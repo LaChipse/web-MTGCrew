@@ -1,0 +1,27 @@
+.snackbar {
+    width: 100%;
+    justify-content: center !important;
+}
+
+.success {
+    background-color: green !important;
+}
+
+.info {
+    background-color: blue !important;
+}
+
+.error {
+    background-color: red !important;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+
+    > div {
+        display: flex;
+    }
+}

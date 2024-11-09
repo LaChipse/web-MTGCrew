@@ -1,0 +1,67 @@
+.tableau {
+    max-height: 75%;
+
+    thead {
+        
+        th {
+        background-color: #1976d2;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+
+    tbody {
+        tr:nth-of-type(odd) {
+            background-color: #0000000a;
+        }
+
+        th {
+            padding: 13px;
+        }
+    
+        &:last-child {
+            td,
+            th {
+                border: 0;
+            }
+        }
+    }
+
+    .img {
+        display: inline-block;
+        margin: 0 2px;
+    }
+
+    .rank {
+        font-weight: 600;
+        border: 1px solid white !important;
+    }
+
+    .Z {
+        background-color: #000;
+        color: white;
+    }
+
+    .S {
+        background-color: #c00000;
+        color: white;
+    }
+
+    .A {
+        background-color: #ffc000;
+    }
+
+    .B {
+        background-color: #ffff00;
+    }
+
+    .C {
+        background-color: #00ff00;
+    }
+
+    .D {
+        background-color: #00b050;
+        color: white;
+    }
+}

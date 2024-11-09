@@ -13,16 +13,20 @@ const Profil = () => {
 
     return (
         <>
-            <ProfilCard 
-                user={user}
-                handleOpen={handleOpen}
-            />
+            {user && (
+                <>
+                    <ProfilCard 
+                        user={user}
+                        handleOpen={handleOpen}
+                    />
 
-            <ProfilModal 
-                user={user}
-                open={open}
-                setOpen={setOpen}
-            />
+                    <ProfilModal 
+                        user={user}
+                        open={open}
+                        setOpen={setOpen}
+                    />
+                </>
+            )}
         </>
     )
 }

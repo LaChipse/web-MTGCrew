@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { Button, FormControl, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -22,7 +22,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
 
     const { mutate, isSuccess } = useUpdateUser();
 
-    const handleUpdateUser = (e) => {
+    const handleUpdateUser = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Empêche le rechargement de la page
         mutate({ nom, prenom, password });
 

@@ -11,7 +11,7 @@ import styles from './DecksArray.module.scss';
 
 const DecksArray = () => {
     const [open, setOpen] = useState(false);
-    const [selectedDeck, setSelectedDeck] = useState(undefined)
+    const [selectedDeck, setSelectedDeck] = useState<Deck>()
 
     const { data: decks} = useGetDecks()
     const { mutate: deleteDeck } = useDeleteDeck();

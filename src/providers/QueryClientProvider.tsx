@@ -22,10 +22,10 @@ const QueryClientProvider: React.FC<Props> = ({ children }) => {
         },
         },
         queryCache: new QueryCache({
-        onError: handleError
+            onError: handleError
         }),
         mutationCache: new MutationCache({
-        onError: handleError,
+            onError: handleError,
         }),
     });
 

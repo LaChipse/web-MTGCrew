@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { useAddDeck } from '../../../hooks/queries/useAddDeck';
 import styles from './DecksModal.module.scss';
 
@@ -11,27 +11,27 @@ type Props = {
 
 const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
     const [nom, setNom] = useState('');
-    const [couleurs, setCouleurs] = useState([]);
+    const [couleurs, setCouleurs] = useState<Array<string>>([]);
     const [rank, setRank] = useState('');
     const [type, setType] = useState('');
     const [isImprime, setIsImprime] = useState(false);
 
     const { mutate } = useAddDeck();
 
-    const handleCheckboxChange = (event) => {
-        const { value, checked } = event.target;
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value, checked } = e.target;
 
         setCouleurs((prevCouleurs) => checked ? [...prevCouleurs, value] : prevCouleurs.filter((color) => color !== value));
     };
 
-    const handleRadioImprimeChange = (event) => {
-        const { value } = event.target
+    const handleRadioImprimeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target
 
         if (value.toString() === 'true') setIsImprime(true)
         else setIsImprime(false)
     }
 
-    const handleAddDeckForm = (e) => {
+    const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         mutate({ nom, couleurs, isImprime, rank, type });
         setOpen(false)

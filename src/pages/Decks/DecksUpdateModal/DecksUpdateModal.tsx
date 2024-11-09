@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { Deck } from '../../../hooks/queries/useGetDecks';
 import { useUpdateDeck } from '../../../hooks/queries/useUpdateDeck';
 import styles from './DecksUpdateModal.module.scss';
@@ -28,20 +28,20 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
 
     const { mutate } = useUpdateDeck();
 
-    const handleCheckboxChange = (e) => {
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
 
         setCouleurs((prevCouleurs) => checked ? [...prevCouleurs, value] : prevCouleurs.filter((color) => color !== value));
     };
 
-    const handleRadioImprimeChange = (e) => {
+    const handleRadioImprimeChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
 
         if (value.toString() === 'true') setIsImprime(true)
         else setIsImprime(false)
     }
 
-    const handleUpdateDeck = (e) => {
+    const handleUpdateDeck = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         mutate({ id: deck._id, nom, couleurs, isImprime, rank, type });
         setOpen(false)

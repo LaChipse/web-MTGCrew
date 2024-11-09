@@ -1,5 +1,5 @@
 import { Button, FormControl, TextField } from '@mui/material';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useLogin } from '../../../hooks/queries/useLogin';
 import styles from './Login.module.scss';
 
@@ -10,7 +10,7 @@ const Login = () => {
 
     const { mutate } = useLogin();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Empêche le rechargement de la page
         mutate({ nom, prenom, password });
     };

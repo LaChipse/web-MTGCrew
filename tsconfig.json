@@ -2,25 +2,19 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable", "esnext"],
+    "lib": ["ES2020", "DOM", "DOM.Iterable", "esnext", "ES2015"],
     "module": "ESNext",
     "skipLibCheck": true,
     "allowJs": false,
-    
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    /* Custom */
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -39,7 +33,7 @@
       "@router/*": ["./src/router/*"],
       "@store/*": ["./src/store/*"],
       "@t/*": ["./src/types/*"],
-      "@utils/*": ["./src/utils/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src"],

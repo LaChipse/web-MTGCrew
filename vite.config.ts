@@ -8,12 +8,14 @@ export default defineConfig({
     react(), 
     VitePWA({
       registerType: 'autoUpdate', // Le service worker sera mis à jour automatiquement
+      injectRegister: 'auto',
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'], // Ajouter des assets supplémentaires ici
       manifest: {
         name: 'MTGT Crew',
         short_name: 'MTGCrew',
         description: 'MTG entre pote',
         start_url: "/",
+        id: "/",
         display: "standalone",        // C'est un point clé pour le mode d'affichage
         background_color: "#ffffff",
         theme_color: '#ffffff',
@@ -44,8 +46,8 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png'
           }
-        ]
-      }
+        ],
+      },
     })
   ],
 })

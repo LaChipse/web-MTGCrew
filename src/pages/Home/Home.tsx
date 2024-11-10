@@ -10,7 +10,9 @@ const Home = () => {
         const encodedStateBeforeLeaving = sessionStorage.getItem('stateBeforeLeaving');
         const stateBeforeLeaving = encodedStateBeforeLeaving ? JSON.parse(encodedStateBeforeLeaving) as Record<string, unknown> : null;
 
-        navigate(sessionStorage.getItem('currentPagePath') || DEFAULT_PAGE_PATH, { state: stateBeforeLeaving });
+        setTimeout(() => {
+            navigate(sessionStorage.getItem('currentPagePath') || DEFAULT_PAGE_PATH, { state: stateBeforeLeaving });
+        }, 2000);
 
         sessionStorage.removeItem('currentPagePath');
         sessionStorage.removeItem('stateBeforeLeaving');

@@ -19,7 +19,8 @@ const PagePathStorageLayout = React.lazy(() => import('../Layouts/PagePathStorag
 const Router = () => (
     <BrowserRouter>
         <Routes>
-            
+        <Route path={ROUTES.HOME_PATH} element={<HomePage />} />
+        
             <Route element={<ThemeAuthLayout />}>
                 <Route path={ROUTES.LOGIN_PAGE} element={<Login />} />
                 <Route path={ROUTES.SIGNUP_PAGE} element={<Signup />} />

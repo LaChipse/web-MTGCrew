@@ -75,7 +75,6 @@ const DecksArray = () => {
                                         <IconButton color="primary" size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
                                         <IconButton color="error" size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                     </TableCell>
-
                                 </TableRow>
                             ))}
                         </TableBody>

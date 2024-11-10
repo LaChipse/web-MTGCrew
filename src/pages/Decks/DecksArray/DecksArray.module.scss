@@ -1,10 +1,8 @@
 .tableau {
-    max-height: 75%;
-
     thead {
         
         th {
-        background-color: #1976d2;
+            background-color: #1976d2;
             color: white;
             font-weight: 600;
             font-size: 16px;
@@ -16,8 +14,8 @@
             background-color: #0000000a;
         }
 
-        th {
-            padding: 13px;
+        th, td {
+            padding: 10px;
         }
     
         &:last-child {

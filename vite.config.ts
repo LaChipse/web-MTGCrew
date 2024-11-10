@@ -7,18 +7,18 @@ export default defineConfig({
   plugins: [
     react(), 
     VitePWA({
-      registerType: 'autoUpdate', // Le service worker sera mis à jour automatiquement
+      registerType: 'autoUpdate',
       injectRegister: 'auto',
-      includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'], // Ajouter des assets supplémentaires ici
+      includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'mtgCrew_icon_192.png', "mtgCrew_icon_512.png", "screenshot.png"], 
       manifest: {
-        name: 'MTGT Crew',
-        short_name: 'MTGCrew',
-        description: 'MTG entre pote',
+        name: "MTGT Crew",
+        short_name: "MTGCrew",
+        description: "MTG entre pote",
         start_url: "/",
         id: "/",
-        display: "standalone",        // C'est un point clé pour le mode d'affichage
+        display: "standalone",
         background_color: "#ffffff",
-        theme_color: '#ffffff',
+        theme_color: "#ffffff",
         screenshots: [
           {
             src: "/screenshot.png",
@@ -37,14 +37,14 @@ export default defineConfig({
         ],
         icons: [
           {
-            src: '/mtgCrew_icon_192.png', // L'icône de l'application
-            sizes: '192x192',
-            type: 'image/png'
+            src: "/mtgCrew_icon_192.png",
+            sizes: "192x192",
+            type: "image/png"
           },
           {
-            src: '/mtgCrew_icon_512.png',
-            sizes: '512x512',
-            type: 'image/png'
+            src: "/mtgCrew_icon_512.png",
+            sizes: "512x512",
+            type: "image/png"
           }
         ],
       },

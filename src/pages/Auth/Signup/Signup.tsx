@@ -24,7 +24,7 @@ const Signup = () => {
                         required
                         label="Nom"
                         value={nom}
-                        id="outlined-size-small"
+                        id="nomSignup"
                         size="small"
                         onChange={(e) => setNom(e.target.value)}
                         placeholder="Nom"
@@ -34,7 +34,7 @@ const Signup = () => {
                         required
                         label="Prénom"
                         value={prenom}
-                        id="outlined-size-small"
+                        id="prenomSignup"
                         size="small"
                         onChange={(e) => setPrenom(e.target.value)}
                         placeholder="Prénom"
@@ -45,7 +45,7 @@ const Signup = () => {
                         label="Mot de passe"
                         type='password'
                         value={password}
-                        id="outlined-size-small"
+                        id="passwordSignup"
                         size="small"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"

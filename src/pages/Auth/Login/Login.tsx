@@ -23,7 +23,7 @@ const Login = () => {
                     required
                     label="Nom"
                     value={nom}
-                    id="outlined-size-small"
+                    id="nom"
                     size="small"
                     onChange={(e) => setNom(e.target.value)}
                     placeholder="Nom"
@@ -33,7 +33,7 @@ const Login = () => {
                     required
                     label="Prenom"
                     value={prenom}
-                    id="outlined-size-small"
+                    id="prenom"
                     size="small"
                     onChange={(e) => setPrenom(e.target.value)}
                     placeholder="Prenom"
@@ -44,7 +44,7 @@ const Login = () => {
                     label="Mot de passe"
                     type='password'
                     value={password}
-                    id="outlined-size-small"
+                    id="password"
                     size="small"
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Mot de passe"

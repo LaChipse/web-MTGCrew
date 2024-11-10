@@ -55,7 +55,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         required
                         label="Nom"
                         value={nom}
-                        id="outlined-size-small"
+                        id="nomProfil"
                         size="small"
                         onChange={(e) => setNom(e.target.value)}
                         placeholder="Nom"
@@ -65,7 +65,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         required
                         label="Prénom"
                         value={prenom}
-                        id="outlined-size-small"
+                        id="prenomProfil"
                         size="small"
                         onChange={(e) => setPrenom(e.target.value)}
                         placeholder="Prénom"
@@ -75,7 +75,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         label="Mot de passe"
                         type='password'
                         value={password}
-                        id="outlined-size-small"
+                        id="passwordProfil"
                         size="small"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"

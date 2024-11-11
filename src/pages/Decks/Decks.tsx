@@ -1,11 +1,13 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import DecksModal from './DecksModal/DecksModal';
-import styles from './Decks.module.scss';
 import DecksArray from './DecksArray/DecksArray';
+import { useGetDecks } from '../../hooks/queries/useGetDecks';
+import styles from './Decks.module.scss';
 
 const Decks = () => {
     const [open, setOpen] = useState(false);
+    const { data: decks} = useGetDecks()
 
     const handleOpen = () => {
         setOpen(true);
@@ -22,7 +24,7 @@ const Decks = () => {
                 setOpen={setOpen}
             />
 
-            <DecksArray />
+            <DecksArray decks={decks}/>
         </>
     )
 }

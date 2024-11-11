@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import ProfilCard from './ProfilCard/ProfilCard';
 import ProfilModal from './ProfilModal/ProfilModal';
+import HistoryGames from './HistoryGames/HistoryGames';
+import styles from './Profil.module.scss'
 
 const Profil = () => {
     const user = useAppSelector((state) => state.auth.user);
@@ -27,6 +29,10 @@ const Profil = () => {
                     />
                 </>
             )}
+
+            <div className={styles.history}>
+                <HistoryGames />
+            </div>
         </>
     )
 }

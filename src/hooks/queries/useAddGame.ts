@@ -8,6 +8,7 @@ import { useGetDecks } from './useGetDecks';
 import { useAppSelector } from '../useAppSelector';
 import { authActions } from '../../store/reducers/authReducer';
 import { useGetGames } from './useGetGames';
+import { useCountGames } from './useCountGames';
 
 const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string) => (
     await new Api<{ config: Array<PlayersBlock>, victoire:string }>()
@@ -43,6 +44,7 @@ export const useAddGame = () => {
                 }
                 useGetDecks.reset(queryClient)
                 useGetGames.reset(queryClient)
+                useCountGames.reset(queryClient)
             }
         })
     );

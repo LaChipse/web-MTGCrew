@@ -1,10 +1,12 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useGetGames } from '../../../hooks/queries/useGetGames';
-import styles from './GamesArray.module.scss';
-import { PlayersBlock } from '../DrawerGamesForm/DrawerGamesForm';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { useGetHistoryGames } from "../../../hooks/queries/useGetHistoryGames"
+import { useAppSelector } from "../../../hooks/useAppSelector"
+import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm"
+import styles from './HistoryGames.module.scss'
 
-const GamesArray = () => {
-    const { data: games } = useGetGames()
+const HistoryGames = () => {
+    const { data: gameHistory } = useGetHistoryGames()
+    const user = useAppSelector((state) => state.auth.user);
 
     const formatType = (type: string) => {
         if (type === 'team') return 'En équipe'
@@ -38,9 +40,21 @@ const GamesArray = () => {
         </>
     )
 
+    const winnerStyle = (victoire: string, config: Array<PlayersBlock>) => {
+        const userPlayer = config.find((conf) => conf.userId === user?.id)
+        const isWinner = (
+            (userPlayer?.userId === victoire) 
+            || (victoire === 'Seigneur' ? (userPlayer?.role === victoire || userPlayer?.role === 'Gardien') : userPlayer?.role === victoire) 
+            || (userPlayer?.team === victoire) 
+        )
+
+        if (isWinner) return 'green'
+        return 'red'
+    }
+
     return (
         <>
-            {games && (
+            {gameHistory && (
                 <TableContainer className={styles.tableau}>
                     <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
@@ -53,8 +67,8 @@ const GamesArray = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {games.map((game) => (
-                                <TableRow key={game.id}>
+                            {gameHistory.map((game) => (
+                                <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
                                     <TableCell align="center" component="th" scope="row">{ game.date }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>
                                     <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
@@ -70,4 +84,4 @@ const GamesArray = () => {
     )
 }
 
-export default GamesArray
+export default HistoryGames

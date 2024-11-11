@@ -4,16 +4,21 @@ import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useDeleteDeck } from '../../../hooks/queries/useDeleteDeck';
-import { Deck, useGetDecks } from '../../../hooks/queries/useGetDecks';
+import { Deck} from '../../../hooks/queries/useGetDecks';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
 import styles from './DecksArray.module.scss';
+import { useCountGames } from '../../../hooks/queries/useCountGames';
 
-const DecksArray = () => {
+type Props = {
+    decks?: Array<Deck>
+}
+
+const DecksArray: React.FC<Props> = ({ decks }) => {
     const [open, setOpen] = useState(false);
     const [selectedDeck, setSelectedDeck] = useState<Deck>()
+    const {data: count} = useCountGames()
 
-    const { data: decks} = useGetDecks()
     const { mutate: deleteDeck } = useDeleteDeck();
 
     const formatBooelan = (boolean: boolean) =>{
@@ -68,8 +73,8 @@ const DecksArray = () => {
                                     <TableCell align="center" className={classNames([styles[deck.rank.toLocaleUpperCase()], styles.rank])}>
                                         {deck.rank.toLocaleUpperCase()}
                                     </TableCell>
-                                    <TableCell align="center">{deck.parties}</TableCell>
-                                    <TableCell align="center">{deck.victoires}</TableCell>
+                                    <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/count!) * 100)}%)`}</TableCell>
+                                    <TableCell align="center">{`${deck.victoires} (${Math.round((deck.victoires/(deck.parties || 1)) * 100)}%)`}</TableCell>
                                     <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                     <TableCell align="center">
                                         <IconButton color="primary" size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>

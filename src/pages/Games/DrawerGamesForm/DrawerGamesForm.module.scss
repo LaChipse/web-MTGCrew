@@ -1,0 +1,50 @@
+.drawer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 420px;
+
+    h3 {
+        margin-bottom: 0px;
+    }
+
+    .firstBloc {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        > div {
+            width: 200px;
+        }
+    }
+
+    .addIcon {
+        height: 30px;
+        width: 30px;
+        align-self: start;
+        background-color: #39bd2f;
+        color: white;
+    }
+
+    .hasPlayer {
+        margin-top: -30px;
+    }
+
+    .addIcon[disabled] {
+        background-color: #dcdee3;
+    }
+} 
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+    background-color: #dcdee3;
+
+    h2 {
+        margin: 0
+    }
+}

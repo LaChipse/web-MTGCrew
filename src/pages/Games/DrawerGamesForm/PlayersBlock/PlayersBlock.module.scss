@@ -1,0 +1,11 @@
+.secondBloc {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+
+    > div {
+        width: 200px;
+    }
+}

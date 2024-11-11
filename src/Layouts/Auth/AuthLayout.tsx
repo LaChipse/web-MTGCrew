@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useTokenValidation } from "../../hooks/useTokenValidation";
 import { TOKEN_REFRESH_THRESHOLD } from "../../constants/token";
 import { AUTH_PATH, LOGIN_PAGE } from '../../router/routes'
+import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
 
 
 const AuthLayout = () => {
@@ -47,11 +48,7 @@ const AuthLayout = () => {
         }
     }, [user, tokenExpirationDate, navigate, location.pathname]);
 
-    if (error) return (
-        <div>
-            ERROR
-        </div>
-    );
+    if (error) dispatch(addErrorSnackbar(`Erreur: ${error}`))
     if (user) return <Outlet />;
 
     return <Loading />;

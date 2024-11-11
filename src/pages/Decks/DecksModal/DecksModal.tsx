@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { useAddDeck } from '../../../hooks/queries/useAddDeck';
 import styles from './DecksModal.module.scss';
+import classNames from 'classnames';
 
 type Props = {
     open: boolean
@@ -50,7 +51,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
         >
             <Box className={styles.modal}>
                 <div className={styles.formBloc}>
-                    <FormControl>
+                    <FormControl className={styles.formControl}>
                         <TextField
                             required
                             label="Nom"
@@ -62,7 +63,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                         />
                     </FormControl>
 
-                    <FormControl>
+                    <FormControl className={styles.formControl}>
                         <FormLabel id="checkbox-colors">Couleurs du deck</FormLabel>
                         <FormGroup className={styles.choices}>
                             <FormControlLabel value="incolore" control={<Checkbox onChange={handleCheckboxChange} />} label="Incolore" />
@@ -76,7 +77,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                 </div>
                     
                 <div className={styles.formBloc}>
-                    <FormControl>
+                    <FormControl className={styles.formControl}>
                         <FormLabel id="radio-imprime-groupe">Deck imprimé ?</FormLabel>
                         <RadioGroup
                             aria-labelledby="radio-imprime-groupe"
@@ -89,7 +90,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                         </RadioGroup>
                     </FormControl>
 
-                    <FormControl className={styles.select}>
+                    <FormControl className={classNames([styles.select, styles.formControl])}>
                         <InputLabel id="Type">Type</InputLabel>
                         <Select
                             labelId="Type"
@@ -105,7 +106,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                         </Select>
                     </FormControl>
 
-                    <FormControl className={styles.select}>
+                    <FormControl className={classNames([styles.select, styles.formControl])}>
                         <InputLabel id="Rank">Rank</InputLabel>
                         <Select
                             labelId="Rank"

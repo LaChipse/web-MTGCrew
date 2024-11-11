@@ -1,0 +1,76 @@
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useGetGames } from '../../../hooks/queries/useGetGames';
+import styles from './GamesArray.module.scss';
+import { PlayersBlock } from '../DrawerGamesForm/DrawerGamesForm';
+
+const GamesArray = () => {
+
+    const { data: games } = useGetGames()
+
+    const formatType = (type: string) => {
+        if (type === 'team') return 'En équipe'
+        if (type === 'each') return 'Chacun pour soit'
+        if (type === 'treachery') return 'Treachery'
+    }
+
+    const formatVictoir = (type: string, victoire: string, config: Array<PlayersBlock>) => {
+        if (type === 'team') return <><strong>Equipe: </strong>{victoire}</>
+        if (type === 'each') return <><strong>Joueur: </strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
+        if (type === 'treachery') return <><strong>Role: </strong>{victoire}</>
+    }
+
+    const typeGame = (type: string, conf: PlayersBlock) => {
+        if (type === 'team') return (<><strong>, Equipe: </strong>{conf.team}</>)
+        if (type === 'treachery') return (<><strong>, Role: </strong>{conf.role}</>)
+        else return ''
+    }
+
+    const formatConfig = (type: string, config: Array<PlayersBlock>) => (
+        <>
+            <ul>
+                {config.map((conf) => {
+                    return (
+                        <li>
+                            <strong>Joueur: </strong>{conf.joueur}<strong>, Deck: </strong>{conf.deck}{typeGame(type, conf)}
+                        </li>
+                    )
+                })}
+            </ul>
+        </>
+    )
+
+    console.log(games)
+
+    return (
+        <>
+            {games && (
+                <TableContainer className={styles.tableau}>
+                    <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Type de partie</TableCell>
+                                <TableCell align="center" style={{ minWidth: "150px" }}>Config</TableCell>
+                                <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
+                                <TableCell align="center" style={{ minWidth: "75px" }}>Type de victoire</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {games.map((game) => (
+                                <TableRow key={game.id}>
+                                    <TableCell align="center" component="th" scope="row">{ game.date }</TableCell>
+                                    <TableCell align="center">{ formatType(game.type) }</TableCell>
+                                    <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
+                                    <TableCell align="left">{ formatVictoir(game.type, game.victoire, game.config) }</TableCell>
+                                    <TableCell align="center">{ game.typeVictoire }</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            )}
+        </>
+    )
+}
+
+export default GamesArray

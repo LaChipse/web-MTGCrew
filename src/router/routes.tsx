@@ -27,6 +27,10 @@ export const DECKS_PAGE = '/decks'
  */
 export const GAMES_PAGE = '/games'
 /**
+ * Parties
+ */
+export const JOUEURS_PAGE = '/joueurs'
+/**
  * Page par défaut.
  */
 export const DEFAULT_PAGE_PATH = PROFIL_PAGE;

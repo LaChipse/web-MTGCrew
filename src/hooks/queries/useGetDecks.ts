@@ -16,7 +16,7 @@ export interface Deck {
 const getDecks = async () => (
     await new Api<Array<Deck>>()
         .setBearerToken()
-        .get('/deck/all')
+        .get('/deck/mine')
 )
 
 export const useGetDecks = () => (

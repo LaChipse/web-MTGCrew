@@ -7,6 +7,7 @@ const HomePage = React.lazy(() => import('../pages/Home/Home'));
 const ProfilPage = React.lazy(() => import('../pages/Profil/Profil'));
 const DecksPage = React.lazy(() => import('../pages/Decks/Decks'));
 const GamesPage = React.lazy(() => import('../pages/Games/Games'));
+const JoueursPge = React.lazy(() => import('../pages/Joueurs/Joueurs'))
 const Login = React.lazy(() => import('../pages/Auth/Login/Login'));
 const Signup = React.lazy(() => import('../pages/Auth/Signup/Signup'));
 
@@ -32,6 +33,7 @@ const Router = () => (
                             <Route path={ROUTES.PROFIL_PAGE} element={<ProfilPage />} />
                             <Route path={ROUTES.DECKS_PAGE} element={<DecksPage />} />
                             <Route path={ROUTES.GAMES_PAGE} element={<GamesPage />} />
+                            <Route path={ROUTES.JOUEURS_PAGE} element={<JoueursPge />} />
                         </Route>
                     </Route>
                 </Route>

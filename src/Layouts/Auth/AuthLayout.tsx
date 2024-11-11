@@ -14,10 +14,11 @@ import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
 const AuthLayout = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { refreshTokenIfNeeded } = useTokenValidation();
+    
     const location = useAppLocation();
     const { error } = useLogin();
     const user = useAppSelector((state) => state.auth.user);
-    const { refreshTokenIfNeeded } = useTokenValidation();
 
     const tokenExpirationDate = useAppSelector((state) => state.auth.tokenExpirationDate);
 
@@ -32,7 +33,7 @@ const AuthLayout = () => {
 
     useEffect(() => {
         const redirectToAuthPage = (token: string) => {
-            navigate(AUTH_PATH.replace(':token', btoa(token)), { state: { isInternalRedirect: true, redirect: location.pathname } });
+            navigate(AUTH_PATH.replace(':token', btoa(token)));
         };
 
         const handleLogin = async () => {

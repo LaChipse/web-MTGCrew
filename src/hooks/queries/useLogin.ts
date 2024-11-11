@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { AUTH_PATH } from '../../router/routes.js';
 import { Api } from '../../utils/Api';
-import { useAppLocation } from '../useAppLocation';
+// import { useAppLocation } from '../useAppLocation';
 
 const login = (nom: string, prenom:string, password: string) => (
     new Api<{ token: string }>()
@@ -11,14 +11,14 @@ const login = (nom: string, prenom:string, password: string) => (
 
 export const useLogin = (): UseMutationResult<{ token: string }, Error, { nom: string; prenom: string, password: string }> => {
     const navigate = useNavigate();
-    const location = useAppLocation();
+    // const location = useAppLocation();
 
     return useMutation({
         mutationFn: (data: { nom: string; prenom: string,  password: string }) => login(data.nom, data.prenom, data.password),
         onSuccess: (data) => {
             // data contient le token, vous pouvez le retourner ou le gérer ici
             localStorage.setItem('token', btoa(data.token));
-            navigate(AUTH_PATH.replace(':token', btoa(data.token)), { state: { isInternalRedirect: true, redirect: location.pathname } });
+            navigate(AUTH_PATH.replace(':token', btoa(data.token)));
         }
     });
 };

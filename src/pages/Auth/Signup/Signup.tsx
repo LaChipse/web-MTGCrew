@@ -4,7 +4,6 @@ import { Button, FormControl, TextField } from '@mui/material';
 import styles from './Signup.module.scss';
 
 const Signup = () => {
-
     const [password, setPassword] = useState('');
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');

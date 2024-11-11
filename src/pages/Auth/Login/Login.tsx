@@ -1,12 +1,15 @@
 import { Button, FormControl, TextField } from '@mui/material';
 import { MouseEvent, useState } from 'react';
+import { SIGNUP_PAGE } from '../../../router/routes';
 import { useLogin } from '../../../hooks/queries/useLogin';
 import styles from './Login.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate()
 
     const { mutate } = useLogin();
 
@@ -51,7 +54,7 @@ const Login = () => {
                 />
 
                 <Button type="submit" variant="contained" onClick={handleSubmit} className={styles.submit}>Se connecter</Button>
-                <Button href={'http://localhost:3000/signup'}>Créer un compte</Button>
+                <Button onClick={() => navigate(SIGNUP_PAGE)}>Créer un compte</Button>
             </FormControl>
 
             

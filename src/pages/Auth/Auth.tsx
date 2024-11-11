@@ -25,10 +25,10 @@ const Auth = () => {
                 ...user,
             }));
 
-            if (!location.state?.isInternalRedirect) {
-                sessionStorage.removeItem('currentPagePath');
-                sessionStorage.removeItem('stateBeforeLeaving');
-            }
+            // if (!location.state?.isInternalRedirect) {
+            //     sessionStorage.removeItem('currentPagePath');
+            //     sessionStorage.removeItem('stateBeforeLeaving');
+            // }
 
             navigate(HOME_PATH);
         }

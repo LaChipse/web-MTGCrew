@@ -12,8 +12,6 @@ type Props = {
 const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
     const { data: count } = useCountGames()
 
-    console.log(count)
-
     return (
         <Card className={styles.profil}>
             <CardContent>

@@ -12,8 +12,6 @@ type Props = {
 
 const EachVictoryBlock: React.FC<Props> = ({ joueurs, victoire, setVictoire, typeVictoire, setTypeVictoire }) => {
     const typeVictoireEnum = [ 'KO', 'Meule', 'Poison', 'Capacité', 'Egalité', 'Autres']
-
-    console.log(joueurs)
     
     return (
         <div className={styles.thirdBloc}>

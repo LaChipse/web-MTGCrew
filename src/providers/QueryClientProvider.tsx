@@ -6,8 +6,8 @@ type Props = {
     children: ReactNode
 }
 
-const SIX_MINUTES_IN_MILISECONDS = 6 * 60 * 1000;
-const FIVE_MINUTES_IN_MILISECONDS = 5 * 60 * 1000;
+// const SIX_MINUTES_IN_MILISECONDS = 6 * 60 * 1000;
+// const FIVE_MINUTES_IN_MILISECONDS = 5 * 60 * 1000;
 
 const QueryClientProvider: React.FC<Props> = ({ children }) => {
     const handleError = useQueryErrorHandler();
@@ -17,8 +17,8 @@ const QueryClientProvider: React.FC<Props> = ({ children }) => {
         queries: {
             refetchOnWindowFocus: false,
             retry: false,
-            gcTime: SIX_MINUTES_IN_MILISECONDS,
-            staleTime: FIVE_MINUTES_IN_MILISECONDS,
+            gcTime: 0,
+            staleTime: 0,
         },
         },
         queryCache: new QueryCache({

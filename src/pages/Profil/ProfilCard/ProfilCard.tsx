@@ -25,10 +25,10 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
                             primary={`Nombre de decks = ${user.nbrDecks}`}
                         />
                         <ListItemText
-                            primary={`Parties jouées = ${user.partiesJouees} (${Math.round((user.partiesJouees/count!) * 100)}%)`}
+                            primary={`Parties jouées = ${user.partiesJouees} (${Math.round((user.partiesJouees/(count || 1)) * 100)}%)`}
                         />
                         <ListItemText
-                            primary={`Victoires = ${user.victoires} (${Math.round((user.victoires/user.partiesJouees) * 100)}%)`}
+                            primary={`Victoires = ${user.victoires} (${Math.round((user.victoires/(user.partiesJouees || 1)) * 100)}%)`}
                         />
                     </ListItem>
                 </List>

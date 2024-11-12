@@ -6,10 +6,11 @@ import styles from './Login.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate()
+    
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate()
 
     const { mutate } = useLogin();
 

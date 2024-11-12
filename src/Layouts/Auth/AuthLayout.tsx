@@ -1,14 +1,14 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
+import { TOKEN_REFRESH_THRESHOLD } from "../../constants/token";
 import { useLogin } from "../../hooks/queries/useLogin";
 import { useAppLocation } from "../../hooks/useAppLocation";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import Loading from "../../pages/Loading/Loading";
-import { useDispatch } from "react-redux";
 import { useTokenValidation } from "../../hooks/useTokenValidation";
-import { TOKEN_REFRESH_THRESHOLD } from "../../constants/token";
-import { AUTH_PATH, LOGIN_PAGE } from '../../router/routes'
-import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
+import Login from "../../pages/Auth/Login/Login";
+import Loading from "../../pages/Loading/Loading";
+import { AUTH_PATH, LOGIN_PAGE } from '../../router/routes';
 
 
 const AuthLayout = () => {
@@ -33,14 +33,14 @@ const AuthLayout = () => {
 
     useEffect(() => {
         const redirectToAuthPage = (token: string) => {
-            navigate(AUTH_PATH.replace(':token', btoa(token)));
+            navigate(AUTH_PATH.replace(':token', btoa(token)), { state: { isInternalRedirect: true, redirect: location.pathname } });
         };
 
         const handleLogin = async () => {
             const token = localStorage.getItem('token')
     
             if (token) redirectToAuthPage(token)
-            else navigate(LOGIN_PAGE); // Your login URL
+            else navigate(LOGIN_PAGE);
         };
 
 
@@ -49,7 +49,7 @@ const AuthLayout = () => {
         }
     }, [user, tokenExpirationDate, navigate, location.pathname]);
 
-    if (error) dispatch(addErrorSnackbar(`Erreur: ${error}`))
+    if (error) return <Login />
     if (user) return <Outlet />;
 
     return <Loading />;

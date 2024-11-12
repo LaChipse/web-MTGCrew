@@ -73,7 +73,7 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                                     <TableCell align="center" className={classNames([styles[deck.rank.toLocaleUpperCase()], styles.rank])}>
                                         {deck.rank.toLocaleUpperCase()}
                                     </TableCell>
-                                    <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/count!) * 100)}%)`}</TableCell>
+                                    <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/(count  || 1)) * 100)}%)`}</TableCell>
                                     <TableCell align="center">{`${deck.victoires} (${Math.round((deck.victoires/(deck.parties || 1)) * 100)}%)`}</TableCell>
                                     <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                     <TableCell align="center">

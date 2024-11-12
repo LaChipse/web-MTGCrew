@@ -34,7 +34,13 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
 
     const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        mutate({ nom, couleurs, isImprime, rank, type });
+        mutate({ nom, couleurs: [...new Set(couleurs)], isImprime, rank, type });
+
+        setNom('')
+        setCouleurs([])
+        setRank('')
+        setType('')
+        setIsImprime(false)
         setOpen(false)
     };
 
@@ -125,7 +131,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                     </FormControl>
                 </div>
 
-                <Button type="submit" variant="contained" onClick={handleAddDeckForm} className={styles.submit}>Ajouter</Button>      
+                <Button type="submit" variant="contained" onClick={handleAddDeckForm} disabled={(!couleurs.length || !nom.length)} className={styles.submit}>Ajouter</Button>      
             </Box>
         </Modal>
     )

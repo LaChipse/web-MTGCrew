@@ -3,9 +3,11 @@ import { useState } from 'react';
 import DrawerGamesForm from './DrawerGamesForm/DrawerGamesForm';
 import GamesArray from './GamesArray/GamesArray';
 import styles from './Games.module.scss';
+import { useCountGames } from '../../hooks/queries/useCountGames';
 
 const Games = () => {
     const [open, setOpen] = useState(false);
+    const { data: count } = useCountGames()
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -13,8 +15,9 @@ const Games = () => {
 
     return (
         <>
-            <div>
-                <Button variant="contained" onClick={toggleDrawer(true)}  className={styles.addGames}>Ajouter une partie</Button>
+            <div className={styles.addGames}>
+                <Button variant="contained" onClick={toggleDrawer(true)}>Ajouter une partie</Button>
+                <p>Nbr de parties : {count}</p>
             </div>
 
             <GamesArray />

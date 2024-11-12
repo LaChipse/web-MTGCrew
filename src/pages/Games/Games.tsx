@@ -2,8 +2,8 @@ import { Button, Drawer } from '@mui/material';
 import { useState } from 'react';
 import DrawerGamesForm from './DrawerGamesForm/DrawerGamesForm';
 import GamesArray from './GamesArray/GamesArray';
-import styles from './Games.module.scss';
 import { useCountGames } from '../../hooks/queries/useCountGames';
+import styles from './Games.module.scss';
 
 const Games = () => {
     const [open, setOpen] = useState(false);

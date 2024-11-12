@@ -1,9 +1,10 @@
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
-import { useAddDeck } from '../../../hooks/queries/useAddDeck';
+import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
 import styles from './DecksModal.module.scss';
 import classNames from 'classnames';
+import { LoadingButton } from '@mui/lab';
 
 type Props = {
     open: boolean
@@ -17,7 +18,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
     const [type, setType] = useState('');
     const [isImprime, setIsImprime] = useState(false);
 
-    const { mutate } = useAddDeck();
+    const { mutate, isPending } = useAddDeck();
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
@@ -131,7 +132,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                     </FormControl>
                 </div>
 
-                <Button type="submit" variant="contained" onClick={handleAddDeckForm} disabled={(!couleurs.length || !nom.length)} className={styles.submit}>Ajouter</Button>      
+                <LoadingButton loading={isPending} type="submit" variant="contained" onClick={handleAddDeckForm} disabled={!couleurs.length || !nom.length || isPending} className={styles.submit}>Ajouter</LoadingButton>      
             </Box>
         </Modal>
     )

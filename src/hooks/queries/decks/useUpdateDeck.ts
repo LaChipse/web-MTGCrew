@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import { addSuccessSnackbar } from '../../store/reducers/snackbarReducer';
-import { Api } from '../../utils/Api';
+import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
+import { Api } from '../../../utils/Api';
 import { useGetDecks } from './useGetDecks';
 
 const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (

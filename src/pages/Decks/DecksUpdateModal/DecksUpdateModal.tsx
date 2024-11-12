@@ -1,8 +1,9 @@
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
-import { Deck } from '../../../hooks/queries/useGetDecks';
-import { useUpdateDeck } from '../../../hooks/queries/useUpdateDeck';
+import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
+import { LoadingButton } from '@mui/lab';
+import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import styles from './DecksUpdateModal.module.scss';
 
 type Props = {
@@ -26,7 +27,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
         setIsImprime(deck.isImprime)
     }, [deck])
 
-    const { mutate } = useUpdateDeck();
+    const { mutate, isPending } = useUpdateDeck();
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
@@ -134,7 +135,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                     </FormControl>
                 </div>
 
-                <Button type="submit" variant="contained" onClick={handleUpdateDeck} className={styles.submit}>Modifié</Button>      
+                <LoadingButton disabled={isPending} loading={isPending} type="submit" variant="contained" onClick={handleUpdateDeck} className={styles.submit}>Modifié</LoadingButton>      
             </Box>
         </Modal>
     )

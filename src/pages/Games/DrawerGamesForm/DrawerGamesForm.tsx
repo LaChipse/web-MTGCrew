@@ -1,12 +1,13 @@
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { LoadingButton } from '@mui/lab';
+import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
 import { Dayjs } from "dayjs";
 import React, { MouseEvent, useState } from "react";
-import { useAddGame } from '../../../hooks/queries/useAddGame';
+import { useAddGame } from '../../../hooks/queries/games/useAddGame';
 import styles from './DrawerGamesForm.module.scss';
 import EachPlayersBlock from "./PlayersBlock/EachPlayersBlock";
 import TeamPlayersBlock from "./PlayersBlock/TeamPlayersBlock";
@@ -36,7 +37,7 @@ const DrawerGamesForm: React.FC<Props> = ({toggleDrawer}) => {
     const [victoire, setVictoire] = useState<string>('')
     const [typeVictoire, setTypeVictoire] = useState<string>('')
 
-    const { mutate } = useAddGame();
+    const { mutate, isPending } = useAddGame();
 
     const canAddPlayer = () => {
         switch (type) {
@@ -185,15 +186,16 @@ const DrawerGamesForm: React.FC<Props> = ({toggleDrawer}) => {
                         </>
                     )}
 
-                <Button 
-                    disabled={!(type && config && victoire && typeVictoire)} 
+                <LoadingButton
+                    loading={isPending} 
+                    disabled={!(type && config && victoire && typeVictoire) || isPending} 
                     type="submit" 
                     variant="contained" 
                     onClick={handleAddGameForm} 
                     className={styles.submit}
                 >
                     Valider
-                </Button>      
+                </LoadingButton>      
             </Box>
         </>
     )

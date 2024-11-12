@@ -11,12 +11,10 @@ const login = (nom: string, prenom:string, password: string) => (
 
 export const useLogin = (): UseMutationResult<{ token: string }, Error, { nom: string; prenom: string, password: string }> => {
     const navigate = useNavigate();
-    // const location = useAppLocation();
 
     return useMutation({
         mutationFn: (data: { nom: string; prenom: string,  password: string }) => login(data.nom, data.prenom, data.password),
         onSuccess: (data) => {
-            // data contient le token, vous pouvez le retourner ou le gérer ici
             localStorage.setItem('token', btoa(data.token));
             navigate(AUTH_PATH.replace(':token', btoa(data.token)));
         }

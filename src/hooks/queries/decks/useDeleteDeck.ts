@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Api } from '../../utils/Api';
+import { Api } from '../../../utils/Api';
 import { useDispatch } from 'react-redux';
-import { addSuccessSnackbar } from '../../store/reducers/snackbarReducer';
+import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { useGetDecks } from './useGetDecks';
 
 const deleteDeck = (id: string, ) => (

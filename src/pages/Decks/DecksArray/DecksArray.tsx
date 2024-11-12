@@ -1,20 +1,21 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useDeleteDeck } from '../../../hooks/queries/useDeleteDeck';
-import { Deck} from '../../../hooks/queries/useGetDecks';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
+import { useCountGames } from '../../../hooks/queries/games/useCountGames';
+import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import { useDeleteDeck } from '../../../hooks/queries/decks/useDeleteDeck';
 import styles from './DecksArray.module.scss';
-import { useCountGames } from '../../../hooks/queries/useCountGames';
 
 type Props = {
     decks?: Array<Deck>
+    isLoading: boolean
 }
 
-const DecksArray: React.FC<Props> = ({ decks }) => {
+const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
     const [open, setOpen] = useState(false);
     const [selectedDeck, setSelectedDeck] = useState<Deck>()
     const {data: count} = useCountGames()
@@ -49,7 +50,9 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
 
     return (
         <>
-            {decks && (
+            {isLoading? (
+                <Skeleton variant="rectangular" width={1000} height={300} />
+            ) : (
                 <TableContainer className={styles.tableau}>
                     <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
@@ -65,7 +68,7 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {decks.map((deck) => (
+                            {decks?.map((deck) => (
                                 <TableRow key={deck.nom}>
                                     <TableCell align="center" component="th" scope="row">{deck.nom}</TableCell>
                                     <TableCell align="center">{formatArray(deck.couleurs)}</TableCell>
@@ -89,10 +92,10 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
 
             {selectedDeck && (
                 <DecksUpdateModal 
-                open={open}
-                setOpen={setOpen}
-                deck={selectedDeck}
-            />
+                    open={open}
+                    setOpen={setOpen}
+                    deck={selectedDeck}
+                />
             )}
         </>
     )

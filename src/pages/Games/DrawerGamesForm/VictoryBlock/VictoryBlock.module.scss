@@ -8,3 +8,11 @@
         width: 200px;
     }
 }
+
+@media (max-width: 600px) {
+    .thirdBloc {
+        > div {
+            width: 350px;
+        }
+    }
+}

@@ -1,10 +1,10 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useGetGames } from '../../../hooks/queries/useGetGames';
+import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useGetGames } from '../../../hooks/queries/games/useGetGames';
 import styles from './GamesArray.module.scss';
 import { PlayersBlock } from '../DrawerGamesForm/DrawerGamesForm';
 
 const GamesArray = () => {
-    const { data: games } = useGetGames()
+    const { data: games, isLoading } = useGetGames()
 
     const formatType = (type: string) => {
         if (type === 'team') return 'En équipe'
@@ -40,7 +40,9 @@ const GamesArray = () => {
 
     return (
         <>
-            {games && (
+            {isLoading ? (
+                <Skeleton variant="rectangular" width={1000} height={300} />
+            ) : (
                 <TableContainer className={styles.tableau}>
                     <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
@@ -53,7 +55,7 @@ const GamesArray = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {games.map((game) => (
+                            {games?.map((game) => (
                                 <TableRow key={game.id}>
                                     <TableCell align="center" component="th" scope="row">{ game.date }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>

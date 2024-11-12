@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { Api } from '../../utils/Api';
-import { resetQueries } from '../../utils/resetQueries';
 import { GameResume } from './useGetGames';
+import { Api } from '../../../utils/Api';
+import { resetQueries } from '../../../utils/resetQueries';
 
 const getHistoryGames = async () => (
     await new Api<Array<GameResume>>()

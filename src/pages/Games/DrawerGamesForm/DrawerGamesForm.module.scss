@@ -48,3 +48,14 @@
         margin: 0
     }
 }
+
+@media (max-width: 600px) {
+    .drawer {
+        .firstBloc {
+            > div {
+                width: 350px;
+            }
+        }
+    }
+    
+}

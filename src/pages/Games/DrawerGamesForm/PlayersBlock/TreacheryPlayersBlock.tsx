@@ -1,8 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
-import { useGetAllDecks } from "../../../../hooks/queries/useGetAllDecks";
-import { useGetAllPlayers } from "../../../../hooks/queries/useGetAllPlayers";
+import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPlayers";
 import React, { Dispatch, SetStateAction } from "react";
 import { PlayersBlock } from "../DrawerGamesForm";
+import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
 import styles from './PlayersBlock.module.scss'
 
 type Props = {

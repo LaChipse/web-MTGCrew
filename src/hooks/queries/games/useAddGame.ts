@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import { addSuccessSnackbar } from '../../store/reducers/snackbarReducer';
-import { Api } from '../../utils/Api';
+import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
+import { Api } from '../../../utils/Api';
 import { Dayjs } from 'dayjs';
-import { PlayersBlock } from '../../pages/Games/DrawerGamesForm/DrawerGamesForm';
-import { useGetDecks } from './useGetDecks';
-import { useAppSelector } from '../useAppSelector';
-import { authActions } from '../../store/reducers/authReducer';
+import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/DrawerGamesForm';
+import { useAppSelector } from '../../useAppSelector';
+import { authActions } from '../../../store/reducers/authReducer';
 import { useGetGames } from './useGetGames';
+import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
 import { useCountGames } from './useCountGames';
+import { useGetDecks } from '../decks/useGetDecks';
 
 const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string) => (
     await new Api<{ config: Array<PlayersBlock>, victoire:string }>()
@@ -45,6 +46,7 @@ export const useAddGame = () => {
                 useGetDecks.reset(queryClient)
                 useGetGames.reset(queryClient)
                 useCountGames.reset(queryClient)
+                useGetAllPlayers.reset(queryClient)
             }
         })
     );

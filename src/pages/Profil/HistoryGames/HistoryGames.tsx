@@ -1,11 +1,11 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import { useGetHistoryGames } from "../../../hooks/queries/useGetHistoryGames"
+import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { useAppSelector } from "../../../hooks/useAppSelector"
 import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm"
+import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames"
 import styles from './HistoryGames.module.scss'
 
 const HistoryGames = () => {
-    const { data: gameHistory } = useGetHistoryGames()
+    const { data: gameHistory, isLoading } = useGetHistoryGames()
     const user = useAppSelector((state) => state.auth.user);
 
     const formatType = (type: string) => {
@@ -54,7 +54,9 @@ const HistoryGames = () => {
 
     return (
         <>
-            {gameHistory && (
+            {isLoading ? (
+                <Skeleton variant="rectangular" width={1000} height={300} />
+            ) : (
                 <TableContainer className={styles.tableau}>
                     <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
@@ -67,7 +69,7 @@ const HistoryGames = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {gameHistory.map((game) => (
+                            {gameHistory?.map((game) => (
                                 <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
                                     <TableCell align="center" component="th" scope="row">{ game.date }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>
@@ -80,6 +82,7 @@ const HistoryGames = () => {
                     </Table>
                 </TableContainer>
             )}
+            
         </>
     )
 }

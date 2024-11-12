@@ -1,8 +1,9 @@
-import React, { MouseEvent, useState } from 'react';
-import { Button, FormControl, Modal, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { FormControl, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import React, { MouseEvent, useState } from 'react';
+import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { useUpdateUser } from '../../../hooks/queries/useUpdateUser';
 import { authActions, AuthUser } from '../../../store/reducers/authReducer';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import styles from './ProfilModal.module.scss';
@@ -20,7 +21,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const [prenom, setPrenom] = useState(user.prenom);
     const [password, setPassword] = useState('');
 
-    const { mutate, isSuccess } = useUpdateUser();
+    const { mutate, isSuccess, isPending } = useUpdateUser();
 
     const handleUpdateUser = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Empêche le rechargement de la page
@@ -81,7 +82,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         placeholder="Mot de passe"
                     />
 
-                    <Button type="submit" variant="contained" onClick={handleUpdateUser}>Modifier</Button>
+                    <LoadingButton disabled={isPending} loading={isPending} type="submit" variant="contained" onClick={handleUpdateUser}>Modifier</LoadingButton>
                 </FormControl>
             </Box>
         </Modal>

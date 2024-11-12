@@ -2,7 +2,7 @@ import { Button, Drawer } from '@mui/material';
 import { useState } from 'react';
 import DrawerGamesForm from './DrawerGamesForm/DrawerGamesForm';
 import GamesArray from './GamesArray/GamesArray';
-import { useCountGames } from '../../hooks/queries/useCountGames';
+import { useCountGames } from '../../hooks/queries/games/useCountGames';
 import styles from './Games.module.scss';
 
 const Games = () => {

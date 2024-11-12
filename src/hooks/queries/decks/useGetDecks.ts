@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { Api } from '../../utils/Api';
-import { resetQueries } from '../../utils/resetQueries';
+import { Api } from '../../../utils/Api';
+import { resetQueries } from '../../../utils/resetQueries';
 
 export interface Deck {
     _id: string,

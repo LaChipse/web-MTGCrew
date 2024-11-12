@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import { useSignup } from '../../../hooks/queries/useSignup';
 import { Button, FormControl, TextField } from '@mui/material';
-import styles from './Signup.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../router/routes';
+import styles from './Signup.module.scss';
+import { LoadingButton } from '@mui/lab';
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -12,9 +13,9 @@ const Signup = () => {
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
 
-    const { mutate } = useSignup();
+    const { mutate, isPending } = useSignup();
 
-    const handleSignUpForm = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleSignUpForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         mutate({ nom, prenom, password });
     };
@@ -56,10 +57,12 @@ const Signup = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"
                     />
-
-                    <Button href={""} type="submit" variant="contained" onClick={handleSignUpForm} className={styles.submit}>Créer un compte</Button>
-                    <Button onClick={() => navigate(LOGIN_PAGE)}>Se connecter</Button>
                 </FormControl>
+
+                <LoadingButton disabled={isPending} loading={isPending} variant="contained" onClick={handleSignUpForm} className={styles.submit}>
+                    Créer un compte
+                </LoadingButton>
+                <Button onClick={() => navigate(LOGIN_PAGE)}>Se connecter</Button>
             </div>
         </div>
     )

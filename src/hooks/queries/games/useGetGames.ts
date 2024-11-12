@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { Api } from '../../utils/Api';
-import { resetQueries } from '../../utils/resetQueries';
-import { PlayersBlock } from '../../pages/Games/DrawerGamesForm/DrawerGamesForm';
+import { Api } from '../../../utils/Api';
+import { resetQueries } from '../../../utils/resetQueries';
+import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/DrawerGamesForm';
 
 export interface GameResume {
     id: string,

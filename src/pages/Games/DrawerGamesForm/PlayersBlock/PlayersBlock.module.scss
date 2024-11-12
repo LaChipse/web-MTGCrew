@@ -9,3 +9,11 @@
         width: 200px;
     }
 }
+
+@media (max-width: 600px) {
+    .secondBloc {
+        > div {
+            width: 350px;
+        }
+    }
+}

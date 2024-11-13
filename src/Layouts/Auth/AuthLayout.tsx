@@ -29,8 +29,6 @@ const AuthLayout = () => {
         return () => document.removeEventListener('click', checkToken);
     }, [dispatch, tokenExpirationDate, refreshTokenIfNeeded]);
 
-    
-
     useEffect(() => {
         const redirectToAuthPage = (token: string) => {
             navigate(AUTH_PATH.replace(':token', btoa(token)));

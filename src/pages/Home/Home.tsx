@@ -7,15 +7,9 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const encodedStateBeforeLeaving = sessionStorage.getItem('stateBeforeLeaving');
-        const stateBeforeLeaving = encodedStateBeforeLeaving ? JSON.parse(encodedStateBeforeLeaving) as Record<string, unknown> : null;
-
-        setTimeout(() => {
-            navigate(sessionStorage.getItem('currentPagePath') || DEFAULT_PAGE_PATH, { state: stateBeforeLeaving });
-        }, 2000);
+        navigate(DEFAULT_PAGE_PATH);
 
         sessionStorage.removeItem('currentPagePath');
-        sessionStorage.removeItem('stateBeforeLeaving');
     }, [navigate]);
 
     return <Loading />;

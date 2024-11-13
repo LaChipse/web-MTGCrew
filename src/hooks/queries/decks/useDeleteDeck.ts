@@ -3,6 +3,10 @@ import { Api } from '../../../utils/Api';
 import { useDispatch } from 'react-redux';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { useGetDecks } from './useGetDecks';
+import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
+import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
+import { useAppSelector } from '../../useAppSelector';
+import { authActions } from '../../../store/reducers/authReducer';
 
 const deleteDeck = (id: string, ) => (
     new Api<{ token: string }>()
@@ -13,6 +17,7 @@ const deleteDeck = (id: string, ) => (
 export const useDeleteDeck = () => {
     const dispatch = useDispatch()
     const queryClient = useQueryClient();
+    const user = useAppSelector((state) => state.auth.user);
 
     return useMutation({
         mutationFn: (id: string) => (
@@ -20,7 +25,16 @@ export const useDeleteDeck = () => {
         ),
         onSuccess: () => {
             dispatch(addSuccessSnackbar('Deck supprimé !'))
+            if (user) {
+                dispatch(authActions.updateState({
+                    ...user,
+                    nbrDecks: user.nbrDecks - 1
+                }));
+            }
+
             useGetDecks.reset(queryClient)
+            useGetAllPlayers.reset(queryClient)
+            useGetUsersDecks.reset(queryClient)
         }
     })
 };

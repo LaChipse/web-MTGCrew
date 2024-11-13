@@ -26,7 +26,6 @@ export class Api<T = unknown> {
      * Appelle l'API en POST.
      */
     public post(path: string, body?: unknown, params?: Params, headers?: Record<string, string>) {
-        console.debug('PATH', path)
         return this.call('POST', path, body, params, headers);
     }
 

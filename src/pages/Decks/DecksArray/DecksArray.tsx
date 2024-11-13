@@ -62,7 +62,7 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Type</TableCell>
                                 <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Parties jouées</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Victoires</TableCell>
+                                <TableCell align="center" style={{ minWidth: "75px" }}>Ratio victoire</TableCell>
                                 <TableCell align="center" style={{ minWidth: "80px" }}>Deck imprimé ?</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Actions</TableCell>
                             </TableRow>

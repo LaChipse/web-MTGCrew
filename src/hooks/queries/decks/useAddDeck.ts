@@ -6,6 +6,7 @@ import { authActions } from '../../../store/reducers/authReducer';
 import { useAppSelector } from '../../useAppSelector';
 import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
 import { useGetDecks } from './useGetDecks';
+import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 
 const addDeck = async (nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (
     await new Api<{ token: string }>()
@@ -34,6 +35,7 @@ export const useAddDeck = () => {
                 
                 useGetDecks.reset(queryClient)
                 useGetAllPlayers.reset(queryClient)
+                useGetUsersDecks.reset(queryClient)
             }
         })
     );

@@ -10,6 +10,7 @@ import { useGetGames } from './useGetGames';
 import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
 import { useCountGames } from './useCountGames';
 import { useGetDecks } from '../decks/useGetDecks';
+import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 
 const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string) => (
     await new Api<{ config: Array<PlayersBlock>, victoire:string }>()
@@ -47,6 +48,7 @@ export const useAddGame = () => {
                 useGetGames.reset(queryClient)
                 useCountGames.reset(queryClient)
                 useGetAllPlayers.reset(queryClient)
+                useGetUsersDecks.reset(queryClient)
             }
         })
     );

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { Api } from '../../../utils/Api';
 import { useGetDecks } from './useGetDecks';
+import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 
 const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (
     await new Api<{ token: string }>()
@@ -22,6 +23,7 @@ export const useUpdateDeck = () => {
             onSuccess: () => {
                 dispatch(addSuccessSnackbar('Deck modifié !'))
                 useGetDecks.reset(queryClient)
+                useGetUsersDecks.reset(queryClient)
             }
         })
     );

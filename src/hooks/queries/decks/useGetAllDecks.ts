@@ -6,7 +6,6 @@ export interface DeckResume {
     id: string,
     nom: string,
     userId: string,
-    userFullName: string
 }
 
 const getAllDecks = async () => (

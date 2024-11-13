@@ -3,9 +3,7 @@ import { FormControl, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { MouseEvent, useState } from 'react';
 import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
-import { authActions, AuthUser } from '../../../store/reducers/authReducer';
-import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
+import { AuthUser } from '../../../store/reducers/authReducer';
 import styles from './ProfilModal.module.scss';
 
 type Props = {
@@ -15,27 +13,16 @@ type Props = {
 }
 
 const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
-    const dispatch = useAppDispatch();
-    
     const [nom, setNom] = useState(user.nom);
     const [prenom, setPrenom] = useState(user.prenom);
     const [password, setPassword] = useState('');
 
-    const { mutate, isSuccess, isPending } = useUpdateUser();
+    const { mutate, isPending } = useUpdateUser();
 
     const handleUpdateUser = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Empêche le rechargement de la page
         mutate({ nom, prenom, password });
-
-        if (isSuccess) {
-            dispatch(authActions.updateState({
-                ...user,
-                nom,
-                prenom,
-            }));
-            dispatch(addSuccessSnackbar('Profil mis à jour'));
-            setOpen(false)
-        }
+        setOpen(false)
     };
 
     const handleClose = () => {

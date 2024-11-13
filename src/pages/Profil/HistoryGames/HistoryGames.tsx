@@ -65,8 +65,8 @@ const HistoryGames = () => {
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Type de partie</TableCell>
                                 <TableCell align="center" style={{ minWidth: "150px" }}>Config</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Type de victoire</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Victoire</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Type de victoire</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

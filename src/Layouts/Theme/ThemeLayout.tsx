@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
-import styles from './ThemeLayout.module.scss'
 import Navbar from './components/Navbar';
+import styles from './ThemeLayout.module.scss'
 
 const ThemeLayout = () => {
     return (

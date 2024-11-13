@@ -4,6 +4,10 @@ body:has(.layout) {
     overflow-y: hidden;
 }
 
+h2 {
+    color: grey
+}
+
 .layout {
     display: flex;
 

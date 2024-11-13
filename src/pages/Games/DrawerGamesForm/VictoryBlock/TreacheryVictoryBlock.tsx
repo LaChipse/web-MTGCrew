@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import styles from './VictoryBlock.module.scss';
+import { TYPE_VICTORY_VALUES } from "../../../../utils/Enums/victoryType";
 
 type Props = {
     victoire: string
@@ -11,8 +12,7 @@ type Props = {
 
 const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVictoire, setTypeVictoire }) => {
     const roles = [ 'Seigneur', 'Assassin', 'Traitre']
-    const typeVictoireEnum = [ 'KO', 'Meule', 'Poison', 'Capacité', 'Egalité', 'Autres']
-    
+
     return (
         <div className={styles.thirdBloc}>
             <FormControl>
@@ -44,7 +44,7 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
                     label="Type de victoire"
                 >
                     {
-                        typeVictoireEnum?.map((type) => (
+                        TYPE_VICTORY_VALUES?.map((type) => (
                             <MenuItem value={type} key={type}>
                                 {type}
                             </MenuItem>

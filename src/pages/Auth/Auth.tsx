@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetAuthUser } from '../../hooks/queries/useGetAuthUser';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppLocation } from '../../hooks/useAppLocation';
 import { useAppParams } from '../../hooks/useAppParams';
 import Loading from '../../pages/Loading/Loading';
-import { HOME_PATH } from '../../router/routes';
+import { HOME_PATH, LOGIN_PAGE } from '../../router/routes';
 import { authActions } from '../../store/reducers/authReducer';
 
 const Auth = () => {
-    const location = useAppLocation<{ isInternalRedirect: boolean, redirect: string }>();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { token } = useAppParams<{ token: string }>();
@@ -28,9 +26,9 @@ const Auth = () => {
             navigate(HOME_PATH);
         }
 
-        if ((error && !user) || !token) navigate(HOME_PATH)
+        if ((error && !user) || !token) navigate(LOGIN_PAGE)
 
-    }, [user, error, token, navigate, dispatch, location.state]);
+    }, [user, error, token, navigate, dispatch]);
 
     return <Loading />;
 };

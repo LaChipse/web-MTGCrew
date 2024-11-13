@@ -33,7 +33,7 @@ const AuthLayout = () => {
 
     useEffect(() => {
         const redirectToAuthPage = (token: string) => {
-            navigate(AUTH_PATH.replace(':token', btoa(token)), { state: { isInternalRedirect: true, redirect: location.pathname } });
+            navigate(AUTH_PATH.replace(':token', btoa(token)));
         };
 
         const handleLogin = async () => {
@@ -42,7 +42,6 @@ const AuthLayout = () => {
             if (token) redirectToAuthPage(token)
             else navigate(LOGIN_PAGE);
         };
-
 
         if (!user || !tokenExpirationDate) {
             handleLogin()

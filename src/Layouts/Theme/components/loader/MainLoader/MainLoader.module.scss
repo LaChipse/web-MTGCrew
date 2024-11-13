@@ -1,0 +1,138 @@
+.verticallyCentered {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.loader {
+  display: flex;
+  width: 100%;
+  height: 350px;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    position: absolute;
+    animation: zoomInOut 3s ease-in-out infinite;
+  }
+
+  .loader1,
+  .loader2,
+  .loader3,
+  .loader4,
+  .loader5 {
+    border: 9px solid transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1;
+  }
+
+  .loader1 {
+    height: calc(100% - 12px);
+    border-left-color: #fefcbf;
+    border-right-color: #fefcbf;
+  }
+
+  .loader2 {
+    height: calc(100% - 25px);
+    border-left-color: #68c2f7;
+    border-right-color: #68c2f7;
+  }
+
+  .loader3 {
+    height: calc(100% - 33px);
+    border-left-color: #838383;
+    border-right-color: #838383;
+  }
+
+  .loader4 {
+    height: calc(100% - 46px);
+    border-left-color: #f45752;
+    border-right-color: #f45752;
+  }
+
+  .loader5 {
+    height: calc(100% - 59px);
+    border-left-color: #29b66a;
+    border-right-color: #29b66a;
+  }
+
+  .loader1 {
+    animation: loading-first 6s linear infinite;
+
+    .loader2 {
+      animation: loading-second 4s linear infinite;
+
+      .loader3 {
+        animation: loading-third 2.5s linear infinite;
+
+        .loader4 {
+          animation: loading-fourth 2s linear infinite;
+
+          .loader5 {
+            animation: loading-fourth 1.5s linear infinite;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes loading-first {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-second {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes loading-third {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-fourth {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes loading-fifth {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);   /* Taille normale */
+  }
+  50% {
+    transform: scale(1.2); /* Zoom avant à 120% */
+  }
+  100% {
+    transform: scale(1);   /* Retour à la taille normale */
+  }
+}   

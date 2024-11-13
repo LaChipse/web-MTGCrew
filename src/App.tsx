@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import Loading from './pages/Loading/Loading';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import MainSnackbar from './components/MainSnackBar';
+import FullscreenLoader from './Layouts/Theme/components/loader/FullscreenLoader/FullscreenLoader';
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -18,6 +19,7 @@ const App = () => {
         <ReduxProvider store={store}>
           <QueryClientProvider>
             <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
+            <FullscreenLoader />
             <Suspense fallback={<Loading />}>
               <Router />
             </Suspense>

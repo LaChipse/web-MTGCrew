@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import ProfilCard from './ProfilCard/ProfilCard';
 import ProfilModal from './ProfilModal/ProfilModal';
 import HistoryGames from './HistoryGames/HistoryGames';
+import Loading from '../Loading/Loading';
 import styles from './Profil.module.scss'
 
 const Profil = () => {
@@ -12,6 +13,8 @@ const Profil = () => {
     const handleOpen = () => {
         setOpen(true);
     };
+
+    if (!user) return <Loading />;
 
     return (
         <>

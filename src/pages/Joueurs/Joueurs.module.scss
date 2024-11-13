@@ -1,33 +1,5 @@
 .tableau {
     margin-top: 30px;
-    
-    thead {
-        
-        th {
-            background-color: #1976d2;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            padding: 10px;
-        }
-    }
-
-    tbody {
-        tr:nth-of-type(odd) {
-            background-color: #0000000a;
-        }
-
-        th, td {
-            padding: 8px;
-        }
-    
-        &:last-child {
-            td,
-            th {
-                border: 0;
-            }
-        }
-    }
 
     .red {
         color: red

@@ -1,34 +1,11 @@
 .tableau {
     min-width: 900px;
-    thead {
-        
-        th {
-            background-color: #1976d2;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            padding: 10px;
-        }
-    }
-
-    tbody {
-        th, td {
-            padding: 8px;
-        }
-    
-        &:last-child {
-            td,
-            th {
-                border: 0;
-            }
-        }
-    }
 
     .green {
-        background-color: #d7fcd4;
+        background-color: #d7fcd4 !important;
     }
 
     .red {
-        background-color: #facdc5
+        background-color: #facdc5 !important
     }
 }

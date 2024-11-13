@@ -62,8 +62,8 @@ const Joueurs = () => {
                             <TableRow>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Nbr decks</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Parties jouées</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Ratio victoire</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Parties jouées</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Ratio victoire</TableCell>
                                 <TableCell align="center" style={{ minWidth: "150px" }}>Deck le plus joué</TableCell>
                                 <TableCell align="center" style={{ minWidth: "150px" }}>Meilleur deck</TableCell>
                             </TableRow>

@@ -48,6 +48,15 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
         deleteDeck(id)
     }
 
+    const ratioVictory = (deck: Deck) => {
+        return Math.round((deck.victoires/(deck.parties || 1)) * 100)
+    }
+
+    const colorVictory = (deck: Deck) => {
+        if (ratioVictory(deck) >= 50) return 'green'
+        else return 'red'
+    }
+
     return (
         <>
             {isLoading? (
@@ -61,8 +70,8 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Couleurs</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Type</TableCell>
                                 <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Parties jouées</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Ratio victoire</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Parties jouées</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Ratio victoire</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Deck imprimé ?</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Actions</TableCell>
                             </TableRow>
@@ -77,7 +86,7 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                                         {deck.rank.toLocaleUpperCase()}
                                     </TableCell>
                                     <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/(count  || 1)) * 100)}%)`}</TableCell>
-                                    <TableCell align="center">{`${deck.victoires} (${Math.round((deck.victoires/(deck.parties || 1)) * 100)}%)`}</TableCell>
+                                    <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires} (${ratioVictory(deck)}%)`}</TableCell>
                                     <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                     <TableCell align="center">
                                         <IconButton color="primary" size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>

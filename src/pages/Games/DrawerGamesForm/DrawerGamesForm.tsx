@@ -26,10 +26,10 @@ export interface PlayersBlock {
 }
 
 type Props = {
-    toggleDrawer: (newOpen: boolean) => () => void
+    toggleDrawer: (newOpen: boolean) => void
 }
 
-const DrawerGamesForm: React.FC<Props> = ({toggleDrawer}) => {
+const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
     const [date, setDate] = useState<Dayjs | null>(null)
     const [type, setType] = useState<string>('')
     const [configIndex, setConfigIndex] = useState<number>(1)
@@ -71,14 +71,17 @@ const DrawerGamesForm: React.FC<Props> = ({toggleDrawer}) => {
         setConfig([{}])
         setVictoire('')
         setTypeVictoire('')
-        toggleDrawer(false)
+
+        setTimeout(() => {
+            toggleDrawer(false)
+        }, 2000); 
     };
 
     return (
         <>
             <header className={styles.header}>
                 <h2>Ajouter une partie</h2>
-                <IconButton onClick={toggleDrawer(false)}>
+                <IconButton onClick={() => toggleDrawer(false)} style={{ color: 'white' }}>
                     <CloseIcon />
                 </IconButton>
             </header>

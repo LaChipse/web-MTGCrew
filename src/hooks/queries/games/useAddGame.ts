@@ -44,6 +44,7 @@ export const useAddGame = () => {
                         victoires: userWinner ? user.victoires + 1 : user.victoires
                     }));
                 }
+                
                 useGetDecks.reset(queryClient)
                 useGetGames.reset(queryClient)
                 useCountGames.reset(queryClient)

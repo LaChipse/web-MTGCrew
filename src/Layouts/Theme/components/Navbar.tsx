@@ -114,7 +114,7 @@ const Navbar: React.FC<Props> = () => {
                 <div>
                     <Button color="inherit" onClick={() => handleLogOut()}>Se déconnecter</Button>
                     {isPending && (
-                        <CircularProgress color="inherit" size={20} style={{ marginLeft: 10 }} />
+                        <CircularProgress color="inherit" size={20} style={{ marginLeft: 10, verticalAlign: 'middle' }} />
                     )}
                 </div>
             </Toolbar>

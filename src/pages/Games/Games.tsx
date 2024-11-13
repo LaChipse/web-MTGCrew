@@ -9,20 +9,20 @@ const Games = () => {
     const [open, setOpen] = useState(false);
     const { data: count } = useCountGames()
 
-    const toggleDrawer = (newOpen: boolean) => () => {
+    const toggleDrawer = (newOpen: boolean) => {
         setOpen(newOpen);
     };
 
     return (
         <>
             <div className={styles.addGames}>
-                <Button variant="contained" onClick={toggleDrawer(true)}>Ajouter une partie</Button>
-                <p>Nbr de parties : {count}</p>
+                <Button variant="contained" onClick={() => toggleDrawer(true)}>Ajouter une partie</Button>
+                <strong>Nbr de parties : {count}</strong>
             </div>
 
             <GamesArray />
 
-            <Drawer open={open} onClose={toggleDrawer(false)} anchor='right' className={styles.drawer}>
+            <Drawer open={open} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>
                 <DrawerGamesForm toggleDrawer={toggleDrawer}/>
             </Drawer>
         </>

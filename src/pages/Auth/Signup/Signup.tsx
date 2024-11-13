@@ -27,7 +27,6 @@ const Signup = () => {
                 <FormControl>
                     <TextField
                         required
-                        label="Nom"
                         value={nom}
                         id="nomSignup"
                         size="small"
@@ -38,7 +37,6 @@ const Signup = () => {
                 <FormControl>
                     <TextField
                         required
-                        label="Prénom"
                         value={prenom}
                         id="prenomSignup"
                         size="small"
@@ -49,7 +47,6 @@ const Signup = () => {
                 <FormControl>
                     <TextField
                         required
-                        label="Mot de passe"
                         type='password'
                         value={password}
                         id="passwordSignup"

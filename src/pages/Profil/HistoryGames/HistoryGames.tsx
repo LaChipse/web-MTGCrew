@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../hooks/useAppSelector"
 import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm"
 import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames"
 import styles from './HistoryGames.module.scss'
+import { DateHelper } from "../../../utils/DateHelper"
 
 const HistoryGames = () => {
     const { data: gameHistory, isLoading } = useGetHistoryGames()
@@ -71,7 +72,7 @@ const HistoryGames = () => {
                         <TableBody>
                             {gameHistory?.map((game) => (
                                 <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
-                                    <TableCell align="center" component="th" scope="row">{ game.date }</TableCell>
+                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '' }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>
                                     <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
                                     <TableCell align="left">{ formatVictoir(game.type, game.victoire, game.config) }</TableCell>

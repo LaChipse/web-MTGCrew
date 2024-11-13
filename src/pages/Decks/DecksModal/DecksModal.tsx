@@ -2,9 +2,9 @@ import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLab
 import { Box } from '@mui/system';
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
-import styles from './DecksModal.module.scss';
 import classNames from 'classnames';
 import { LoadingButton } from '@mui/lab';
+import styles from './DecksModal.module.scss';
 
 type Props = {
     open: boolean
@@ -57,6 +57,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
             aria-describedby="ajout deck"
         >
             <Box className={styles.modal}>
+                <h2 id="addDeck">Ajouter un deck</h2>
                 <div className={styles.formBloc}>
                     <FormControl className={styles.formControl}>
                         <TextField

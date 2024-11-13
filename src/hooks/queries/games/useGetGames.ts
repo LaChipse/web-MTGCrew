@@ -5,7 +5,7 @@ import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/DrawerGamesFo
 
 export interface GameResume {
     id: string,
-    date?: string,
+    date?: Date,
     type: string,
     config: Array<PlayersBlock>,
     victoire: string, 

@@ -1,7 +1,8 @@
 import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useGetGames } from '../../../hooks/queries/games/useGetGames';
-import styles from './GamesArray.module.scss';
+import { DateHelper } from '../../../utils/DateHelper';
 import { PlayersBlock } from '../DrawerGamesForm/DrawerGamesForm';
+import styles from './GamesArray.module.scss';
 
 const GamesArray = () => {
     const { data: games, isLoading } = useGetGames()
@@ -57,7 +58,7 @@ const GamesArray = () => {
                         <TableBody>
                             {games?.map((game) => (
                                 <TableRow key={game.id}>
-                                    <TableCell align="center" component="th" scope="row">{ game.date }</TableCell>
+                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '' }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>
                                     <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
                                     <TableCell align="left">{ formatVictoir(game.type, game.victoire, game.config) }</TableCell>

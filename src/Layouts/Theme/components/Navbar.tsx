@@ -57,16 +57,20 @@ const Navbar: React.FC<Props> = () => {
         </Button>
     );
 
-    const renderNavMenuItem = (key: string, path: string, label: string, activeStyle: string) => (
-        <MenuItem
-            key={key}
-            sx={{ color: '#242424' }}
-            onClick={() => handleMenuItemNavigate(path)}
-            className={classNames({ [activeStyle]: (currentPage ? currentPage : window.location.pathname) === path })}
-        >
-            {label}
-        </MenuItem>
-    )
+    const renderNavMenuItem = (key: string, path: string, label: string) => {
+
+        const isActive = () => (currentPage ? currentPage : window.location.pathname) === path
+
+        return (
+            <MenuItem
+                key={key}
+                sx={{ backgroundColor: isActive() ? '#1976d2' : 'white', color: isActive() ? 'white' : 'black' }}
+                onClick={() => handleMenuItemNavigate(path)}
+            >
+                {label}
+            </MenuItem>
+        )
+    }
 
     return (
         <AppBar>
@@ -98,7 +102,7 @@ const Navbar: React.FC<Props> = () => {
                     }}
                 >
                     {navTabs.map ((navTab) => {
-                        return renderNavMenuItem(navTab, `/${navTab}`, toTitleCase(navTab), styles[navTab])
+                        return renderNavMenuItem(navTab, `/${navTab}`, toTitleCase(navTab))
                     })}
                 </Menu>
 

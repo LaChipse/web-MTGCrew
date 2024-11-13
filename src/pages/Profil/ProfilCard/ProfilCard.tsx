@@ -23,8 +23,7 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
 
     return (
         <>
-            {
-                user ? (
+            { user ? (
                     <Card className={styles.profil}>
                     <CardContent>
                         <h2 className={styles.h2}>
@@ -50,8 +49,9 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
                         <Button size="small" onClick={handleOpen}>Modifier profil</Button>
                     </CardActions>
                 </Card>
-                ) : ( <Skeleton variant="rectangular" width={400} height={150} /> )
-            }
+                ) : ( 
+                <Skeleton variant="rectangular" width={400} height={150} /> 
+            )}
         </>
     )
 }

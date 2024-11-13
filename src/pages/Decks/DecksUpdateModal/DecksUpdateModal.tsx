@@ -4,6 +4,7 @@ import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import { LoadingButton } from '@mui/lab';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import classNames from 'classnames';
 import styles from './DecksUpdateModal.module.scss';
 
 type Props = {
@@ -60,8 +61,9 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
             aria-describedby="ajout deck"
         >
             <Box className={styles.modal}>
+                <h2 id="updateDeck">Modifier un deck</h2>
                 <div className={styles.formBloc}>
-                    <FormControl>
+                    <FormControl className={styles.formControl}>
                         <TextField
                             required
                             label="Nom"
@@ -73,7 +75,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                         />
                     </FormControl>
 
-                    <FormControl>
+                    <FormControl className={styles.formControl}>
                         <FormLabel id="checkbox-colors">Couleurs du deck</FormLabel>
                         <FormGroup className={styles.choices}>
                             <FormControlLabel value="incolore" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("incolore")} />} label="Incolore" />
@@ -87,7 +89,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                 </div>
                     
                 <div className={styles.formBloc}>
-                    <FormControl>
+                    <FormControl className={styles.formControl}>
                         <FormLabel id="radio-imprime-groupe">Deck imprimé ?</FormLabel>
                         <RadioGroup
                             aria-labelledby="radio-imprime-groupe"
@@ -100,7 +102,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                         </RadioGroup>
                     </FormControl>
 
-                    <FormControl className={styles.select}>
+                    <FormControl className={classNames([styles.select, styles.formControl])}>
                         <InputLabel id="Type">Type</InputLabel>
                         <Select
                             labelId="Type"
@@ -116,7 +118,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                         </Select>
                     </FormControl>
 
-                    <FormControl className={styles.select}>
+                    <FormControl className={classNames([styles.select, styles.formControl])}>
                         <InputLabel id="Rank">Rank</InputLabel>
                         <Select
                             labelId="Rank"
@@ -135,7 +137,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                     </FormControl>
                 </div>
 
-                <LoadingButton disabled={isPending} loading={isPending} type="submit" variant="contained" onClick={handleUpdateDeck} className={styles.submit}>Modifié</LoadingButton>      
+                <LoadingButton disabled={!couleurs.length || !nom.length || isPending} loading={isPending} type="submit" variant="contained" onClick={handleUpdateDeck} className={styles.submit}>Modifié</LoadingButton>      
             </Box>
         </Modal>
     )

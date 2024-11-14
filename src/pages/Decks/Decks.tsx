@@ -37,7 +37,9 @@ const Decks = () => {
                     <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='seringue' width="35px" height="35px" style={{marginRight: '5px'}}/><strong style={{marginRight: '5px'}}>{moreVictory?.nom}</strong>{`(${Math.round(((moreVictory?.victoires || 0)/(countVictories  || 1)) * 100)}% totalité des victoires)`}</p>
                 </div>
                 
-                <Button variant="contained" onClick={handleOpen}  className={styles.addDeck}>Ajouter un deck</Button>
+                <div>
+                    <Button variant="contained" onClick={handleOpen}  className={styles.addDeck}>Ajouter un deck</Button>
+                </div>
             </div>
 
             <DecksModal 

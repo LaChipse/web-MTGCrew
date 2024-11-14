@@ -26,7 +26,7 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
             <Card className={styles.profil}>
                 <CardContent>
                     <h2 className={styles.h2}>
-                        {user?.prenom} {user.nom.charAt(0)}.
+                        {user?.prenom} {user?.nom?.charAt(0)}.
                     </h2>
     
                     <List>

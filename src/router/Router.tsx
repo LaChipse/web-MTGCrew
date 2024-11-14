@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import * as ROUTES from './routes'
 
-const AuthPage = React.lazy(() => import('../pages/Auth/Auth'));
 const HomePage = React.lazy(() => import('../pages/Home/Home'));
 const ProfilPage = React.lazy(() => import('../pages/Profil/Profil'));
 const DecksPage = React.lazy(() => import('../pages/Decks/Decks'));
@@ -26,7 +25,6 @@ const Router = () => (
             </Route>
 
             <Route element={<ThemeLayout />}>
-                <Route path={ROUTES.AUTH_PATH} element={<AuthPage />} />
                     <Route element={<AuthLayout />}>
                         <Route path={ROUTES.HOME_PATH} element={<HomePage />} />
                         <Route element={<PagePathStorageLayout />}>

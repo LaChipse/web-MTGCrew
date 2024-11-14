@@ -3,10 +3,6 @@
  */
 export const HOME_PATH = '/';
 /**
- * Authentification.
- */
-export const AUTH_PATH = '/auth/:token';
-/**
  * Login
  */
 export const LOGIN_PAGE = '/login'

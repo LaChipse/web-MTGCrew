@@ -9,9 +9,12 @@ const getUser = async () => (
     .get('/user')
 )
 
-export const useGetUser = () => (
-    useQuery({
+export const useGetUser = () => {
+    const token = localStorage.getItem('token')
+
+    return useQuery({
         queryKey: ['getUser'],
         queryFn: () => getUser(),
+        enabled: !!token
     })
-);
+}

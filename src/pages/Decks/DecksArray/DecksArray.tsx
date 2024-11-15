@@ -67,7 +67,7 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Couleurs</TableCell>
+                                <TableCell align="center" style={{ minWidth: "175px" }}>Couleurs</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Type</TableCell>
                                 <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Parties jouées</TableCell>
@@ -89,8 +89,8 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                                     <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires} (${ratioVictory(deck)}%)`}</TableCell>
                                     <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                     <TableCell align="center">
-                                        <IconButton color="primary" size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
-                                        <IconButton color="error" size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
+                                        <IconButton style={{padding: 3}} color="primary" size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
+                                        <IconButton style={{padding: 3}} color="error" size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))}

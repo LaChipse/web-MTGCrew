@@ -56,7 +56,7 @@ const Signup = () => {
                     />
                 </FormControl>
 
-                <LoadingButton loading={isPending} variant="contained" onClick={handleSignUpForm} className={styles.submit}>
+                <LoadingButton disabled={ !nom || !prenom || !password } loading={isPending} variant="contained" onClick={handleSignUpForm} className={styles.submit}>
                     Créer un compte
                 </LoadingButton>
                 <Button onClick={() => navigate(LOGIN_PAGE)}>Se connecter</Button>

@@ -1,8 +1,6 @@
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { TOKEN_VALIDATION_DURATION } from '../../constants/token';
-import { DateHelper } from '../../utils/DateHelper';
 
 export interface AuthUser {
     id: string
@@ -15,12 +13,10 @@ export interface AuthUser {
 
 export interface AuthState {
     user?: AuthUser
-    tokenExpirationDate?: number
 }
 
 const initialState: AuthState = {
     user: undefined,
-    tokenExpirationDate: undefined,
 };
 
 const authSlice = createSlice({
@@ -29,10 +25,6 @@ const authSlice = createSlice({
     reducers: {
         updateState: (state, action: PayloadAction<AuthUser>) => {
             state.user = action.payload;
-            state.tokenExpirationDate = DateHelper.addMinutes(new Date(), TOKEN_VALIDATION_DURATION).getTime();
-        },
-        updateTokenExpirationDate: (state) => {
-            state.tokenExpirationDate = DateHelper.addMinutes(new Date(), TOKEN_VALIDATION_DURATION).getTime();
         },
     },
 });

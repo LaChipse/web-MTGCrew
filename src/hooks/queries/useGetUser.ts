@@ -5,9 +5,11 @@ import { AuthUser } from '../../store/reducers/authReducer';
 
 const getUser = async () => (
     await new Api<AuthUser>()
-    .setBearerToken()
-    .get('/user')
+        .setBearerToken()
+        .get('/user')
 )
+
+
 
 export const useGetUser = () => {
     const token = localStorage.getItem('token')

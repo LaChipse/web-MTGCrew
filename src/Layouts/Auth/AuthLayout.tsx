@@ -13,29 +13,30 @@ const AuthLayout = () => {
     const dispatch = useDispatch()
     const location = useAppLocation();
     const user = useAppSelector((state) => state.auth.user);
-    const tokenExpirationDate = useAppSelector((state) => state.auth.tokenExpirationDate);
 
     const { data: authUser } = useGetUser()
 
     useEffect(() => {
-        const handleLogin = async () => {
+        const handleLogin = () => {
             const token = localStorage.getItem('token')
-
+            
             if (authUser) {
                 dispatch(authActions.updateState(
                     authUser,
                 ));
             }
 
-            if (token) navigate(DEFAULT_PAGE_PATH)
+            if (token && (user || authUser)) navigate(DEFAULT_PAGE_PATH)
             else navigate(LOGIN_PAGE);
         };
 
 
-        if (!user || !tokenExpirationDate) {
-            handleLogin()
+        if (!user) {
+            setTimeout(() => {
+                handleLogin()
+            }, 2000)
         }
-    }, [user, tokenExpirationDate, navigate, dispatch, authUser, location.pathname]);
+    }, [user, navigate, dispatch, authUser, location.pathname]);
 
     if (user) return <Outlet />;
     return <Loading />;

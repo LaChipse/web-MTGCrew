@@ -22,7 +22,6 @@ export const useLogin = (): UseMutationResult<{ token: string }, Error, { nom: s
             }
 
             if (data.token) localStorage.setItem('token', data.token)
-            dispatch(authActions.updateTokenExpirationDate());
             navigate(DEFAULT_PAGE_PATH);
         }
     });

@@ -29,7 +29,7 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
                         {user?.prenom} {user?.nom?.charAt(0)}.
                     </h2>
     
-                    <List>
+                    <List style={{ padding: 0 }}>
                         <ListItem className={styles.list}>
                             <ListItemText
                                 primary={`Nombre de decks = ${user.nbrDecks}`}
@@ -44,7 +44,7 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
                         </ListItem>
                     </List>
                 </CardContent>
-                <CardActions>
+                <CardActions style={{ padding: '8px 16px' }}>
                     <Button size="small" onClick={handleOpen}>Modifier profil</Button>
                 </CardActions>
             </Card> 

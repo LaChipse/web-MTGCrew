@@ -2,8 +2,13 @@
     max-width: 450px;
     margin: 20px 0;
 
+    > div:first-child {
+        padding: 16px 16px 0;
+    }
+
     .h2 {
         margin-top: 0;
+        margin-bottom: 5px;
     }
 
     .list {

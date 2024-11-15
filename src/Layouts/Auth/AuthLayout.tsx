@@ -7,6 +7,7 @@ import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
 import { useGetUser } from "../../hooks/queries/useGetUser";
 import { authActions } from "../../store/reducers/authReducer";
 import { useDispatch } from "react-redux";
+import Login from "../../pages/Auth/Login/Login";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ const AuthLayout = () => {
     }, [user, navigate, dispatch, authUser, location.pathname]);
 
     if (user) return <Outlet />;
-    return <Loading />;
+    return <Login />;
 };
 
 export default AuthLayout;

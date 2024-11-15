@@ -1,6 +1,5 @@
-import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import classNames from 'classnames';
+import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
 import React, { useTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../router/routes';
@@ -15,7 +14,6 @@ const Navbar: React.FC<Props> = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const currentPage = sessionStorage.getItem('currentPagePath') || "";
-
     const navTabs = ['profil', 'decks', 'games', 'joueurs']
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -46,19 +44,22 @@ const Navbar: React.FC<Props> = () => {
         startTransition(() => navigate(LOGIN_PAGE))
     }
 
-    const renderNavButton = (key: string, path: string, label: string, activeStyle: string) => (
-        <Button
-            key={key}
-            sx={{ color: '#fff' }}
-            onClick={() => handlePageNavigation(path)}
-            className={classNames([styles.buttonNav, { [activeStyle]: (currentPage ? currentPage : window.location.pathname) === path }])}
-        >
-            {label}
-        </Button>
-    );
+    const renderNavButton = (key: string, path: string, label: string) => {
+        const isActive = () => (currentPage ? currentPage : window.location.pathname) === path
+
+        return (
+            <Button
+                key={key}
+                sx={{ color: '#fff', backgroundColor: isActive() ? '#1976d2' : 'none', }}
+                onClick={() => handlePageNavigation(path)}
+                className={styles.buttonNav}
+            >
+                {label}
+            </Button>
+        )
+    }
 
     const renderNavMenuItem = (key: string, path: string, label: string) => {
-
         const isActive = () => (currentPage ? currentPage : window.location.pathname) === path
 
         return (
@@ -111,7 +112,7 @@ const Navbar: React.FC<Props> = () => {
 
                     <div>
                         {navTabs.map ((navTab) => {
-                            return renderNavButton(navTab, `/${navTab}`, toTitleCase(navTab), styles[navTab])
+                            return renderNavButton(navTab, `/${navTab}`, toTitleCase(navTab))
                         })}
                     </div>
                 </div>

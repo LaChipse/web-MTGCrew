@@ -1,18 +1,17 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useAppLocation } from "../../hooks/useAppLocation";
+import { useGetUser } from "../../hooks/queries/useGetUser";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Loading from "../../pages/Loading/Loading";
 import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
-import { useGetUser } from "../../hooks/queries/useGetUser";
 import { authActions } from "../../store/reducers/authReducer";
-import { useDispatch } from "react-redux";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const location = useAppLocation();
     const user = useAppSelector((state) => state.auth.user);
+    const currentPagePath = sessionStorage.getItem('currentPagePath')
 
     const { data: authUser } = useGetUser()
 
@@ -26,8 +25,15 @@ const AuthLayout = () => {
                 ));
             }
 
-            if (token && (user || authUser)) navigate(DEFAULT_PAGE_PATH)
-            else navigate(LOGIN_PAGE);
+            if (token && (user || authUser)) {
+                
+                if (currentPagePath) {
+                    navigate(currentPagePath)
+                } else {
+                    sessionStorage.setItem('currentPagePath', DEFAULT_PAGE_PATH)
+                    navigate(DEFAULT_PAGE_PATH)
+                }
+            } else navigate(LOGIN_PAGE);
         };
 
         if (!user) {
@@ -35,7 +41,7 @@ const AuthLayout = () => {
                 handleLogin()
             }, 2000)
         }
-    }, [user, navigate, dispatch, authUser, location.pathname]);
+    }, [user, navigate, dispatch, authUser, currentPagePath]);
 
     if (user) return <Outlet />;
     return <Loading />;

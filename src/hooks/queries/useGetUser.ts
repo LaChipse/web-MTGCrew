@@ -9,8 +9,6 @@ const getUser = async () => (
         .get('/user')
 )
 
-
-
 export const useGetUser = () => {
     const token = localStorage.getItem('token')
 

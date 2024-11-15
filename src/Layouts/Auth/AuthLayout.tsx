@@ -19,7 +19,7 @@ const AuthLayout = () => {
     useEffect(() => {
         const handleLogin = () => {
             const token = localStorage.getItem('token')
-            
+
             if (authUser) {
                 dispatch(authActions.updateState(
                     authUser,
@@ -29,7 +29,6 @@ const AuthLayout = () => {
             if (token && (user || authUser)) navigate(DEFAULT_PAGE_PATH)
             else navigate(LOGIN_PAGE);
         };
-
 
         if (!user) {
             setTimeout(() => {

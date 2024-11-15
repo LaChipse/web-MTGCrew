@@ -69,7 +69,16 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         placeholder="Mot de passe"
                     />
 
-                    <LoadingButton disabled={isPending} loading={isPending} type="submit" variant="contained" onClick={handleUpdateUser}>Modifier</LoadingButton>
+                    <LoadingButton 
+                        disabled={isPending} 
+                        loading={isPending} 
+                        type="submit" 
+                        variant="contained" 
+                        onClick={handleUpdateUser}
+                        className={styles.updateButton}
+                    >
+                        Modifier
+                    </LoadingButton>
                 </FormControl>
             </Box>
         </Modal>

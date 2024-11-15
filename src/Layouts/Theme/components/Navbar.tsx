@@ -1,4 +1,4 @@
-import { AppBar, Button, CircularProgress, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
+import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import classNames from 'classnames';
 import React, { useTransition } from 'react';
@@ -75,41 +75,45 @@ const Navbar: React.FC<Props> = () => {
     return (
         <AppBar>
             <Toolbar variant="dense" className={styles.navbar}>
-                <IconButton
-                    id="menu-button"
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                    className={styles.iconButton}
-                    sx={{ mr: 2 }}
-                >
-                    <MenuIcon />
-                </IconButton>
+                <div style={{ display: 'flex' }}>
+                    <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 37, height: 37 }} style={{marginRight: 10}} />
 
-                <Menu
-                    id="menu-button"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    className={styles.menuButton}
-                    MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    {navTabs.map ((navTab) => {
-                        return renderNavMenuItem(navTab, `/${navTab}`, toTitleCase(navTab))
-                    })}
-                </Menu>
+                    <IconButton
+                        id="menu-button"
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                        className={styles.iconButton}
+                        sx={{ mr: 2 }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                
+                    <Menu
+                        id="menu-button"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        className={styles.menuButton}
+                        MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        {navTabs.map ((navTab) => {
+                            return renderNavMenuItem(navTab, `/${navTab}`, toTitleCase(navTab))
+                        })}
+                    </Menu>
 
-                <div>
-                    {navTabs.map ((navTab) => {
-                        return renderNavButton(navTab, `/${navTab}`, toTitleCase(navTab), styles[navTab])
-                    })}
+                    <div>
+                        {navTabs.map ((navTab) => {
+                            return renderNavButton(navTab, `/${navTab}`, toTitleCase(navTab), styles[navTab])
+                        })}
+                    </div>
                 </div>
                 <div>
                     <Button color="inherit" onClick={() => handleLogOut()}>Se déconnecter</Button>

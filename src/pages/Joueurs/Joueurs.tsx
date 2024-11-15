@@ -71,7 +71,7 @@ const Joueurs = () => {
                         <TableBody>
                             {users?.map((user) => (
                                 <TableRow key={user.fullName}>
-                                    <TableCell align="center" component="th" scope="row">{user.fullName}</TableCell>
+                                    <TableCell align="center" style={{ fontWeight: 700 }} component="th" scope="row">{user.fullName}</TableCell>
                                     <TableCell align="center">{user.nbrDecks}</TableCell>
                                     <TableCell align="center">{`${user.partiesJouees} (${Math.round((user.partiesJouees/(count  || 1)) * 100)}%)`}</TableCell>
                                     <TableCell className={styles[colorVictory(user)]} align="center">{`${user.victoires} (${ratioVictory(user)}%)`}</TableCell>

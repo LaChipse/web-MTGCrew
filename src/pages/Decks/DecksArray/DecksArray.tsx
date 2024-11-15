@@ -3,11 +3,11 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { IconButton, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { useDeleteDeck } from '../../../hooks/queries/decks/useDeleteDeck';
+import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import { useCountGames } from '../../../hooks/queries/games/useCountGames';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
-import { useCountGames } from '../../../hooks/queries/games/useCountGames';
-import { Deck } from '../../../hooks/queries/decks/useGetDecks';
-import { useDeleteDeck } from '../../../hooks/queries/decks/useDeleteDeck';
 import styles from './DecksArray.module.scss';
 
 type Props = {
@@ -79,7 +79,7 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                         <TableBody>
                             {decks?.map((deck) => (
                                 <TableRow key={deck.nom}>
-                                    <TableCell align="center" component="th" scope="row">{deck.nom}</TableCell>
+                                    <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom}</TableCell>
                                     <TableCell align="center">{formatArray(deck.couleurs)}</TableCell>
                                     <TableCell align="center">{toTitleCase(deck.type)}</TableCell>
                                     <TableCell align="center" className={classNames([styles[deck.rank.toLocaleUpperCase()], styles.rank])}>

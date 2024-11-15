@@ -8,7 +8,7 @@ type Props = unknown
 const FullscreenLoader: React.FC<Props> = () => {
   const isLoading = useAppSelector((state) => state.loader.isLoading);
 
-  // if (!isLoading) return null;
+  if (!isLoading) return null;
 
   return (
     <div className={styles.loader}>

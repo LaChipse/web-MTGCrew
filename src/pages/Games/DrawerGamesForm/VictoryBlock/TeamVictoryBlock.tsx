@@ -13,7 +13,7 @@ type Props = {
 
 const TeamVictoryBlock: React.FC<Props> = ({ equipes, victoire, setVictoire, typeVictoire, setTypeVictoire }) => (
     <div className={styles.thirdBloc}>
-        <FormControl>
+        <FormControl size='small'>
             <InputLabel id="victoire">Victoire</InputLabel>
             <Select
                 labelId="victoire"
@@ -32,7 +32,7 @@ const TeamVictoryBlock: React.FC<Props> = ({ equipes, victoire, setVictoire, typ
             </Select>
         </FormControl>
 
-        <FormControl>
+        <FormControl size='small'>
             <InputLabel id="typeVictoire">Type de victoire</InputLabel>
             <Select
                 labelId="typeVictoire"

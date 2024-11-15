@@ -6,6 +6,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
 import { Dayjs } from "dayjs";
+import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../hooks/queries/games/useAddGame';
 import styles from './DrawerGamesForm.module.scss';
@@ -89,13 +90,13 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                     
                     <h3> Partie </h3>
                     <div className={styles.firstBloc}>
-                        <FormControl>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <FormControl className={styles.datePickerForm}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
                                 <DatePicker label="Date de la partie" value={date} onChange={setDate}/>
                             </LocalizationProvider>
                         </FormControl>
 
-                        <FormControl>
+                        <FormControl size='small'>
                             <InputLabel id="partieType">Type de partie</InputLabel>
                             <Select
                                 labelId="partieType"

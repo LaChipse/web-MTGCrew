@@ -68,7 +68,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
 
     const inputs = Array.from({ length: configIndex }, (_, index) => (
         <div key={index} className={styles.secondBloc}>
-            <FormControl>
+            <FormControl size='small'>
                 <InputLabel id="joueur">{`Joueur ${index + 1}`}</InputLabel>
                 <Select
                     labelId="joueur"
@@ -87,7 +87,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                 </Select>
             </FormControl>
 
-            <FormControl>
+            <FormControl size='small'>
                 <InputLabel id="deck">{`Deck ${index + 1}`}</InputLabel>
                 <Select
                     labelId="deck"

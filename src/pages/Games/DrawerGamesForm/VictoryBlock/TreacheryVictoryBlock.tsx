@@ -15,7 +15,7 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
 
     return (
         <div className={styles.thirdBloc}>
-            <FormControl>
+            <FormControl size='small'>
                 <InputLabel id="victoire">Victoire</InputLabel>
                 <Select
                     labelId="victoire"
@@ -34,7 +34,7 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
                 </Select>
             </FormControl>
 
-            <FormControl>
+            <FormControl size='small'>
                 <InputLabel id="typeVictoire">Type de victoire</InputLabel>
                 <Select
                     labelId="typeVictoire"

@@ -98,7 +98,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                         </RadioGroup>
                     </FormControl>
 
-                    <FormControl className={classNames([styles.select, styles.formControl])}>
+                    <FormControl className={classNames([styles.select, styles.formControl])} size="small">
                         <InputLabel id="Type">Type</InputLabel>
                         <Select
                             labelId="Type"
@@ -114,7 +114,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                         </Select>
                     </FormControl>
 
-                    <FormControl className={classNames([styles.select, styles.formControl])}>
+                    <FormControl className={classNames([styles.select, styles.formControl])} size="small">
                         <InputLabel id="Rank">Rank</InputLabel>
                         <Select
                             labelId="Rank"

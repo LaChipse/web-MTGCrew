@@ -4,6 +4,8 @@ import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { Api } from '../../../utils/Api';
 import { useGetDecks } from './useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
+import { useAppSelector } from '../../useAppSelector';
+import { useGetUserDeck } from './useGetUserDeck';
 
 const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (
     await new Api<{ token: string }>()
@@ -14,6 +16,7 @@ const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImp
 export const useUpdateDeck = () => {
     const dispatch = useDispatch()
     const queryClient = useQueryClient();
+    const user = useAppSelector((state) => state.auth.user);
 
     return (
         useMutation({
@@ -22,6 +25,8 @@ export const useUpdateDeck = () => {
             ),
             onSuccess: () => {
                 dispatch(addSuccessSnackbar('Deck modifié !'))
+                if (user) useGetUserDeck.reset(user.id)
+
                 useGetDecks.reset(queryClient)
                 useGetUsersDecks.reset(queryClient)
             }

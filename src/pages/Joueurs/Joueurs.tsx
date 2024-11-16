@@ -4,7 +4,7 @@ import { useCountGames } from "../../hooks/queries/games/useCountGames"
 import { useGetUsersDecks } from "../../hooks/queries/joueurs/useGetUsersDecks"
 import InfoIcon from '@mui/icons-material/Info';
 import { useState } from "react";
-import UserDeckModal from "./UserDeckModal/UserDeck";
+import UserDeckModal from "./UserDeck/UserDeck";
 import styles from './Joueurs.module.scss'
 
 const Joueurs = () => {

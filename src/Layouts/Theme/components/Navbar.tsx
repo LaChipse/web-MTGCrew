@@ -1,7 +1,7 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
 import React, { useTransition } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../router/routes';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import styles from './Navbar.module.scss';
@@ -10,10 +10,11 @@ type Props = unknown
 
 const Navbar: React.FC<Props> = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [isPending, startTransition] = useTransition();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const currentPage = sessionStorage.getItem('currentPagePath') || "";
     const navTabs = ['profil', 'decks', 'games', 'joueurs']
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +46,7 @@ const Navbar: React.FC<Props> = () => {
     }
 
     const renderNavButton = (key: string, path: string, label: string) => {
-        const isActive = () => (currentPage ? currentPage : window.location.pathname) === path
+        const isActive = () => (location.pathname ? location.pathname : window.location.pathname) === path
 
         return (
             <Button
@@ -60,7 +61,7 @@ const Navbar: React.FC<Props> = () => {
     }
 
     const renderNavMenuItem = (key: string, path: string, label: string) => {
-        const isActive = () => (currentPage ? currentPage : window.location.pathname) === path
+        const isActive = () => (location.pathname ? location.pathname : window.location.pathname) === path
 
         return (
             <MenuItem

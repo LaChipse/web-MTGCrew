@@ -78,12 +78,12 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                     <FormControl className={styles.formControl}>
                         <FormLabel id="checkbox-colors">Couleurs du deck</FormLabel>
                         <FormGroup className={styles.choices}>
-                            <FormControlLabel value="incolore" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("incolore")} />} label="Incolore" />
-                            <FormControlLabel value="blanc" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("blanc")} />} label="Blanc" />
-                            <FormControlLabel value="bleu" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("bleu")} />} label="Bleu" />
-                            <FormControlLabel value="noir" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("noir")} />} label="Noir" />
-                            <FormControlLabel value="rouge" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("rouge")} />} label="Rouge" />
-                            <FormControlLabel value="vert" control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("vert")} />} label="Vert" />
+                            <FormControlLabel value="incolore" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("incolore")} />} label="Incolore" />
+                            <FormControlLabel value="blanc" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("blanc")} />} label="Blanc" />
+                            <FormControlLabel value="bleu" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("bleu")} />} label="Bleu" />
+                            <FormControlLabel value="noir" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("noir")} />} label="Noir" />
+                            <FormControlLabel value="rouge" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("rouge")} />} label="Rouge" />
+                            <FormControlLabel value="vert" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("vert")} />} label="Vert" />
                         </FormGroup>
                     </FormControl>
                 </div>
@@ -97,8 +97,8 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                             name="radio-imprime-groupe"
                             className={styles.choices}
                         >
-                            <FormControlLabel value={false} control={<Radio onChange={handleRadioImprimeChange} />} label="Non" />
-                            <FormControlLabel value={true} control={<Radio onChange={handleRadioImprimeChange} />} label="Oui" />
+                            <FormControlLabel value={false} style={{ color: 'black' }} control={<Radio onChange={handleRadioImprimeChange} />} label="Non" />
+                            <FormControlLabel value={true} style={{ color: 'black' }} control={<Radio onChange={handleRadioImprimeChange} />} label="Oui" />
                         </RadioGroup>
                     </FormControl>
 

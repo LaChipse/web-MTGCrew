@@ -7,6 +7,7 @@ import { useAppSelector } from '../../useAppSelector';
 import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
 import { useGetDecks } from './useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
+import { useGetUserDeck } from './useGetUserDeck';
 
 const addDeck = async (nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (
     await new Api<{ token: string }>()
@@ -31,6 +32,8 @@ export const useAddDeck = () => {
                         ...user,
                         nbrDecks: user.nbrDecks + 1
                     }));
+                    
+                    useGetUserDeck.reset(user.id)
                 }
                 
                 useGetDecks.reset(queryClient)

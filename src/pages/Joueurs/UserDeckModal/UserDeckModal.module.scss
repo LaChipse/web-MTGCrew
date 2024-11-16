@@ -1,0 +1,58 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 70%;
+    max-height: 80%;
+    border: 1px solid #000;
+
+    .img {
+        display: inline-block;
+        margin: 0 2px;
+    }
+
+    .rank {
+        font-weight: 600;
+        border: 1px solid white !important;
+    }
+
+    .Z {
+        background-color: #000;
+        color: white;
+    }
+
+    .S {
+        background-color: #c00000;
+        color: white;
+    }
+
+    .A {
+        background-color: #ffc000;
+    }
+
+    .B {
+        background-color: #ffff00;
+    }
+
+    .C {
+        background-color: #00ff00;
+    }
+
+    .D {
+        background-color: #00b050;
+        color: white;
+    }
+}
+
+@media (max-width: 600px) {
+    .modal {
+        width: 95%;
+    }
+    
+}

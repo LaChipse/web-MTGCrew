@@ -22,6 +22,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const handleUpdateUser = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault(); // Empêche le rechargement de la page
         mutate({ nom, prenom, password });
+        setPassword('')
         setOpen(false)
     };
 

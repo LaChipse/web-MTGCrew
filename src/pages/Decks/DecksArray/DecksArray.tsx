@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useDeleteDeck } from '../../../hooks/queries/decks/useDeleteDeck';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
-import { useCountGames } from '../../../hooks/queries/games/useCountGames';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
 import styles from './DecksArray.module.scss';
@@ -18,7 +17,8 @@ type Props = {
 const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
     const [open, setOpen] = useState(false);
     const [selectedDeck, setSelectedDeck] = useState<Deck>()
-    const {data: count} = useCountGames()
+
+    const countGames = decks?.reduce((sum, deck) => sum + deck.parties, 0)
 
     const { mutate: deleteDeck } = useDeleteDeck();
 
@@ -85,7 +85,7 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                                     <TableCell align="center" className={classNames([styles[deck.rank.toLocaleUpperCase()], styles.rank])}>
                                         {deck.rank.toLocaleUpperCase()}
                                     </TableCell>
-                                    <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/(count  || 1)) * 100)}%)`}</TableCell>
+                                    <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/(countGames  || 1)) * 100)}%)`}</TableCell>
                                     <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires} (${ratioVictory(deck)}%)`}</TableCell>
                                     <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                     <TableCell align="center">

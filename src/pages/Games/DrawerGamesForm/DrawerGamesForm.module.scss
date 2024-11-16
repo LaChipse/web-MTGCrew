@@ -56,7 +56,7 @@
     > div {
         height: 100%;
 
-        label {
+        label[data-shrink=false] {
             -webkit-transform: translate(14px, 9px) scale(1);
             transform: translate(14px, 9px) scale(1)
         }

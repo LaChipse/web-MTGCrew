@@ -29,7 +29,7 @@ const HistoryGames = () => {
 
     const formatConfig = (type: string, config: Array<PlayersBlock>) => (
         <>
-            <ul>
+            <ul style={{ margin: 0 }}>
                 {config.map((conf) => {
                     return (
                         <li>

@@ -3,6 +3,7 @@ import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPla
 import React, { Dispatch, SetStateAction } from "react";
 import { PlayersBlock } from "../DrawerGamesForm";
 import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
+import classNames from "classnames";
 import styles from './PlayersBlock.module.scss'
 
 type Props = {
@@ -87,6 +88,10 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
         });
     }
 
+    const isDeckUser = (userId: string, index: number) => {
+        return userId === config?.[index].userId
+    }
+
     const inputs = Array.from({ length: configIndex }, (_, index) => (
         <div key={index} className={styles.secondBloc}>
             <FormControl size='small'>
@@ -120,7 +125,7 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
                 >
                     {
                         decks?.map((deck) => (
-                            <MenuItem value={deck.id} key={deck.id}>
+                            <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
                                 {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
                             </MenuItem>
                         ))

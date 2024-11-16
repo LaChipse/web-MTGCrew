@@ -3,8 +3,8 @@ import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPla
 import React, { Dispatch, SetStateAction } from "react";
 import { PlayersBlock } from "../DrawerGamesForm";
 import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
-import styles from './PlayersBlock.module.scss'
 import classNames from "classnames";
+import styles from './PlayersBlock.module.scss'
 
 type Props = {
     config: Array<PlayersBlock>
@@ -104,7 +104,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                 >
                     {
                         decks?.map((deck) => (
-                            <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) }) }>
+                            <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
                                 {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
                             </MenuItem>
                         ))

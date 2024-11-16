@@ -3,9 +3,9 @@ import { useGetAllPlayers, User } from "../../hooks/queries/joueurs/useGetAllPla
 import { useCountGames } from "../../hooks/queries/games/useCountGames"
 import { useGetUsersDecks } from "../../hooks/queries/joueurs/useGetUsersDecks"
 import InfoIcon from '@mui/icons-material/Info';
-import styles from './Joueurs.module.scss'
 import { useState } from "react";
-import UserDeckModal from "./UserDeckModal/userDeckModal";
+import UserDeckModal from "./UserDeckModal/UserDeck";
+import styles from './Joueurs.module.scss'
 
 const Joueurs = () => {
     const { data: users, isLoading } = useGetAllPlayers()

@@ -9,13 +9,13 @@ import { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../hooks/queries/games/useAddGame';
-import styles from './DrawerGamesForm.module.scss';
 import EachPlayersBlock from "./PlayersBlock/EachPlayersBlock";
 import TeamPlayersBlock from "./PlayersBlock/TeamPlayersBlock";
 import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
 import EachVictoryBlock from './VictoryBlock/EachVictoryBlock';
 import TeamVictoryBlock from './VictoryBlock/TeamVictoryBlock';
 import TreacheryVictoryBlock from './VictoryBlock/TreacheryVictoryBlock';
+import styles from './DrawerGamesForm.module.scss';
 
 export interface PlayersBlock {
     joueur?: string,

@@ -3,8 +3,8 @@ import { useSignup } from '../../../hooks/queries/useSignup';
 import { Button, FormControl, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../router/routes';
-import styles from './Signup.module.scss';
 import { LoadingButton } from '@mui/lab';
+import styles from './Signup.module.scss';
 
 const Signup = () => {
     const navigate = useNavigate()

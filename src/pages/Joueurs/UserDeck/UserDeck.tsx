@@ -2,7 +2,7 @@ import { Box, Modal, Skeleton, Table, TableBody, TableCell, TableContainer, Tabl
 import React from 'react';
 import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
 import classNames from 'classnames';
-import styles from './UserDeckModal.module.scss';
+import styles from './UserDeck.module.scss'
 
 type Props = {
     userId: string

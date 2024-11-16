@@ -2,8 +2,8 @@ import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, Table
 import { useAppSelector } from "../../../hooks/useAppSelector"
 import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm"
 import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames"
-import styles from './HistoryGames.module.scss'
 import { DateHelper } from "../../../utils/DateHelper"
+import styles from './HistoryGames.module.scss'
 
 const HistoryGames = () => {
     const { data: gameHistory, isLoading } = useGetHistoryGames()

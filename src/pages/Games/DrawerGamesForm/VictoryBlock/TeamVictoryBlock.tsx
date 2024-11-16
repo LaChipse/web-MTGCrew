@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
-import styles from './VictoryBlock.module.scss';
 import { TYPE_VICTORY_VALUES } from "../../../../utils/Enums/victoryType";
+import styles from './VictoryBlock.module.scss';
 
 type Props = {
     equipes: Array<string | undefined>

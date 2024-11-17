@@ -44,7 +44,7 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
                         </ListItem>
                     </List>
                 </CardContent>
-                <CardActions style={{ padding: '8px 16px' }}>
+                <CardActions style={{ padding: '8px 16px 16px' }}>
                     <Button size="small" onClick={handleOpen}>Modifier profil</Button>
                 </CardActions>
             </Card> 

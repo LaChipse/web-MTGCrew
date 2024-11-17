@@ -4,7 +4,6 @@ import { LoadingButton } from '@mui/lab';
 import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import classNames from 'classnames';
 import { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
@@ -15,6 +14,7 @@ import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
 import EachVictoryBlock from './VictoryBlock/EachVictoryBlock';
 import TeamVictoryBlock from './VictoryBlock/TeamVictoryBlock';
 import TreacheryVictoryBlock from './VictoryBlock/TreacheryVictoryBlock';
+import classNames from 'classnames';
 import styles from './DrawerGamesForm.module.scss';
 
 export interface PlayersBlock {
@@ -86,8 +86,8 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                     <CloseIcon />
                 </IconButton>
             </header>
+
             <Box className={styles.drawer}>
-                    
                     <h3> Partie </h3>
                     <div className={styles.firstBloc}>
                         <FormControl className={styles.datePickerForm}>

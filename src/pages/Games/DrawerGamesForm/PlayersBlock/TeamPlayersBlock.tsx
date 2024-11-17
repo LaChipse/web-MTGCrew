@@ -1,10 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
-import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPlayers";
-import React, { Dispatch, SetStateAction } from "react";
-import { PlayersBlock } from "../DrawerGamesForm";
-import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
-import styles from './PlayersBlock.module.scss'
+import React, { Dispatch, SetStateAction } from "react";
+import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
+import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPlayers";
+import { PlayersBlock } from "../DrawerGamesForm";
+import styles from './PlayersBlock.module.scss';
 
 type Props = {
     config: Array<PlayersBlock>
@@ -16,25 +16,26 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     const {data: decks} = useGetAllDecks()
     const {data: users} = useGetAllPlayers()
 
-    const teams = [ '1', '2', '3', '4', '5']
+    const otherUsersNotSelected = users?.filter((user) => !config.map((conf) => conf.userId).includes(user.id))
+    const otherDecksNotSelected = decks?.filter((deck) => !config.map((conf) => conf.deckId).includes(deck.id))
 
-    const newIndex = configIndex - 1;
+    const teams = [ '1', '2', '3', '4', '5']
 
     const getUser = (userId: string) => {
         const user = users?.find((user) => user.id === userId)
         return user?.fullName
     }
 
-    const handleChangeJoueur = (e: SelectChangeEvent<string>) => {
+    const handleChangeJoueur = (e: SelectChangeEvent<string>, index: number) => {
         const selectedUser = users?.find((user) => user.id === e.target.value);
 
         setConfig((prevConfig) => {
             const nouvelleConfig = [...(prevConfig || [])];
 
             if (selectedUser) {
-                if (nouvelleConfig[newIndex]) {
-                    nouvelleConfig[newIndex] = {
-                        ...nouvelleConfig[newIndex],
+                if (nouvelleConfig[index]) {
+                    nouvelleConfig[index] = {
+                        ...nouvelleConfig[index],
                         joueur: selectedUser.fullName, 
                         userId: selectedUser.id
                     }
@@ -47,16 +48,16 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
         });
     }
 
-    const handleChangeDeck = (e: SelectChangeEvent<string>) => {
+    const handleChangeDeck = (e: SelectChangeEvent<string>,index: number) => {
         const selectedDeck = decks?.find((deck) => deck.id === e.target.value);
 
         setConfig((prevConfig) => {
             const nouvelleConfig = [...(prevConfig || [])];
 
             if (selectedDeck) {
-                if (nouvelleConfig[newIndex]) {
-                    nouvelleConfig[newIndex] = {
-                        ...nouvelleConfig[newIndex],
+                if (nouvelleConfig[index]) {
+                    nouvelleConfig[index] = {
+                        ...nouvelleConfig[index],
                         deck: selectedDeck.nom, 
                         deckId: selectedDeck.id
                     }
@@ -69,13 +70,13 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
         });
     }
 
-    const handleChangeTeam = (e: SelectChangeEvent<string>) => {
+    const handleChangeTeam = (e: SelectChangeEvent<string>, index: number) => {
         setConfig((prevConfig) => {
             const nouvelleConfig = [...(prevConfig || [])];
             
-                if (nouvelleConfig[newIndex]) {
-                    nouvelleConfig[newIndex] = {
-                        ...nouvelleConfig[newIndex],
+                if (nouvelleConfig[index]) {
+                    nouvelleConfig[index] = {
+                        ...nouvelleConfig[index],
                         team: e.target.value
                     }
                 } else {
@@ -87,24 +88,24 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     }
 
     const isDeckUser = (userId: string, index: number) => {
-        return userId === config?.[index].userId
+        return userId === config?.[index]?.userId || false
     }
 
     const inputs = Array.from({ length: configIndex }, (_, index) => (
-        <div key={index} className={styles.secondBloc}>
+        <div key={`secondBloc${index}`} className={styles.secondBloc}>
             <FormControl size='small'>
                 <InputLabel id="joueur">{`Joueur ${index + 1}`}</InputLabel>
                 <Select
                     labelId="joueur"
                     id="joueurSelect"
                     value={config?.[index] ? config?.[index].userId : ''}
-                    onChange={handleChangeJoueur}
+                    onChange={(e) => handleChangeJoueur(e, index)}
                     renderValue={() => (config?.[index] ? config[index].joueur : 'Sélectionner un joueur')}
                     label="Joueur"
                 >
 
                     {
-                        users?.map((user) => (
+                        otherUsersNotSelected?.map((user) => (
                             <MenuItem value={user.id} key={user.id}>{user.fullName}</MenuItem>
                         ))
                     }
@@ -117,12 +118,12 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                     labelId="deck"
                     id="deckSelect"
                     value={config?.[index] ? config?.[index].deckId : ''}
-                    onChange={handleChangeDeck}
+                    onChange={(e) => handleChangeDeck(e, index)}
                     renderValue={() => (config?.[index] ? config[index].deck : 'Sélectionner un deck')}
                     label="Deck"
                 >
                     {
-                        decks?.map((deck) => (
+                        otherDecksNotSelected?.map((deck) => (
                             <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
                                 {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
                             </MenuItem>
@@ -137,7 +138,7 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                     labelId="team"
                     id="teamSelect"
                     value={config?.[index] ? config?.[index].team : ''}
-                    onChange={handleChangeTeam}
+                    onChange={(e) => handleChangeTeam(e, index)}
                     renderValue={() => (config?.[index] ? config[index].team : 'Sélectionner une équipe')}
                     label="Equipe"
                 >

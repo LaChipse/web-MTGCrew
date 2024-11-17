@@ -70,10 +70,8 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     }
 
     const handleChangeTeam = (e: SelectChangeEvent<string>) => {
-
         setConfig((prevConfig) => {
             const nouvelleConfig = [...(prevConfig || [])];
-
             
                 if (nouvelleConfig[newIndex]) {
                     nouvelleConfig[newIndex] = {

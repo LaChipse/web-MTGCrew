@@ -11,6 +11,7 @@ const Joueurs = () => {
     const { data: users, isLoading } = useGetAllPlayers()
     const { data: count } = useCountGames()
     const { data: usersDecks } = useGetUsersDecks()
+
     const [open, setOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState('')
 
@@ -44,14 +45,22 @@ const Joueurs = () => {
         return user.victoires > max.victoires ? user : max;
     });
 
-    const ratioVictoryDeck = (id: string) => {
-        const userDecks = usersDecks?.find((userDeck) => userDeck.id === id)?.decks
-        return userDecks?.reduce((max, deck) => {
-            return Math.round((deck.victoires/(deck.parties  || 1)) * 100) > Math.round((max.victoires/(max.parties  || 1)) * 100) ? deck : max;
-        });
-    }
 
-    const mostGamesPlayed = (id: string) => {
+    const getVictoryRatio = (victoires: number, parties: number) => Math.round((victoires / (parties || 1)) * 100);
+
+    const ratioVictoryDeck = (id: string) => {
+        const userDecks = usersDecks?.find((userDeck) => userDeck.id === id)?.decks;
+        return userDecks?.reduce((max, deck) => 
+            getVictoryRatio(deck.victoires, deck.parties) > getVictoryRatio(max.victoires, max.parties) ? deck : max
+        );
+    };
+
+    const overallVictoryRatio = (id: string) => {
+        const { victoires = 0, parties = 1 } = ratioVictoryDeck(id) || {};
+        return getVictoryRatio(victoires, parties);
+    };
+
+    const mostDeckPlayed = (id: string) => {
         const userDecks = usersDecks?.find((userDeck) => userDeck.id === id)?.decks
         return userDecks?.reduce((max, deck) => {
             return deck.parties > max.parties ? deck : max;
@@ -101,8 +110,8 @@ const Joueurs = () => {
                                     <TableCell align="center"><IconButton size="small" onClick={() => handleOpenModal(user.id)}><InfoIcon fontSize="small" color="primary"/></IconButton> { user.nbrDecks }</TableCell>
                                     <TableCell align="center">{ `${ user.partiesJouees } (${ Math.round((user.partiesJouees/(count  || 1)) * 100) }%)` }</TableCell>
                                     <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires } (${ratioVictory(user) }%)`}</TableCell>
-                                    <TableCell align="left">{ `${ mostGamesPlayed(user.id)?.nom } (${ Math.round(((mostGamesPlayed(user.id)?.parties || 0)/(user.partiesJouees || 1)) * 100) }%)` }</TableCell>
-                                    <TableCell align="left">{ `${ ratioVictoryDeck(user.id)?.nom } (${ Math.round(((ratioVictoryDeck(user.id)?.victoires || 0)/(ratioVictoryDeck(user.id)?.parties || 1)) * 100) }%)` }</TableCell>
+                                    <TableCell align="left">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties || 0)/(count || 1)) * 100) }%)` }</TableCell>
+                                    <TableCell align="left">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

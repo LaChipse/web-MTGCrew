@@ -11,12 +11,14 @@ const GamesArray = () => {
         if (type === 'team') return 'En équipe'
         if (type === 'each') return 'Chacun pour soit'
         if (type === 'treachery') return 'Treachery'
+        else return '-'
     }
 
     const formatVictoire = (type: string, victoire: string, config: Array<PlayersBlock>) => {
         if (type === 'team') return <><strong>Equipe: </strong>{victoire}</>
         if (type === 'each') return <><strong>Joueur: </strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
         if (type === 'treachery') return <><strong>Role: </strong>{victoire}</>
+        else return '-'
     }
 
     const typeGame = (type: string, conf: PlayersBlock) => {
@@ -58,7 +60,7 @@ const GamesArray = () => {
                         <TableBody>
                             {games?.map((game) => (
                                 <TableRow key={game.id}>
-                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '' }</TableCell>
+                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>
                                     <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
                                     <TableCell align="left">{ formatVictoire(game.type, game.victoire, game.config) }</TableCell>

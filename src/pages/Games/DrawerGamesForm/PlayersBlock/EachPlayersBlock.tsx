@@ -68,7 +68,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     }
 
     const isDeckUser = (userId: string, index: number) => {
-        return userId === config?.[index].userId
+        return userId === config?.[index]?.userId || false
     }
 
     const inputs = Array.from({ length: configIndex }, (_, index) => (

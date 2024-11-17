@@ -72,7 +72,7 @@ const HistoryGames = () => {
                         <TableBody>
                             {gameHistory?.map((game) => (
                                 <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
-                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '' }</TableCell>
+                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
                                     <TableCell align="center">{ formatType(game.type) }</TableCell>
                                     <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
                                     <TableCell align="left">{ formatVictoir(game.type, game.victoire, game.config) }</TableCell>

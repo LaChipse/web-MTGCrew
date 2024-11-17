@@ -81,9 +81,9 @@ const DecksArray: React.FC<Props> = ({ decks, isLoading }) => {
                                 <TableRow key={deck.nom}>
                                     <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom}</TableCell>
                                     <TableCell align="center">{formatArray(deck.couleurs)}</TableCell>
-                                    <TableCell align="center">{toTitleCase(deck.type)}</TableCell>
-                                    <TableCell align="center" className={classNames([styles[deck.rank.toLocaleUpperCase()], styles.rank])}>
-                                        {deck.rank.toLocaleUpperCase()}
+                                    <TableCell align="center">{toTitleCase(deck.type) || '-'}</TableCell>
+                                    <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
+                                        {deck.rank?.toLocaleUpperCase()  || '-'}
                                     </TableCell>
                                     <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/(countGames  || 1)) * 100)}%)`}</TableCell>
                                     <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires} (${ratioVictory(deck)}%)`}</TableCell>

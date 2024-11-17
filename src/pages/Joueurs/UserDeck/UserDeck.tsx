@@ -26,7 +26,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
     }
 
     const formatArray = (arr: Array<string>) => {
-        return arr.map(getImg);
+        return arr?.map(getImg);
     }
 
     return (
@@ -54,13 +54,13 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
                             <TableBody>
                                 {decks?.map((deck) => (
                                     <TableRow key={deck.nom}>
-                                        <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom}</TableCell>
-                                        <TableCell align="center">{formatArray(deck.couleurs)}</TableCell>
-                                        <TableCell align="center" className={classNames([styles[deck.rank.toLocaleUpperCase()], styles.rank])}>
-                                            {deck.rank.toLocaleUpperCase()}
+                                        <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom || '-'}</TableCell>
+                                        <TableCell align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
+                                        <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
+                                            {deck.rank?.toLocaleUpperCase() || '-'}
                                         </TableCell>
-                                        <TableCell align="center"> {deck.parties} </TableCell>
-                                        <TableCell align="center"> {deck.victoires} </TableCell>
+                                        <TableCell align="center"> { deck.parties } </TableCell>
+                                        <TableCell align="center"> { deck.victoires } </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

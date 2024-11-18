@@ -14,13 +14,13 @@ type Props = {
 const EachVictoryBlock: React.FC<Props> = ({ joueurs, victoire, setVictoire, typeVictoire, setTypeVictoire }) => (
     <div className={styles.thirdBloc}>
         <FormControl size='small'>
-            <InputLabel id="victoire">Victoire</InputLabel>
+            <InputLabel id="victoire">Vainqueur</InputLabel>
             <Select
                 labelId="victoire"
                 id="victoireSelect"
                 value={joueurs?.find((joueur) => joueur.userId === victoire)?.joueur}
                 onChange={(e) => setVictoire(e.target.value)}
-                label="victoire"
+                label="Vainqueur"
             >
                 {
                     joueurs?.map((joueur) => (

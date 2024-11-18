@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingButton } from '@mui/lab';
-import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from "dayjs";
@@ -54,29 +54,49 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
         
     }
 
-    const handleTypeChange = (e: SelectChangeEvent<string>) => {
-        setType(e.target.value)
+    const resetState = () => {
         setConfigIndex(1)
         setConfig([{}])
         setVictoire('')
         setTypeVictoire('')
     }
 
+    const handleTypeChange = (e: SelectChangeEvent<string>) => {
+        setType(e.target.value)
+        resetState()
+    }
+
     const handleAddGameForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         mutate({date, type, config, victoire, typeVictoire});
         
-        setConfigIndex(1)
         setType('')
         setDate(null)
-        setConfig([{}])
-        setVictoire('')
-        setTypeVictoire('')
+        resetState()
 
         setTimeout(() => {
             toggleDrawer(false)
-        }, 2000); 
+        }, 1000); 
     };
+
+    const handleResetForm = () => {
+        setType('')
+        setDate(null)
+        resetState()
+    }
+
+    const hasValidConfig = () => {
+        if (config.length !== configIndex) return true
+        if (type === 'team') {
+            if (config.every(element => element.userId && element.deckId && element.team))  return false
+        }
+        if (type === 'treachery') {
+            if (config.every(element => element.userId && element.deckId && element.role))  return false
+        }
+        if (config.every(element => element.userId && element.deckId)) return false
+
+        return true
+    }
 
     return (
         <>
@@ -151,7 +171,7 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
                     {type === 'each' && (
                         <>
-                            <h3> Victoire </h3>
+                            <h3> Vainqueur </h3>
                             <EachVictoryBlock 
                                 joueurs={config.map((conf) => ({joueur: conf.joueur, userId: conf.userId}))
                                     .filter((item, index, self) => index === self
@@ -167,7 +187,7 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
                     {type === 'team' && (
                         <>
-                            <h3> Victoire </h3>
+                            <h3> Equipe victorieuse </h3>
                             <TeamVictoryBlock 
                                 equipes={[...new Set(config.map((conf) => (conf.team)))]}
                                 victoire={victoire}
@@ -180,7 +200,7 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
                     {type === 'treachery' && (
                         <>
-                            <h3> Victoire </h3>
+                            <h3> Rôle victorieux </h3>
                             <TreacheryVictoryBlock 
                                 victoire={victoire}
                                 setVictoire={setVictoire}
@@ -190,16 +210,21 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                         </>
                     )}
 
-                <LoadingButton
-                    loading={isPending} 
-                    disabled={!(type && config && victoire && typeVictoire) || isPending} 
-                    type="submit" 
-                    variant="contained" 
-                    onClick={handleAddGameForm} 
-                    className={styles.submit}
-                >
-                    Valider
-                </LoadingButton>      
+                <div className={styles.buttons}>
+                    <LoadingButton
+                        loading={isPending} 
+                        disabled={!(type && victoire && typeVictoire) || isPending || hasValidConfig()} 
+                        type="submit" 
+                        variant="contained" 
+                        onClick={handleAddGameForm}
+                    >
+                        Valider
+                    </LoadingButton>    
+
+                    <Button className={styles.reset} onClick={handleResetForm} >
+                        Reset
+                    </Button>
+                </div>
             </Box>
         </>
     )

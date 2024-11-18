@@ -37,8 +37,18 @@
         background-color: #dcdee3;
     }
 
-    .submit {
+    .buttons {
         margin-bottom: 20px;
+        gap: 20px;
+        display: flex;
+    }
+
+    .reset {
+        color: red
+    }
+
+    .reset:hover {
+        background-color: rgb(253, 232, 232);
     }
 } 
 

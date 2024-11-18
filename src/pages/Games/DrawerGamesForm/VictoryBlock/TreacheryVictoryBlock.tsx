@@ -16,13 +16,13 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
     return (
         <div className={styles.thirdBloc}>
             <FormControl size='small'>
-                <InputLabel id="victoire">Victoire</InputLabel>
+                <InputLabel id="victoire">Role victorieux</InputLabel>
                 <Select
                     labelId="victoire"
                     id="victoireSelect"
                     value={victoire}
                     onChange={(e) => setVictoire(e.target.value)}
-                    label="victoire"
+                    label="Role victorieux"
                 >
                     {
                         roles?.map((role) => (

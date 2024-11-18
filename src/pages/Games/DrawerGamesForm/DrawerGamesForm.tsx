@@ -88,13 +88,15 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
     const hasValidConfig = () => {
         if (config.length !== configIndex) return true
         if (type === 'team') {
-            if (config.every(element => element.userId && element.deckId && element.team))  return false
+            if (config.every((element) => element.userId && element.deckId && element.team)) return false
         }
         if (type === 'treachery') {
-            if (config.every(element => element.userId && element.deckId && element.role))  return false
+            if (config.every(element => element.userId && element.deckId && element.role)) return false
         }
-        if (config.every(element => element.userId && element.deckId)) return false
-
+        else if (type !== 'team' && type !== 'treachery') {
+            if (config.every(element => element.userId && element.deckId)) return false
+        }
+            
         return true
     }
 

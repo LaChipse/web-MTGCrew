@@ -75,7 +75,7 @@ const Navbar: React.FC<Props> = () => {
     }
 
     return (
-        <AppBar>
+        <AppBar style={{backgroundColor:'transparent'}}>
             <Toolbar variant="dense" className={styles.navbar}>
                 <div style={{ display: 'flex' }}>
                     <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 37, height: 37 }} style={{marginRight: 10}} />

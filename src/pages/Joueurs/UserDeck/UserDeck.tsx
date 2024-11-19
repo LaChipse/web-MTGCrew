@@ -1,4 +1,4 @@
-import { Box, Modal, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React from 'react';
 import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
-    const { data: decks, isLoading } = useGetUserDeck(userId);
+    const { data: decks } = useGetUserDeck(userId);
 
     const handleClose = () => {
         setOpen(false);
@@ -37,36 +37,32 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
             aria-describedby="mise à jour profil"
         >
             <Box className={styles.modal}>
-                {isLoading? (
-                    <Skeleton variant="rectangular" width={1000} height={300} />
-                ) : (
-                    <TableContainer className={styles.tableau}>
-                        <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "75px" }}>Parties jouées</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "75px" }}>Victoires</TableCell>
+                <TableContainer className={styles.tableau}>
+                    <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
+                                <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
+                                <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
+                                <TableCell align="center" style={{ minWidth: "75px" }}>Parties jouées</TableCell>
+                                <TableCell align="center" style={{ minWidth: "75px" }}>Victoires</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {decks?.map((deck) => (
+                                <TableRow key={deck.nom}>
+                                    <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom || '-'}</TableCell>
+                                    <TableCell align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
+                                    <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
+                                        {deck.rank?.toLocaleUpperCase() || '-'}
+                                    </TableCell>
+                                    <TableCell align="center"> { deck.parties } </TableCell>
+                                    <TableCell align="center"> { deck.victoires } </TableCell>
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {decks?.map((deck) => (
-                                    <TableRow key={deck.nom}>
-                                        <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom || '-'}</TableCell>
-                                        <TableCell align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
-                                        <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
-                                            {deck.rank?.toLocaleUpperCase() || '-'}
-                                        </TableCell>
-                                        <TableCell align="center"> { deck.parties } </TableCell>
-                                        <TableCell align="center"> { deck.victoires } </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                )}
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Box>
         </Modal>
     )

@@ -1,4 +1,4 @@
-import { IconButton, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { useGetAllPlayers, User } from "../../hooks/queries/joueurs/useGetAllPlayers"
 import { useCountGames } from "../../hooks/queries/games/useCountGames"
 import { useGetUsersDecks } from "../../hooks/queries/joueurs/useGetUsersDecks"
@@ -8,7 +8,7 @@ import UserDeckModal from "./UserDeck/UserDeck";
 import styles from './Joueurs.module.scss'
 
 const Joueurs = () => {
-    const { data: users, isLoading } = useGetAllPlayers()
+    const { data: users } = useGetAllPlayers()
     const { data: count } = useCountGames()
     const { data: usersDecks } = useGetUsersDecks()
 
@@ -88,36 +88,33 @@ const Joueurs = () => {
                 <p className={styles.highlights}><img src={`/assets/couronne.png`} alt='couronne' width="35px" height="25px" style={{marginRight: '7px'}}/><strong style={{marginRight: '5px'}}>{highestRatio()?.fullName}</strong>{`(${Math.round(((highestRatio()?.victoires || 0)/(highestRatio()?.partiesJouees  || 1)) * 100)}% parties jouées gagnées)`}</p>
                 <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '10px'}}/><strong style={{marginRight: '5px'}}>{moreVictory?.fullName}</strong>{`(${Math.round(((moreVictory?.victoires || 0)/(countVictories  || 1)) * 100)}% totalité des victoires)`}</p>
             </div>
-            {isLoading ? (
-                <Skeleton variant="rectangular" width={1000} height={300} />
-            ) : (
-                <TableContainer className={styles.tableau}>
-                    <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Nbr decks</TableCell>
-                                <TableCell align="center" style={{ minWidth: "100px" }}>Parties jouées</TableCell>
-                                <TableCell align="center" style={{ minWidth: "100px" }}>Ratio victoire</TableCell>
-                                <TableCell align="center" style={{ minWidth: "150px" }}>Deck le plus joué</TableCell>
-                                <TableCell align="center" style={{ minWidth: "150px" }}>Meilleur deck</TableCell>
+
+            <TableContainer className={styles.tableau}>
+                <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }}>Nbr decks</TableCell>
+                            <TableCell align="center" style={{ minWidth: "125px" }}>Parties jouées</TableCell>
+                            <TableCell align="center" style={{ minWidth: "125px" }}>Ratio victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "150px" }}>Deck le plus joué</TableCell>
+                            <TableCell align="center" style={{ minWidth: "150px" }}>Meilleur deck</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {users?.map((user) => (
+                            <TableRow key={user.fullName}>
+                                <TableCell align="center" style={{ fontWeight: 700 }} component="th" scope="row">{user.fullName}</TableCell>
+                                <TableCell align="center"><IconButton size="small" onClick={() => handleOpenModal(user.id)}><InfoIcon fontSize="small" color="primary"/></IconButton> { user.nbrDecks }</TableCell>
+                                <TableCell align="center">{ `${ user.partiesJouees } (${ Math.round((user.partiesJouees/(count  || 1)) * 100) }%)` }</TableCell>
+                                <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires } (${ratioVictory(user) }%)`}</TableCell>
+                                <TableCell align="left">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties || 0)/(count || 1)) * 100) }%)` }</TableCell>
+                                <TableCell align="left">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users?.map((user) => (
-                                <TableRow key={user.fullName}>
-                                    <TableCell align="center" style={{ fontWeight: 700 }} component="th" scope="row">{user.fullName}</TableCell>
-                                    <TableCell align="center"><IconButton size="small" onClick={() => handleOpenModal(user.id)}><InfoIcon fontSize="small" color="primary"/></IconButton> { user.nbrDecks }</TableCell>
-                                    <TableCell align="center">{ `${ user.partiesJouees } (${ Math.round((user.partiesJouees/(count  || 1)) * 100) }%)` }</TableCell>
-                                    <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires } (${ratioVictory(user) }%)`}</TableCell>
-                                    <TableCell align="left">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties || 0)/(count || 1)) * 100) }%)` }</TableCell>
-                                    <TableCell align="left">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
             <UserDeckModal 
                 userId={selectedUser}

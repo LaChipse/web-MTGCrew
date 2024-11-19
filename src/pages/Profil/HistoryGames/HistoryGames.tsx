@@ -1,12 +1,12 @@
-import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import { useAppSelector } from "../../../hooks/useAppSelector"
-import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames"
+import { useAppSelector } from "../../../hooks/useAppSelector"
 import { DateHelper } from "../../../utils/DateHelper"
+import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm"
 import styles from './HistoryGames.module.scss'
 
 const HistoryGames = () => {
-    const { data: gameHistory, isLoading } = useGetHistoryGames()
+    const { data: gameHistory } = useGetHistoryGames()
     const user = useAppSelector((state) => state.auth.user);
 
     const formatType = (type: string) => {
@@ -15,7 +15,7 @@ const HistoryGames = () => {
         if (type === 'treachery') return 'Treachery'
     }
 
-    const formatVictoir = (type: string, victoire: string, config: Array<PlayersBlock>) => {
+    const formatVictoire = (type: string, victoire: string, config: Array<PlayersBlock>) => {
         if (type === 'team') return <><strong>Equipe: </strong>{victoire}</>
         if (type === 'each') return <><strong>Joueur: </strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
         if (type === 'treachery') return <><strong>Role: </strong>{victoire}</>
@@ -55,35 +55,30 @@ const HistoryGames = () => {
 
     return (
         <>
-            {isLoading ? (
-                <Skeleton variant="rectangular" width={1000} height={300} />
-            ) : (
-                <TableContainer className={styles.tableau}>
-                    <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Type de partie</TableCell>
-                                <TableCell align="center" style={{ minWidth: "150px" }}>Config</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Type de victoire</TableCell>
+            <TableContainer className={styles.tableau}>
+                <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Type de partie</TableCell>
+                            <TableCell align="center" style={{ minWidth: "150px" }}>Config</TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Type de victoire</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {gameHistory?.map((game) => (
+                            <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
+                                <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
+                                <TableCell align="center">{ formatType(game.type) }</TableCell>
+                                <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
+                                <TableCell align="left">{ formatVictoire(game.type, game.victoire, game.config) }</TableCell>
+                                <TableCell align="center">{ game.typeVictoire }</TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {gameHistory?.map((game) => (
-                                <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
-                                    <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
-                                    <TableCell align="center">{ formatType(game.type) }</TableCell>
-                                    <TableCell align="left">{ formatConfig(game.type, game.config) }</TableCell>
-                                    <TableCell align="left">{ formatVictoir(game.type, game.victoire, game.config) }</TableCell>
-                                    <TableCell align="center">{ game.typeVictoire }</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
-            
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </>
     )
 }

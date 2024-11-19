@@ -7,7 +7,7 @@ import styles from './Decks.module.scss';
 
 const Decks = () => {
     const [open, setOpen] = useState(false);
-    const { data: decks, isLoading} = useGetDecks()
+    const {data: decks} = useGetDecks()
 
     const countVictories = decks?.reduce((sum, deck) => sum + deck.victoires, 0)
     const countGames = decks?.reduce((sum, deck) => sum + deck.parties, 0)
@@ -63,7 +63,7 @@ const Decks = () => {
                 setOpen={setOpen}
             />
 
-            <DecksArray decks={decks} isLoading={isLoading}/>
+            <DecksArray decks={decks} />
         </>
     )
 }

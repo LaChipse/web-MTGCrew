@@ -64,7 +64,7 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                         <TableRow>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
                             <TableCell align="center" style={{ minWidth: "175px" }}>Couleurs</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Type</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }}>Type</TableCell>
                             <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
                             <TableCell align="center" style={{ minWidth: "125px" }}>Parties jouées</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Ratio victoire</TableCell>

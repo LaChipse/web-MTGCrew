@@ -63,12 +63,12 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                     <TableHead>
                         <TableRow>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
-                            <TableCell align="center" style={{ minWidth: "175px" }}>Couleurs</TableCell>
+                            <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Type</TableCell>
                             <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }}>Parties jouées</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }}>Ratio victoire</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }}>Deck imprimé ?</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }}>Nbr parties</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }}>Victoires</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }}>Imprimé ?</TableCell>
                             <TableCell align="center" style={{ minWidth: "75px" }}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -76,7 +76,7 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                         {decks?.map((deck) => (
                             <TableRow key={deck.nom}>
                                 <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom}</TableCell>
-                                <TableCell align="center">{formatArray(deck.couleurs)}</TableCell>
+                                <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs)}</TableCell>
                                 <TableCell align="center">{toTitleCase(deck.type) || '-'}</TableCell>
                                 <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
                                     {deck.rank?.toLocaleUpperCase()  || '-'}

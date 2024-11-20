@@ -44,7 +44,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
                                 <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
                                 <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
-                                <TableCell align="center" style={{ minWidth: "75px" }}>Parties jouées</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }}>Nbr parties</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Victoires</TableCell>
                             </TableRow>
                         </TableHead>
@@ -52,7 +52,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
                             {decks?.map((deck) => (
                                 <TableRow key={deck.nom}>
                                     <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom || '-'}</TableCell>
-                                    <TableCell align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
+                                    <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
                                     <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
                                         {deck.rank?.toLocaleUpperCase() || '-'}
                                     </TableCell>

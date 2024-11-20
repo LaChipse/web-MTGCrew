@@ -105,7 +105,7 @@ const Joueurs = () => {
                         {users?.map((user) => (
                             <TableRow key={user.fullName}>
                                 <TableCell align="center" style={{ fontWeight: 700 }} component="th" scope="row">{user.fullName}</TableCell>
-                                <TableCell align="center"><IconButton size="small" onClick={() => handleOpenModal(user.id)}><InfoIcon fontSize="small" color="primary"/></IconButton> { user.nbrDecks }</TableCell>
+                                <TableCell align="center"><div className={styles.infosDecks}><IconButton size="small" onClick={() => handleOpenModal(user.id)}><InfoIcon fontSize="small" color="primary"/></IconButton> { user.nbrDecks }</div></TableCell>
                                 <TableCell align="center">{ `${ user.partiesJouees } (${ Math.round((user.partiesJouees/(count  || 1)) * 100) }%)` }</TableCell>
                                 <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires } (${ratioVictory(user) }%)`}</TableCell>
                                 <TableCell align="left">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties || 0)/(count || 1)) * 100) }%)` }</TableCell>

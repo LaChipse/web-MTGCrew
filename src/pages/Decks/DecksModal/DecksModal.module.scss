@@ -39,9 +39,6 @@
     background-color: white;
     border: 2px solid #000;
     gap: 30px;
-    height: 70%;
-    max-height: 650px;
-    min-height: 400px;
     overflow: auto;
 }
 
@@ -49,6 +46,10 @@
     .formBloc {
         flex-direction: column;
         width: 100%;
+    }
+
+    .modal {
+        height: auto;
     }
 
     .formControl {

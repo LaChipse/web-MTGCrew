@@ -40,7 +40,7 @@
     border: 2px solid #000;
     gap: 30px;
     height: 80%;
-    max-height: 400px;
+    max-height: 325px;
     overflow: auto;
 }
 
@@ -52,6 +52,7 @@
 
     .modal {
         height: 70%;
+        max-height: auto;
     }
 
     .formControl {

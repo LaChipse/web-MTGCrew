@@ -1,12 +1,20 @@
 .tableau {
     margin-top: 20px;
 
+    .delete {
+        color: #FF0033 !important
+    }
+
+    .edit {
+        color: rgb(55, 55, 255) !important
+    }
+
     .red {
-        color: red
+        color: #FF0033 !important
     }
 
     .green {
-        color: green
+        color: #00ff00 !important
     }
         
 
@@ -33,14 +41,17 @@
 
     .A {
         background-color: #ffc000;
+        color: rgb(29, 29, 29) !important;
     }
 
     .B {
         background-color: #ffff00;
+        color: rgb(29, 29, 29) !important;
     }
 
     .C {
         background-color: #00ff00;
+        color: rgb(29, 29, 29) !important;
     }
 
     .D {

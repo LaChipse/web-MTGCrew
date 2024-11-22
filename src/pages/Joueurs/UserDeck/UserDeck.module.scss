@@ -1,5 +1,6 @@
 .modal {
     display: flex;
+    border-radius: 25px;
     flex-direction: column;
     align-items: center;
     padding: 5px;
@@ -11,6 +12,10 @@
     width: 70%;
     max-height: 80%;
     border: 1px solid #000;
+
+    div:first-child {
+        border-radius: 25px;
+    }
 
     .img {
         display: inline-block;
@@ -35,20 +40,38 @@
 
     .A {
         background-color: #ffc000;
+        color: rgb(29, 29, 29) !important;
     }
 
     .B {
         background-color: #ffff00;
+        color: rgb(29, 29, 29) !important;
     }
 
     .C {
         background-color: #00ff00;
+        color: rgb(29, 29, 29) !important;
     }
 
     .D {
         background-color: #00b050;
         color: white;
     }
+
+    tbody {
+        tr:nth-of-type(odd) {
+            background-color: rgb(248, 247, 247) !important;
+        }
+
+        tr:nth-of-type(even) {
+            background-color: white !important;
+        }
+
+        th, td {
+            color: rgb(29, 29, 29) !important
+        }
+    }
+    
 }
 
 @media (max-width: 600px) {

@@ -85,8 +85,8 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                                 <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires} (${ratioVictory(deck)}%)`}</TableCell>
                                 <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                 <TableCell align="center">
-                                    <IconButton style={{padding: 3}} color="primary" size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
-                                    <IconButton style={{padding: 3}} color="error" size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
+                                    <IconButton style={{padding: 3}} className={styles.edit} size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
+                                    <IconButton style={{padding: 3}} className={styles.delete} size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}

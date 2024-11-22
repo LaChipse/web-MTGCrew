@@ -18,31 +18,26 @@ body {
                 th {
                     background-color: rgb(198, 197, 201) !important;
                     color: white !important;
-                    font-weight: 600 !important;;
-                    font-size: 16px !important;;
-                    padding: 9px !important;;
+                    font-weight: 600 !important;
+                    font-size: 16px !important;
+                    padding: 9px !important;
                 }
             }
         }
 
         tbody {
-            tr:nth-of-type(odd) {
-                background-color: rgb(248, 247, 247) !important;
-            }
-
-            tr:nth-of-type(even) {
-                background-color: white !important;
+            tr {
+                background-color: rgb(29, 29, 29) !important;
             }
 
             th, td {
                 padding: 6px !important;
+                color: white !important;
             }
         
-            &:last-child {
-                td,
-                th {
-                    border: 0 !important;
-                }
+            tr:last-child th,
+            tr:last-child td {
+                border-bottom: 0 !important;
             }
         }
     }

@@ -3,9 +3,17 @@
 
     .green {
         background-color: #dbf7d8 !important;
+
+        th, td {
+            color: rgb(29, 29, 29) !important
+        }
     }
 
     .red {
-        background-color: #f7dbd6 !important
+        background-color: #f7dbd6 !important;
+
+        th, td {
+            color: rgb(29, 29, 29) !important
+        }
     }
 }

@@ -4,7 +4,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../hooks/queries/games/useAddGame';
@@ -31,7 +31,7 @@ type Props = {
 }
 
 const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
-    const [date, setDate] = useState<Dayjs | null>(null)
+    const [date, setDate] = useState<Dayjs | null>(dayjs())
     const [type, setType] = useState<string>('')
     const [configIndex, setConfigIndex] = useState<number>(1)
     const [config, setConfig] = useState<Array<PlayersBlock>>([{}])

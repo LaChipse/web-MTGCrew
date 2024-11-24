@@ -92,66 +92,70 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     }
 
     const inputs = Array.from({ length: configIndex }, (_, index) => (
-        <div key={`secondBloc${index}`} className={styles.secondBloc}>
-            <FormControl size='small'>
-                <InputLabel id="joueur">{`Joueur ${index + 1}`}</InputLabel>
-                <Select
-                    labelId="joueur"
-                    id="joueurSelect"
-                    value={config?.[index] ? config?.[index].userId : ''}
-                    onChange={(e) => handleChangeJoueur(e, index)}
-                    renderValue={() => (config?.[index] ? config[index].joueur : 'Sélectionner un joueur')}
-                    label="Joueur"
-                >
+        <>
+            <div key={`secondBloc${index}`} className={styles.secondBloc}>
+                <FormControl size='small'>
+                    <InputLabel id="joueur">{`Joueur ${index + 1}`}</InputLabel>
+                    <Select
+                        labelId="joueur"
+                        id="joueurSelect"
+                        value={config?.[index] ? config?.[index].userId : ''}
+                        onChange={(e) => handleChangeJoueur(e, index)}
+                        renderValue={() => (config?.[index] ? config[index].joueur : 'Sélectionner un joueur')}
+                        label="Joueur"
+                    >
 
-                    {
-                        otherUsersNotSelected?.map((user) => (
-                            <MenuItem value={user.id} key={user.id}>{user.fullName}</MenuItem>
-                        ))
-                    }
-                </Select>
-            </FormControl>
+                        {
+                            otherUsersNotSelected?.map((user) => (
+                                <MenuItem value={user.id} key={user.id}>{user.fullName}</MenuItem>
+                            ))
+                        }
+                    </Select>
+                </FormControl>
 
-            <FormControl size='small'>
-                <InputLabel id="deck">{`Deck ${index + 1}`}</InputLabel>
-                <Select
-                    labelId="deck"
-                    id="deckSelect"
-                    value={config?.[index] ? config?.[index].deckId : ''}
-                    onChange={(e) => handleChangeDeck(e, index)}
-                    renderValue={() => (config?.[index] ? config[index].deck : 'Sélectionner un deck')}
-                    label="Deck"
-                >
-                    {
-                        otherDecksNotSelected?.map((deck) => (
-                            <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
-                                {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
-                            </MenuItem>
-                        ))
-                    }
-                </Select>
-            </FormControl>
+                <FormControl size='small'>
+                    <InputLabel id="deck">{`Deck ${index + 1}`}</InputLabel>
+                    <Select
+                        labelId="deck"
+                        id="deckSelect"
+                        value={config?.[index] ? config?.[index].deckId : ''}
+                        onChange={(e) => handleChangeDeck(e, index)}
+                        renderValue={() => (config?.[index] ? config[index].deck : 'Sélectionner un deck')}
+                        label="Deck"
+                    >
+                        {
+                            otherDecksNotSelected?.map((deck) => (
+                                <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
+                                    {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
+                                </MenuItem>
+                            ))
+                        }
+                    </Select>
+                </FormControl>
 
-            <FormControl size='small'>
-                <InputLabel id="team">{`Equipe`}</InputLabel>
-                <Select
-                    labelId="team"
-                    id="teamSelect"
-                    value={config?.[index] ? config?.[index].team : ''}
-                    onChange={(e) => handleChangeTeam(e, index)}
-                    renderValue={() => (config?.[index] ? config[index].team : 'Sélectionner une équipe')}
-                    label="Equipe"
-                >
-                    {
-                        teams?.map((team) => (
-                            <MenuItem value={team} key={team}>
-                                {team}
-                            </MenuItem>
-                        ))
-                    }
-                </Select>
-            </FormControl>
-        </div>
+                <FormControl size='small'>
+                    <InputLabel id="team">{`Equipe`}</InputLabel>
+                    <Select
+                        labelId="team"
+                        id="teamSelect"
+                        value={config?.[index] ? config?.[index].team : ''}
+                        onChange={(e) => handleChangeTeam(e, index)}
+                        renderValue={() => (config?.[index] ? config[index].team : 'Sélectionner une équipe')}
+                        label="Equipe"
+                    >
+                        {
+                            teams?.map((team) => (
+                                <MenuItem value={team} key={team}>
+                                    {team}
+                                </MenuItem>
+                            ))
+                        }
+                    </Select>
+                </FormControl>
+            </div>
+            
+            <div className={classNames({ [styles.separator]: index  !== (configIndex - 1) })}></div>
+        </>
     ));
 
     

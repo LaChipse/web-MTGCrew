@@ -86,14 +86,14 @@ const HistoryGames = () => {
                             <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
                             <TableCell align="center" style={{ minWidth: "75px" }}>Type de partie</TableCell>
                             <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Type de victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "50px" }}>Type de victoire</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {gameHistory?.map((game) => (
                             <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
-                                <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
-                                <TableCell align="center">{ formatType(game.type) }</TableCell>   
+                                <TableCell align="left" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
+                                <TableCell align="left">{ formatType(game.type) }</TableCell>   
                                 <TableCell align="left">
                                     <div className={styles.infosDecks}>
                                         { formatVictoire(game.type, game.victoire, game.config) }

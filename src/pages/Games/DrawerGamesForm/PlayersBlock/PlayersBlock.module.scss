@@ -3,11 +3,17 @@
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     > div {
         width: 200px;
     }
+}
+
+.separator {
+    height: 1px;
+    background: grey;
+    width: 50%;
 }
 
 .green {

@@ -1,11 +1,11 @@
 .tableau {
-    min-width: 900px;
 
     .green {
         background-color: #dbf7d8 !important;
 
         th, td {
-            color: rgb(29, 29, 29) !important
+            color: rgb(29, 29, 29) !important;
+            border-bottom: 1px solid white;
         }
     }
 
@@ -13,7 +13,8 @@
         background-color: #f7dbd6 !important;
 
         th, td {
-            color: rgb(29, 29, 29) !important
+            color: rgb(29, 29, 29) !important;
+            border-bottom: 1px solid white;
         }
     }
 

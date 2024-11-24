@@ -1,3 +1,10 @@
 .tableau {
     min-width: 900px;
+
+    .infosDecks {
+        margin: auto;
+        text-align: start;
+        display: flex;
+        gap: 5px;
+    }
 }

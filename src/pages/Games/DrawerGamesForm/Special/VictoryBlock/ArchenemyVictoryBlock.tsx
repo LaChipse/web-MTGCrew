@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
-import { TYPE_VICTORY_VALUES } from "../../../../utils/Enums/victoryType";
+import { TYPE_VICTORY_VALUES } from "../../../../../utils/Enums/victoryType";
 import styles from './VictoryBlock.module.scss';
 
 type Props = {
@@ -10,9 +10,9 @@ type Props = {
     setTypeVictoire: Dispatch<SetStateAction<string>>
 }
 
-const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVictoire, setTypeVictoire }) => {
-    const roles = [ 'Seigneur', 'Assassin', 'Traitre']
-
+const ArchenemyVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVictoire, setTypeVictoire }) => {
+    const roles = [ 'Archenemy', 'Alliés']
+    
     return (
         <div className={styles.thirdBloc}>
             <FormControl size='small'>
@@ -44,7 +44,7 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
                     label="Type de victoire"
                 >
                     {
-                        TYPE_VICTORY_VALUES?.map((type) => (
+                        TYPE_VICTORY_VALUES.map((type) => (
                             <MenuItem value={type} key={type}>
                                 {type}
                             </MenuItem>
@@ -54,6 +54,6 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
             </FormControl>
         </div>
     )
-}
+}                  
 
-export default TreacheryVictoryBlock
+export default ArchenemyVictoryBlock

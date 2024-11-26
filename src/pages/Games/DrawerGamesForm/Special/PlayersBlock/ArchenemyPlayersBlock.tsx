@@ -1,9 +1,9 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
 import React, { Dispatch, SetStateAction } from "react";
-import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
-import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPlayers";
-import { PlayersBlock } from "../DrawerGamesForm";
+import { useGetAllDecks } from "../../../../../hooks/queries/decks/useGetAllDecks";
+import { useGetAllPlayers } from "../../../../../hooks/queries/joueurs/useGetAllPlayers";
+import { PlayersBlock } from "../../Standard/DrawerStandardGamesForm";
 import styles from './PlayersBlock.module.scss';
 
 type Props = {
@@ -12,14 +12,14 @@ type Props = {
     configIndex: number
 }
 
-const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) => {
+const ArchenemyPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) => {
     const {data: decks} = useGetAllDecks()
     const {data: users} = useGetAllPlayers()
 
     const otherUsersNotSelected = users?.filter((user) => !config.map((conf) => conf.userId).includes(user.id))
     const otherDecksNotSelected = decks?.filter((deck) => !config.map((conf) => conf.deckId).includes(deck.id))
 
-    const roles = [ 'Seigneur', 'Gardien', 'Assassin', 'Traitre']
+    const roles = [ 'Archenemy', 'Alliés']
 
     const getUser = (userId: string) => {
         const user = users?.find((user) => user.id === userId)
@@ -167,4 +167,4 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
     )
 }
 
-export default TreacheryPlayersBlock
+export default ArchenemyPlayersBlock

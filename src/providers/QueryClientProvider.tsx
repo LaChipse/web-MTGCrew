@@ -17,8 +17,8 @@ const QueryClientProvider: React.FC<Props> = ({ children }) => {
         queries: {
             refetchOnWindowFocus: false,
             retry: false,
-            gcTime: 0,
-            staleTime: 0,
+            gcTime: Infinity,
+            staleTime: Infinity,
         },
         },
         queryCache: new QueryCache({

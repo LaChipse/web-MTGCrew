@@ -1,9 +1,9 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
 import React, { Dispatch, SetStateAction } from "react";
-import { useGetAllDecks } from "../../../../hooks/queries/decks/useGetAllDecks";
-import { useGetAllPlayers } from "../../../../hooks/queries/joueurs/useGetAllPlayers";
-import { PlayersBlock } from "../DrawerGamesForm";
+import { PlayersBlock } from "../DrawerStandardGamesForm";
+import { useGetAllDecks } from "../../../../../hooks/queries/decks/useGetAllDecks";
+import { useGetAllPlayers } from "../../../../../hooks/queries/joueurs/useGetAllPlayers";
 import styles from './PlayersBlock.module.scss';
 
 type Props = {
@@ -12,12 +12,14 @@ type Props = {
     configIndex: number
 }
 
-const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) => {
+const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) => {
     const {data: decks} = useGetAllDecks()
     const {data: users} = useGetAllPlayers()
 
     const otherUsersNotSelected = users?.filter((user) => !config.map((conf) => conf.userId).includes(user.id))
     const otherDecksNotSelected = decks?.filter((deck) => !config.map((conf) => conf.deckId).includes(deck.id))
+
+    const teams = [ '1', '2', '3', '4', '5']
 
     const getUser = (userId: string) => {
         const user = users?.find((user) => user.id === userId)
@@ -46,7 +48,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
         });
     }
 
-    const handleChangeDeck = (e: SelectChangeEvent<string>,  index: number) => {
+    const handleChangeDeck = (e: SelectChangeEvent<string>,index: number) => {
         const selectedDeck = decks?.find((deck) => deck.id === e.target.value);
 
         setConfig((prevConfig) => {
@@ -68,6 +70,23 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
         });
     }
 
+    const handleChangeTeam = (e: SelectChangeEvent<string>, index: number) => {
+        setConfig((prevConfig) => {
+            const nouvelleConfig = [...(prevConfig || [])];
+            
+                if (nouvelleConfig[index]) {
+                    nouvelleConfig[index] = {
+                        ...nouvelleConfig[index],
+                        team: e.target.value
+                    }
+                } else {
+                    nouvelleConfig.push({ team: e.target.value })
+                }
+            
+            return nouvelleConfig;
+        });
+    }
+
     const isDeckUser = (userId: string, index: number) => {
         return userId === config?.[index]?.userId || false
     }
@@ -82,7 +101,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                         id="joueurSelect"
                         value={config?.[index] ? config?.[index].userId : ''}
                         onChange={(e) => handleChangeJoueur(e, index)}
-                        renderValue={() => (config?.[index] ? config[index].joueur : '')}
+                        renderValue={() => (config?.[index] ? config[index].joueur : 'Sélectionner un joueur')}
                         label="Joueur"
                     >
 
@@ -101,13 +120,33 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                         id="deckSelect"
                         value={config?.[index] ? config?.[index].deckId : ''}
                         onChange={(e) => handleChangeDeck(e, index)}
-                        renderValue={() => (config?.[index] ? config[index].deck : '')}
+                        renderValue={() => (config?.[index] ? config[index].deck : 'Sélectionner un deck')}
                         label="Deck"
                     >
                         {
                             otherDecksNotSelected?.map((deck) => (
-                                <MenuItem value={deck.id} key={deck.id} className={classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
+                                <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
                                     {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
+                                </MenuItem>
+                            ))
+                        }
+                    </Select>
+                </FormControl>
+
+                <FormControl size='small'>
+                    <InputLabel id="team">{`Equipe`}</InputLabel>
+                    <Select
+                        labelId="team"
+                        id="teamSelect"
+                        value={config?.[index] ? config?.[index].team : ''}
+                        onChange={(e) => handleChangeTeam(e, index)}
+                        renderValue={() => (config?.[index] ? config[index].team : 'Sélectionner une équipe')}
+                        label="Equipe"
+                    >
+                        {
+                            teams?.map((team) => (
+                                <MenuItem value={team} key={team}>
+                                    {team}
                                 </MenuItem>
                             ))
                         }
@@ -127,4 +166,4 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     )
 }
 
-export default EachPlayersBlock
+export default TeamPlayersBlock

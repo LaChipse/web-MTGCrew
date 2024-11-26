@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { Api } from '../../../utils/Api';
 import { Dayjs } from 'dayjs';
-import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/DrawerGamesForm';
+import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import { useAppSelector } from '../../useAppSelector';
 import { authActions } from '../../../store/reducers/authReducer';
 import { useGetGames } from './useGetGames';
@@ -11,22 +11,26 @@ import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
 import { useCountGames } from './useCountGames';
 import { useGetDecks } from '../decks/useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
+import { useGetHistoryGames } from './useGetHistoryGames';
 
-const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string) => (
+const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean) => (
     await new Api<{ config: Array<PlayersBlock>, victoire:string }>()
         .setBearerToken()
-        .post('/game/add', {date, type, config, victoire, typeVictoire})
+        .post('/game/add', {date, type, config, victoire, typeVictoire, isStandard})
 )
 
 export const useAddGame = () => {
     const dispatch = useDispatch()
     const queryClient = useQueryClient();
+    const isStandard = useAppSelector((state) => state.type.isStandard);
     const user = useAppSelector((state) => state.auth.user);
+
+    const partieType = isStandard ? 'standard' : 'special'
 
     return (
         useMutation({
-            mutationFn: (data: {date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string}) => (
-                addGame(data.date, data.type, data.config, data.victoire, data.typeVictoire)
+            mutationFn: (data: {date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean}) => (
+                addGame(data.date, data.type, data.config, data.victoire, data.typeVictoire, data.isStandard)
             ),
             onSuccess: (data) => {
                 dispatch(addSuccessSnackbar('Partie ajoutée !'))
@@ -40,8 +44,14 @@ export const useAddGame = () => {
 
                     dispatch(authActions.updateState({
                         ...user,
-                        partiesJouees: userPlayer? user.partiesJouees + 1 : user.partiesJouees,
-                        victoires: userWinner ? user.victoires + 1 : user.victoires
+                        partiesJouees: {
+                            ...user.partiesJouees,
+                            [partieType]: userPlayer? user.partiesJouees?.[partieType] + 1 : user.partiesJouees?.[partieType],
+                        },
+                        victoires: {
+                            ...user.victoires,
+                            [partieType]: userWinner ? user.victoires?.[partieType] + 1 : user.victoires?.[partieType]
+                        }
                     }));
                 }
                 
@@ -50,6 +60,7 @@ export const useAddGame = () => {
                 useCountGames.reset(queryClient)
                 useGetAllPlayers.reset(queryClient)
                 useGetUsersDecks.reset(queryClient)
+                useGetHistoryGames.reset(queryClient)
             }
         })
     );

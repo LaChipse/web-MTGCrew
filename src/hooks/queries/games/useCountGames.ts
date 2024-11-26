@@ -2,16 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
 import { resetQueries } from '../../../utils/resetQueries';
 
-const getCountGames = async () => (
+const getCountGames = async (isStandard: boolean) => (
     await new Api<number>()
         .setBearerToken()
-        .get('/game/count')
+        .get(`/game/count/${isStandard}`)
 )
 
-export const useCountGames = () => (
+export const useCountGames = (isStandard: boolean) => (
     useQuery({
-        queryKey: ['getCountGames'],
-        queryFn: () => getCountGames(),
+        queryKey: ['getCountGames', isStandard],
+        queryFn: () => getCountGames(isStandard),
     })
 );
 

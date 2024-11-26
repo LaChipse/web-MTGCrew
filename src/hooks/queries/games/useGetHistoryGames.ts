@@ -3,16 +3,16 @@ import { GameResume } from './useGetGames';
 import { Api } from '../../../utils/Api';
 import { resetQueries } from '../../../utils/resetQueries';
 
-const getHistoryGames = async () => (
+const getHistoryGames = async (isStandard: boolean) => (
     await new Api<Array<GameResume>>()
         .setBearerToken()
-        .get('/game/history')
+        .get(`/game/history/${isStandard}`)
 )
 
-export const useGetHistoryGames = () => (
+export const useGetHistoryGames = (isStandard: boolean) => (
     useQuery({
-        queryKey: ['getHistoryGames'],
-        queryFn: () => getHistoryGames(),
+        queryKey: ['getHistoryGames', isStandard],
+        queryFn: () => getHistoryGames(isStandard),
     })
 );
 

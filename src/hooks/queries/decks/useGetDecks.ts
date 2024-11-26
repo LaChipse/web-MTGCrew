@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
 import { resetQueries } from '../../../utils/resetQueries';
+import { PartiesTypes } from '../../../store/reducers/authReducer';
 
 export interface Deck {
     _id: string,
@@ -8,8 +9,8 @@ export interface Deck {
     couleurs: Array<string>
     type: string
     rank: string
-    parties: number
-    victoires: number
+    parties: PartiesTypes
+    victoires: PartiesTypes
     isImprime: boolean
 }
 

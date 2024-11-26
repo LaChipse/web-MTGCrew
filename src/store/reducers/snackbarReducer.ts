@@ -38,5 +38,4 @@ const themeSlice = createSlice({
 });
 
 export const { addSuccessSnackbar, addInfoSnackbar, addErrorSnackbar, clearSnackbar } = themeSlice.actions;
-
 export const snackbarReducer = themeSlice.reducer;

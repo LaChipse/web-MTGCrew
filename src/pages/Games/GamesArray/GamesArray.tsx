@@ -2,11 +2,15 @@ import { styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 import InfoIcon from '@mui/icons-material/Info';
 import { useGetGames } from '../../../hooks/queries/games/useGetGames';
 import { DateHelper } from '../../../utils/DateHelper';
-import { PlayersBlock } from '../DrawerGamesForm/DrawerGamesForm';
+import { PlayersBlock } from '../DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import styles from './GamesArray.module.scss';
 
-const GamesArray = () => {
-    const { data: games } = useGetGames()
+type Props = {
+    isStandard: boolean
+}
+
+const GamesArray: React.FC<Props> = ({isStandard}) => {
+    const { data: games } = useGetGames(isStandard)
 
     const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
         <Tooltip {...props} classes={{ popper: className }} />
@@ -24,19 +28,20 @@ const GamesArray = () => {
         if (type === 'team') return 'En équipe'
         if (type === 'each') return 'Chacun pour soit'
         if (type === 'treachery') return 'Treachery'
+        if (type === 'archenemy') return 'Archenemy'
         else return '-'
     }
 
     const formatVictoire = (type: string, victoire: string, config: Array<PlayersBlock>) => {
         if (type === 'team') return <><strong>Equipe: </strong>{victoire}</>
         if (type === 'each') return <><strong>Joueur: </strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
-        if (type === 'treachery') return <><strong>Role: </strong>{victoire}</>
+        if (type === 'treachery' || type === 'archenemy') return <><strong>Role: </strong>{victoire}</>
         else return '-'
     }
 
     const typeGame = (type: string, conf: PlayersBlock) => {
         if (type === 'team') return (<><strong>, Equipe: </strong>{conf.team}</>)
-        if (type === 'treachery') return (<><strong>, Role: </strong>{conf.role}</>)
+        if (type === 'treachery' || type === 'archenemy') return (<><strong>, Role: </strong>{conf.role}</>)
         else return ''
     }
 
@@ -80,9 +85,9 @@ const GamesArray = () => {
                     <TableBody>
                         {games?.map((game) => (
                             <TableRow key={game.id}>
-                                <TableCell align="left" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
-                                <TableCell align="left">{ formatType(game.type) }</TableCell>
-                                <TableCell align="left">
+                                <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
+                                <TableCell align="center">{ formatType(game.type) }</TableCell>
+                                <TableCell align="center">
                                     <div className={styles.infosDecks}>
                                         { formatVictoire(game.type, game.victoire, game.config) }
                                         <CustomTooltip title={formatConfig(game.victoire, game.type, game.config)} placement="top">

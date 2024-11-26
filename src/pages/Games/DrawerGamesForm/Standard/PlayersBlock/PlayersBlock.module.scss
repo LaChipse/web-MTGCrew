@@ -1,0 +1,29 @@
+.secondBloc {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    > div {
+        width: 200px;
+    }
+}
+
+.separator {
+    height: 1px;
+    background: grey;
+    width: 50%;
+}
+
+.green {
+    background-color: #dbf7d8 !important;
+}
+
+@media (max-width: 600px) {
+    .secondBloc {
+        > div {
+            width: 350px;
+        }
+    }
+}

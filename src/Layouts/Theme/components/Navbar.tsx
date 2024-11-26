@@ -1,9 +1,11 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Toolbar } from '@mui/material';
+import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Switch, Toolbar } from '@mui/material';
 import React, { useTransition } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../router/routes';
 import { toTitleCase } from '../../../utils/ToTitleCase';
+import { useDispatch } from 'react-redux';
+import { switchType } from '../../../store/reducers/typeReducer';
 import styles from './Navbar.module.scss';
 
 type Props = unknown
@@ -11,6 +13,7 @@ type Props = unknown
 const Navbar: React.FC<Props> = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
 
     const [isPending, startTransition] = useTransition();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -78,9 +81,10 @@ const Navbar: React.FC<Props> = () => {
         <AppBar style={{backgroundColor:'rgb(29, 29, 29)'}}>
             <Toolbar variant="dense" className={styles.navbar}>
                 <div style={{ display: 'flex' }}>
-                    <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 37, height: 37 }} style={{marginRight: 10}} />
+                    <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 37, height: 37 }} style={{marginRight: 10}} className={styles.avatar}/>
 
                     <IconButton
+                        style={{margin: 0}}
                         id="menu-button"
                         size="large"
                         edge="start"
@@ -111,13 +115,20 @@ const Navbar: React.FC<Props> = () => {
                         })}
                     </Menu>
 
+
                     <div>
                         {navTabs.map ((navTab) => {
                             return renderNavButton(navTab, `/${navTab}`, toTitleCase(navTab))
                         })}
                     </div>
                 </div>
-                <div>
+
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <div style={{margin: '0 10px', fontSize: 14}}>
+                        <strong>Std</strong>
+                        <Switch size='small' onChange={() => dispatch(switchType())}/>
+                        <strong>Spec</strong>
+                    </div>
                     <Button color="inherit" onClick={() => handleLogOut()}>Se déconnecter</Button>
                     {isPending && (
                         <CircularProgress color="inherit" size={20} style={{ marginLeft: 10, verticalAlign: 'middle' }} />

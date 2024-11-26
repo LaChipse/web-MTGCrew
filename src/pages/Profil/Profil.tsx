@@ -8,7 +8,10 @@ import styles from './Profil.module.scss'
 
 const Profil = () => {
     const user = useAppSelector((state) => state.auth.user);
+    const isStandard = useAppSelector((state) => state.type.isStandard);
+
     const [open, setOpen] = useState(false);
+    const partieType = isStandard ? 'standard' : 'special'
 
     const handleOpen = () => {
         setOpen(true);
@@ -23,6 +26,7 @@ const Profil = () => {
                     <ProfilCard 
                         user={user}
                         handleOpen={handleOpen}
+                        partieType={partieType}
                     />
 
                     <ProfilModal 
@@ -35,7 +39,7 @@ const Profil = () => {
 
             <div className={styles.history}>
                 <h2 style={{color: 'white'}}>Dernières parties jouées</h2>
-                <HistoryGames />
+                <HistoryGames partieType={partieType} />
             </div>
         </>
     )

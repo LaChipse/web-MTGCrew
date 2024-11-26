@@ -2,13 +2,18 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
+export interface PartiesTypes {
+    standard: number,
+    special: number
+}
+
 export interface AuthUser {
     id: string
     nom: string
     prenom: string
     nbrDecks: number,
-    partiesJouees: number,
-    victoires: number,
+    partiesJouees: PartiesTypes,
+    victoires: PartiesTypes,
 }
 
 export interface AuthState {
@@ -30,5 +35,4 @@ const authSlice = createSlice({
 });
 
 export const authActions = authSlice.actions;
-
 export const authReducer = authSlice.reducer;

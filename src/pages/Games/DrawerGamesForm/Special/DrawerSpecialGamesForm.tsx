@@ -4,18 +4,16 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import classNames from 'classnames';
 import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
-import { useAddGame } from '../../../hooks/queries/games/useAddGame';
-import EachPlayersBlock from "./PlayersBlock/EachPlayersBlock";
-import TeamPlayersBlock from "./PlayersBlock/TeamPlayersBlock";
+import { useAddGame } from '../../../../hooks/queries/games/useAddGame';
 import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
-import EachVictoryBlock from './VictoryBlock/EachVictoryBlock';
-import TeamVictoryBlock from './VictoryBlock/TeamVictoryBlock';
 import TreacheryVictoryBlock from './VictoryBlock/TreacheryVictoryBlock';
-import classNames from 'classnames';
-import styles from './DrawerGamesForm.module.scss';
+import ArchenemyVictoryBlock from './VictoryBlock/ArchenemyVictoryBlock';
+import ArchenemyPlayersBlock from './PlayersBlock/ArchenemyPlayersBlock';
+import styles from './DrawerSpecialGamesForm.module.scss';
 
 export interface PlayersBlock {
     joueur?: string,
@@ -30,7 +28,7 @@ type Props = {
     toggleDrawer: (newOpen: boolean) => void
 }
 
-const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
+const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
     const [date, setDate] = useState<Dayjs | null>(dayjs())
     const [type, setType] = useState<string>('')
     const [configIndex, setConfigIndex] = useState<number>(1)
@@ -42,16 +40,13 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
     const canAddPlayer = () => {
         switch (type) {
-            case 'each':
-                return !!(config[configIndex - 1]?.joueur && config[configIndex - 1]?.deck)
-            case 'team' :
-                return !!(config[configIndex - 1]?.joueur && config[configIndex - 1]?.deck && config[configIndex - 1]?.team)
             case 'treachery' :
+                return !!(config[configIndex - 1]?.joueur && config[configIndex - 1]?.deck && config[configIndex - 1]?.role)
+            case 'archenemy' :
                 return !!(config[configIndex - 1]?.joueur && config[configIndex - 1]?.deck && config[configIndex - 1]?.role)
             default:
                 break;
         }
-        
     }
 
     const resetState = () => {
@@ -68,7 +63,7 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
     const handleAddGameForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        mutate({date, type, config, victoire, typeVictoire});
+        mutate({date, type, config, victoire, typeVictoire, isStandard: false});
         
         setType('')
         setDate(null)
@@ -87,13 +82,10 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
     const hasValidConfig = () => {
         if (config.length !== configIndex) return true
-        if (type === 'team') {
-            if (config.every((element) => element.userId && element.deckId && element.team)) return false
-        }
-        if (type === 'treachery') {
+        if (type === 'treachery' || type === 'archenemy') {
             if (config.every(element => element.userId && element.deckId && element.role)) return false
         }
-        else if (type !== 'team' && type !== 'treachery') {
+        else if (type !== 'archenemy' && type !== 'treachery') {
             if (config.every(element => element.userId && element.deckId)) return false
         }
             
@@ -127,39 +119,27 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                                 onChange={handleTypeChange}
                                 label="Type de partie"
                             >
-                                <MenuItem value={'each'}>Chacun pour soit</MenuItem>
-                                <MenuItem value={'team'}>Equipe</MenuItem>
                                 <MenuItem value={'treachery'}>Treachery</MenuItem>
+                                <MenuItem value={'archenemy'}>Archenemy</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
 
-                    {type === 'each' && (
-                        <>
-                            <h3> Joueurs </h3>
-                            <EachPlayersBlock
-                                config={config}
-                                setConfig={setConfig}
-                                configIndex={configIndex}
-                            />
-                        </>
-                    )}
-
-                    {type === 'team' && (
-                        <>
-                            <h3> Equipes </h3>
-                            <TeamPlayersBlock
-                                config={config}
-                                setConfig={setConfig}
-                                configIndex={configIndex}
-                            />
-                        </>
-                    )}
-
                     {type === 'treachery' && (
                         <>
-                            <h3> Joueurs et Rôles</h3>
+                            <h3>Joueurs et Rôles</h3>
                             <TreacheryPlayersBlock
+                                config={config}
+                                setConfig={setConfig}
+                                configIndex={configIndex}
+                            />
+                        </>
+                    )}
+
+                    {type === 'archenemy' && (
+                        <>
+                            <h3>Joueurs et Rôles</h3>
+                            <ArchenemyPlayersBlock
                                 config={config}
                                 setConfig={setConfig}
                                 configIndex={configIndex}
@@ -171,39 +151,22 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                         <AddIcon />
                     </IconButton>
 
-                    {type === 'each' && (
-                        <>
-                            <h3> Vainqueur </h3>
-                            <EachVictoryBlock 
-                                joueurs={config.map((conf) => ({joueur: conf.joueur, userId: conf.userId}))
-                                    .filter((item, index, self) => index === self
-                                    .findIndex((t) => t.userId === item.userId)
-                                )}
-                                victoire={victoire}
-                                setVictoire={setVictoire}
-                                typeVictoire={typeVictoire}
-                                setTypeVictoire={setTypeVictoire}
-                            />
-                        </>
-                    )}
-
-                    {type === 'team' && (
-                        <>
-                            <h3> Equipe victorieuse </h3>
-                            <TeamVictoryBlock 
-                                equipes={[...new Set(config.map((conf) => (conf.team)))]}
-                                victoire={victoire}
-                                setVictoire={setVictoire}
-                                typeVictoire={typeVictoire}
-                                setTypeVictoire={setTypeVictoire}
-                            />
-                        </>
-                    )}
-
                     {type === 'treachery' && (
                         <>
                             <h3> Rôle victorieux </h3>
                             <TreacheryVictoryBlock 
+                                victoire={victoire}
+                                setVictoire={setVictoire}
+                                typeVictoire={typeVictoire}
+                                setTypeVictoire={setTypeVictoire}
+                            />
+                        </>
+                    )}
+
+                    {type === 'archenemy' && (
+                        <>
+                            <h3> Rôle victorieux </h3>
+                            <ArchenemyVictoryBlock 
                                 victoire={victoire}
                                 setVictoire={setVictoire}
                                 typeVictoire={typeVictoire}
@@ -232,4 +195,4 @@ const DrawerGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
     )
 }
 
-export default DrawerGamesForm
+export default DrawerSpecialGamesForm

@@ -1,19 +1,20 @@
-import React from 'react';
 import { Button, Card, CardActions, CardContent, List, ListItem, ListItemText } from '@mui/material';
-import { AuthUser } from '../../../store/reducers/authReducer';
+import React from 'react';
 import { useCountGames } from '../../../hooks/queries/games/useCountGames';
-import styles from './ProfilCard.module.scss'
+import { AuthUser } from '../../../store/reducers/authReducer';
+import styles from './ProfilCard.module.scss';
 
 type Props = {
     user: AuthUser
+    partieType: 'standard' | 'special',
     handleOpen: () => void
 }
 
-const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
-    const { data: count } = useCountGames()
+const ProfilCard: React.FC<Props> = ({ user, partieType, handleOpen }) => {
+    const { data: count } = useCountGames(true)
 
     const ratioVictory = () => {
-        return Math.round((user.victoires/(user.partiesJouees || 1)) * 100)
+        return Math.round((user.victoires?.[partieType] / (user.partiesJouees?.[partieType] || 1)) * 100)
     }
 
     const colorVictory = () => {
@@ -35,14 +36,15 @@ const ProfilCard: React.FC<Props> = ({ user, handleOpen }) => {
                                 primary={`Nombre de decks = ${user.nbrDecks}`}
                             />
                             <ListItemText
-                                primary={`Parties jouées = ${user.partiesJouees} (${Math.round((user.partiesJouees/(count || 1)) * 100)}%)`}
+                                primary={`Parties jouées = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}
                             />
                             <ListItemText
-                                primary={`Victoires = ${user.victoires} (${ratioVictory()}%)`}
+                                primary={`Victoires = ${user.victoires[partieType]} (${ratioVictory()}%)`}
                                 className={styles[colorVictory()]}
                             />
                         </ListItem>
                     </List>
+
                 </CardContent>
                 <CardActions style={{ padding: '8px 16px 16px' }}>
                     <Button size="small" onClick={handleOpen}>Modifier profil</Button>

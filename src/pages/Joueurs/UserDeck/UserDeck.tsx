@@ -7,10 +7,11 @@ import styles from './UserDeck.module.scss'
 type Props = {
     userId: string
     open: boolean
+    partieType: 'standard' | 'special',
     setOpen: (value: React.SetStateAction<boolean>) => void
 }
 
-const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
+const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) => {
     const { data: decks } = useGetUserDeck(userId);
 
     const handleClose = () => {
@@ -56,8 +57,8 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, setOpen }) => {
                                     <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
                                         {deck.rank?.toLocaleUpperCase() || '-'}
                                     </TableCell>
-                                    <TableCell align="center"> { deck.parties } </TableCell>
-                                    <TableCell align="center"> { deck.victoires } </TableCell>
+                                    <TableCell align="center"> { deck.parties?.[partieType] } </TableCell>
+                                    <TableCell align="center"> { deck.victoires?.[partieType] } </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

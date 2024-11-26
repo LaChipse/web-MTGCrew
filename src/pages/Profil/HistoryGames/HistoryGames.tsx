@@ -3,11 +3,15 @@ import { styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { DateHelper } from "../../../utils/DateHelper";
-import { PlayersBlock } from "../../Games/DrawerGamesForm/DrawerGamesForm";
+import { PlayersBlock } from "../../Games/DrawerGamesForm/Standard/DrawerStandardGamesForm";
 import styles from './HistoryGames.module.scss';
 
-const HistoryGames = () => {
-    const { data: gameHistory } = useGetHistoryGames()
+type Props = {
+    partieType: 'standard' | 'special',
+}
+
+const HistoryGames: React.FC<Props> = ({partieType}) => {
+    const { data: gameHistory } = useGetHistoryGames(partieType === 'standard' ? true : false)
     const user = useAppSelector((state) => state.auth.user);
 
     const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -26,17 +30,20 @@ const HistoryGames = () => {
         if (type === 'team') return 'En équipe'
         if (type === 'each') return 'Chacun pour soit'
         if (type === 'treachery') return 'Treachery'
+        if (type === 'archenemy') return 'Archenemy'
+        else return '-'
     }
 
     const formatVictoire = (type: string, victoire: string, config: Array<PlayersBlock>) => {
         if (type === 'team') return <><strong>Equipe: </strong>{victoire}</>
         if (type === 'each') return <><strong>Joueur: </strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
-        if (type === 'treachery') return <><strong>Role: </strong>{victoire}</>
+        if (type === 'treachery' || type === 'archenemy') return <><strong>Role: </strong>{victoire}</>
+        else return '-'
     }
 
     const typeGame = (type: string, conf: PlayersBlock) => {
         if (type === 'team') return (<><strong>, Equipe: </strong>{conf.team}</>)
-        if (type === 'treachery') return (<><strong>, Role: </strong>{conf.role}</>)
+        if (type === 'treachery' || type === 'archenemy') return (<><strong>, Role: </strong>{conf.role}</>)
         else return ''
     }
 
@@ -92,9 +99,9 @@ const HistoryGames = () => {
                     <TableBody>
                         {gameHistory?.map((game) => (
                             <TableRow key={game.id} className={styles[winnerStyle(game.victoire, game.config)]}>
-                                <TableCell align="left" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
-                                <TableCell align="left">{ formatType(game.type) }</TableCell>   
-                                <TableCell align="left">
+                                <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
+                                <TableCell align="center">{ formatType(game.type) }</TableCell>   
+                                <TableCell align="center">
                                     <div className={styles.infosDecks}>
                                         { formatVictoire(game.type, game.victoire, game.config) }
                                         <CustomTooltip title={formatConfig(game.victoire, game.type, game.config)} placement="top">

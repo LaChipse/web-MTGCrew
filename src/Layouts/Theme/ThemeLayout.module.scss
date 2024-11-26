@@ -26,12 +26,16 @@ body {
         }
 
         tbody {
-            tr {
+            tr:nth-of-type(odd) {
+                background-color: rgb(43, 42, 42) !important;
+            }
+
+            tr:nth-of-type(even) {
                 background-color: rgb(29, 29, 29) !important;
             }
 
             th, td {
-                padding: 8px !important;
+                padding: 8px 12px !important;
                 color: white !important;
             }
         

@@ -11,13 +11,14 @@ import styles from './DecksArray.module.scss';
 
 type Props = {
     decks?: Array<Deck>
+    partieType: 'standard' | 'special'
 }
 
-const DecksArray: React.FC<Props> = ({ decks }) => {
+const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
     const [open, setOpen] = useState(false);
     const [selectedDeck, setSelectedDeck] = useState<Deck>()
 
-    const countGames = decks?.reduce((sum, deck) => sum + deck.parties, 0)
+    const countGames = decks?.reduce((sum, deck) => sum + deck.parties?.[partieType], 0)
 
     const { mutate: deleteDeck } = useDeleteDeck();
 
@@ -48,7 +49,7 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
     }
 
     const ratioVictory = (deck: Deck) => {
-        return Math.round((deck.victoires/(deck.parties || 1)) * 100)
+        return Math.round((deck.victoires?.[partieType] / (deck.parties?.[partieType] || 1)) * 100)
     }
 
     const colorVictory = (deck: Deck) => {
@@ -81,8 +82,8 @@ const DecksArray: React.FC<Props> = ({ decks }) => {
                                 <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
                                     {deck.rank?.toLocaleUpperCase()  || '-'}
                                 </TableCell>
-                                <TableCell align="center">{`${deck.parties} (${Math.round((deck.parties/(countGames  || 1)) * 100)}%)`}</TableCell>
-                                <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires} (${ratioVictory(deck)}%)`}</TableCell>
+                                <TableCell align="center">{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</TableCell>
+                                <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>
                                 <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                 <TableCell align="center">
                                     <IconButton style={{padding: 3}} className={styles.edit} size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>

@@ -118,8 +118,8 @@ const Joueurs = () => {
                                     </div></TableCell>
                                 <TableCell align="center">{ `${ user.partiesJouees[partieType] } (${ Math.round((user.partiesJouees[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
                                 <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires[partieType] } (${ratioVictory(user) }%)`}</TableCell>
-                                <TableCell align="left">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
-                                <TableCell align="left">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
+                                <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
+                                <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

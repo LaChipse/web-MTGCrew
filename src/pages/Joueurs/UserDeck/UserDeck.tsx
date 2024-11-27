@@ -21,7 +21,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
     const getImg = (couleur: string) => {
         return (
             <div key={couleur} className={styles.img}>
-                <img src={`/assets/${couleur.toLocaleLowerCase()}.svg`} alt={couleur} width="20px" height="20px" />
+                <img src={`/assets/${couleur.toLocaleLowerCase()}.svg`} alt={couleur} width="18px" height="18px" />
             </div>
         )
     }

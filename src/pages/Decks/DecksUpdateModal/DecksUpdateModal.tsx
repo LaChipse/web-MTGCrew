@@ -57,8 +57,8 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="addDeck"
-            aria-describedby="ajout deck"
+            aria-labelledby="updateDeck"
+            aria-describedby="update deck"
         >
             <Box className={styles.modal}>
                 <div className={styles.container}>

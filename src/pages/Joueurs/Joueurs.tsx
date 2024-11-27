@@ -68,12 +68,12 @@ const Joueurs = () => {
     const mostDeckPlayed = (id: string) => {
         const userDecks = usersDecks?.find((userDeck) => userDeck.id === id)?.decks
         return userDecks?.reduce((max, deck) => {
-            return deck.parties[partieType] > max.parties[partieType] ? deck : max;
+            return deck.parties?.[partieType] > max.parties?.[partieType] ? deck : max;
         });
     }
 
     const ratioVictory = (user: User) => {
-        return Math.round((user.victoires[partieType] / (user.partiesJouees[partieType] || 1)) * 100)
+        return Math.round((user.victoires?.[partieType] / (user.partiesJouees?.[partieType] || 1)) * 100)
     }
 
     const colorVictory = (user: User) => {
@@ -89,9 +89,9 @@ const Joueurs = () => {
     return (
         <>
             <div>
-                <p className={styles.highlights}><img src={`/assets/seringue.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '5px'}}/><strong style={{marginRight: '5px'}}>{highestGamesPlayed?.fullName}</strong>{`(${Math.round(((highestGamesPlayed?.partiesJouees[partieType] || 0)/(count || 1)) * 100)}% parties jouées)`}</p>
-                <p className={styles.highlights}><img src={`/assets/couronne.png`} alt='couronne' width="35px" height="25px" style={{marginRight: '7px'}}/><strong style={{marginRight: '5px'}}>{highestRatio()?.fullName}</strong>{`(${Math.round(((highestRatio()?.victoires[partieType] || 0)/(highestRatio()?.partiesJouees[partieType] || 1)) * 100)}% parties jouées gagnées)`}</p>
-                <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '10px'}}/><strong style={{marginRight: '5px'}}>{moreVictory?.fullName}</strong>{`(${Math.round(((moreVictory?.victoires[partieType] || 0)/(countVictories || 1)) * 100)}% totalité des victoires)`}</p>
+                <p className={styles.highlights}><img src={`/assets/seringue.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '5px'}}/><strong style={{marginRight: '5px'}}>{highestGamesPlayed?.fullName}</strong>{`(${Math.round(((highestGamesPlayed?.partiesJouees?.[partieType] || 0)/(count || 1)) * 100)}% parties jouées)`}</p>
+                <p className={styles.highlights}><img src={`/assets/couronne.png`} alt='couronne' width="35px" height="25px" style={{marginRight: '7px'}}/><strong style={{marginRight: '5px'}}>{highestRatio()?.fullName}</strong>{`(${Math.round(((highestRatio()?.victoires?.[partieType] || 0)/(highestRatio()?.partiesJouees?.[partieType] || 1)) * 100)}% parties jouées gagnées)`}</p>
+                <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '10px'}}/><strong style={{marginRight: '5px'}}>{moreVictory?.fullName}</strong>{`(${Math.round(((moreVictory?.victoires?.[partieType] || 0)/(countVictories || 1)) * 100)}% totalité des victoires)`}</p>
             </div>
 
             <TableContainer className={styles.tableau}>
@@ -117,9 +117,9 @@ const Joueurs = () => {
                                             <InfoIcon fontSize="small" color="primary" />
                                         </IconButton> 
                                     </div></TableCell>
-                                <TableCell align="center">{ `${ user.partiesJouees[partieType] } (${ Math.round((user.partiesJouees[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
-                                <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires[partieType] } (${ratioVictory(user) }%)`}</TableCell>
-                                <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
+                                <TableCell align="center">{ `${ user.partiesJouees?.[partieType] } (${ Math.round((user.partiesJouees?.[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
+                                <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires?.[partieType] } (${ratioVictory(user) }%)`}</TableCell>
+                                <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties?.[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
                                 <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
                             </TableRow>
                         ))}

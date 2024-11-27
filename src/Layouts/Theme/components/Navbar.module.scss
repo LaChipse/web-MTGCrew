@@ -4,8 +4,13 @@
     padding: 2px 13px !important;
 
     .iconButton {
-        padding: 0 10px;
+        padding: 0;
         display: none;
+
+        svg {
+            display: flex;
+            font-size: 32px
+        }
     }
 }
 

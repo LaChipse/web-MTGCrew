@@ -3,9 +3,9 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { useDeleteDeck } from '../../../hooks/queries/decks/useDeleteDeck';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { toTitleCase } from '../../../utils/ToTitleCase';
+import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
 import styles from './DecksArray.module.scss';
 
@@ -16,11 +16,12 @@ type Props = {
 
 const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
     const [open, setOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const [deletedDeck, setDeletedDeck] = useState<string>('')
     const [selectedDeck, setSelectedDeck] = useState<Deck>()
 
     const countGames = decks?.reduce((sum, deck) => sum + deck.parties?.[partieType], 0)
-
-    const { mutate: deleteDeck } = useDeleteDeck();
 
     const formatBooelan = (boolean: boolean) =>{
         if (boolean) return "Oui"
@@ -44,8 +45,9 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
         return arr.map(getImg);
     }
 
-    const handleDelete =(id: string) => {
-        deleteDeck(id)
+    const handleDeleteOpen =(id: string) => {
+        setDeleteOpen(true)
+        setDeletedDeck(id)
     }
 
     const ratioVictory = (deck: Deck) => {
@@ -85,15 +87,24 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                                 <TableCell align="center">{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</TableCell>
                                 <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>
                                 <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={styles.actions}>
                                     <IconButton style={{padding: 1}} className={styles.edit} size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
-                                    <IconButton style={{padding: 1}} className={styles.delete} size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
+                                    <IconButton style={{padding: 1}} className={styles.delete} size="small" onClick={() => handleDeleteOpen(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {deletedDeck && (
+                <DecksDeleteModal
+                    open={deleteOpen}
+                    setOpen={setDeleteOpen}
+                    deletedDeck={deletedDeck}
+                    setDeletedDeck={setDeletedDeck}
+                />
+            )}
 
             {selectedDeck && (
                 <DecksUpdateModal 

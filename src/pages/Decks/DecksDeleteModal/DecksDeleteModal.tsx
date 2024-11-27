@@ -33,7 +33,7 @@ const DecksDeleteModal: React.FC<Props> = ({ open, deletedDeck, setDeletedDeck, 
             aria-describedby="delete Deck"
         >
             <Box className={styles.modal}>
-                <p id="deleteDeck" style={{marginBottom: 30, fontWeight: 700, fontSize: 18}}>Etes-vous sûr de vouloir supprimer ce deck ?</p>
+                <p id="deleteDeck">Etes-vous sûr de vouloir supprimer ce deck ?</p>
 
                 <div className={styles.buttons}>
                     <Button onClick={handleClose}>Annuler</Button>

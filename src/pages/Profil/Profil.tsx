@@ -27,6 +27,7 @@ const Profil = () => {
                         user={user}
                         handleOpen={handleOpen}
                         partieType={partieType}
+                        isStandard={isStandard}
                     />
 
                     <ProfilModal 

@@ -6,12 +6,13 @@ import styles from './ProfilCard.module.scss';
 
 type Props = {
     user: AuthUser
+    isStandard: boolean
     partieType: 'standard' | 'special',
     handleOpen: () => void
 }
 
-const ProfilCard: React.FC<Props> = ({ user, partieType, handleOpen }) => {
-    const { data: count } = useCountGames(true)
+const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleOpen }) => {
+    const { data: count } = useCountGames(isStandard)
 
     const ratioVictory = () => {
         return Math.round((user.victoires?.[partieType] / (user.partiesJouees?.[partieType] || 1)) * 100)

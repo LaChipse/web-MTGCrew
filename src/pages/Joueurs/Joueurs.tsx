@@ -9,10 +9,11 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import styles from './Joueurs.module.scss'
 
 const Joueurs = () => {
-    const { data: users } = useGetAllPlayers()
-    const { data: count } = useCountGames(true)
-    const { data: usersDecks } = useGetUsersDecks()
     const isStandard = useAppSelector((state) => state.type.isStandard);
+    
+    const { data: users } = useGetAllPlayers()
+    const { data: usersDecks } = useGetUsersDecks()
+    const { data: count } = useCountGames(isStandard)
 
     const [open, setOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState('')

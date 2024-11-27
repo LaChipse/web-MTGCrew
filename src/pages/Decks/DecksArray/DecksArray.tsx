@@ -30,7 +30,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
     const getImg = (couleur: string) => {
         return (
             <div key={couleur} className={styles.img}>
-                <img src={`/assets/${couleur.toLocaleLowerCase()}.svg`} alt={couleur} width="20px" height="20px" />
+                <img src={`/assets/${couleur.toLocaleLowerCase()}.svg`} alt={couleur} width="18px" height="18px" />
             </div>
         )
     }
@@ -66,7 +66,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                             <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
                             <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Type</TableCell>
-                            <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
+                            <TableCell align="center" style={{ minWidth: "35px" }}>Rank</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Nbr parties</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Victoires</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }}>Imprimé ?</TableCell>
@@ -86,8 +86,8 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                                 <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>
                                 <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
                                 <TableCell align="center">
-                                    <IconButton style={{padding: 3}} className={styles.edit} size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
-                                    <IconButton style={{padding: 3}} className={styles.delete} size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
+                                    <IconButton style={{padding: 1}} className={styles.edit} size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
+                                    <IconButton style={{padding: 1}} className={styles.delete} size="small" onClick={() => handleDelete(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}

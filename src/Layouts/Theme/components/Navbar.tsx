@@ -81,7 +81,7 @@ const Navbar: React.FC<Props> = () => {
         <AppBar style={{backgroundColor:'rgb(29, 29, 29)'}}>
             <Toolbar variant="dense" className={styles.navbar}>
                 <div style={{ display: 'flex' }}>
-                    <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 37, height: 37 }} style={{marginRight: 10}} className={styles.avatar}/>
+                    <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 35, height: 35 }} style={{marginRight: 10}} className={styles.avatar}/>
 
                     <IconButton
                         style={{margin: 0}}
@@ -129,7 +129,7 @@ const Navbar: React.FC<Props> = () => {
                         <Switch size='small' onChange={() => dispatch(switchType())}/>
                         <strong>Spec</strong>
                     </div>
-                    <Button color="inherit" onClick={() => handleLogOut()}>Se déconnecter</Button>
+                    <Button variant="contained"  onClick={() => handleLogOut()}>Se déco</Button>
                     {isPending && (
                         <CircularProgress color="inherit" size={20} style={{ marginLeft: 10, verticalAlign: 'middle' }} />
                     )}

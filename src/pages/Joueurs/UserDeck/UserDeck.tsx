@@ -44,7 +44,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                             <TableRow>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
                                 <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
-                                <TableCell align="center" style={{ minWidth: "50px" }}>Rank</TableCell>
+                                <TableCell align="center" style={{ minWidth: "35px" }}>Rank</TableCell>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Nbr parties</TableCell>
                                 <TableCell align="center" style={{ minWidth: "75px" }}>Victoires</TableCell>
                             </TableRow>

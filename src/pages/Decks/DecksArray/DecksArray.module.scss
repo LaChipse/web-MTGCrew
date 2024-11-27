@@ -2,11 +2,19 @@
     margin-top: 20px;
 
     .delete {
-        color: #FF0033 !important
+        color: #FF0033 !important;
+
+        svg {
+            font-size: 1.3rem;
+        }
     }
 
     .edit {
-        color: #1976d2 !important
+        color: #1976d2 !important;
+
+        svg {
+            font-size: 1.3rem;
+        }
     }
 
     .red {

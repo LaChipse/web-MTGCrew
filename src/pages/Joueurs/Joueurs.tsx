@@ -113,8 +113,8 @@ const Joueurs = () => {
                                 <TableCell align="center">
                                     <div className={styles.infosDecks}>
                                         { user.nbrDecks }
-                                        <IconButton size="small" onClick={() => handleOpenModal(user.id)}>
-                                            <InfoIcon fontSize="small" color="primary"/>
+                                        <IconButton size="small" style={{padding: 0}} onClick={() => handleOpenModal(user.id)}>
+                                            <InfoIcon fontSize="small" color="primary" />
                                         </IconButton> 
                                     </div></TableCell>
                                 <TableCell align="center">{ `${ user.partiesJouees[partieType] } (${ Math.round((user.partiesJouees[partieType] / (count  || 1)) * 100) }%)` }</TableCell>

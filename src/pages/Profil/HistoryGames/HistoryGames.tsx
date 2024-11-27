@@ -1,18 +1,23 @@
 import InfoIcon from '@mui/icons-material/Info';
-import { styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
+import { Pagination, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { DateHelper } from "../../../utils/DateHelper";
 import { PlayersBlock } from "../../Games/DrawerGamesForm/Standard/DrawerStandardGamesForm";
+import { useState } from 'react';
 import styles from './HistoryGames.module.scss';
 
 type Props = {
     partieType: 'standard' | 'special',
+    isStandard: boolean
 }
 
-const HistoryGames: React.FC<Props> = ({partieType}) => {
-    const { data: gameHistory } = useGetHistoryGames(partieType === 'standard' ? true : false)
+const HistoryGames: React.FC<Props> = ({partieType, isStandard}) => {
+    const [page, setPage] = useState(1)
+
+    const { data: gameHistory } = useGetHistoryGames(isStandard, page)
     const user = useAppSelector((state) => state.auth.user);
+    const gamesPlayed = user?.partiesJouees?.[partieType]
 
     const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
         <Tooltip {...props} classes={{ popper: className }} />
@@ -50,9 +55,9 @@ const HistoryGames: React.FC<Props> = ({partieType}) => {
     const formatConfig = (victoire: string, type: string, config: Array<PlayersBlock>) =>(
         <>
             <ul style={{ margin: 0, listStyle: 'none', padding: 0 }}>
-                {config.map((conf) => {
+                {config.map((conf, index) => {
                     return (
-                        <li style={{ margin: 10, color: showWinnerStyle(victoire, conf) }}>
+                        <li key={`${index}-${conf.userId}`} style={{ margin: 10, color: showWinnerStyle(victoire, conf) }}>
                             <strong>Joueur: </strong>{conf.joueur}<strong>, Deck: </strong>{conf.deck}{typeGame(type, conf)}
                         </li>
                     )
@@ -84,8 +89,21 @@ const HistoryGames: React.FC<Props> = ({partieType}) => {
         return '#FF0033'
     }
 
+    const getPaginate = () => {
+        if (gamesPlayed) {
+            if (gamesPlayed % 10 > 0) return (Math.floor(gamesPlayed / 10) + 1)
+            return Math.floor(gamesPlayed / 10)
+        }
+        return 1
+    }
+
+    const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value)
+    }
+
     return (
         <>
+            <Pagination count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
             <TableContainer className={styles.tableau}>
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>

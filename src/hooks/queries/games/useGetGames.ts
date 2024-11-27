@@ -12,15 +12,15 @@ export interface GameResume {
     typeVictoire: string
 }
 
-const getGames = async (isStandard: boolean) => (
+const getGames = async (isStandard: boolean, page: number) => (
     await new Api<Array<GameResume>>()
-        .get(`/game/all/${isStandard}`)
+        .get(`/game/all/${isStandard}/${page}`)
 )
 
-export const useGetGames = (isStandard: boolean) => (
+export const useGetGames = (isStandard: boolean, page: number) => (
     useQuery({
-        queryKey: ['getGames', isStandard],
-        queryFn: () => getGames(isStandard),
+        queryKey: ['getGames', isStandard, page],
+        queryFn: () => getGames(isStandard, page),
     })
 );
 

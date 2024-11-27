@@ -1,16 +1,19 @@
-import { styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
+import { Pagination, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { useGetGames } from '../../../hooks/queries/games/useGetGames';
 import { DateHelper } from '../../../utils/DateHelper';
 import { PlayersBlock } from '../DrawerGamesForm/Standard/DrawerStandardGamesForm';
+import { useState } from 'react';
 import styles from './GamesArray.module.scss';
 
 type Props = {
     isStandard: boolean
+    count?: number
 }
 
-const GamesArray: React.FC<Props> = ({isStandard}) => {
-    const { data: games } = useGetGames(isStandard)
+const GamesArray: React.FC<Props> = ({isStandard, count}) => {
+    const [page, setPage] = useState(1)
+    const { data: games } = useGetGames(isStandard, page)
 
     const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
         <Tooltip {...props} classes={{ popper: className }} />
@@ -70,8 +73,23 @@ const GamesArray: React.FC<Props> = ({isStandard}) => {
         return '#FF0033'
     }
 
+
+    const getPaginate = () => {
+        if (count) {
+            if (count % 20 > 0) return (Math.floor(count / 20) + 1)
+            return Math.floor(count / 20)
+        }
+        return 1
+    }
+
+    const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value)
+    }
+
     return (
         <>
+            <Pagination count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
+
             <TableContainer className={styles.tableau}>
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>

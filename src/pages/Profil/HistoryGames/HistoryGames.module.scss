@@ -26,3 +26,20 @@
         align-items: center;
     }
 }
+
+.pagination {
+    button, div {
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    button:hover {
+        color: rgb(29, 29, 29);
+        background-color: white !important;
+    }
+
+    button[aria-current] {
+        color: rgb(29, 29, 29);
+        background-color: white !important;
+    }
+}

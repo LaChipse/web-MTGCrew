@@ -5,10 +5,12 @@ import ProfilModal from './ProfilModal/ProfilModal';
 import HistoryGames from './HistoryGames/HistoryGames';
 import Loading from '../Loading/Loading';
 import styles from './Profil.module.scss'
+import { useCountGames } from '../../hooks/queries/games/useCountGames';
 
 const Profil = () => {
     const user = useAppSelector((state) => state.auth.user);
     const isStandard = useAppSelector((state) => state.type.isStandard);
+    const { data: count } = useCountGames(isStandard)
 
     const [open, setOpen] = useState(false);
     const partieType = isStandard ? 'standard' : 'special'
@@ -25,9 +27,9 @@ const Profil = () => {
                 <>
                     <ProfilCard 
                         user={user}
+                        count={count}
                         handleOpen={handleOpen}
                         partieType={partieType}
-                        isStandard={isStandard}
                     />
 
                     <ProfilModal 
@@ -40,7 +42,7 @@ const Profil = () => {
 
             <div className={styles.history}>
                 <h2 style={{color: 'white'}}>Dernières parties jouées</h2>
-                <HistoryGames partieType={partieType} />
+                <HistoryGames partieType={partieType} isStandard={isStandard}/>
             </div>
         </>
     )

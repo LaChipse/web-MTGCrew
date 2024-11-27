@@ -27,7 +27,7 @@ const Games = () => {
                 <strong>Parties jouées : {count}</strong>
             </div>
 
-            <GamesArray isStandard={isStandard}/>
+            <GamesArray isStandard={isStandard} count={count}/>
 
             <Drawer open={openStandard} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>
                 <DrawerStandardGamesForm toggleDrawer={toggleDrawer} />

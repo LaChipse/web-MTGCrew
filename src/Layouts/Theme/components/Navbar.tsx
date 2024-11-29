@@ -55,6 +55,7 @@ const Navbar: React.FC<Props> = () => {
             <Button
                 key={key}
                 sx={{ color: '#fff', backgroundColor: isActive() ? '#1976d2' : 'none', }}
+                size='small'
                 onClick={() => handlePageNavigation(path)}
                 className={styles.buttonNav}
             >
@@ -71,6 +72,7 @@ const Navbar: React.FC<Props> = () => {
                 key={key}
                 sx={{ backgroundColor: isActive() ? '#1976d2' : 'white', color: isActive() ? 'white' : 'black' }}
                 onClick={() => handleMenuItemNavigate(path)}
+                style={{fontSize: 15, padding: '6px 20px'}}
             >
                 {label}
             </MenuItem>
@@ -80,7 +82,7 @@ const Navbar: React.FC<Props> = () => {
     return (
         <AppBar style={{backgroundColor:'rgb(29, 29, 29)'}}>
             <Toolbar variant="dense" className={styles.navbar}>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar alt="Avatar" src="/assets/mtgCrew_icon.png" sx={{ width: 35, height: 35 }} style={{marginRight: 10}} className={styles.avatar}/>
 
                     <IconButton
@@ -129,7 +131,7 @@ const Navbar: React.FC<Props> = () => {
                         <Switch size='small' onChange={() => dispatch(switchType())}/>
                         <strong>Spec</strong>
                     </div>
-                    <Button variant="contained"  onClick={() => handleLogOut()}>Se déco</Button>
+                    <Button size='small' variant="contained" onClick={() => handleLogOut()}>Se déco</Button>
                     {isPending && (
                         <CircularProgress color="inherit" size={20} style={{ marginLeft: 10, verticalAlign: 'middle' }} />
                     )}

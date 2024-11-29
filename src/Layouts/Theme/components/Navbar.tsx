@@ -1,6 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Switch, Toolbar } from '@mui/material';
-import React, { useTransition } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_PAGE } from '../../../router/routes';
 import { toTitleCase } from '../../../utils/ToTitleCase';
@@ -12,13 +12,29 @@ type Props = unknown
 
 const Navbar: React.FC<Props> = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const [isPending, startTransition] = useTransition();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [showLoader, setShowLoader] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    
     const open = Boolean(anchorEl);
     const navTabs = ['profil', 'decks', 'games', 'joueurs']
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout | null = null;
+
+        if (isPending) timeout = setTimeout(() => setShowLoader(true), 500);
+        else {
+            setShowLoader(false);
+            if (timeout) clearTimeout(timeout);
+        }
+
+        return () => {
+            if (timeout) clearTimeout(timeout);
+        };
+    }, [isPending]);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -132,7 +148,7 @@ const Navbar: React.FC<Props> = () => {
                         <strong>Spec</strong>
                     </div>
                     <Button size='small' variant="contained" onClick={() => handleLogOut()}>Se déco</Button>
-                    {isPending && (
+                    {showLoader && (
                         <CircularProgress color="inherit" size={20} style={{ marginLeft: 10, verticalAlign: 'middle' }} />
                     )}
                 </div>

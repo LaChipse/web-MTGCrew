@@ -1,15 +1,13 @@
+import { ThemeProvider, unstable_createMuiStrictModeTheme } from '@mui/material/styles';
 import { Suspense } from 'react';
+import { createPortal } from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import { unstable_createMuiStrictModeTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles';
+import MainSnackbar from './components/MainSnackBar';
+import FullscreenLoader from './Layouts/Theme/components/loader/FullscreenLoader/FullscreenLoader';
+import Loading from './pages/Loading/Loading';
 import QueryClientProvider from './providers/QueryClientProvider';
 import Router from './router/Router';
 import { store } from './store/store';
-import { createPortal } from 'react-dom';
-import Loading from './pages/Loading/Loading';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import MainSnackbar from './components/MainSnackBar';
-import FullscreenLoader from './Layouts/Theme/components/loader/FullscreenLoader/FullscreenLoader';
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -18,7 +16,6 @@ const App = () => {
     <ThemeProvider theme={theme}>
         <ReduxProvider store={store}>
           <QueryClientProvider>
-            <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
             <FullscreenLoader />
             <Suspense fallback={<Loading />}>
               <Router />

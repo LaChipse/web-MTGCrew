@@ -6,9 +6,6 @@ type Props = {
     children: ReactNode
 }
 
-// const SIX_MINUTES_IN_MILISECONDS = 6 * 60 * 1000;
-// const FIVE_MINUTES_IN_MILISECONDS = 5 * 60 * 1000;
-
 const QueryClientProvider: React.FC<Props> = ({ children }) => {
     const handleError = useQueryErrorHandler();
 

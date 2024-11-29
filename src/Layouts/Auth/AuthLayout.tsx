@@ -13,35 +13,31 @@ const AuthLayout = () => {
     const user = useAppSelector((state) => state.auth.user);
     const currentPagePath = sessionStorage.getItem('currentPagePath')
 
-    const { data: authUser } = useGetUser()
+    const { data: authUser, isLoading } = useGetUser();
 
     useEffect(() => {
         const handleLogin = () => {
-            const token = localStorage.getItem('token')
-
+            const token = localStorage.getItem('token');
             if (authUser) {
-                dispatch(authActions.updateState(
-                    authUser,
-                ));
+                dispatch(authActions.updateState(authUser));
             }
 
             if (token && (user || authUser)) {
-                
                 if (currentPagePath) {
-                    navigate(currentPagePath)
+                    navigate(currentPagePath);
                 } else {
-                    sessionStorage.setItem('currentPagePath', DEFAULT_PAGE_PATH)
-                    navigate(DEFAULT_PAGE_PATH)
+                    sessionStorage.setItem('currentPagePath', DEFAULT_PAGE_PATH);
+                    navigate(DEFAULT_PAGE_PATH);
                 }
-            } else navigate(LOGIN_PAGE);
+            } else {
+                navigate(LOGIN_PAGE);
+            }
         };
 
-        if (!user) {
-            setTimeout(() => {
-                handleLogin()
-            }, 2000)
+        if (!user && !isLoading) {
+            handleLogin();
         }
-    }, [user, navigate, dispatch, authUser, currentPagePath]);
+    }, [user, authUser, navigate, isLoading, dispatch, currentPagePath]);
 
     if (user) return <Outlet />;
     return <Loading />;

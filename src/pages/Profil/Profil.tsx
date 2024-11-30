@@ -41,7 +41,7 @@ const Profil = () => {
             )}
 
             <div className={styles.history}>
-                <h2 style={{color: 'white'}}>Dernières parties jouées</h2>
+                <h2 style={{color: 'rgb(197, 195, 195)', marginBottom: 15}}>Dernières parties jouées :</h2>
                 <HistoryGames partieType={partieType} isStandard={isStandard}/>
             </div>
         </>

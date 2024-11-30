@@ -1,5 +1,5 @@
 import { Pagination, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useGetGames } from '../../../hooks/queries/games/useGetGames';
 import { DateHelper } from '../../../utils/DateHelper';
 import { PlayersBlock } from '../DrawerGamesForm/Standard/DrawerStandardGamesForm';
@@ -109,7 +109,7 @@ const GamesArray: React.FC<Props> = ({isStandard, count}) => {
                                     <div className={styles.infosDecks}>
                                         { formatVictoire(game.type, game.victoire, game.config) }
                                         <CustomTooltip title={formatConfig(game.victoire, game.type, game.config)} placement="top">
-                                            <InfoIcon fontSize="small" color="primary"/>
+                                            <VisibilityIcon style={{marginLeft: 5}} fontSize="small" color="primary"/>
                                         </CustomTooltip>
                                     </div>
                                 </TableCell>

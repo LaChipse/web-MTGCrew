@@ -1,5 +1,5 @@
-import InfoIcon from '@mui/icons-material/Info';
 import { Pagination, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useGetHistoryGames } from "../../../hooks/queries/games/useGetHistoryGames";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { DateHelper } from "../../../utils/DateHelper";
@@ -123,7 +123,7 @@ const HistoryGames: React.FC<Props> = ({partieType, isStandard}) => {
                                     <div className={styles.infosDecks}>
                                         { formatVictoire(game.type, game.victoire, game.config) }
                                         <CustomTooltip title={formatConfig(game.victoire, game.type, game.config)} placement="top">
-                                            <InfoIcon fontSize="small" color="primary"/>
+                                            <VisibilityIcon style={{marginLeft: 5}} fontSize="small" color="primary"/>
                                         </CustomTooltip>
                                     </div>
                                 </TableCell>

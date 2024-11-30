@@ -58,7 +58,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
         >
             <Box className={styles.modal}>
                 <div className={styles.container}>
-                    <h2 id="addDeck" style={{marginBottom: 0}}>Ajouter un deck</h2>
+                    <h2 id="addDeck">Ajouter un deck</h2>
                     <div className={styles.formBloc}>
                         <FormControl className={styles.formControl}>
                             <TextField

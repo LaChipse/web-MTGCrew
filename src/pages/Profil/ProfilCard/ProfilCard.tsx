@@ -1,16 +1,19 @@
 import { Button, Card, CardActions, CardContent, List, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
+import { useCountGames } from '../../../hooks/queries/games/useCountGames';
 import { AuthUser } from '../../../store/reducers/authReducer';
 import styles from './ProfilCard.module.scss';
 
 type Props = {
     user: AuthUser
-    count?: number
+    isStandard: boolean
     partieType: 'standard' | 'special',
     handleOpen: () => void
 }
 
-const ProfilCard: React.FC<Props> = ({ user, count, partieType, handleOpen }) => {
+const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleOpen }) => {
+    const { data: count } = useCountGames(isStandard)
+
     const ratioVictory = () => {
         return Math.round((user.victoires?.[partieType] / (user.partiesJouees?.[partieType] || 1)) * 100)
     }

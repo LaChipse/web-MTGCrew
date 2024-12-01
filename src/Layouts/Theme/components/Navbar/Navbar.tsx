@@ -1,11 +1,11 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Switch, Toolbar } from '@mui/material';
 import React, { useEffect, useState, useTransition } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../../router/routes';
-import { toTitleCase } from '../../../utils/ToTitleCase';
 import { useDispatch } from 'react-redux';
-import { switchType } from '../../../store/reducers/typeReducer';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { LOGIN_PAGE } from '../../../../router/routes';
+import { switchType } from '../../../../store/reducers/typeReducer';
+import { toTitleCase } from '../../../../utils/ToTitleCase';
 import styles from './Navbar.module.scss';
 
 type Props = unknown

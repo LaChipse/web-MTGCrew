@@ -1,18 +1,21 @@
 import { Button, Drawer } from '@mui/material';
 import { useState } from 'react';
 import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGamesForm';
-import GamesArray from './GamesArray/GamesArray';
 import { useCountGames } from '../../hooks/queries/games/useCountGames';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import DrawerSpcialGamesForm from './DrawerGamesForm/Special/DrawerSpecialGamesForm';
 import styles from './Games.module.scss';
+import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
+import { useGetGames } from '../../hooks/queries/games/useGetGames';
 
 const Games = () => {
-    const isStandard = useAppSelector((state) => state.type.isStandard);
-
+    const [page, setPage] = useState(1)
     const [openStandard, setOpenSdandard] = useState(false);
     const [openSpecial, setOpenSpecial] = useState(false);
 
+    const isStandard = useAppSelector((state) => state.type.isStandard);
+
+    const { data: games } = useGetGames(isStandard, page)
     const { data: count } = useCountGames(isStandard)
 
     const toggleDrawer = (newOpen: boolean) => {
@@ -27,7 +30,7 @@ const Games = () => {
                 <strong>Parties jouées : {count}</strong>
             </div>
 
-            <GamesArray isStandard={isStandard} count={count}/>
+            <GamesArray games={games} count={count} setPage={setPage} divider={20} />
 
             <Drawer open={openStandard} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>
                 <DrawerStandardGamesForm toggleDrawer={toggleDrawer} />

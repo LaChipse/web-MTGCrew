@@ -1,31 +1,23 @@
-import { Pagination, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useGetGames } from '../../../hooks/queries/games/useGetGames';
-import { DateHelper } from '../../../utils/DateHelper';
-import { PlayersBlock } from '../DrawerGamesForm/Standard/DrawerStandardGamesForm';
-import { useState } from 'react';
+import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import classNames from "classnames";
+import { GameResume } from '../../../../hooks/queries/games/useGetGames';
+import { useAppSelector } from '../../../../hooks/useAppSelector';
+import { PlayersBlock } from '../../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
+import { DateHelper } from '../../../../utils/DateHelper';
+import CustomTooltip from '../CustomTooltip/CustomTooltip';
 import styles from './GamesArray.module.scss';
 
 type Props = {
-    isStandard: boolean
+    games?: Array<GameResume>
+    setPage: React.Dispatch<React.SetStateAction<number>>
+    divider: number
     count?: number
+    isHystoric?: boolean
 }
 
-const GamesArray: React.FC<Props> = ({isStandard, count}) => {
-    const [page, setPage] = useState(1)
-    const { data: games } = useGetGames(isStandard, page)
-
-    const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
-        <Tooltip {...props} classes={{ popper: className }} />
-    ))({
-        [`& .${tooltipClasses.tooltip}`]: {
-            maxWidth: 'none',
-            margin: 0,
-            fontSize: '13px',
-            backgroundColor: 'rgb(29, 29, 29)',
-            borderRadius: 8
-        }
-    });
+const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystoric}) => {
+    const user = useAppSelector((state) => state.auth.user);
 
     const formatType = (type: string) => {
         if (type === 'team') return 'En équipe'
@@ -62,6 +54,18 @@ const GamesArray: React.FC<Props> = ({isStandard, count}) => {
         </>
     )
 
+    const winnerStyle = (victoire: string, config: Array<PlayersBlock>) => {
+        const userPlayer = config.find((conf) => conf.userId === user?.id)
+        const isWinner = (
+            (userPlayer?.userId === victoire) 
+            || (victoire === 'Seigneur' ? (userPlayer?.role === victoire || userPlayer?.role === 'Gardien') : userPlayer?.role === victoire) 
+            || (userPlayer?.team === victoire) 
+        )
+
+        if (isWinner) return 'green'
+        return 'red'
+    }
+
     const showWinnerStyle = (victoire: string, config: PlayersBlock) => {
         const isWinner = (
             (config?.userId === victoire) 
@@ -73,11 +77,10 @@ const GamesArray: React.FC<Props> = ({isStandard, count}) => {
         return '#FF0033'
     }
 
-
     const getPaginate = () => {
         if (count) {
-            if (count % 20 > 0) return (Math.floor(count / 20) + 1)
-            return Math.floor(count / 20)
+            if (count % divider > 0) return (Math.floor(count / divider) + 1)
+            return Math.floor(count / divider)
         }
         return 1
     }
@@ -102,7 +105,7 @@ const GamesArray: React.FC<Props> = ({isStandard, count}) => {
                     </TableHead>
                     <TableBody>
                         {games?.map((game) => (
-                            <TableRow key={game.id}>
+                            <TableRow key={game.id} className={classNames({ [styles[winnerStyle(game.victoire, game.config)]]: isHystoric })}>
                                 <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
                                 <TableCell align="center">{ formatType(game.type) }</TableCell>
                                 <TableCell align="center">

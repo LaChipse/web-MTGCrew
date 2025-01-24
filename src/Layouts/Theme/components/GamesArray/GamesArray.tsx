@@ -43,9 +43,9 @@ const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystori
     const formatConfig = (victoire: string, type: string, config: Array<PlayersBlock>) =>(
         <>
             <ul style={{ margin: 0, listStyle: 'none', padding: 0 }}>
-                {config.map((conf) => {
+                {config.map((conf, index) => {
                     return (
-                        <li style={{ margin: 10, color: showWinnerStyle(victoire, conf) }}>
+                        <li key={`${conf.deckId}-${conf.userId}-${index}`} style={{ margin: 10, color: showWinnerStyle(victoire, conf) }}>
                             <strong>Joueur: </strong>{conf.joueur}<strong>, Deck: </strong>{conf.deck}{typeGame(type, conf)}
                         </li>
                     )

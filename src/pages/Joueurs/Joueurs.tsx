@@ -54,7 +54,7 @@ const Joueurs = () => {
     const getVictoryRatio = (victoires: number, parties: number) => Math.round((victoires / (parties || 1)) * 100);
 
     const ratioVictoryDeck = (id: string) => {
-        const userDecks = usersDecks?.find((userDeck) => userDeck.id === id)?.decks;
+        const userDecks = usersDecks?.filter((userDeck) => userDeck.decks.length).find((userDeck) => userDeck.id === id)?.decks;
         return userDecks?.reduce((max, deck) => 
             getVictoryRatio(deck.victoires[partieType], deck.parties[partieType]) > getVictoryRatio(max.victoires[partieType], max.parties[partieType]) ? deck : max
         );
@@ -66,7 +66,7 @@ const Joueurs = () => {
     };
 
     const mostDeckPlayed = (id: string) => {
-        const userDecks = usersDecks?.find((userDeck) => userDeck.id === id)?.decks
+        const userDecks = usersDecks?.filter((userDeck) => userDeck.decks.length).find((userDeck) => userDeck.id === id)?.decks
         return userDecks?.reduce((max, deck) => {
             return deck.parties?.[partieType] > max.parties?.[partieType] ? deck : max;
         });
@@ -119,8 +119,8 @@ const Joueurs = () => {
                                     </div></TableCell>
                                 <TableCell align="center">{ `${ user.partiesJouees?.[partieType] } (${ Math.round((user.partiesJouees?.[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
                                 <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires?.[partieType] } (${ratioVictory(user) }%)`}</TableCell>
-                                <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom } (${ Math.round(((mostDeckPlayed(user.id)?.parties?.[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
-                                <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
+                                <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom || 'Non défini' } (${ Math.round(((mostDeckPlayed(user.id)?.parties?.[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
+                                <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom || 'Non défini' } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -120,7 +120,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                                 onChange={handleTypeChange}
                                 label="Type de partie"
                             >
-                                <MenuItem value={'each'}>Chacun pour soit</MenuItem>
+                                <MenuItem value={'each'}>Chacun pour soi</MenuItem>
                                 <MenuItem value={'team'}>Equipe</MenuItem>
                             </Select>
                         </FormControl>

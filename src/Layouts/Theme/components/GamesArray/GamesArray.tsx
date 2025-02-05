@@ -21,7 +21,7 @@ const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystori
 
     const formatType = (type: string) => {
         if (type === 'team') return 'En équipe'
-        if (type === 'each') return 'Chacun pour soit'
+        if (type === 'each') return 'Chacun pour soi'
         if (type === 'treachery') return 'Treachery'
         if (type === 'archenemy') return 'Archenemy'
         else return '-'

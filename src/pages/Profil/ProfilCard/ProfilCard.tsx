@@ -19,7 +19,7 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleOpen 
     }
 
     const colorVictory = () => {
-        if (ratioVictory() >= 50) return 'green'
+        if (ratioVictory() >= 30) return 'green'
         else return 'red'
     }
 

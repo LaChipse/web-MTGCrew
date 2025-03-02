@@ -14,7 +14,7 @@ type Props = {
 const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
     const [nom, setNom] = useState('');
     const [couleurs, setCouleurs] = useState<Array<string>>([]);
-    const [rank, setRank] = useState('');
+    const [rank, setRank] = useState(1);
     const [type, setType] = useState('');
     const [isImprime, setIsImprime] = useState(false);
 
@@ -39,7 +39,7 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
 
         setNom('')
         setCouleurs([])
-        setRank('')
+        setRank(1)
         setType('')
         setIsImprime(false)
         setOpen(false)
@@ -120,16 +120,15 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                             <Select
                                 labelId="Rank"
                                 id="Rank"
-                                value={rank}
-                                onChange={((e) => setRank(e.target.value))}
+                                value={rank.toString()}
+                                onChange={((e) => setRank(Number(e.target.value)))}
                                 label="Rank"
                             >
-                                <MenuItem value={'Z'}>Z</MenuItem>
-                                <MenuItem value={'S'}>S</MenuItem>
-                                <MenuItem value={'A'}>A</MenuItem>
-                                <MenuItem value={'B'}>B</MenuItem>
-                                <MenuItem value={'C'}>C</MenuItem>
-                                <MenuItem value={'D'}>D</MenuItem>
+                                <MenuItem value={'1'}>1</MenuItem>
+                                <MenuItem value={'2'}>2</MenuItem>
+                                <MenuItem value={'3'}>3</MenuItem>
+                                <MenuItem value={'4'}>4</MenuItem>
+                                <MenuItem value={'5'}>5</MenuItem>
                             </Select>
                         </FormControl>
                     </div>

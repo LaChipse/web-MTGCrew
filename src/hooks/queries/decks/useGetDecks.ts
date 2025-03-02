@@ -8,7 +8,7 @@ export interface Deck {
     nom: string,
     couleurs: Array<string>
     type: string
-    rank: string
+    rank: number
     parties: PartiesTypes
     victoires: PartiesTypes
     isImprime: boolean

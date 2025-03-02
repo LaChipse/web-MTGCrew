@@ -8,6 +8,7 @@ import { toTitleCase } from '../../../utils/ToTitleCase';
 import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
 import styles from './DecksArray.module.scss';
+import { RANK } from '../../../utils/Enums/rank';
 
 type Props = {
     decks?: Array<Deck>
@@ -81,8 +82,8 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                                 <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom}</TableCell>
                                 <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs)}</TableCell>
                                 <TableCell align="center">{toTitleCase(deck.type) || '-'}</TableCell>
-                                <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
-                                    {deck.rank?.toLocaleUpperCase()  || '-'}
+                                <TableCell align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
+                                    {deck.rank  || '-'}
                                 </TableCell>
                                 <TableCell align="center">{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</TableCell>
                                 <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>

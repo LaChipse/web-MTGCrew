@@ -9,7 +9,7 @@ import { useGetDecks } from './useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 import { useGetUserDeck } from './useGetUserDeck';
 
-const addDeck = async (nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (
+const addDeck = async (nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()
         .setBearerToken()
         .post('/deck/add', {nom, couleurs, isImprime, rank, type})
@@ -22,7 +22,7 @@ export const useAddDeck = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {nom: string, couleurs: Array<string>, isImprime: boolean, rank:string, type?: string}) => (
+            mutationFn: (data: {nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string}) => (
                 addDeck(data.nom, data.couleurs, data.isImprime, data.rank, data.type)
             ),
             onSuccess: () => {

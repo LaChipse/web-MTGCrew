@@ -77,7 +77,7 @@ const Joueurs = () => {
     }
 
     const colorVictory = (user: User) => {
-        if (ratioVictory(user) >= 50) return 'green'
+        if (ratioVictory(user) >= 30) return 'green'
         else return 'red'
     }
 

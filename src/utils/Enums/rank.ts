@@ -1,0 +1,1 @@
+export const RANK = ['E', 'D', 'C', 'B', 'A']

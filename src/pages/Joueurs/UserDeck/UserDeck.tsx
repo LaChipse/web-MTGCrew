@@ -3,6 +3,7 @@ import React from 'react';
 import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
 import classNames from 'classnames';
 import styles from './UserDeck.module.scss'
+import { RANK } from '../../../utils/Enums/rank';
 
 type Props = {
     userId: string
@@ -54,8 +55,8 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                                 <TableRow key={deck.nom}>
                                     <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom || '-'}</TableCell>
                                     <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
-                                    <TableCell align="center" className={classNames([styles[deck.rank?.toLocaleUpperCase()], styles.rank])}>
-                                        {deck.rank?.toLocaleUpperCase() || '-'}
+                                    <TableCell align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
+                                        {deck.rank || '-'}
                                     </TableCell>
                                     <TableCell align="center"> { deck.parties?.[partieType] } </TableCell>
                                     <TableCell align="center"> { deck.victoires?.[partieType] } </TableCell>

@@ -6,8 +6,10 @@ import { useGetDecks } from './useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 import { useAppSelector } from '../../useAppSelector';
 import { useGetUserDeck } from './useGetUserDeck';
+import { useGetGames } from '../games/useGetGames';
+import { useGetHistoryGames } from '../games/useGetHistoryGames';
 
-const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: string, type?: string) => (
+const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()
         .setBearerToken()
         .put('/deck/update', {id, nom, couleurs, isImprime, rank, type})
@@ -20,7 +22,7 @@ export const useUpdateDeck = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank:string, type?: string}) => (
+            mutationFn: (data: {id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string}) => (
                 updateDeck(data.id, data.nom, data.couleurs, data.isImprime, data.rank, data.type)
             ),
             onSuccess: () => {
@@ -29,6 +31,8 @@ export const useUpdateDeck = () => {
 
                 useGetDecks.reset(queryClient)
                 useGetUsersDecks.reset(queryClient)
+                useGetGames.reset(queryClient)
+                useGetHistoryGames.reset(queryClient)
             }
         })
     );

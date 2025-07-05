@@ -4,7 +4,7 @@ import { resetQueries } from '../../../utils/resetQueries';
 import { filtersGetGames } from './useGetGames';
 import dayjs from 'dayjs';
 
-const getCountGames = async (isStandard: boolean, filters: filtersGetGames) => {
+const getCountHistoryGames = async (isStandard: boolean, filters: filtersGetGames) => {
     const searchParams = new URLSearchParams();
     
     Object.entries(filters).forEach(([key, value]) => {
@@ -19,14 +19,14 @@ const getCountGames = async (isStandard: boolean, filters: filtersGetGames) => {
     });
 
     const queryString = searchParams.toString();
-    const url = `/game/count/${isStandard}${queryString ? `?${queryString}` : ''}`;
+    const url = `/game/historyCount/${isStandard}${queryString ? `?${queryString}` : ''}`;
 
     return await new Api<number>()
         .setBearerToken()
         .get(url)
 }
 
-export const useCountGames = (isStandard: boolean, filters: filtersGetGames) => {
+export const useCountHistoryGames = (isStandard: boolean, filters: filtersGetGames) => {
 
     const { startDate, endDate } = filters;
 
@@ -34,10 +34,10 @@ export const useCountGames = (isStandard: boolean, filters: filtersGetGames) => 
     const bothUndefined = !startDate && !endDate;
 
     return useQuery({
-        queryKey: ['getCountGames', isStandard],
-        queryFn: () => getCountGames(isStandard, filters),
+        queryKey: ['getCountHistoryGames', isStandard],
+        queryFn: () => getCountHistoryGames(isStandard, filters),
         enabled: bothDefined || bothUndefined,
     })
 };
 
-useCountGames.reset = resetQueries(['getCountGames']);
+useCountHistoryGames.reset = resetQueries(['getCountHistoryGames']);

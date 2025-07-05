@@ -13,7 +13,7 @@ const Joueurs = () => {
     
     const { data: users } = useGetAllPlayers()
     const { data: usersDecks } = useGetUsersDecks()
-    const { data: count } = useCountGames(isStandard)
+    const { data: count } = useCountGames(isStandard, {startDate: null, endDate: null})
 
     const [open, setOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState('')

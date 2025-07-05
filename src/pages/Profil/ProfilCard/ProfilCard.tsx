@@ -12,7 +12,7 @@ type Props = {
 }
 
 const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleOpen }) => {
-    const { data: count } = useCountGames(isStandard)
+    const { data: count } = useCountGames(isStandard, { startDate: null, endDate: null })
 
     const ratioVictory = () => {
         return Math.round((user.victoires?.[partieType] / (user.partiesJouees?.[partieType] || 1)) * 100)

@@ -1,13 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
 import { useDispatch } from 'react-redux';
-import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
-import { authActions } from '../../../store/reducers/authReducer';
+import { useGetDecks } from './useGetDecks';
+import { useGetUserDeck } from './useGetUserDeck';
 import { useAppSelector } from '../../useAppSelector';
 import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
-import { useGetDecks } from './useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
-import { useGetUserDeck } from './useGetUserDeck';
+import { authActions } from '../../../store/reducers/authReducer';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 
 const addDeck = async (nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()

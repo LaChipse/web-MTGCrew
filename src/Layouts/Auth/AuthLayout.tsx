@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+
+import Loading from "../../pages/Loading/Loading";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useGetUser } from "../../hooks/queries/useGetUser";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import Loading from "../../pages/Loading/Loading";
-import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
 import { authActions } from "../../store/reducers/authReducer";
+import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
 
 const AuthLayout = () => {
     const navigate = useNavigate();

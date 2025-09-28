@@ -53,20 +53,39 @@
         color: white !important;
     }
 
-    tbody {
-        tr:nth-of-type(odd) {
-            background-color: rgb(248, 247, 247) !important;
+    .tableau {
+        overflow: auto;
+        height: 100%;
+
+        .styckyCol {
+            left: 0;
+            top: 0;
+            position: sticky;
+            z-index: 11;
         }
 
-        tr:nth-of-type(even) {
-            background-color: white !important;
+        .styckyFirstCell {
+            left: 0;
+            top: 0;
+            position: sticky;
+            z-index: 12;
         }
+        
+        tbody {
 
-        th, td {
-            color: rgb(29, 29, 29) !important
+            tr:nth-of-type(odd), tr:nth-child(odd) > th {
+                background-color: rgb(248, 247, 247) !important;
+            }
+
+            tr:nth-of-type(even), tr:nth-child(even) > th  {
+                background-color: white !important;
+            }
+
+            th, td {
+                color: rgb(29, 29, 29) !important
+            }
         }
     }
-    
 }
 
 @media (max-width: 600px) {

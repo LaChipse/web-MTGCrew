@@ -43,7 +43,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                     <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
+                                <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
                                 <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
                                 <TableCell align="center" style={{ minWidth: "35px" }}>Rank</TableCell>
                                 <TableCell align="center" style={{ minWidth: "100px" }}>Nbr parties</TableCell>
@@ -53,7 +53,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                         <TableBody>
                             {decks?.map((deck) => (
                                 <TableRow key={deck.nom}>
-                                    <TableCell align="center" style={{fontWeight: 700}} component="th" scope="row">{deck.nom || '-'}</TableCell>
+                                    <TableCell align="center" style={{fontWeight: 700}} className={styles.styckyCol} component="th" scope="row">{deck.nom || '-'}</TableCell>
                                     <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
                                     <TableCell align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
                                         {deck.rank || '-'}

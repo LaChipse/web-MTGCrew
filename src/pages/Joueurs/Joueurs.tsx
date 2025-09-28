@@ -98,18 +98,18 @@ const Joueurs = () => {
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center" style={{ minWidth: "100px" }}>Nom</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }}>Nbr decks</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }}>Parties jouées</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }}>Ratio victoire</TableCell>
-                            <TableCell align="center" style={{ minWidth: "150px" }}>Deck le plus joué</TableCell>
-                            <TableCell align="center" style={{ minWidth: "175px" }}>Meilleur deck</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Nbr decks</TableCell>
+                            <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Parties jouées</TableCell>
+                            <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Ratio victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "150px" }} className={styles.styckyRow}>Deck le plus joué</TableCell>
+                            <TableCell align="center" style={{ minWidth: "175px" }} className={styles.styckyRow}>Meilleur deck</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {users?.map((user) => (
                             <TableRow key={user.fullName}>
-                                <TableCell align="center" style={{ fontWeight: 700 }} component="th" scope="row">{user.fullName}</TableCell>
+                                <TableCell align="center" style={{ fontWeight: 700 }} className={styles.styckyCol} component="th" scope="row">{user.fullName}</TableCell>
                                 <TableCell align="center">
                                     <div className={styles.infosDecks}>
                                         { user.nbrDecks }

@@ -1,5 +1,35 @@
 .tableau {
     margin-top: 20px;
+    overflow: auto;
+    height: 100%;
+
+    .styckyCol {
+        left: 0;
+        position: sticky;
+        z-index: 11;
+    }
+
+    .styckyRow {
+        top: 0;
+        position: sticky;
+        z-index: 10;
+    }
+
+    .styckyFirstCell {
+        top: 0;
+        left: 0;
+        position: sticky;
+        z-index: 15;
+    }
+
+    tbody tr:nth-child(odd) > th {
+        background-color: rgb(43, 42, 42);
+    }
+
+    tbody tr:nth-child(even) > th {
+        background-color: rgb(29, 29, 29);
+    }
+
 
     .actions {
         display: flex;

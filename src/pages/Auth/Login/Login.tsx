@@ -1,14 +1,14 @@
-import { FormControl, TextField } from '@mui/material';
+import { Button, FormControl, TextField } from '@mui/material';
 import { MouseEvent, useEffect, useState } from 'react';
-// import { SIGNUP_PAGE } from '../../../router/routes';
+import { SIGNUP_PAGE } from '../../../router/routes';
 import { useLogin } from '../../../hooks/queries/useLogin';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import styles from './Login.module.scss';
 
 const Login = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const user = useAppSelector((state) => state.auth.user);
 
     const [nom, setNom] = useState('');
@@ -68,7 +68,7 @@ const Login = () => {
                 <LoadingButton loading={isPending} variant="contained" onClick={handleSubmit} className={styles.submit}>
                     Se connecter
                 </LoadingButton>
-                {/* <Button onClick={() => navigate(SIGNUP_PAGE)}>Créer un compte</Button> */}
+                <Button onClick={() => navigate(SIGNUP_PAGE)}>Créer un compte</Button>
             </div>
         </div>
     )

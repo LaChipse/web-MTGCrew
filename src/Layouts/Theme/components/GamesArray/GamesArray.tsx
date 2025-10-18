@@ -105,10 +105,18 @@ const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystori
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Type de partie</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
-                            <TableCell align="center" style={{ minWidth: "50px" }}>Type de victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>
+                                Date
+                            </TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>
+                                Type de partie
+                            </TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>
+                                Victoire
+                            </TableCell>
+                            <TableCell align="center" style={{ minWidth: "50px" }}>
+                                Type de victoire
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

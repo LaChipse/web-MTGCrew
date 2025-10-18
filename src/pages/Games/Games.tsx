@@ -20,17 +20,12 @@ const Games = () => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
     const filters = useAppSelector((state) => state.gameFilters);
 
-    const { data: games, refetch: refetchGames } = useGetGames(isStandard, page, { ...filters })
-    const { data: count, refetch: refetchCount } = useCountGames(isStandard, { ...filters })
+    const { data: games, refetch: refetchGames } = useGetGames(isStandard, page, filters)
+    const { data: count, refetch: refetchCount } = useCountGames(isStandard, filters)
 
     useEffect(() => {
-        const bothDefined = !!filters.startDate && !!filters.endDate;
-        const bothUndefined = !filters.startDate && !filters.endDate;
-
-        if (bothDefined || bothUndefined) {
-            refetchGames();
-            refetchCount();
-        }
+        refetchGames();
+        refetchCount();
     }, [filters, refetchGames, refetchCount])
 
     const toggleDrawer = (newOpen: boolean) => {

@@ -4,6 +4,7 @@ import { snackbarReducer } from './reducers/snackbarReducer';
 import { loaderReducer } from './reducers/loaderReducer';
 import { typeReducer } from './reducers/typeReducer';
 import { gameFiltersReducer } from './reducers/gameFiltersReducer';
+import { gameSortingSliceReducer } from './reducers/gameSortingReducer';
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         auth: authReducer,
         snackbar: snackbarReducer,
         type: typeReducer,
-        gameFilters: gameFiltersReducer
+        gameFilters: gameFiltersReducer,
+        gameSorting: gameSortingSliceReducer
     }
 })
 

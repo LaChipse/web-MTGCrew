@@ -1,22 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { filtersGames } from '../../../store/reducers/gameFiltersReducer';
 import { Api } from '../../../utils/Api';
 import { resetQueries } from '../../../utils/resetQueries';
-import { filtersGetGames } from './useGetGames';
-import dayjs from 'dayjs';
 
-const getCountGames = async (isStandard: boolean, filters: filtersGetGames) => {
+const getCountGames = async (isStandard: boolean, filters: filtersGames) => {
     const searchParams = new URLSearchParams();
     
-    Object.entries(filters).forEach(([key, value]) => {
-        if (value === undefined || value === null) return;
+    if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value === undefined || value === null) return;
 
-        // Si c’est un objet dayjs, on le formate
-        if (dayjs.isDayjs(value)) {
-            searchParams.append(key, value.toISOString()); // ou value.format('YYYY-MM-DD') selon le besoin
-        } else {
-            searchParams.append(key, String(value));
-        }
-    });
+            // Si c’est un objet dayjs, on le formate
+            if (dayjs.isDayjs(value)) {
+                searchParams.append(key, value.toISOString()); // ou value.format('YYYY-MM-DD') selon le besoin
+            } else {
+                searchParams.append(key, String(value));
+            }
+        });
+    }
 
     const queryString = searchParams.toString();
     const url = `/game/count/${isStandard}${queryString ? `?${queryString}` : ''}`;
@@ -26,17 +28,10 @@ const getCountGames = async (isStandard: boolean, filters: filtersGetGames) => {
         .get(url)
 }
 
-export const useCountGames = (isStandard: boolean, filters: filtersGetGames) => {
-
-    const { startDate, endDate } = filters;
-
-    const bothDefined = !!startDate && !!endDate;
-    const bothUndefined = !startDate && !endDate;
-
+export const useCountGames = (isStandard: boolean, filters: filtersGames) => {
     return useQuery({
-        queryKey: ['getCountGames', isStandard],
+        queryKey: ['getCountGames', isStandard, filters],
         queryFn: () => getCountGames(isStandard, filters),
-        enabled: bothDefined || bothUndefined,
     })
 };
 

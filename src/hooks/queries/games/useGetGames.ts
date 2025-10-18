@@ -1,16 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
+import { filtersGames } from '../../../store/reducers/gameFiltersReducer';
 import { Api } from '../../../utils/Api';
 import { resetQueries } from '../../../utils/resetQueries';
-import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
-import dayjs, { Dayjs } from 'dayjs';
-
-export interface filtersGetGames {
-    startDate: Dayjs | null,
-    endDate: Dayjs | null,
-    victoryRole?: string,
-    winnerId?: string
-}
-
 export interface GameResume {
     id: string,
     date?: Date,
@@ -20,19 +13,21 @@ export interface GameResume {
     typeVictoire: string
 }
 
-const getGames = async (isStandard: boolean, page: number, filters: filtersGetGames) => {
+const getGames = async (isStandard: boolean, page: number, filters: filtersGames) => {
     const searchParams = new URLSearchParams();
 
-    Object.entries(filters).forEach(([key, value]) => {
-        if (value === undefined || value === null) return;
+    if (filters) {
+            Object.entries(filters).forEach(([key, value]) => {
+            if (value === undefined || value === null) return;
 
-        // Si c’est un objet dayjs, on le formate
-        if (dayjs.isDayjs(value)) {
-            searchParams.append(key, value.toISOString()); // ou value.format('YYYY-MM-DD') selon le besoin
-        } else {
-            searchParams.append(key, String(value));
-        }
-    });
+            // Si c’est un objet dayjs, on le formate
+            if (dayjs.isDayjs(value)) {
+                searchParams.append(key, value.toISOString()); // ou value.format('YYYY-MM-DD') selon le besoin
+            } else {
+                searchParams.append(key, String(value));
+            }
+        });
+    }
 
     const queryString = searchParams.toString();
     const url = `/game/all/${isStandard}/${page}${queryString ? `?${queryString}` : ''}`;
@@ -43,17 +38,10 @@ const getGames = async (isStandard: boolean, page: number, filters: filtersGetGa
 export const useGetGames = (
     isStandard: boolean,
     page: number,
-    filters: filtersGetGames
-) => {
-    const { startDate, endDate } = filters;
-
-    const bothDefined = !!startDate && !!endDate;
-    const bothUndefined = !startDate && !endDate;
-
-    return useQuery({
-        queryKey: ['getGames', isStandard, page],
+    filters: filtersGames,
+) => { return useQuery({
+        queryKey: ['getGames', isStandard, page, filters],
         queryFn: () => getGames(isStandard, page, filters),
-        enabled: bothDefined || bothUndefined,
     });
 };
 

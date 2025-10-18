@@ -7,6 +7,8 @@ import dayjs, { Dayjs } from 'dayjs';
 export interface filtersGetGames {
     startDate: Dayjs | null,
     endDate: Dayjs | null,
+    victoryRole?: string,
+    winnerId?: string
 }
 
 export interface GameResume {

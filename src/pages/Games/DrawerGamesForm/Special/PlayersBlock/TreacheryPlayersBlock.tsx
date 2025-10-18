@@ -5,6 +5,7 @@ import { useGetAllDecks } from "../../../../../hooks/queries/decks/useGetAllDeck
 import { useGetAllPlayers } from "../../../../../hooks/queries/joueurs/useGetAllPlayers";
 import { PlayersBlock } from "../../Standard/DrawerStandardGamesForm";
 import styles from './PlayersBlock.module.scss';
+import { ROLE_TYPE } from "../../../../../utils/Enums/roleType";
 
 type Props = {
     config: Array<PlayersBlock>
@@ -18,8 +19,6 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
 
     const otherUsersNotSelected = users?.filter((user) => !config.map((conf) => conf.userId).includes(user.id))
     const otherDecksNotSelected = decks?.filter((deck) => !config.map((conf) => conf.deckId).includes(deck.id))
-
-    const roles = [ 'Seigneur', 'Gardien', 'Assassin', 'Traitre']
 
     const getUser = (userId: string) => {
         const user = users?.find((user) => user.id === userId)
@@ -144,7 +143,7 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
                         label="Role"
                     >
                         {
-                            roles?.map((role) => (
+                            Object.values(ROLE_TYPE).map((role) => (
                                 <MenuItem value={role} key={role}>
                                     {role}
                                 </MenuItem>

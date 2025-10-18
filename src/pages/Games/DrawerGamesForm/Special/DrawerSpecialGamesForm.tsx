@@ -102,78 +102,78 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
             </header>
 
             <Box className={styles.drawer}>
-                    <h3> Partie </h3>
-                    <div className={styles.firstBloc}>
-                        <FormControl className={styles.datePickerForm}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                                <DatePicker label="Date de la partie" value={date} onChange={setDate}/>
-                            </LocalizationProvider>
-                        </FormControl>
+                <h3> Partie </h3>
+                <div className={styles.firstBloc}>
+                    <FormControl className={styles.datePickerForm}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
+                            <DatePicker label="Date de la partie" value={date} onChange={setDate}/>
+                        </LocalizationProvider>
+                    </FormControl>
 
-                        <FormControl size='small'>
-                            <InputLabel id="partieType">Type de partie</InputLabel>
-                            <Select
-                                labelId="partieType"
-                                id="partieTypeSelect"
-                                value={type}
-                                onChange={handleTypeChange}
-                                label="Type de partie"
-                            >
-                                <MenuItem value={'treachery'}>Treachery</MenuItem>
-                                <MenuItem value={'archenemy'}>Archenemy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
+                    <FormControl size='small'>
+                        <InputLabel id="partieType">Type de partie</InputLabel>
+                        <Select
+                            labelId="partieType"
+                            id="partieTypeSelect"
+                            value={type}
+                            onChange={handleTypeChange}
+                            label="Type de partie"
+                        >
+                            <MenuItem value={'treachery'}>Treachery</MenuItem>
+                            <MenuItem value={'archenemy'}>Archenemy</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 
-                    {type === 'treachery' && (
-                        <>
-                            <h3>Joueurs et Rôles</h3>
-                            <TreacheryPlayersBlock
-                                config={config}
-                                setConfig={setConfig}
-                                configIndex={configIndex}
-                            />
-                        </>
-                    )}
+                {type === 'treachery' && (
+                    <>
+                        <h3>Joueurs et Rôles</h3>
+                        <TreacheryPlayersBlock
+                            config={config}
+                            setConfig={setConfig}
+                            configIndex={configIndex}
+                        />
+                    </>
+                )}
 
-                    {type === 'archenemy' && (
-                        <>
-                            <h3>Joueurs et Rôles</h3>
-                            <ArchenemyPlayersBlock
-                                config={config}
-                                setConfig={setConfig}
-                                configIndex={configIndex}
-                            />
-                        </>
-                    )}
-                    
-                    <IconButton className={classNames([styles.addIcon, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
-                        <AddIcon />
-                    </IconButton>
+                {type === 'archenemy' && (
+                    <>
+                        <h3>Joueurs et Rôles</h3>
+                        <ArchenemyPlayersBlock
+                            config={config}
+                            setConfig={setConfig}
+                            configIndex={configIndex}
+                        />
+                    </>
+                )}
+                
+                <IconButton className={classNames([styles.addIcon, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
+                    <AddIcon />
+                </IconButton>
 
-                    {type === 'treachery' && (
-                        <>
-                            <h3> Rôle victorieux </h3>
-                            <TreacheryVictoryBlock 
-                                victoire={victoire}
-                                setVictoire={setVictoire}
-                                typeVictoire={typeVictoire}
-                                setTypeVictoire={setTypeVictoire}
-                            />
-                        </>
-                    )}
+                {type === 'treachery' && (
+                    <>
+                        <h3> Rôle victorieux </h3>
+                        <TreacheryVictoryBlock 
+                            victoire={victoire}
+                            setVictoire={setVictoire}
+                            typeVictoire={typeVictoire}
+                            setTypeVictoire={setTypeVictoire}
+                        />
+                    </>
+                )}
 
-                    {type === 'archenemy' && (
-                        <>
-                            <h3> Rôle victorieux </h3>
-                            <ArchenemyVictoryBlock 
-                                victoire={victoire}
-                                setVictoire={setVictoire}
-                                typeVictoire={typeVictoire}
-                                setTypeVictoire={setTypeVictoire}
-                            />
-                        </>
-                    )}
+                {type === 'archenemy' && (
+                    <>
+                        <h3> Rôle victorieux </h3>
+                        <ArchenemyVictoryBlock 
+                            victoire={victoire}
+                            setVictoire={setVictoire}
+                            typeVictoire={typeVictoire}
+                            setTypeVictoire={setTypeVictoire}
+                        />
+                    </>
+                )}
 
                 <div className={styles.buttons}>
                     <LoadingButton

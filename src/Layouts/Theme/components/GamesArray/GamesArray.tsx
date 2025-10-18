@@ -1,11 +1,14 @@
+import FilterListIcon from '@mui/icons-material/FilterList';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from "classnames";
+import { useState } from 'react';
 import { GameResume } from '../../../../hooks/queries/games/useGetGames';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { PlayersBlock } from '../../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import { DateHelper } from '../../../../utils/DateHelper';
 import CustomTooltip from '../CustomTooltip/CustomTooltip';
+import GamesFilter from '../GamesFilter/GamesFilter';
 import styles from './GamesArray.module.scss';
 
 type Props = {
@@ -16,8 +19,10 @@ type Props = {
     isHystoric?: boolean
 }
 
-const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystoric}) => {
+const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystoric }) => {
     const user = useAppSelector((state) => state.auth.user);
+
+    const [isOpen, setIsOpen] = useState(false)
 
     const formatType = (type: string) => {
         if (type === 'team') return 'En équipe'
@@ -91,7 +96,10 @@ const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystori
 
     return (
         <>
-            <Pagination count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Pagination count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
+                <FilterListIcon style={{color: 'white'}} onClick={() => setIsOpen(true)}/>
+            </div>
 
             <TableContainer className={styles.tableau}>
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
@@ -122,6 +130,11 @@ const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystori
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <GamesFilter
+                isOpen={isOpen}
+                handleSetIsOpen={setIsOpen}
+            />
         </>
     )
 }

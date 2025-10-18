@@ -1,14 +1,11 @@
-import 'dayjs/locale/fr';
-import dayjs, { Dayjs } from 'dayjs';
 import { Button, Drawer } from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import 'dayjs/locale/fr';
 
 import { useEffect, useState } from 'react';
 
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { useGetGames } from '../../hooks/queries/games/useGetGames';
 import { useCountGames } from '../../hooks/queries/games/useCountGames';
+import { useGetGames } from '../../hooks/queries/games/useGetGames';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
 import DrawerSpcialGamesForm from './DrawerGamesForm/Special/DrawerSpecialGamesForm';
 import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGamesForm';
@@ -16,28 +13,25 @@ import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGa
 import styles from './Games.module.scss';
 
 const Games = () => {
-    dayjs.locale('fr')
-    
     const [page, setPage] = useState(1)
     const [openStandard, setOpenSdandard] = useState(false);
     const [openSpecial, setOpenSpecial] = useState(false);
-    const [startDate, setStartDate] = useState<Dayjs | null>(null)
-    const [endDate, setEndDate] = useState<Dayjs | null>(null)
 
     const isStandard = useAppSelector((state) => state.type.isStandard);
+    const filters = useAppSelector((state) => state.gameFilters);
 
-    const { data: games, refetch: refetchGames } = useGetGames(isStandard, page, { startDate, endDate })
-    const { data: count, refetch: refetchCount } = useCountGames(isStandard, { startDate, endDate })
+    const { data: games, refetch: refetchGames } = useGetGames(isStandard, page, { ...filters })
+    const { data: count, refetch: refetchCount } = useCountGames(isStandard, { ...filters })
 
     useEffect(() => {
-        const bothDefined = !!startDate && !!endDate;
-        const bothUndefined = !startDate && !endDate;
+        const bothDefined = !!filters.startDate && !!filters.endDate;
+        const bothUndefined = !filters.startDate && !filters.endDate;
 
         if (bothDefined || bothUndefined) {
             refetchGames();
             refetchCount();
         }
-    }, [endDate, startDate, refetchGames, refetchCount])
+    }, [filters, refetchGames, refetchCount])
 
     const toggleDrawer = (newOpen: boolean) => {
         if(isStandard) setOpenSdandard(newOpen) 
@@ -50,28 +44,6 @@ const Games = () => {
             <div className={styles.addGames}>
                 <Button variant="contained" onClick={() => toggleDrawer(true)}>Ajouter une partie</Button>
                 <strong>Parties jouées : {count}</strong>
-            </div>
-            <div className={styles.datePickers}>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                    <div>
-                        <p>Debut</p>
-                        <DatePicker 
-                            className={styles.datePicker} 
-                            value={startDate} 
-                            onChange={(d) => setStartDate(d!.startOf('day').add(1, 'second'))}
-                            shouldDisableDate={(date) => date.isAfter(endDate)}
-                        />
-                    </div>
-                    <div>
-                        <p>Fin</p>
-                        <DatePicker 
-                            className={styles.datePicker} 
-                            value={endDate} 
-                            onChange={(d) => setEndDate(d!.endOf('day'))} 
-                            shouldDisableDate={(date) => date.isBefore(startDate)}
-                        />
-                    </div>
-                </LocalizationProvider>
             </div>
         </div>
 

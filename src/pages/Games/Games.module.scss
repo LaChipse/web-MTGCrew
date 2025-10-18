@@ -11,29 +11,6 @@
     }
 }
 
-.datePickers {
-    margin-bottom: 20px;
-    display: flex;
-
-    p {
-        margin: 5px;
-    }
-
-    .datePicker {
-        margin-right: 5px;
-        margin-left: 5px;
-
-        > div {
-            background-color: white;
-        }
-
-        input {
-            padding: 5px 10px;
-            max-width: 120px;
-        } 
-    }
-}
-
 .drawer {
     width: 100%;
 }

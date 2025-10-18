@@ -27,10 +27,15 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleOpen 
         <>
             <Card className={styles.profil}>
                 <CardContent>
-                    <h2 className={styles.h2}>
-                        {user?.prenom} {user?.nom?.charAt(0)}.
-                    </h2>
-    
+                    <div className={styles.headCard}>
+                        <h2 className={styles.h2}>
+                            {user?.prenom} {user?.nom?.charAt(0)}.
+                        </h2>
+
+                        <CardActions>
+                            <Button size="small" onClick={handleOpen}>Modifier profil</Button>
+                        </CardActions>
+                    </div>
                     <List style={{ padding: 0 }}>
                         <ListItem className={styles.list}>
                             <ListItemText
@@ -45,11 +50,7 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleOpen 
                             />
                         </ListItem>
                     </List>
-
                 </CardContent>
-                <CardActions style={{ padding: '8px 16px 16px' }}>
-                    <Button size="small" onClick={handleOpen}>Modifier profil</Button>
-                </CardActions>
             </Card> 
         </>
     )

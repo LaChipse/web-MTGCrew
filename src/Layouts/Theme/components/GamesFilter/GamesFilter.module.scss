@@ -1,0 +1,31 @@
+.drawer {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    .select {
+        min-width: 150px;
+        max-height: 36px;
+    }
+    
+    .datePickers {
+        display: flex;
+        gap: 10px;
+
+        .datePicker {
+            input {
+                padding: 5px 10px;
+                max-width: 120px;
+            } 
+        }
+    }
+
+    .clearButton {
+        justify-content: end;
+    }
+}

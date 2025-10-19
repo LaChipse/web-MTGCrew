@@ -6,6 +6,7 @@ import { PartiesTypes } from '../../../store/reducers/authReducer';
 export interface Deck {
     _id: string,
     nom: string,
+    illustrationUrl: string,
     couleurs: Array<string>
     type: string
     rank: number

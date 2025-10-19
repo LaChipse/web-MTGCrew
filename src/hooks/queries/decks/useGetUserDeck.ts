@@ -5,8 +5,8 @@ import { Deck } from './useGetDecks';
 
 const getUserDeck = async (id: string) => (
     await new Api<Array<Deck>>()
-    .setBearerToken()
-    .get(`/deck/${id}`)
+        .setBearerToken()
+        .get(`/deck/${id}`)
 )
 
 export const useGetUserDeck = (id: string) => (

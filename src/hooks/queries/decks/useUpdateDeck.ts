@@ -9,10 +9,10 @@ import { useGetUserDeck } from './useGetUserDeck';
 import { useGetGames } from '../games/useGetGames';
 import { useGetHistoryGames } from '../games/useGetHistoryGames';
 
-const updateDeck = async (id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
+const updateDeck = async (id:string, illustrationUrl: string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()
         .setBearerToken()
-        .put('/deck/update', {id, nom, couleurs, isImprime, rank, type})
+        .put('/deck/update', {id, illustrationUrl, nom, couleurs, isImprime, rank, type})
 )
 
 export const useUpdateDeck = () => {
@@ -22,8 +22,8 @@ export const useUpdateDeck = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {id:string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string}) => (
-                updateDeck(data.id, data.nom, data.couleurs, data.isImprime, data.rank, data.type)
+            mutationFn: (data: {id:string, illustrationUrl: string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string}) => (
+                updateDeck(data.id, data.illustrationUrl, data.nom, data.couleurs, data.isImprime, data.rank, data.type)
             ),
             onSuccess: () => {
                 dispatch(addSuccessSnackbar('Deck modifié !'))

@@ -14,7 +14,7 @@ export interface GameResume {
 }
 
 const getGames = async (isStandard: boolean, page: number, filters: filtersGames) => {
-    const searchParams = new URLSearchParams();
+    const filterParams = new URLSearchParams();
 
     if (filters) {
             Object.entries(filters).forEach(([key, value]) => {
@@ -22,14 +22,14 @@ const getGames = async (isStandard: boolean, page: number, filters: filtersGames
 
             // Si c’est un objet dayjs, on le formate
             if (dayjs.isDayjs(value)) {
-                searchParams.append(key, value.toISOString()); // ou value.format('YYYY-MM-DD') selon le besoin
+                filterParams.append(key, value.toISOString()); // ou value.format('YYYY-MM-DD') selon le besoin
             } else {
-                searchParams.append(key, String(value));
+                filterParams.append(key, String(value));
             }
         });
     }
 
-    const queryString = searchParams.toString();
+    const queryString = filterParams.toString();
     const url = `/game/all/${isStandard}/${page}${queryString ? `?${queryString}` : ''}`;
 
     return await new Api<Array<GameResume>>().get(url);

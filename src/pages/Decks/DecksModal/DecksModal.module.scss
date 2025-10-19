@@ -50,6 +50,36 @@
         gap: 30px;
         overflow: auto;
         max-height: 100%;
+
+        .formControl {
+            width: 100%;
+        }
+
+        .paperIllustration {
+            padding: 2px 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            width: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .illustrationBox {
+            position: absolute;
+            top: 100%; // juste sous le Paper
+            left: 0;
+            max-width: 200px;
+            z-index: 10; // sous le Paper
+            margin-top: 10px;
+        }
+
+        .illustrationShow {
+            position: absolute;
+            max-width: 200px;
+            z-index: 10; // sous le Paper
+            margin-top: 10px;
+        }
     }
 }
 

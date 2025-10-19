@@ -1,9 +1,12 @@
-import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
-import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
-import classNames from 'classnames';
+import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, ImageListItem, InputBase, InputLabel, MenuItem, Modal, Paper, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import { Box } from '@mui/system';
+import classNames from 'classnames';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
+import { CardByName, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import styles from './DecksModal.module.scss';
 
 type Props = {
@@ -17,8 +20,27 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
     const [rank, setRank] = useState(1);
     const [type, setType] = useState('');
     const [isImprime, setIsImprime] = useState(false);
+    const [illustrationUrl, setIllustrationUrl] = useState<string>()
+    const [nameInput, setNameInput] = useState<string>();
+    const [searchCard, setSearchCard] = useState<string>()
+    const [showIllustration, setShowIllustration] = useState<boolean>(false)
 
+    const {data: illustrationCard} = useGetCardByName(searchCard)
     const { mutate, isPending } = useAddDeck();
+
+    const handleSearchCard = () => {
+        if (nameInput) setSearchCard(nameInput)
+        setNameInput(undefined)
+    }
+
+    const handleSetIllustraiton = (url?: string) => {
+        if (url) setIllustrationUrl(url);
+        setSearchCard(undefined)
+    }
+
+    const handleCloseIllustration = () => {
+        if (illustrationCard) setSearchCard(undefined)
+    };
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
@@ -33,9 +55,15 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
         else setIsImprime(false)
     }
 
+    const getIllustrationUrl = (illustrationCard: CardByName) => {
+        if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
+        if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
+        if (illustrationCard.imageUrlPng) return illustrationCard.imageUrlPng;
+    }
+
     const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        mutate({ nom, couleurs: [...new Set(couleurs)], isImprime, rank, type });
+        mutate({ nom, illustrationUrl: illustrationUrl || '', couleurs: [...new Set(couleurs)], isImprime, rank, type });
 
         setNom('')
         setCouleurs([])
@@ -43,6 +71,9 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
         setType('')
         setIsImprime(false)
         setOpen(false)
+        setNameInput('')
+        setIllustrationUrl(undefined)
+        setSearchCard(undefined)
     };
 
     const handleClose = () => {
@@ -52,25 +83,87 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            onClick= {() => handleCloseIllustration()}
+            onClose={ handleClose }
             aria-labelledby="addDeck"
             aria-describedby="ajout deck"
         >
             <Box className={styles.modal}>
                 <div className={styles.container}>
-                    <h2 id="addDeck">Ajouter un deck</h2>
+                    <h2 id="addDeck">Ajouter un deck {
+                        illustrationUrl && (
+                            <>
+                            <IconButton
+                                type="button"
+                                sx={{ p: '10px' }}
+                                aria-label="search"
+                                onClick={() => setShowIllustration(!showIllustration)}
+                            >
+                                <RemoveRedEyeIcon />
+                            </IconButton>
+                            {showIllustration && (
+                                    <Box className={styles.illustrationShow}>
+                                        <img
+                                            src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
+                                            alt={illustrationUrl}
+                                            style={{ borderRadius: '10px' }}
+                                            loading="lazy"
+                                        />
+                                    </Box>
+                                )}
+                                </>
+                        )
+                    }</h2>
                     <div className={styles.formBloc}>
-                        <FormControl className={styles.formControl}>
-                            <TextField
-                                required
-                                label="Nom"
-                                value={nom}
-                                id="Nom"
-                                size="small"
-                                onChange={(e) => setNom(e.target.value)}
-                                placeholder="Nom du deck"
-                            />
-                        </FormControl>
+                        <div style={{ width: '100%' }}>
+                            <FormControl className={styles.formControl}>
+                                <TextField
+                                    required
+                                    label="Nom"
+                                    value={nom}
+                                    id="Nom"
+                                    size="small"
+                                    onChange={(e) => setNom(e.target.value)}
+                                    placeholder="Nom du deck"
+                                />
+                            </FormControl>
+
+                            <Box style={{ position: 'relative' }}>
+                                <Paper className={styles.paperIllustration} >
+                                    <InputBase
+                                        id="illustration"
+                                        size="small"
+                                        value={nameInput}
+                                        style= {{ width: '100%' }}
+                                        onChange={(e) => setNameInput(e.target.value)}
+                                        placeholder="Choisissez votre illustration (nom en anglais)"
+                                    />
+                                    <IconButton
+                                        type="button"
+                                        sx={{ p: '10px' }}
+                                        aria-label="search"
+                                        onClick={() => handleSearchCard()}
+                                    >
+                                        <SearchIcon />
+                                    </IconButton>
+                                </Paper>
+
+                                {!!illustrationCard && (
+                                    <Box className={styles.illustrationBox} >
+                                        <ImageListItem key={illustrationCard.illustrationId}>
+                                            <img
+                                                srcSet={`${getIllustrationUrl(illustrationCard)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                                src={`${getIllustrationUrl(illustrationCard)}?w=164&h=164&fit=crop&auto=format`}
+                                                alt={getIllustrationUrl(illustrationCard)}
+                                                loading="lazy"
+                                                style={{ cursor: 'pointer', borderRadius: '10px' }}
+                                                onClick={() => handleSetIllustraiton(getIllustrationUrl(illustrationCard))}
+                                            />
+                                        </ImageListItem>
+                                    </Box>
+                                )}
+                            </Box>
+                        </div>
 
                         <FormControl className={styles.formControl}>
                             <FormLabel id="checkbox-colors">Couleurs du deck</FormLabel>

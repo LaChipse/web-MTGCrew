@@ -12,8 +12,11 @@
   align-items: center;
 
   img {
-    position: absolute;
-    transform: scale(0.8);
+    position: absolute; 
+  }
+
+  .mainImg {
+    animation: bounce 1s ease-in-out infinite, spin 12s linear infinite;
   }
 
   .loader1,
@@ -33,7 +36,7 @@
   }
 
   .loader1 {
-    height: calc(100% - 30px);
+    height: calc(120%);
     border-left-color: #f0ebc5;
     border-right-color: #005ca9;
   }
@@ -125,5 +128,23 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+}
+
+@keyframes spin {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
   }
 }

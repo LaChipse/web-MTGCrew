@@ -10,7 +10,7 @@ const MainLoader: React.FC<Props> = ({ isVerticallyCentered }) => {
   return (
     <div className={classNames({ [styles.verticallyCentered]: isVerticallyCentered })}>
       <div className={styles.loader}>
-        <img src='/iconLoader.png' alt="Logo" />
+        <img src='/iconLoader.png' alt="Logo" className={styles.mainImg}/>
         <div className={styles.loader1}>
           <div className={styles.loader2}>
             <div className={styles.loader3}>

@@ -1,12 +1,12 @@
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, ImageListItem, InputBase, InputLabel, MenuItem, Modal, Paper, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import classNames from 'classnames';
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
-import { CardByName, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
+import { useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import styles from './DecksModal.module.scss';
 
 type Props = {
@@ -55,10 +55,9 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
         else setIsImprime(false)
     }
 
-    const getIllustrationUrl = (illustrationCard: CardByName) => {
+    const getIllustrationUrl = (illustrationCard: Record<'imageUrlSmall' | 'imageUrlNormal', string>) => {
         if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
         if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
-        if (illustrationCard.imageUrlPng) return illustrationCard.imageUrlPng;
     }
 
     const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
@@ -93,24 +92,24 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
                     <h2 id="addDeck">Ajouter un deck {
                         illustrationUrl && (
                             <>
-                            <IconButton
-                                type="button"
-                                sx={{ p: '10px' }}
-                                aria-label="search"
-                                onClick={() => setShowIllustration(!showIllustration)}
-                            >
-                                <RemoveRedEyeIcon />
-                            </IconButton>
-                            {showIllustration && (
-                                    <Box className={styles.illustrationShow}>
-                                        <img
-                                            src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
-                                            alt={illustrationUrl}
-                                            style={{ borderRadius: '10px' }}
-                                            loading="lazy"
-                                        />
-                                    </Box>
-                                )}
+                                <IconButton
+                                    type="button"
+                                    sx={{ p: '10px' }}
+                                    aria-label="search"
+                                    onClick={() => setShowIllustration(!showIllustration)}
+                                >
+                                    <RemoveRedEyeIcon />
+                                </IconButton>
+                                {showIllustration && (
+                                        <Box className={styles.illustrationShow}>
+                                            <img
+                                                src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
+                                                alt={illustrationUrl}
+                                                style={{ borderRadius: '10px' }}
+                                                loading="lazy"
+                                            />
+                                        </Box>
+                                    )}
                                 </>
                         )
                     }</h2>
@@ -150,15 +149,19 @@ const DecksModal: React.FC<Props> = ({ open, setOpen }) => {
 
                                 {!!illustrationCard && (
                                     <Box className={styles.illustrationBox} >
-                                        <ImageListItem key={illustrationCard.illustrationId}>
-                                            <img
-                                                srcSet={`${getIllustrationUrl(illustrationCard)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${getIllustrationUrl(illustrationCard)}?w=164&h=164&fit=crop&auto=format`}
-                                                alt={getIllustrationUrl(illustrationCard)}
-                                                loading="lazy"
-                                                style={{ cursor: 'pointer', borderRadius: '10px' }}
-                                                onClick={() => handleSetIllustraiton(getIllustrationUrl(illustrationCard))}
-                                            />
+                                        <ImageListItem key={illustrationCard.id} style={{ display: 'flex', gap: '10px' }}>
+                                            {
+                                                illustrationCard.imageUris?.map((iU) => (
+                                                <img
+                                                    srcSet={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                                    src={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format`}
+                                                    alt={getIllustrationUrl(iU)}
+                                                    loading="lazy"
+                                                    style={{ cursor: 'pointer', borderRadius: '10px' }}
+                                                    onClick={() => handleSetIllustraiton(getIllustrationUrl(iU))}
+                                                />
+                                                ))
+                                            }
                                         </ImageListItem>
                                     </Box>
                                 )}

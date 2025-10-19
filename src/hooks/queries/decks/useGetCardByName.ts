@@ -3,12 +3,9 @@ import { Api } from '../../../utils/Api';
 
 export interface CardByName {
     id: string,
-    illustrationId: string,
     name: string,
     lang: string,
-    imageUrlSmall?: string,
-    imageUrlPng?: string,
-    imageUrlNormal?: string,
+    imageUris?: Array<Record<'imageUrlSmall' | 'imageUrlNormal', string>>,
 }
 
 const getCardByName = async (search?: string) => {
@@ -25,6 +22,9 @@ export const useGetCardByName = (search?: string) => (
     useQuery({
         queryKey: ['getCardByName', search],
         queryFn: () => getCardByName(search),
-        enabled: !!search && search.length > 2
+        enabled: !!search && search.length > 2,
+        staleTime: 0,
+        refetchOnMount: true,
+        refetchOnReconnect: true,  
     })
 );

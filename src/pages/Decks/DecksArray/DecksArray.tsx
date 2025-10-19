@@ -1,14 +1,15 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton, Portal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box } from '@mui/system';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import { RANK } from '../../../utils/Enums/rank';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
 import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
 import styles from './DecksArray.module.scss';
-import { RANK } from '../../../utils/Enums/rank';
 
 type Props = {
     decks?: Array<Deck>
@@ -22,17 +23,30 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
     const [deletedDeck, setDeletedDeck] = useState<string>('')
     const [selectedDeck, setSelectedDeck] = useState<Deck>()
 
+    const [openDeck, setOpenDeck] = useState<Deck | null>(null); // deck actuellement ouvert
+    const [anchor, setAnchor] = useState<DOMRect | null>(null);
+
+    const handleClick = (deck: Deck, event: MouseEvent) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setAnchor(rect);
+        handleOpenImage(deck);
+    };
+
     const countGames = decks?.reduce((sum, deck) => sum + deck.parties?.[partieType], 0)
 
     const formatBooelan = (boolean: boolean) =>{
-        if (boolean) return "Oui"
-        return "Non"
+        if (boolean) return 'Oui'
+        return 'Non'
+    }
+
+    const handleOpenImage = (deck: Deck) => {
+        setOpenDeck((prev) => (prev === deck ? null : deck));
     }
 
     const getImg = (couleur: string) => {
         return (
             <div key={couleur} className={styles.img}>
-                <img src={`/assets/${couleur.toLocaleLowerCase()}.svg`} alt={couleur} width="18px" height="18px" />
+                <img src={`/assets/${couleur.toLocaleLowerCase()}.svg`} alt={couleur} width='18px' height='18px' />
             </div>
         )
     }
@@ -63,34 +77,61 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
     return (
         <>
             <TableContainer className={styles.tableau}>
-                <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
+                <Table stickyHeader sx={{ minWidth: 700 }} aria-label='customized table'>
                     <TableHead >
                         <TableRow>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
-                            <TableCell align="center" style={{ minWidth: "150px" }} className={styles.styckyRow}>Couleurs</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Type</TableCell>
-                            <TableCell align="center" style={{ minWidth: "35px" }} className={styles.styckyRow}>Rank</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Nbr parties</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Victoires</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Imprimé ?</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }} className={styles.styckyRow}>Actions</TableCell>
+                            <TableCell align='center' style={{ minWidth: '100px' }} className={styles.styckyFirstCell}>Nom</TableCell>
+                            <TableCell align='center' style={{ minWidth: '150px' }} className={styles.styckyRow}>Couleurs</TableCell>
+                            <TableCell align='center' style={{ minWidth: '100px' }} className={styles.styckyRow}>Type</TableCell>
+                            <TableCell align='center' style={{ minWidth: '35px' }} className={styles.styckyRow}>Rank</TableCell>
+                            <TableCell align='center' style={{ minWidth: '100px' }} className={styles.styckyRow}>Nbr parties</TableCell>
+                            <TableCell align='center' style={{ minWidth: '100px' }} className={styles.styckyRow}>Victoires</TableCell>
+                            <TableCell align='center' style={{ minWidth: '100px' }} className={styles.styckyRow}>Imprimé ?</TableCell>
+                            <TableCell align='center' style={{ minWidth: '75px' }} className={styles.styckyRow}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {decks?.map((deck) => (
                             <TableRow key={deck.nom}>
-                                <TableCell align="center" style={{fontWeight: 700}} className={styles.styckyCol} component="th" scope="row">{deck.nom}</TableCell>
-                                <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs)}</TableCell>
-                                <TableCell align="center">{toTitleCase(deck.type) || '-'}</TableCell>
-                                <TableCell align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
+                                <TableCell align='center' style={{fontWeight: 700}} className={styles.styckyCol} component='th' scope='row'>
+                                    { deck.illustrationUrl ?
+                                        <>
+                                            <a style={{ cursor: 'pointer', color: 'white', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
+                                            {openDeck?._id === deck._id && anchor && (
+                                                <Portal>
+                                                    <Box sx={{
+                                                        position: 'fixed',
+                                                        top: anchor.bottom + 8, // juste sous la cellule
+                                                        left: anchor.left + anchor.width / 2,
+                                                        transform: 'translateX(-50%)',
+                                                        zIndex: 9999,
+                                                        padding: '8px',
+                                                        borderRadius: '8px',
+                                                    }}>
+                                                        <img
+                                                            src={`${openDeck.illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
+                                                            alt={openDeck.illustrationUrl}
+                                                            style={{ borderRadius: '10px' }}
+                                                            loading='lazy'
+                                                        />
+                                                    </Box>
+                                                </Portal>
+                                            )}
+                                        </>
+                                        : <>{deck.nom}</>
+                                    }
+                                </TableCell>
+                                <TableCell style={{lineHeight: 0.5}} align='center'>{formatArray(deck.couleurs)}</TableCell>
+                                <TableCell align='center'>{toTitleCase(deck.type) || '-'}</TableCell>
+                                <TableCell align='center' className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
                                     {deck.rank  || '-'}
                                 </TableCell>
-                                <TableCell align="center">{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</TableCell>
-                                <TableCell className={styles[colorVictory(deck)]} align="center">{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>
-                                <TableCell align="center">{formatBooelan(deck.isImprime)}</TableCell>
-                                <TableCell align="center" className={styles.actions}>
-                                    <IconButton style={{padding: 1}} className={styles.edit} size="small" onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
-                                    <IconButton style={{padding: 1}} className={styles.delete} size="small" onClick={() => handleDeleteOpen(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
+                                <TableCell align='center'>{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</TableCell>
+                                <TableCell className={styles[colorVictory(deck)]} align='center'>{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>
+                                <TableCell align='center'>{formatBooelan(deck.isImprime)}</TableCell>
+                                <TableCell align='center' className={styles.actions}>
+                                    <IconButton style={{padding: 1}} className={styles.edit} size='small' onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
+                                    <IconButton style={{padding: 1}} className={styles.delete} size='small' onClick={() => handleDeleteOpen(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -113,7 +154,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                     setOpen={setOpen}
                     deck={selectedDeck}
                 />
-            )}
+            )} 
         </>
     )
 }

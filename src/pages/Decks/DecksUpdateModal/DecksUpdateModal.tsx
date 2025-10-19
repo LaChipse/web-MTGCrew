@@ -1,13 +1,13 @@
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import SearchIcon from '@mui/icons-material/Search';
+import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, ImageListItem, InputBase, InputLabel, MenuItem, Modal, Paper, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
-import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
-import { CardByName, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
-import { LoadingButton } from '@mui/lab';
-import { Deck } from '../../../hooks/queries/decks/useGetDecks';
-import SearchIcon from '@mui/icons-material/Search';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import classNames from 'classnames';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
+import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import styles from './DecksUpdateModal.module.scss';
 
 type Props = {
@@ -65,10 +65,9 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
         else setIsImprime(false)
     }
 
-    const getIllustrationUrl = (illustrationCard: CardByName) => {
+    const getIllustrationUrl = (illustrationCard: Record<'imageUrlSmall' | 'imageUrlNormal', string>) => {
         if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
         if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
-        if (illustrationCard.imageUrlPng) return illustrationCard.imageUrlPng;
     }
 
     const handleUpdateDeck = (e: MouseEvent<HTMLButtonElement>) => {
@@ -150,15 +149,19 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
 
                                 {!!illustrationCard && (
                                     <Box className={styles.illustrationBox}>
-                                        <ImageListItem key={illustrationCard.illustrationId}>
-                                            <img
-                                                srcSet={`${getIllustrationUrl(illustrationCard)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${getIllustrationUrl(illustrationCard)}?w=164&h=164&fit=crop&auto=format`}
-                                                alt={getIllustrationUrl(illustrationCard)}
-                                                loading="lazy"
-                                                style={{ cursor: 'pointer', borderRadius: '10px' }}
-                                                onClick={() => handleSetIllustraiton(getIllustrationUrl(illustrationCard))}
-                                            />
+                                        <ImageListItem key={illustrationCard.id} style={{ display: 'flex', gap: '10px' }}>
+                                            {
+                                                illustrationCard.imageUris?.map((iU) => (
+                                                <img
+                                                    srcSet={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                                    src={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format`}
+                                                    alt={getIllustrationUrl(iU)}
+                                                    loading="lazy"
+                                                    style={{ cursor: 'pointer', borderRadius: '10px' }}
+                                                    onClick={() => handleSetIllustraiton(getIllustrationUrl(iU))}
+                                                />
+                                                ))
+                                            }
                                         </ImageListItem>
                                     </Box>
                                 )}

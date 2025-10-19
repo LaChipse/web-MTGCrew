@@ -19,7 +19,6 @@ const Joueurs = () => {
     const [selectedUser, setSelectedUser] = useState('')
     const partieType = isStandard ? 'standard' : 'special'
 
-
     const countVictories = users?.reduce((sum, user) => sum + user.victoires[partieType], 0)
 
     const highestRatio = () => {
@@ -77,7 +76,12 @@ const Joueurs = () => {
     }
 
     const colorVictory = (user: User) => {
-        if (ratioVictory(user) >= 30) return 'green'
+        if (ratioVictory(user) >= 35) return 'green'
+        else return 'red'
+    }
+
+    const colorHundredGames = (user: User) => {
+        if (user.hundredGameWins >= 35) return 'green'
         else return 'red'
     }
 
@@ -102,6 +106,7 @@ const Joueurs = () => {
                             <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Nbr decks</TableCell>
                             <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Parties jouées</TableCell>
                             <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Ratio victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>100 dernières parties</TableCell>
                             <TableCell align="center" style={{ minWidth: "150px" }} className={styles.styckyRow}>Deck le plus joué</TableCell>
                             <TableCell align="center" style={{ minWidth: "175px" }} className={styles.styckyRow}>Meilleur deck</TableCell>
                         </TableRow>
@@ -119,6 +124,7 @@ const Joueurs = () => {
                                     </div></TableCell>
                                 <TableCell align="center">{ `${ user.partiesJouees?.[partieType] } (${ Math.round((user.partiesJouees?.[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
                                 <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires?.[partieType] } (${ratioVictory(user) }%)`}</TableCell>
+                                <TableCell className={styles[colorHundredGames(user)]} align="center">{`${ user.hundredGameWins }%`}</TableCell>
                                 <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom || 'Non défini' } (${ Math.round(((mostDeckPlayed(user.id)?.parties?.[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
                                 <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom || 'Non défini' } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
                             </TableRow>

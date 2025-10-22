@@ -1,10 +1,11 @@
-import { Box, Modal, Portal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { MouseEvent, useState } from 'react';
-import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
+import { Box, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from 'classnames';
-import styles from './UserDeck.module.scss'
-import { RANK } from '../../../utils/Enums/rank';
+import React, { MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
+import { RANK } from '../../../utils/Enums/rank';
+import ImagePortal from '../../Decks/composants/ImagePortal/ImagePortal';
+import styles from './UserDeck.module.scss';
 
 type Props = {
     userId: string
@@ -72,24 +73,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                                             <>
                                                 <a style={{ fontWeight: 700, cursor: 'pointer', color: 'black', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
                                                 {openDeck?._id === deck._id && anchor && (
-                                                    <Portal>
-                                                        <Box sx={{
-                                                            position: 'fixed',
-                                                            top: anchor.bottom + 8, // juste sous la cellule
-                                                            left: anchor.left + anchor.width / 2,
-                                                            transform: 'translateX(-50%)',
-                                                            zIndex: 9999,
-                                                            padding: '8px',
-                                                            borderRadius: '8px',
-                                                        }}>
-                                                            <img
-                                                                src={`${openDeck.illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
-                                                                alt={openDeck.illustrationUrl}
-                                                                style={{ borderRadius: '10px' }}
-                                                                loading='lazy'
-                                                            />
-                                                        </Box>
-                                                    </Portal>
+                                                    <ImagePortal anchor={anchor} illustrationUrl={openDeck.illustrationUrl}/>
                                                 )}
                                             </>
                                             : <>{deck.nom || '-'}</>

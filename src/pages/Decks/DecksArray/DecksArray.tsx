@@ -1,15 +1,15 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { IconButton, Portal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Box } from '@mui/system';
+import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from 'classnames';
 import { MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { RANK } from '../../../utils/Enums/rank';
 import { toTitleCase } from '../../../utils/ToTitleCase';
+import ImagePortal from '../composants/ImagePortal/ImagePortal';
 import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
-import DecksUpdateModal from '../DecksUpdateModal/DecksUpdateModal';
 import styles from './DecksArray.module.scss';
+import DecksActionModal from '../DecksActionModal/DecksActionModal';
 
 type Props = {
     decks?: Array<Deck>
@@ -41,6 +41,10 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
 
     const handleOpenImage = (deck: Deck) => {
         setOpenDeck((prev) => (prev === deck ? null : deck));
+    }
+
+    const handleCloseImg = () => {
+        if (openDeck !== null ) setOpenDeck(null);
     }
 
     const getImg = (couleur: string) => {
@@ -76,7 +80,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
 
     return (
         <>
-            <TableContainer className={styles.tableau}>
+            <TableContainer className={styles.tableau} onClick={handleCloseImg}>
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label='customized table'>
                     <TableHead >
                         <TableRow>
@@ -97,25 +101,8 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                                     { deck.illustrationUrl ?
                                         <>
                                             <a style={{ cursor: 'pointer', color: 'white', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
-                                            {openDeck?._id === deck._id && anchor && (
-                                                <Portal>
-                                                    <Box sx={{
-                                                        position: 'fixed',
-                                                        top: anchor.bottom + 8, // juste sous la cellule
-                                                        left: anchor.left + anchor.width / 2,
-                                                        transform: 'translateX(-50%)',
-                                                        zIndex: 9999,
-                                                        padding: '8px',
-                                                        borderRadius: '8px',
-                                                    }}>
-                                                        <img
-                                                            src={`${openDeck.illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
-                                                            alt={openDeck.illustrationUrl}
-                                                            style={{ borderRadius: '10px' }}
-                                                            loading='lazy'
-                                                        />
-                                                    </Box>
-                                                </Portal>
+                                            {openDeck && openDeck?._id === deck._id && anchor && (
+                                                <ImagePortal anchor={anchor} illustrationUrl={openDeck.illustrationUrl}/>
                                             )}
                                         </>
                                         : <>{deck.nom}</>
@@ -149,7 +136,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
             )}
 
             {selectedDeck && (
-                <DecksUpdateModal 
+                <DecksActionModal 
                     open={open}
                     setOpen={setOpen}
                     deck={selectedDeck}

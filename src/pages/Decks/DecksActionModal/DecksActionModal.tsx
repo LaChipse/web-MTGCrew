@@ -8,15 +8,16 @@ import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
-import styles from './DecksUpdateModal.module.scss';
+import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
+import styles from './DecksActionModal.module.scss';
 
 type Props = {
     open: boolean
-    deck: Deck
     setOpen: (value: React.SetStateAction<boolean>) => void
+    deck?: Deck
 }
 
-const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
+const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const [nom, setNom] = useState('');
     const [couleurs, setCouleurs] = useState<Array<string>>([]);
     const [rank, setRank] = useState(1);
@@ -28,16 +29,20 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
     const [showIllustration, setShowIllustration] = useState<boolean>(false)
 
     useEffect(() => {
-        setNom(deck.nom)
-        setCouleurs(deck.couleurs)
-        setRank(deck.rank)
-        setType(deck.type)
-        setIsImprime(deck.isImprime)
-        setIllustrationUrl(deck.illustrationUrl)
+        if (deck) {
+            setNom(deck.nom)
+            setCouleurs(deck.couleurs)
+            setRank(deck.rank)
+            setType(deck.type)
+            setIsImprime(deck.isImprime)
+            setIllustrationUrl(deck.illustrationUrl)
+        }
     }, [deck])
 
     const {data: illustrationCard} = useGetCardByName(searchCard)
-    const { mutate, isPending } = useUpdateDeck();
+    const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
+    const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
+    
 
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
@@ -70,10 +75,30 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
         if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
     }
 
+    const handleActionDeck = (e: MouseEvent<HTMLButtonElement>) => {
+        if (deck) handleUpdateDeck(e)
+        else handleAddDeckForm(e)
+    };
+
     const handleUpdateDeck = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        mutate({ id: deck._id, illustrationUrl: illustrationUrl || '', nom, couleurs, isImprime, rank, type });
+        updateMutate({ id: deck!._id, illustrationUrl: illustrationUrl || '', nom, couleurs, isImprime, rank, type });
         setOpen(false)
+    };
+
+    const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            updateAdd({ nom, illustrationUrl: illustrationUrl || '', couleurs: [...new Set(couleurs)], isImprime, rank, type });
+    
+            setNom('')
+            setCouleurs([])
+            setRank(1)
+            setType('')
+            setIsImprime(false)
+            setOpen(false)
+            setNameInput('')
+            setIllustrationUrl(undefined)
+            setSearchCard(undefined)
     };
 
     const handleClose = () => {
@@ -85,12 +110,12 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
             open={open}
             onClick= {() => handleCloseIllustration()}
             onClose={handleClose}
-            aria-labelledby="updateDeck"
-            aria-describedby="update deck"
+            aria-labelledby="actionDeck"
+            aria-describedby="axtion sur deck"
         >
             <Box className={styles.modal}>
                 <div className={styles.container}>
-                    <h2 id="updateDeck">Modifier un deck {
+                    <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                         illustrationUrl && (
                             <>
                                 <IconButton
@@ -106,7 +131,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                                         <img
                                             src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
                                             alt={illustrationUrl}
-                                            style={{ borderRadius: '10px' }}
+                                            style={{ borderRadius: '10px', width: '150px' }}
                                             loading="lazy"
                                         />
                                     </Box>
@@ -133,6 +158,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                                     <InputBase
                                         id="illustration"
                                         size="small"
+                                        value={nameInput}
                                         style= {{ width: '100%' }}
                                         onChange={(e) => setNameInput(e.target.value)}
                                         placeholder="Choisissez votre illustration (nom en anglais)"
@@ -153,11 +179,12 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                                             {
                                                 illustrationCard.imageUris?.map((iU) => (
                                                 <img
+                                                    key={iU.imageUrlNormal}
                                                     srcSet={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                                                     src={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format`}
                                                     alt={getIllustrationUrl(iU)}
                                                     loading="lazy"
-                                                    style={{ cursor: 'pointer', borderRadius: '10px' }}
+                                                    style={{ cursor: 'pointer', borderRadius: '10px', width: '150px' }}
                                                     onClick={() => handleSetIllustraiton(getIllustrationUrl(iU))}
                                                 />
                                                 ))
@@ -186,7 +213,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                             <FormLabel id="radio-imprime-groupe">Deck imprimé ?</FormLabel>
                             <RadioGroup
                                 aria-labelledby="radio-imprime-groupe"
-                                defaultValue={deck.isImprime ? true : false}
+                                defaultValue={deck && deck.isImprime ? true : false}
                                 name="radio-imprime-groupe"
                                 className={styles.choices}
                             >
@@ -195,7 +222,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                             </RadioGroup>
                         </FormControl>
 
-                        <FormControl className={classNames([styles.select, styles.formControl])}>
+                        <FormControl className={classNames([styles.select, styles.formControl])} size="small">
                             <InputLabel id="Type">Type</InputLabel>
                             <Select
                                 labelId="Type"
@@ -211,7 +238,7 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                             </Select>
                         </FormControl>
 
-                        <FormControl className={classNames([styles.select, styles.formControl])}>
+                        <FormControl className={classNames([styles.select, styles.formControl])} size="small">
                             <InputLabel id="Rank">Rank</InputLabel>
                             <Select
                                 labelId="Rank"
@@ -229,11 +256,20 @@ const DecksUpdateModal: React.FC<Props> = ({ open, deck, setOpen }) => {
                         </FormControl>
                     </div>
 
-                    <LoadingButton disabled={!couleurs.length || !nom.length || isPending} loading={isPending} type="submit" variant="contained" onClick={handleUpdateDeck} className={styles.submit}>Modifié</LoadingButton>  
+                    <LoadingButton 
+                        disabled={!couleurs.length || !nom.length || deck ? isUpdatePending : isAddPending} 
+                        loading={deck ? isUpdatePending : isAddPending} 
+                        type="submit" 
+                        variant="contained" 
+                        onClick={handleActionDeck} 
+                        className={styles.submit}
+                    >
+                            {deck ? 'Modifié': 'Ajouté'}
+                    </LoadingButton>  
                 </div>    
             </Box>
         </Modal>
     )
 }
 
-export default DecksUpdateModal
+export default DecksActionModal

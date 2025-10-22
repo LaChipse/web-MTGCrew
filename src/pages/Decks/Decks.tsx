@@ -1,14 +1,14 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
-import DecksModal from './DecksModal/DecksModal';
 import DecksArray from './DecksArray/DecksArray';
 import { Deck, useGetDecks } from '../../hooks/queries/decks/useGetDecks';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import styles from './Decks.module.scss';
+import DecksActionModal from './DecksActionModal/DecksActionModal';
 
 const Decks = () => {
     const [open, setOpen] = useState(false);
-    const {data: decks} = useGetDecks()
+    const { data: decks } = useGetDecks()
     const isStandard = useAppSelector((state) => state.type.isStandard);
 
     const partieType = isStandard ? 'standard' : 'special'
@@ -65,7 +65,7 @@ const Decks = () => {
                 </div>
             </div>
 
-            <DecksModal 
+            <DecksActionModal 
                 open={open}
                 setOpen={setOpen}
             />

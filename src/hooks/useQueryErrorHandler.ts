@@ -31,7 +31,7 @@ const handleError422 = (dispatch: AppDispatch,  message?: string) => {
 export const useQueryErrorHandler = () => {
     const dispatch = useAppDispatch();
 
-    return (error: ApiException) => {
+    return (error: unknown) => {
         if (!(error instanceof ApiException)) {
             handleUnknownError(dispatch);
             return;

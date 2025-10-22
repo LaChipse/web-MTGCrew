@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "builds": [
+        { "src": "package.json", "use": "@vercel/static-build" }
+    ],
+    "routes": [
+        { "src": "/(.*)", "dest": "/index.html" }
+    ],
+    "headers": [
+        {
+        "source": "/(.*).html",
+        "headers": [
+            { "key": "Cache-Control", "value": "no-cache" }
+        ]
+        },
+        {
+        "source": "/service-worker.js",
+        "headers": [
+            { "key": "Cache-Control", "value": "no-cache" }
+        ]
+        },
+        {
+        "source": "/version.json",
+        "headers": [
+            { "key": "Cache-Control", "value": "no-cache" }
+        ]
+        }
+    ]
+}

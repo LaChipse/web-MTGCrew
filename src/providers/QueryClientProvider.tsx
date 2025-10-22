@@ -28,7 +28,7 @@ const QueryClientProvider: React.FC<Props> = ({ children }) => {
 
     return (
         <BaseQueryClientProvider client={client}>
-        {children}
+            {children}
         </BaseQueryClientProvider>
     );
 };

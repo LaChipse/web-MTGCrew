@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postbuild": "echo '{\"version\":\"'$npm_package_version'\"}' > build/version.json"
+    "postbuild": "node scripts/writeVersion.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

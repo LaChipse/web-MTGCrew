@@ -8,33 +8,22 @@ import Loading from './pages/Loading/Loading';
 import QueryClientProvider from './providers/QueryClientProvider';
 import Router from './router/Router';
 import { store } from './store/store';
-import { useAppVersionChecker } from './hooks/useAppVersionChecker';
+// import { useAppVersionChecker } from './hooks/useAppVersionChecker';
 
 const theme = unstable_createMuiStrictModeTheme();
 
 const App = () => {
-  const { hasUpdate, latestVersion } = useAppVersionChecker();
+  // const { hasUpdate, latestVersion } = useAppVersionChecker();
 
-  const reloadApp = () => {
-    if ("serviceWorker" in navigator) {
-      caches.keys().then((names) => names.forEach((name) => caches.delete(name)));
-    }
-    window.location.reload();
-  };
+  // const reloadApp = () => {
+  //   if ("serviceWorker" in navigator) {
+  //     caches.keys().then((names) => names.forEach((name) => caches.delete(name)));
+  //   }
+  //   window.location.reload();
+  // };
 
   return (
     <>
-    {hasUpdate ? (
-        <div style={{ margin: 'auto', display: 'flex', flexDirection: 'column', maxWidth: '30%', gap: '10px' }}>
-          <span style={{ color: 'white' }}>🚀 Nouvelle version disponible ({latestVersion})</span>
-          <button
-            onClick={reloadApp}
-            className="bg-white text-blue-600 px-3 py-1 rounded-lg font-medium"
-          >
-            Mettre à jour
-          </button>
-        </div>
-      ) : (
         <ThemeProvider theme={theme}>
           <ReduxProvider store={store}>
             <QueryClientProvider>
@@ -46,8 +35,6 @@ const App = () => {
             </QueryClientProvider>
           </ReduxProvider>
         </ThemeProvider>
-      )}
-      
     </>
   );
 }

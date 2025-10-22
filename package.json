@@ -1,13 +1,14 @@
 {
   "name": "web-mtg-crew",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "echo '{\"version\":\"'$npm_package_version'\"}' > build/version.json"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

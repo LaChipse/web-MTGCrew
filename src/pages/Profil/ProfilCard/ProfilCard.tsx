@@ -51,7 +51,7 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleImage
                                 primary={`Nombre de decks = ${user.nbrDecks}`}
                             />
                             <ListItemText
-                                primary={`Parties jouées = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}
+                                primary={`Nombre de parties = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}
                             />
                             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                                 <ListItemText

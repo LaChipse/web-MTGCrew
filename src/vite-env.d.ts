@@ -2,5 +2,18 @@
 
 interface ImportMetaEnv {
     readonly VITE_API_BASE_URL: string
-    readonly VITE_APP_VERSION:string
+}
+
+declare module 'virtual:pwa-register/react' {
+    export interface RegisterSWOptions {
+        immediate?: boolean
+        onNeedRefresh?: () => void
+        onOfflineReady?: () => void
+    }
+
+    export function useRegisterSW(options?: RegisterSWOptions): {
+        needRefresh: [boolean, (v: boolean) => void]
+        offlineReady: [boolean, (v: boolean) => void]
+        updateServiceWorker: (reloadPage?: boolean) => Promise<void>
+    }
 }

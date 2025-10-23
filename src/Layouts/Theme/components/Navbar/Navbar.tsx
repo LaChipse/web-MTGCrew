@@ -7,6 +7,7 @@ import { LOGIN_PAGE } from '../../../../router/routes';
 import { switchType } from '../../../../store/reducers/typeReducer';
 import { toTitleCase } from '../../../../utils/ToTitleCase';
 import styles from './Navbar.module.scss';
+import { clearGameFiltersState } from '../../../../store/reducers/gameFiltersReducer';
 
 type Props = unknown
 
@@ -62,6 +63,11 @@ const Navbar: React.FC<Props> = () => {
         sessionStorage.clear();
         localStorage.clear();
         startTransition(() => navigate(LOGIN_PAGE))
+    }
+
+    const handleNavigation = (callback: (key: string, path: string, label: string) => JSX.Element, navTab: string) => {
+        dispatch(clearGameFiltersState())
+        return callback(navTab, `/${navTab}`, toTitleCase(navTab))
     }
 
     const renderNavButton = (key: string, path: string, label: string) => {
@@ -128,16 +134,12 @@ const Navbar: React.FC<Props> = () => {
                         'aria-labelledby': 'basic-button',
                         }}
                     >
-                        {navTabs.map ((navTab) => {
-                            return renderNavMenuItem(navTab, `/${navTab}`, toTitleCase(navTab))
-                        })}
+                        {navTabs.map ((navTab) => handleNavigation(renderNavMenuItem, navTab))}
                     </Menu>
 
 
                     <div>
-                        {navTabs.map ((navTab) => {
-                            return renderNavButton(navTab, `/${navTab}`, toTitleCase(navTab))
-                        })}
+                        {navTabs.map ((navTab) => handleNavigation(renderNavButton, navTab))}
                     </div>
                 </div>
 

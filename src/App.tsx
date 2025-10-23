@@ -8,35 +8,26 @@ import Loading from './pages/Loading/Loading';
 import QueryClientProvider from './providers/QueryClientProvider';
 import Router from './router/Router';
 import { store } from './store/store';
-// import { useAppVersionChecker } from './hooks/useAppVersionChecker';
+import UpdateBanner from './components/UpdateBanner';
 
 const theme = unstable_createMuiStrictModeTheme();
 
-const App = () => {
-  // const { hasUpdate, latestVersion } = useAppVersionChecker();
+const App = () => (
+  <>
+      <ThemeProvider theme={theme}>
+        <ReduxProvider store={store}>
+          <QueryClientProvider>
+            <FullscreenLoader />
+            <Suspense fallback={<Loading />}>
+              <Router />
+            </Suspense>
+            {createPortal(<MainSnackbar />, document.body)}
+          </QueryClientProvider>
+        </ReduxProvider>
+      </ThemeProvider>
 
-  // const reloadApp = () => {
-  //   if ("serviceWorker" in navigator) {
-  //     caches.keys().then((names) => names.forEach((name) => caches.delete(name)));
-  //   }
-  //   window.location.reload();
-  // };
-
-  return (
-    <>
-        <ThemeProvider theme={theme}>
-          <ReduxProvider store={store}>
-            <QueryClientProvider>
-              <FullscreenLoader />
-              <Suspense fallback={<Loading />}>
-                <Router />
-              </Suspense>
-              {createPortal(<MainSnackbar />, document.body)}
-            </QueryClientProvider>
-          </ReduxProvider>
-        </ThemeProvider>
-    </>
-  );
-}
+      <UpdateBanner />
+  </>
+);
 
 export default App;

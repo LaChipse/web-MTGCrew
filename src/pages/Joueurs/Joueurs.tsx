@@ -104,7 +104,7 @@ const Joueurs = () => {
                         <TableRow>
                             <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Nbr decks</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Parties jouées</TableCell>
+                            <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Nombre de parties</TableCell>
                             <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Ratio victoire</TableCell>
                             <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>100 dernières parties</TableCell>
                             <TableCell align="center" style={{ minWidth: "150px" }} className={styles.styckyRow}>Deck le plus joué</TableCell>

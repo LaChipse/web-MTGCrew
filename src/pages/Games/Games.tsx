@@ -38,7 +38,7 @@ const Games = () => {
         <div>
             <div className={styles.addGames}>
                 <Button variant="contained" onClick={() => toggleDrawer(true)}>Ajouter une partie</Button>
-                <strong>Parties jouées : {count}</strong>
+                <strong>Nombre de parties : {count}</strong>
             </div>
         </div>
 

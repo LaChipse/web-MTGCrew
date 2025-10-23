@@ -7,12 +7,13 @@ import { useState } from "react";
 import UserDeckModal from "./UserDeck/UserDeck";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import styles from './Joueurs.module.scss'
+import SmallLoading from "../loader/SmallLoading/SmallLoading";
 
 const Joueurs = () => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
     
-    const { data: users } = useGetAllPlayers()
-    const { data: usersDecks } = useGetUsersDecks()
+    const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers()
+    const { data: usersDecks, isLoading: isUsersDecksLaoding } = useGetUsersDecks()
     const { data: count } = useCountGames(isStandard, {startDate: null, endDate: null})
 
     const [open, setOpen] = useState(false);
@@ -92,53 +93,59 @@ const Joueurs = () => {
 
     return (
         <>
-            <div>
-                <p className={styles.highlights}><img src={`/assets/seringue.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '5px'}}/><strong style={{marginRight: '5px'}}>{highestGamesPlayed?.fullName}</strong>{`(${Math.round(((highestGamesPlayed?.partiesJouees?.[partieType] || 0)/(count || 1)) * 100)}% parties jouées)`}</p>
-                <p className={styles.highlights}><img src={`/assets/couronne.png`} alt='couronne' width="35px" height="25px" style={{marginRight: '7px'}}/><strong style={{marginRight: '5px'}}>{highestRatio()?.fullName}</strong>{`(${Math.round(((highestRatio()?.victoires?.[partieType] || 0)/(highestRatio()?.partiesJouees?.[partieType] || 1)) * 100)}% parties jouées gagnées)`}</p>
-                <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '10px'}}/><strong style={{marginRight: '5px'}}>{moreVictory?.fullName}</strong>{`(${Math.round(((moreVictory?.victoires?.[partieType] || 0)/(countVictories || 1)) * 100)}% totalité des victoires)`}</p>
-            </div>
+            { isUsersLaoding || isUsersDecksLaoding ? (
+                <SmallLoading />
+            ) : (
+                <>
+                    <div>
+                        <p className={styles.highlights}><img src={`/assets/seringue.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '5px'}}/><strong style={{marginRight: '5px'}}>{highestGamesPlayed?.fullName}</strong>{`(${Math.round(((highestGamesPlayed?.partiesJouees?.[partieType] || 0)/(count || 1)) * 100)}% parties jouées)`}</p>
+                        <p className={styles.highlights}><img src={`/assets/couronne.png`} alt='couronne' width="35px" height="25px" style={{marginRight: '7px'}}/><strong style={{marginRight: '5px'}}>{highestRatio()?.fullName}</strong>{`(${Math.round(((highestRatio()?.victoires?.[partieType] || 0)/(highestRatio()?.partiesJouees?.[partieType] || 1)) * 100)}% parties jouées gagnées)`}</p>
+                        <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '10px'}}/><strong style={{marginRight: '5px'}}>{moreVictory?.fullName}</strong>{`(${Math.round(((moreVictory?.victoires?.[partieType] || 0)/(countVictories || 1)) * 100)}% totalité des victoires)`}</p>
+                    </div>
 
-            <TableContainer className={styles.tableau}>
-                <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Nbr decks</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Nombre de parties</TableCell>
-                            <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Ratio victoire</TableCell>
-                            <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>100 dernières parties</TableCell>
-                            <TableCell align="center" style={{ minWidth: "150px" }} className={styles.styckyRow}>Deck le plus joué</TableCell>
-                            <TableCell align="center" style={{ minWidth: "175px" }} className={styles.styckyRow}>Meilleur deck</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users?.map((user) => (
-                            <TableRow key={user.fullName}>
-                                <TableCell align="center" style={{ fontWeight: 700 }} className={styles.styckyCol} component="th" scope="row">{user.fullName}</TableCell>
-                                <TableCell align="center">
-                                    <div className={styles.infosDecks}>
-                                        { user.nbrDecks }
-                                        <IconButton size="small" style={{padding: 0}} onClick={() => handleOpenModal(user.id)}>
-                                            <InfoIcon fontSize="small" color="primary" />
-                                        </IconButton> 
-                                    </div></TableCell>
-                                <TableCell align="center">{ `${ user.partiesJouees?.[partieType] } (${ Math.round((user.partiesJouees?.[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
-                                <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires?.[partieType] } (${ratioVictory(user) }%)`}</TableCell>
-                                <TableCell className={styles[colorHundredGames(user)]} align="center">{`${ user.hundredGameWins }%`}</TableCell>
-                                <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom || 'Non défini' } (${ Math.round(((mostDeckPlayed(user.id)?.parties?.[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
-                                <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom || 'Non défini' } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                    <TableContainer className={styles.tableau}>
+                        <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
+                                    <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>Nbr decks</TableCell>
+                                    <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Nombre de parties</TableCell>
+                                    <TableCell align="center" style={{ minWidth: "125px" }} className={styles.styckyRow}>Ratio victoire</TableCell>
+                                    <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyRow}>100 dernières parties</TableCell>
+                                    <TableCell align="center" style={{ minWidth: "150px" }} className={styles.styckyRow}>Deck le plus joué</TableCell>
+                                    <TableCell align="center" style={{ minWidth: "175px" }} className={styles.styckyRow}>Meilleur deck</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {users?.map((user) => (
+                                    <TableRow key={user.fullName}>
+                                        <TableCell align="center" style={{ fontWeight: 700 }} className={styles.styckyCol} component="th" scope="row">{user.fullName}</TableCell>
+                                        <TableCell align="center">
+                                            <div className={styles.infosDecks}>
+                                                { user.nbrDecks }
+                                                <IconButton size="small" style={{padding: 0}} onClick={() => handleOpenModal(user.id)}>
+                                                    <InfoIcon fontSize="small" color="primary" />
+                                                </IconButton> 
+                                            </div></TableCell>
+                                        <TableCell align="center">{ `${ user.partiesJouees?.[partieType] } (${ Math.round((user.partiesJouees?.[partieType] / (count  || 1)) * 100) }%)` }</TableCell>
+                                        <TableCell className={styles[colorVictory(user)]} align="center">{`${ user.victoires?.[partieType] } (${ratioVictory(user) }%)`}</TableCell>
+                                        <TableCell className={styles[colorHundredGames(user)]} align="center">{`${ user.hundredGameWins }%`}</TableCell>
+                                        <TableCell align="center">{ `${ mostDeckPlayed(user.id)?.nom || 'Non défini' } (${ Math.round(((mostDeckPlayed(user.id)?.parties?.[partieType] || 0)/(count || 1)) * 100) }%)` }</TableCell>
+                                        <TableCell align="center">{ `${ ratioVictoryDeck(user.id)?.nom || 'Non défini' } (${ overallVictoryRatio(user.id) }%)` }</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-            <UserDeckModal 
-                userId={selectedUser}
-                open={open}
-                partieType={partieType}
-                setOpen={setOpen}
-            />
+                    <UserDeckModal 
+                        userId={selectedUser}
+                        open={open}
+                        partieType={partieType}
+                        setOpen={setOpen}
+                    />
+                </>
+            )}
         </>
     )
 }

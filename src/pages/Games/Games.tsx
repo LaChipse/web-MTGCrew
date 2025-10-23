@@ -11,6 +11,7 @@ import DrawerSpcialGamesForm from './DrawerGamesForm/Special/DrawerSpecialGamesF
 import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGamesForm';
 
 import styles from './Games.module.scss';
+import SmallLoading from '../loader/SmallLoading/SmallLoading';
 
 const Games = () => {
     const [page, setPage] = useState(1)
@@ -20,7 +21,7 @@ const Games = () => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
     const filters = useAppSelector((state) => state.gameFilters);
 
-    const { data: games, refetch: refetchGames } = useGetGames(isStandard, page, filters)
+    const { data: games, refetch: refetchGames, isLoading: isGamesLoading } = useGetGames(isStandard, page, filters)
     const { data: count, refetch: refetchCount } = useCountGames(isStandard, filters)
 
     useEffect(() => {
@@ -42,7 +43,11 @@ const Games = () => {
             </div>
         </div>
 
-            <GamesArray games={games} count={count} setPage={setPage} divider={20} />
+            { isGamesLoading ? (
+                <SmallLoading />
+            ) : (
+                <GamesArray games={games} count={count} setPage={setPage} divider={20} />
+            )}
 
             <Drawer open={openStandard} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>
                 <DrawerStandardGamesForm toggleDrawer={toggleDrawer} />

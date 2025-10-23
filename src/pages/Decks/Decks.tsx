@@ -5,10 +5,11 @@ import { Deck, useGetDecks } from '../../hooks/queries/decks/useGetDecks';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import styles from './Decks.module.scss';
 import DecksActionModal from './DecksActionModal/DecksActionModal';
+import SmallLoading from '../loader/SmallLoading/SmallLoading';
 
 const Decks = () => {
     const [open, setOpen] = useState(false);
-    const { data: decks } = useGetDecks()
+    const { data: decks, isLoading: isDecksLoading } = useGetDecks()
     const isStandard = useAppSelector((state) => state.type.isStandard);
 
     const partieType = isStandard ? 'standard' : 'special'
@@ -70,7 +71,11 @@ const Decks = () => {
                 setOpen={setOpen}
             />
 
-            <DecksArray decks={decks} partieType={partieType} />
+            { isDecksLoading ? (
+                <SmallLoading />
+            ) : (
+                <DecksArray decks={decks} partieType={partieType} />
+            )}
         </>
     )
 }

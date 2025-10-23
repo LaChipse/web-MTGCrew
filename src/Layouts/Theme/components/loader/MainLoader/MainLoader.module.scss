@@ -16,7 +16,7 @@
   }
 
   .mainImg {
-    animation: bounce 1s ease-in-out infinite, spin 12s linear infinite;
+    transform: scale(0.4);
   }
 
   .loader1,
@@ -128,23 +128,5 @@
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: scale(0.3);
-  }
-  50% {
-    transform: scale(0.5);
-  }
-}
-
-@keyframes spin {
-  from {
-    rotate: 0deg;
-  }
-  to {
-    rotate: 360deg;
   }
 }

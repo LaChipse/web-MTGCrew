@@ -23,8 +23,6 @@ export const useGetCardByName = (search?: string) => (
         queryKey: ['getCardByName', search],
         queryFn: () => getCardByName(search),
         enabled: !!search && search.length > 2,
-        staleTime: 0,
-        refetchOnMount: true,
-        refetchOnReconnect: true,  
+        staleTime: 0, 
     })
 );

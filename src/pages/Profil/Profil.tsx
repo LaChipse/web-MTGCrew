@@ -11,6 +11,7 @@ import { Modal } from '@mui/material';
 import { Box } from '@mui/system';
 import { Deck } from '../../hooks/queries/decks/useGetDecks';
 import styles from './Profil.module.scss';
+import SmallLoading from '../loader/SmallLoading/SmallLoading';
 
 const Profil = () => {
     const [page, setPage] = useState(1)
@@ -23,7 +24,7 @@ const Profil = () => {
     
     const partieType = isStandard ? 'standard' : 'special'
 
-    const { data: gameHistory, refetch: refetchHistoryGames } = useGetHistoryGames(isStandard, page, filters)
+    const { data: gameHistory, refetch: refetchHistoryGames, isLoading: isHistoryGamesLoading } = useGetHistoryGames(isStandard, page, filters)
     const { data: count, refetch: refetchCountHistory } = useCountHistoryGames(isStandard, filters)
 
     useEffect(() => {
@@ -55,12 +56,16 @@ const Profil = () => {
 
             <div className={styles.history}>
                 <h2 style={{color: 'rgb(197, 195, 195)', marginBottom: 15}}>Dernières parties jouées :</h2>
-                <GamesArray 
-                    games={gameHistory} 
-                    divider={10} 
-                    setPage={setPage}
-                    count={count} isHystoric 
-                />
+                { isHistoryGamesLoading ? (
+                    <SmallLoading />
+                ) :(
+                    <GamesArray 
+                        games={gameHistory} 
+                        divider={10} 
+                        setPage={setPage}
+                        count={count} isHystoric 
+                    />
+                )}
             </div>
 
             {deckChoose && (

@@ -71,8 +71,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     }
 
     const getIllustrationUrl = (illustrationCard: Record<'imageUrlSmall' | 'imageUrlNormal', string>) => {
-        if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
         if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
+        if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
     }
 
     const handleActionDeck = (e: MouseEvent<HTMLButtonElement>) => {

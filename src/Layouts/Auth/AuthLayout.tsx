@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import Loading from "../../pages/Loading/Loading";
+import Loading from "../../pages/loader/Loading/Loading";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useGetUser } from "../../hooks/queries/useGetUser";
 import { useAppSelector } from "../../hooks/useAppSelector";

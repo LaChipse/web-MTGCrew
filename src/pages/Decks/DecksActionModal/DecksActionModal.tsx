@@ -211,13 +211,13 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     style={{ color: 'white', textShadow: '0 0 3px rgba(0, 0, 0, 0.8)' }} 
                                     control={
                                         <Checkbox 
-                                            sx={{ 
-                                                filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
-                                                '&.Mui-checked': {
-                                                    color: '#1976d2', // couleur cochée
-                                                    filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
-                                                },
-                                            }}
+                                            // sx={{ 
+                                            //     filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
+                                            //     '&.Mui-checked': {
+                                            //         color: '#1976d2', // couleur cochée
+                                            //         filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
+                                            //     },
+                                            // }}
                                             style={{ color: 'white' }} 
                                             onChange={handleCheckboxChange} 
                                             checked={couleurs.includes("blanc")} 

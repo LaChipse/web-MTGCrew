@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { hideLoader, showLoader } from '../../store/reducers/loaderReducer';
+import { hideLoader, showLoader } from '../../../store/reducers/loaderReducer';
 
 type Props = unknown
 

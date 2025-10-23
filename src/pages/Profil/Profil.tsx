@@ -4,7 +4,7 @@ import { useCountHistoryGames } from '../../hooks/queries/games/useCountHistoryG
 import { useGetHistoryGames } from '../../hooks/queries/games/useGetHistoryGames';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
-import Loading from '../Loading/Loading';
+import Loading from '../loader/Loading/Loading';
 import ProfilCard from './ProfilCard/ProfilCard';
 import ProfilModal from './ProfilModal/ProfilModal';
 import { Modal } from '@mui/material';

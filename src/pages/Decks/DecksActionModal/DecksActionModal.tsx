@@ -198,12 +198,65 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         <FormControl className={styles.formControl}>
                             <FormLabel id="checkbox-colors">Couleurs du deck</FormLabel>
                             <FormGroup className={styles.choices}>
-                                <FormControlLabel value="incolore" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("incolore")} />} label="Incolore" />
-                                <FormControlLabel value="blanc" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("blanc")} />} label="Blanc" />
-                                <FormControlLabel value="bleu" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("bleu")} />} label="Bleu" />
-                                <FormControlLabel value="noir" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("noir")} />} label="Noir" />
-                                <FormControlLabel value="rouge" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("rouge")} />} label="Rouge" />
-                                <FormControlLabel value="vert" style={{ color: 'black' }} control={<Checkbox onChange={handleCheckboxChange} checked={couleurs.includes("vert")} />} label="Vert" />
+                                <FormControlLabel 
+                                    value="incolore" 
+                                    style={{ color: 'grey' }} 
+                                    control={
+                                        <Checkbox style={{ color: 'grey'}} onChange={handleCheckboxChange} checked={couleurs.includes("incolore")} />
+                                    } 
+                                    label="Incolore" 
+                                />
+                                <FormControlLabel 
+                                    value="blanc" 
+                                    style={{ color: 'white', textShadow: '0 0 3px rgba(0, 0, 0, 0.8)' }} 
+                                    control={
+                                        <Checkbox 
+                                            sx={{ 
+                                                filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
+                                                '&.Mui-checked': {
+                                                    color: '#1976d2', // couleur cochée
+                                                    filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
+                                                },
+                                            }}
+                                            style={{ color: 'white' }} 
+                                            onChange={handleCheckboxChange} 
+                                            checked={couleurs.includes("blanc")} 
+                                        />
+                                    } 
+                                    label="Blanc" 
+                                />
+                                <FormControlLabel 
+                                    value="bleu" 
+                                    style={{ color: 'blue' }} 
+                                    control={
+                                        <Checkbox style={{ color: 'blue'}} onChange={handleCheckboxChange} checked={couleurs.includes("bleu")} />
+                                    } 
+                                    label="Bleu" 
+                                />
+                                <FormControlLabel 
+                                    value="noir" 
+                                    style={{ color: 'black' }} 
+                                    control={
+                                        <Checkbox style={{ color: 'black'}} onChange={handleCheckboxChange} checked={couleurs.includes("noir")} />
+                                    } 
+                                    label="Noir" 
+                                />
+                                <FormControlLabel 
+                                    value="rouge" 
+                                    style={{ color: 'red' }} 
+                                    control={
+                                        <Checkbox style={{ color: 'red'}} onChange={handleCheckboxChange} checked={couleurs.includes("rouge")} />
+                                    } 
+                                    label="Rouge"  
+                                />
+                                <FormControlLabel 
+                                    value="vert" 
+                                    style={{ color: 'green' }} 
+                                    control={
+                                        <Checkbox style={{ color: 'green'}} onChange={handleCheckboxChange} checked={couleurs.includes("vert")} />
+                                    } 
+                                    label="Vert" 
+                                />
                             </FormGroup>
                         </FormControl>
                     </div>

@@ -8,7 +8,6 @@ import Loading from './pages/loader/Loading/Loading';
 import QueryClientProvider from './providers/QueryClientProvider';
 import Router from './router/Router';
 import { store } from './store/store';
-import UpdateBanner from './components/UpdateBanner';
 
 const theme = unstable_createMuiStrictModeTheme();
 
@@ -25,8 +24,6 @@ const App = () => (
           </QueryClientProvider>
         </ReduxProvider>
       </ThemeProvider>
-
-      <UpdateBanner />
   </>
 );
 

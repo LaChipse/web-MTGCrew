@@ -72,6 +72,13 @@
             width: fit-content;
             z-index: 10; // sous le Paper
             margin-top: 10px;
+
+            .imageListItem {
+                display: flex;
+                gap: 15px; 
+                overflow: auto;
+                border-radius: 5px
+            }
         }
 
         .illustrationShow {
@@ -91,7 +98,7 @@
     .modal {
         height: 70%;
         max-height: 70%;
-        padding: 15px 30px;
+        padding: 20px;
     }
 
     .formControl {

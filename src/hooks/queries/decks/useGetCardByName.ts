@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
 
+export type ImageUrisType = Array<Record<'imageUrlSmall' | 'imageUrlNormal', string>>
+
 export interface CardByName {
     id: string,
     name: string,
     lang: string,
-    imageUris?: Array<Record<'imageUrlSmall' | 'imageUrlNormal', string>>,
+    imageUris?: Array<ImageUrisType> | ImageUrisType,
 }
 
 const getCardByName = async (search?: string) => {

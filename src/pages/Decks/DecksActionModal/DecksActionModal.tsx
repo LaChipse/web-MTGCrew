@@ -4,8 +4,8 @@ import { LoadingButton } from '@mui/lab';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, ImageListItem, InputBase, InputLabel, MenuItem, Modal, Paper, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import classNames from 'classnames';
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
-import { useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
+import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
@@ -28,6 +28,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const [nameInput, setNameInput] = useState('');
     const [searchCard, setSearchCard] = useState<string>()
     const [showIllustration, setShowIllustration] = useState<boolean>(false)
+    const [maxWidthBoxIllustration, setMaxWidthBoxIllustration] = useState(0);
+
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (deck) {
@@ -38,7 +41,20 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             setIsImprime(deck.isImprime)
             setIllustrationUrl(deck.illustrationUrl)
         }
-    }, [deck])
+
+        if (containerRef.current) {
+            setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
+        }
+
+        const handleResize = () => {
+            if (containerRef.current) {
+                setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [deck, containerRef])
 
     const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
     const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
@@ -105,6 +121,20 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         setOpen(false);
     };
 
+    const getImageDisplay = (iU: Record<"imageUrlSmall" | "imageUrlNormal", string>) => {
+        return (
+            <img
+                key={iU.imageUrlNormal}
+                srcSet={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format`}
+                alt={getIllustrationUrl(iU)}
+                loading="lazy"
+                style={{ cursor: 'pointer', borderRadius: '10px', width: '150px' }}
+                onClick={() => handleSetIllustraiton(getIllustrationUrl(iU))}
+            />
+        )
+    }
+
     return (
         <Modal
             open={open}
@@ -117,7 +147,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             
             <Box className={styles.modal}>
                 
-                <div className={styles.container}>
+                <div className={styles.container} ref={containerRef}>
                     <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                         illustrationUrl && (
                             <>
@@ -180,20 +210,21 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                             </IconButton>
                                         </Paper>
 
-                                        {!!illustrationCard && (
-                                            <Box className={styles.illustrationBox}>
-                                                <ImageListItem key={illustrationCard.id} style={{ display: 'flex', gap: '10px' }}>
-                                                    {
-                                                        illustrationCard.imageUris?.map((iU) => (
-                                                        <img
-                                                            key={iU.imageUrlNormal}
-                                                            srcSet={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                            src={`${getIllustrationUrl(iU)}?w=164&h=164&fit=crop&auto=format`}
-                                                            alt={getIllustrationUrl(iU)}
-                                                            loading="lazy"
-                                                            style={{ cursor: 'pointer', borderRadius: '10px', width: '150px' }}
-                                                            onClick={() => handleSetIllustraiton(getIllustrationUrl(iU))}
-                                                        />
+                                        {!!illustrationCard && illustrationCard.imageUris && (
+                                            <Box className={styles.illustrationBox} sx={{ maxWidth: `${maxWidthBoxIllustration}px`}}>
+                                                <ImageListItem key={illustrationCard.id} className={styles.imageListItem}>
+                                                    {Array.isArray(illustrationCard.imageUris[0]) ? 
+                                                        (illustrationCard.imageUris as ImageUrisType[]).map((imageUris) => {
+                                                            return (
+                                                                <div style={{ display: 'flex', gap: '5px' }}>
+                                                                    {imageUris.map((iU) => (
+                                                                        getImageDisplay(iU)
+                                                                    ))}
+                                                                </div>
+                                                            )
+                                                        }) : 
+                                                        (illustrationCard.imageUris as ImageUrisType).map((iU) => (
+                                                            getImageDisplay(iU)
                                                         ))
                                                     }
                                                 </ImageListItem>

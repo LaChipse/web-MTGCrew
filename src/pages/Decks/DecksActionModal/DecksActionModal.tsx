@@ -32,6 +32,10 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
     const containerRef = useRef<HTMLDivElement>(null);
 
+    const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
+    const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
+    const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
+
     useEffect(() => {
         if (deck) {
             setNom(deck.nom)
@@ -54,11 +58,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [deck, containerRef])
-
-    const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
-    const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
-    const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
+    }, [deck, containerRef, illustrationCard])
     
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
@@ -214,15 +214,13 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                             <Box className={styles.illustrationBox} sx={{ maxWidth: `${maxWidthBoxIllustration}px`}}>
                                                 <ImageListItem key={illustrationCard.id} className={styles.imageListItem}>
                                                     {Array.isArray(illustrationCard.imageUris[0]) ? 
-                                                        (illustrationCard.imageUris as ImageUrisType[]).map((imageUris) => {
-                                                            return (
-                                                                <div style={{ display: 'flex', gap: '5px' }}>
+                                                        (illustrationCard.imageUris as ImageUrisType[]).map((imageUris, index) => (
+                                                                <div style={{ display: 'flex', gap: '5px' }} key={index}>
                                                                     {imageUris.map((iU) => (
                                                                         getImageDisplay(iU)
                                                                     ))}
                                                                 </div>
-                                                            )
-                                                        }) : 
+                                                            )) : 
                                                         (illustrationCard.imageUris as ImageUrisType).map((iU) => (
                                                             getImageDisplay(iU)
                                                         ))

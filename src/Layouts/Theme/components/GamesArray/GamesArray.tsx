@@ -13,13 +13,14 @@ import styles from './GamesArray.module.scss';
 
 type Props = {
     games?: Array<GameResume>
+    page: number
     setPage: React.Dispatch<React.SetStateAction<number>>
     divider: number
     count?: number
     isHystoric?: boolean
 }
 
-const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystoric }) => {
+const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isHystoric }) => {
     const user = useAppSelector((state) => state.auth.user);
 
     const [isOpen, setIsOpen] = useState(false)
@@ -97,7 +98,7 @@ const GamesArray: React.FC<Props> = ({ games, setPage, count, divider, isHystori
     return (
         <>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Pagination count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
+                <Pagination page={page} count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
                 <FilterListIcon style={{color: 'white'}} onClick={() => setIsOpen(true)}/>
             </div>
 

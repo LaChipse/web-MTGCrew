@@ -46,7 +46,7 @@ const Games = () => {
             { isGamesLoading ? (
                 <SmallLoading />
             ) : (
-                <GamesArray games={games} count={count} setPage={setPage} divider={20} />
+                <GamesArray page={page} games={games} count={count} setPage={setPage} divider={20} />
             )}
 
             <Drawer open={openStandard} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>

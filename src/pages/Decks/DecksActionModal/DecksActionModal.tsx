@@ -9,21 +9,20 @@ import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/us
 import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
-import { useGetOneDeck } from '../../../hooks/queries/decks/useGetOneDeck';
+import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import styles from './DecksActionModal.module.scss';
 
 type Props = {
     open: boolean
     setOpen: (value: React.SetStateAction<boolean>) => void
-    idDeck?: string
+    deck?: Deck
 }
 
-const DecksActionModal: React.FC<Props> = ({ open, setOpen, idDeck }) => {
-    const { data: deck, isLoading: isDeckLoading } = useGetOneDeck(idDeck);
+const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
     const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
 
-    const [idDeckFetch, setIdDeckFetch] = useState<string>('')
+    const [deckFetch, setDeckFetch] = useState<Deck>()
     const [nom, setNom] = useState('');
     const [couleurs, setCouleurs] = useState<Array<string>>([]);
     const [rank, setRank] = useState(1);
@@ -40,8 +39,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, idDeck }) => {
     const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
 
     useEffect(() => {
-        if (deck && idDeck && (idDeck !== idDeckFetch)) {
-            setIdDeckFetch(idDeck)
+        if (deck && (deck !== deckFetch)) {
+            setDeckFetch(deck)
             setNom(deck.nom)
             setCouleurs(deck.couleurs)
             setRank(deck.rank)
@@ -62,7 +61,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, idDeck }) => {
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [deck, containerRef, illustrationCard, illustrationUrl, idDeck, idDeckFetch])
+    }, [deck, containerRef, illustrationCard, illustrationUrl, deckFetch])
     
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
@@ -123,6 +122,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, idDeck }) => {
     };
 
     const handleClose = () => {
+        setDeckFetch(undefined)
         setOpen(false);
     };
 
@@ -177,7 +177,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, idDeck }) => {
                             </>
                         )
                     }</h2>
-                    {isGetillustrationCardLoading || isDeckLoading ? (
+                    {isGetillustrationCardLoading ? (
                         <SmallLoading />
                     ) : (
                         <>

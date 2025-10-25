@@ -62,8 +62,10 @@ const Profil = () => {
                     <GamesArray 
                         games={gameHistory} 
                         divider={10} 
+                        page={page}
                         setPage={setPage}
-                        count={count} isHystoric 
+                        count={count} 
+                        isHystoric 
                     />
                 )}
             </div>

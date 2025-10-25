@@ -123,6 +123,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
     const handleClose = () => {
         setDeckFetch(undefined)
+        setShowIllustration(false)
         setOpen(false);
     };
 
@@ -144,7 +145,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         <Modal
             open={open}
             onClick= {() => handleCloseIllustration()}
-            onClose={handleClose}
+            onClose={() => handleClose()}
             aria-labelledby="actionDeck"
             aria-describedby="axtion sur deck"
         >

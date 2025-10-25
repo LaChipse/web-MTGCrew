@@ -21,7 +21,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
     const [deleteOpen, setDeleteOpen] = useState(false);
 
     const [deletedDeck, setDeletedDeck] = useState<string>('')
-    const [selectedDeck, setSelectedDeck] = useState<Deck>()
+    const [selectedDeck, setSelectedDeck] = useState<string | undefined>()
 
     const [openDeck, setOpenDeck] = useState<Deck | null>(null); // deck actuellement ouvert
     const [anchor, setAnchor] = useState<DOMRect | null>(null);
@@ -55,8 +55,8 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
         )
     }
 
-    const handleOpen = (deck: Deck) => {
-        setSelectedDeck(deck)
+    const handleOpen = (id: string) => {
+        setSelectedDeck(id)
         setOpen(true);
     };
 
@@ -117,7 +117,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                                 <TableCell className={styles[colorVictory(deck)]} align='center'>{`${deck.victoires?.[partieType]} (${ratioVictory(deck)}%)`}</TableCell>
                                 <TableCell align='center'>{formatBooelan(deck.isImprime)}</TableCell>
                                 <TableCell align='center' className={styles.actions}>
-                                    <IconButton style={{padding: 1}} className={styles.edit} size='small' onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
+                                    <IconButton style={{padding: 1}} className={styles.edit} size='small' onClick={() => handleOpen(deck._id)}><ModeEditIcon/></IconButton>
                                     <IconButton style={{padding: 1}} className={styles.delete} size='small' onClick={() => handleDeleteOpen(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                 </TableCell>
                             </TableRow>
@@ -135,11 +135,12 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                 />
             )}
 
-            {selectedDeck && (
+            {!!selectedDeck && (
                 <DecksActionModal 
                     open={open}
                     setOpen={setOpen}
-                    deck={selectedDeck}
+                    key={selectedDeck}
+                    idDeck={selectedDeck}
                 />
             )} 
         </>

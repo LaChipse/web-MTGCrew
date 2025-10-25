@@ -6,25 +6,30 @@ import { Box } from '@mui/system';
 import classNames from 'classnames';
 import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
-import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
-import styles from './DecksActionModal.module.scss';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
+import { useGetOneDeck } from '../../../hooks/queries/decks/useGetOneDeck';
+import styles from './DecksActionModal.module.scss';
 
 type Props = {
     open: boolean
     setOpen: (value: React.SetStateAction<boolean>) => void
-    deck?: Deck
+    idDeck?: string
 }
 
-const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
+const DecksActionModal: React.FC<Props> = ({ open, setOpen, idDeck }) => {
+    const { data: deck, isLoading: isDeckLoading } = useGetOneDeck(idDeck);
+    const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
+    const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
+
+    const [idDeckFetch, setIdDeckFetch] = useState<string>('')
     const [nom, setNom] = useState('');
     const [couleurs, setCouleurs] = useState<Array<string>>([]);
     const [rank, setRank] = useState(1);
-    const [type, setType] = useState('');
+    const [type, setType] = useState<string>('');
     const [isImprime, setIsImprime] = useState(false);
-    const [illustrationUrl, setIllustrationUrl] = useState<string>()
+    const [illustrationUrl, setIllustrationUrl] = useState<string>('')
     const [nameInput, setNameInput] = useState('');
     const [searchCard, setSearchCard] = useState<string>()
     const [showIllustration, setShowIllustration] = useState<boolean>(false)
@@ -33,11 +38,10 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
-    const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
-    const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
 
     useEffect(() => {
-        if (deck) {
+        if (deck && idDeck && (idDeck !== idDeckFetch)) {
+            setIdDeckFetch(idDeck)
             setNom(deck.nom)
             setCouleurs(deck.couleurs)
             setRank(deck.rank)
@@ -58,14 +62,14 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [deck, containerRef, illustrationCard])
+    }, [deck, containerRef, illustrationCard, illustrationUrl, idDeck, idDeckFetch])
     
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
     }
 
-    const handleSetIllustraiton = (url?: string) => {
-        if (url) setIllustrationUrl(url);
+    const handleSetIllustraiton = (url: string) => {
+        setIllustrationUrl(url);
         setSearchCard(undefined)
     }
 
@@ -89,6 +93,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const getIllustrationUrl = (illustrationCard: Record<'imageUrlSmall' | 'imageUrlNormal', string>) => {
         if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
         if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
+        return ''
     }
 
     const handleActionDeck = (e: MouseEvent<HTMLButtonElement>) => {
@@ -103,18 +108,18 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     };
 
     const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            updateAdd({ nom, illustrationUrl: illustrationUrl || '', couleurs: [...new Set(couleurs)], isImprime, rank, type });
-    
-            setNom('')
-            setCouleurs([])
-            setRank(1)
-            setType('')
-            setIsImprime(false)
-            setOpen(false)
-            setNameInput('')
-            setIllustrationUrl(undefined)
-            setSearchCard(undefined)
+        e.preventDefault();
+        updateAdd({ nom, illustrationUrl: illustrationUrl || '', couleurs: [...new Set(couleurs)], isImprime, rank, type });
+
+        setNom('')
+        setCouleurs([])
+        setRank(1)
+        setType('')
+        setIsImprime(false)
+        setOpen(false)
+        setNameInput('')
+        setIllustrationUrl('')
+        setSearchCard(undefined)
     };
 
     const handleClose = () => {
@@ -172,7 +177,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                             </>
                         )
                     }</h2>
-                    {   isGetillustrationCardLoading ? (
+                    {isGetillustrationCardLoading || isDeckLoading ? (
                         <SmallLoading />
                     ) : (
                         <>

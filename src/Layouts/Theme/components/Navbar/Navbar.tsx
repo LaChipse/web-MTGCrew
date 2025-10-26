@@ -21,7 +21,7 @@ const Navbar: React.FC<Props> = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     
     const open = Boolean(anchorEl);
-    const navTabs = ['profil', 'decks', 'games', 'joueurs']
+    const navTabs = ['profil', 'decks', 'games', 'joueurs', 'matchmaking']
 
     useEffect(() => {
         let timeout: NodeJS.Timeout | null = null;
@@ -130,9 +130,6 @@ const Navbar: React.FC<Props> = () => {
                         open={open}
                         onClose={handleClose}
                         className={styles.menuButton}
-                        MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                        }}
                     >
                         {navTabs.map ((navTab) => handleNavigation(renderNavMenuItem, navTab))}
                     </Menu>
@@ -144,9 +141,9 @@ const Navbar: React.FC<Props> = () => {
                 </div>
 
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    <div style={{margin: '0 10px', fontSize: 14}}>
+                    <div style={{ margin: '0 10px', fontSize: 14 }}>
                         <strong>Std</strong>
-                        <Switch size='small' onChange={() => dispatch(switchType())}/>
+                            <Switch size='small' onChange={() => dispatch(switchType())}/>
                         <strong>Spec</strong>
                     </div>
                     <Button size='small' variant="contained" onClick={() => handleLogOut()}>Se déco</Button>

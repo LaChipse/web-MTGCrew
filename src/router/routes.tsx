@@ -27,6 +27,10 @@ export const GAMES_PAGE = '/games'
  */
 export const JOUEURS_PAGE = '/joueurs'
 /**
+ * Matchmaking
+ */
+export const MATCHMAKING_PAGE = '/matchmaking'
+/**
  * Page par défaut.
  */
 export const DEFAULT_PAGE_PATH = PROFIL_PAGE;

@@ -149,10 +149,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             aria-labelledby="actionDeck"
             aria-describedby="axtion sur deck"
         >
-
-            
             <Box className={styles.modal}>
-                
                 <div className={styles.container} ref={containerRef}>
                     <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                         illustrationUrl && (

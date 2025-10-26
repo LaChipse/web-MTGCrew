@@ -1,0 +1,24 @@
+.container {
+    background-color: white;
+    opacity: 0.9;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.formControl {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+}
+
+.containerTeam {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.checkBox {
+    span{
+        color: rgba(0, 0, 0, 0.6);
+    }
+}

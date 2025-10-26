@@ -1,4 +1,4 @@
-import { Button, Checkbox, Container, FormControl, FormControlLabel, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, Checkbox, Container, Divider, FormControl, FormControlLabel, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useGetAllDecks } from "../../hooks/queries/decks/useGetAllDecks";
 import { useGetAllPlayers } from "../../hooks/queries/joueurs/useGetAllPlayers";
@@ -13,6 +13,8 @@ const Matchmaking: React.FC = () => {
     const [usersChecked, setUsersChecked] = useState<string[]>([]);
     const [nbrParties, setNbrParties] = useState<number | undefined>(undefined);
     const [includedDecks, setIncludedDecks] = useState<string[]>([]);
+    const [hasAllDecksSelected, setHasAllDecksSelected] = useState<boolean>(false);
+    const [allUserDecksSelected, setAllUserDecksSelected] = useState<string[]>([])
     const [rank, setRank] = useState<string>('');
     const [isTeam, setIsTeam] = useState<boolean>(false);
     const [nbrTeam, setNbrTeam] = useState<number>(2)
@@ -28,8 +30,41 @@ const Matchmaking: React.FC = () => {
 
     const handleChangeIncludedDecks = (event: SelectChangeEvent<typeof includedDecks>) => {
         const { target: { value } } = event;
-        setIncludedDecks(typeof value === 'string' ? value.split(',') : value);
+        if (value === 'user' || value.includes('user')) return
+
+        setIncludedDecks(typeof value === 'string' ? [...new Set(value.split(','))] : [...new Set(value)]);
     };
+
+
+    const handleChangeDeckSelected = (deckId: string) => {
+        const deckSelected = decks?.find((d) => d.id === deckId)?.userId
+        if (allUserDecksSelected.includes(deckSelected!)) setAllUserDecksSelected((prev) => prev.filter((p) => p !== deckSelected))
+    }
+
+    const handleAllUserDecksSelected = (userId: string) => {
+        setAllUserDecksSelected((prev) => {
+            let formatedPrev = [...prev];
+            const userDecks = decks!.filter((d) => d.userId === userId).map((d) => d.id)
+
+            if (prev.includes(userId)) {
+                formatedPrev = prev.filter((p) => p !== userId)
+
+                setIncludedDecks((prev) => {
+                    const formatedPrevDecks = prev.filter((p) => !userDecks.includes(p));
+                    return formatedPrevDecks
+                })
+            } else {
+                formatedPrev.push(userId)
+
+                setIncludedDecks((prev) => {
+                    const formatedPrevDecks = prev.filter((p) => !userDecks.includes(p));
+                    formatedPrevDecks.push(...userDecks)
+                    return [...new Set(formatedPrevDecks)]
+                })
+            }
+            return formatedPrev 
+        })
+    }
 
     const handleNbrParties = (value: string) => {
         if (!!value && isNaN(Number(value))) setNbrParties(1)
@@ -53,6 +88,19 @@ const Matchmaking: React.FC = () => {
         setIsExclusifsDecks(true)
         setConfiguration(undefined)
         setNbrTeam(2)
+        setHasAllDecksSelected(false)
+        setAllUserDecksSelected([])
+    }
+
+    const handleHasAllDeckSelected = () => {
+        setHasAllDecksSelected((prev) => {
+            if (!prev) setIncludedDecks(decks!.map((d) => d.id))
+            else setIncludedDecks([])
+
+            return !prev
+        })
+
+        setAllUserDecksSelected([])
     }
 
     const splitArray = (array: Array<Record<string, string>>, parts: number) => {
@@ -80,16 +128,22 @@ const Matchmaking: React.FC = () => {
 
         const selectedDecks = decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d)
                                     .filter((d) => !includedDecks.length ? d : includedDecks.includes(d.id))
-                                    .map((d) => ({ title: `${d.nom} (${users?.filter((u) => u.id === d.userId)[0].fullName})`, userId: d.userId }))
+                                    .map((d) => ({ title: `${d.nom} (${users?.filter((u) => u.id === d.userId)[0].fullName})`, userId: d.userId, deckId: d.id}))
 
+        const useDeckIds: string[] = [];
 
         configSet = players.map((p) => {
             let formatedSelectedDeck = isExlusifsDecks ? selectedDecks!.filter((d) => d.userId === p.id) : selectedDecks
             if (!formatedSelectedDeck.length) formatedSelectedDeck = selectedDecks
 
+            formatedSelectedDeck.filter((d) => !useDeckIds.includes(d.deckId))
+            if (!formatedSelectedDeck.length) formatedSelectedDeck = selectedDecks
+
             const randomIndex = Math.floor(Math.random() * formatedSelectedDeck.length);
             const deck = isExlusifsDecks ? formatedSelectedDeck.splice(randomIndex, 1)[0] : selectedDecks.splice(randomIndex, 1)[0];
-            return { player: p.nom, title: deck.title };
+            useDeckIds.push(deck.deckId)
+
+            return { player: p.nom, title: deck.title, idDeck: deck.userId, deckId: deck.deckId };
         });
 
         configSet = splitArray(configSet as Array<Record<string, string>>, nbrParties ? Number(nbrParties) : 1)
@@ -143,11 +197,36 @@ const Matchmaking: React.FC = () => {
                             onChange={(e) => handleChangeIncludedDecks(e)}
                             renderValue={() => (includedDecks.length)}
                             label="Decks présents"
+                            MenuProps={{
+                                MenuListProps: {
+                                    // Empêche le MenuList de forcer le focus sur l'item sélectionné
+                                    autoFocus: false,
+                                    autoFocusItem: false,
+                                },
+                                // optionnel : conserve le menu monté (évite remontée/re-rendu)
+                                keepMounted: true,
+                            }}
                         >
+
+                            <MenuItem key={'allDeck'} value={'allDeck'}>
+                                <Checkbox checked={hasAllDecksSelected} onChange={handleHasAllDeckSelected} />
+                                <ListItemText primary={hasAllDecksSelected ? 'Tout déselectionner' : 'Tout sélectionner'} />
+                            </MenuItem>
+
+                            <Divider />
+
+                            {users!.map((user) => (
+                                <MenuItem key={user.id} value={'user'} >
+                                    <Checkbox checked={allUserDecksSelected.includes(user.id)} onClick={() => handleAllUserDecksSelected(user.id)}/>
+                                    <ListItemText primary={`Decks de ${user.fullName}`} />
+                                </MenuItem>
+                            ))}
+
+                            <Divider />
 
                             {decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d).map((deck) => (
                                 <MenuItem key={deck.id} value={deck.id}>
-                                    <Checkbox checked={includedDecks.includes(deck.id)} />
+                                    <Checkbox checked={includedDecks.includes(deck.id)} onClick={() => handleChangeDeckSelected(deck.id)}/>
                                     <ListItemText primary={`${deck.nom} (${users!.find((u) => deck.userId === u.id)?.fullName})`} />
                                 </MenuItem>
                             ))}

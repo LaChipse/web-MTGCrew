@@ -57,6 +57,5 @@ export const useDeleteGame = () => {
             useCountGames.reset(queryClient)
             useCountHistoryGames.reset(queryClient)
         },
-        onError: (error) => console.debug('ERROR', error)
     })
 };

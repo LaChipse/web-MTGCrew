@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import { TYPE_VICTORY_VALUES } from "../../../../../utils/Enums/victoryType";
 import styles from './VictoryBlock.module.scss';
-import { ROLE_TYPE } from "../../../../../utils/Enums/roleType";
+import { ROLE_TYPE_SIMPLE } from "../../../../../utils/Enums/roleType";
 
 type Props = {
     victoire: string
@@ -23,7 +23,7 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
                 label="Role victorieux"
             >
                 {
-                    Object.values(ROLE_TYPE).map((role) => (
+                    Object.values(ROLE_TYPE_SIMPLE).map((role) => (
                         <MenuItem value={role} key={role}>
                             {role}
                         </MenuItem>

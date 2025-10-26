@@ -17,6 +17,20 @@
         }
     }
 
+    .actions {
+        display: flex;
+        gap: 3px;
+        justify-content: center;
+    }
+
+    .delete {
+        color: #FF0033 !important;
+
+        svg {
+            font-size: 1.3rem;
+        }
+    }
+
     .infosDecks {
         margin: auto;
         justify-content: center;

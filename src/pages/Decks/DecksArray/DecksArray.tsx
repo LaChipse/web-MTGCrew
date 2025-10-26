@@ -8,8 +8,8 @@ import { RANK } from '../../../utils/Enums/rank';
 import { toTitleCase } from '../../../utils/ToTitleCase';
 import ImagePortal from '../composants/ImagePortal/ImagePortal';
 import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
-import styles from './DecksArray.module.scss';
 import DecksActionModal from '../DecksActionModal/DecksActionModal';
+import styles from './DecksArray.module.scss';
 
 type Props = {
     decks?: Array<Deck>

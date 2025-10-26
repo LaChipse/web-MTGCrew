@@ -1,6 +1,7 @@
 import FilterListIcon from '@mui/icons-material/FilterList';
+import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import classNames from "classnames";
 import { useState } from 'react';
 import { GameResume } from '../../../../hooks/queries/games/useGetGames';
@@ -10,6 +11,7 @@ import { DateHelper } from '../../../../utils/DateHelper';
 import CustomTooltip from '../CustomTooltip/CustomTooltip';
 import GamesFilter from '../GamesFilter/GamesFilter';
 import styles from './GamesArray.module.scss';
+import GameDeleteModal from '../GameDeleteModal/GameDeleteModal';
 
 type Props = {
     games?: Array<GameResume>
@@ -24,6 +26,8 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
     const user = useAppSelector((state) => state.auth.user);
 
     const [isOpen, setIsOpen] = useState(false)
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [deletedGame, setDeletedGame] = useState<string>('')
 
     const formatType = (type: string) => {
         if (type === 'team') return 'En équipe'
@@ -95,6 +99,11 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
         setPage(value)
     }
 
+    const handleDeleteOpen =(id: string) => {
+        setDeleteOpen(true)
+        setDeletedGame(id)
+    }
+
     return (
         <>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -106,18 +115,11 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                 <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>
-                                Date
-                            </TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>
-                                Type de partie
-                            </TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>
-                                Victoire
-                            </TableCell>
-                            <TableCell align="center" style={{ minWidth: "50px" }}>
-                                Type de victoire
-                            </TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Type de partie</TableCell>
+                            <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
+                            <TableCell align="center" style={{ minWidth: "50px" }}>Type de victoire</TableCell>
+                            <TableCell align='center' style={{ minWidth: '75px' }} className={styles.styckyRow}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -134,6 +136,9 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                                     </div>
                                 </TableCell>
                                 <TableCell align="center">{ game.typeVictoire }</TableCell>
+                                <TableCell align='center' className={styles.actions}>
+                                    <IconButton style={{padding: 1}} className={styles.delete} size='small' onClick={() => handleDeleteOpen(game.id)} value={game.id}><DeleteIcon/></IconButton>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -144,6 +149,15 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                 isOpen={isOpen}
                 handleSetIsOpen={setIsOpen}
             />
+
+            {deletedGame && (
+                <GameDeleteModal
+                    open={deleteOpen}
+                    setOpen={setDeleteOpen}
+                    deletedGame={deletedGame}
+                    setDeletedDeck={setDeletedGame}
+                />
+            )}
         </>
     )
 }

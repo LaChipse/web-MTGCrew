@@ -48,6 +48,7 @@ const Navbar: React.FC<Props> = () => {
         startTransition(() => {
             sessionStorage.setItem('currentPagePath', path);
             navigate(path);
+            dispatch(clearGameFiltersState())
         });
     };
 
@@ -56,6 +57,7 @@ const Navbar: React.FC<Props> = () => {
         startTransition(() => {
             sessionStorage.setItem('currentPagePath', path);
             navigate(path);
+            dispatch(clearGameFiltersState())
         });
     }
 
@@ -66,7 +68,6 @@ const Navbar: React.FC<Props> = () => {
     }
 
     const handleNavigation = (callback: (key: string, path: string, label: string) => JSX.Element, navTab: string) => {
-        dispatch(clearGameFiltersState())
         return callback(navTab, `/${navTab}`, toTitleCase(navTab))
     }
 
@@ -131,12 +132,12 @@ const Navbar: React.FC<Props> = () => {
                         onClose={handleClose}
                         className={styles.menuButton}
                     >
-                        {navTabs.map ((navTab) => handleNavigation(renderNavMenuItem, navTab))}
+                        {navTabs.map((navTab) => handleNavigation(renderNavMenuItem, navTab))}
                     </Menu>
 
 
                     <div>
-                        {navTabs.map ((navTab) => handleNavigation(renderNavButton, navTab))}
+                        {navTabs.map((navTab) => handleNavigation(renderNavButton, navTab))}
                     </div>
                 </div>
 

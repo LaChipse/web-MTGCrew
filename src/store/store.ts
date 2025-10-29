@@ -5,6 +5,7 @@ import { loaderReducer } from './reducers/loaderReducer';
 import { typeReducer } from './reducers/typeReducer';
 import { gameFiltersReducer } from './reducers/gameFiltersReducer';
 import { gameSortingSliceReducer } from './reducers/gameSortingReducer';
+import { themeReducer } from './reducers/themeReducer';
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
         snackbar: snackbarReducer,
         type: typeReducer,
         gameFilters: gameFiltersReducer,
-        gameSorting: gameSortingSliceReducer
+        gameSorting: gameSortingSliceReducer,
+        theme: themeReducer,
     }
 })
 

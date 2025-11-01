@@ -1,46 +1,69 @@
 .profil {
     max-width: 450px;
-    margin: 20px 0;
+    margin: auto;
+    background-color: var(--secondary);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
 
-    .headCard {
-        display: flex;
-        justify-content: space-between;
+    h2 {
+        margin: 0;
     }
 
-    .casino {
+    .summary {
+        flex: 2;
+
+        li {
+            margin: 5px 0;
+        }
+
+        .red {
+            color: var(--error)
+        }
+
+        .green {
+            color: var(--success)
+        }
+    }
+
+    .updateButton {
+        mask: var(--svg) no-repeat center;
+            mask-size: contain;
+            height: 20px;
+            width: 20px;
+            background-color: var(--primary);
+            --svg: url("../../../../public/assets/settings.svg");
+            margin-left: auto;
+
+            &:hover {
+                background-color: var(--tertiary);
+            }
+    }
+
+    .action {
         display: flex;
-        justify-content: end;
+        flex-direction: column;
+        justify-content: space-between;
 
-        div {
-            padding: 0;
+        .chooseRandomCard {
+            height: 75px;
+            width: 50px;
+            margin: auto;
+            margin-top: 20px;
+            font-size: 30px;
+            background-color: var(--tertiary);
+            border-radius: 10px;
 
-            button {
-                padding: 0;
+            &:hover {
+                color: var(--tertiary);
+                background-color: var(--primary);
             }
         }
     }
 
-    > div:first-child {
-        padding: 10px 16px;
-    }
 
-    .h2 {
-        margin-top: 0;
-        margin-bottom: 5px;
-    }
+    
 
-    .list {
-        display: flex;
-        flex-direction: column;
-        align-items: baseline;
-        padding: 5px 10px;
-    }
-
-    .red {
-        color: #c00000 !important
-    }
-
-    .green {
-        color: green !important
-    }
+    
 }

@@ -14,6 +14,8 @@ export interface AuthUser {
     nbrDecks: number,
     partiesJouees: PartiesTypes,
     victoires: PartiesTypes,
+    colorStd: string,
+    colorSpec: string,
 }
 
 export interface AuthState {

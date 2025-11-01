@@ -1,0 +1,61 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    .circularLoader {
+        color: var(--primary);
+    }
+
+    .stdButton, .specButton {
+        color: var(--primary);
+        border: none;
+        width: 75px;
+        padding: 3px;
+
+        &.isActive {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        &:hover {
+            color: var(--secondary);
+        }
+    }
+
+    .stdButton {
+        border-radius: 10px 0 0 10px;
+        
+    }
+
+    .specButton {
+        border-radius: 0 10px 10px 0;
+        
+    }
+
+    .signout {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--primary);
+        }
+
+        .signoutIcon {
+            mask: var(--svg) no-repeat center;
+            mask-size: contain;
+            height: 20px;
+            width: 20px;
+            background-color: var(--primary);
+            --svg: url("../../../../../public/assets/signout.svg");
+            margin: auto;
+
+            &:hover {
+                background-color: var(--secondary);
+            }
+        }
+    }
+}

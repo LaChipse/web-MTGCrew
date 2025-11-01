@@ -12,6 +12,7 @@ import { Box } from '@mui/system';
 import { Deck } from '../../hooks/queries/decks/useGetDecks';
 import styles from './Profil.module.scss';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import Header from '../../Layouts/Theme/components/Header/Header';
 
 const Profil = () => {
     const [page, setPage] = useState(1)
@@ -36,6 +37,7 @@ const Profil = () => {
 
     return (
         <>
+        <Header />
             {user && (
                 <>
                     <ProfilCard 

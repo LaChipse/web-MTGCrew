@@ -1,37 +1,61 @@
 .navbar {
-    justify-content: space-between;
-    background-color: rgb(198, 197, 201) ;
-    padding: 2px 13px !important;
-    min-height: 45px !important;
+    display: flex;
+    background-color: var(--secondary);
+    padding: 0;
+    height: 50px;
 
-    .iconButton {
-        padding: 0;
-        display: none;
+    .circularLoader {
+        color: var(--primary);
+    }
 
-        svg {
-            display: flex;
-            font-size: 32px
+    button {
+        background-color: var(--secondary);
+        flex: 1;
+        height: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+
+        &:hover, &.isActive {
+            background-color: var(--primary);
         }
     }
-}
 
-@media (max-width: 600px) {
-    .navbar {
-        .buttonNav {
-            display: none;
-        }
-
-        .iconButton {
-            display: block;
-        }
+    .icon {
+        mask: var(--svg) no-repeat center;
+        mask-size: contain;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        background-color: var(--primary);
     }
-    
-}
 
-@media (max-width: 330px) {
-    .navbar {
-        .avatar {
-            display: none;
-        }
+    .icon:hover {
+        cursor: pointer;
+        background-color: var(--secondary);
+    }
+
+    .icon-active {
+        background-color: var(--secondary);
+    }
+
+    .profil {
+        --svg: url("../../../../../public/assets/Profil.svg");
+    }
+
+    .decks {
+        --svg: url("../../../../../public/assets/Decks.svg");
+    }
+
+    .games {
+        --svg: url("../../../../../public/assets/Parties.svg");
+    }
+
+    .joueurs {
+        --svg: url("../../../../../public/assets/Joueurs.svg");
+    }
+
+    .matchmaking {
+        --svg: url("../../../../../public/assets/Matchmaking.svg");
     }
 }

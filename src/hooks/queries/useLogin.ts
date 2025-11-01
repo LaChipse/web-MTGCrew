@@ -1,9 +1,10 @@
 import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { authActions, AuthUser } from '../../store/reducers/authReducer.js';
-import { Api } from '../../utils/Api';
 import { DEFAULT_PAGE_PATH } from '../../router/routes.js';
+import { authActions, AuthUser } from '../../store/reducers/authReducer.js';
+import { setTheme } from '../../store/reducers/themeReducer.js';
+import { Api } from '../../utils/Api';
 import { useGetAllPlayers } from './joueurs/useGetAllPlayers.js';
 import { useGetUsersDecks } from './joueurs/useGetUsersDecks.js';
 
@@ -24,7 +25,10 @@ export const useLogin = (): UseMutationResult<{ token: string }, Error, { nom: s
             useGetAllPlayers.reset(queryClient);
             useGetUsersDecks.reset(queryClient);
 
-            if (data.user) dispatch(authActions.updateState(data.user));
+            if (data.user) {
+                dispatch(authActions.updateState(data.user));
+                dispatch(setTheme({primaryStd: data.user.colorStd, primarySpec: data.user.colorSpec}))
+            }
 
             if (data.token) localStorage.setItem('token', data.token)
             navigate(DEFAULT_PAGE_PATH);

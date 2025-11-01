@@ -4,26 +4,31 @@ export interface ThemeColors {
     primaryStd: string;
     primarySpec: string;
     secondary: string;
+    tertiary: string,
     background: string,
-    tertiary: string;
-    text: string;
+    white: string;
+    success: string;
+    error: string;
 }
 
 const initialState: ThemeColors = {
     primaryStd: '#27E9FF',
-    primarySpec: '#F01EDB',
-    secondary: '#0D0241',
-    background: 'black',
-    tertiary: '#2A047F',
-    text: '#ffff',
+    primarySpec: '#fc79efff',
+    secondary: '#1f234eff',
+    tertiary: '#2f336bff',
+    background: '#21213aff',
+    white: '#ffffffcc',
+    success: '#21fc42ff',
+    error: '#FA0505'
+
 };
 
 const themeSlice = createSlice({
     name: 'theme',
     initialState,
     reducers: {
-        setTheme: (state, action: PayloadAction<ThemeColors>) => {
-        return { ...state, ...action.payload };
+        setTheme: (state, action: PayloadAction<Partial<ThemeColors>>) => {
+            return { ...state, ...action.payload };
         },
     },
 });

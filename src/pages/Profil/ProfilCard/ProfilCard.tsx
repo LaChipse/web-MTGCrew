@@ -1,5 +1,3 @@
-import CasinoIcon from '@mui/icons-material/Casino';
-import { Button, Card, CardActions, CardContent, IconButton, List, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 import { Deck, useGetDecks } from '../../../hooks/queries/decks/useGetDecks';
 import { useCountGames } from '../../../hooks/queries/games/useCountGames';
@@ -33,51 +31,28 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleImage
     }
 
     return (
-        <>
-            <Card className={styles.profil}>
-                <CardContent>
-                    <div className={styles.headCard}>
-                        <h2 className={styles.h2}>
-                            {user?.prenom} {user?.nom?.charAt(0)}.
-                        </h2>
+        <div className={styles.profil}>
+                <div className={styles.summary}>
+                    <h2>
+                        {user?.prenom} {user?.nom?.charAt(0)}.
+                    </h2>
+                    <ul>
+                        <li>{`Nombre de decks = ${user.nbrDecks}`}</li>
+                        <li>{`Nombre de parties = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}</li>
+                        <li className={styles[colorVictory()]}>{`Victoires = ${user.victoires[partieType]} (${ratioVictory()}%)`}</li>
+                    </ul>
+                </div>
 
-                        <CardActions>
-                            <Button size="small" onClick={handleOpen}>Modifier profil</Button>
-                        </CardActions>
-                    </div>
-                    <List style={{ padding: 0 }}>
-                        <ListItem className={styles.list}>
-                            <ListItemText
-                                primary={`Nombre de decks = ${user.nbrDecks}`}
-                            />
-                            <ListItemText
-                                primary={`Nombre de parties = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}
-                            />
-                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                                <ListItemText
-                                    primary={`Victoires = ${user.victoires[partieType]} (${ratioVictory()}%)`}
-                                    className={styles[colorVictory()]}
-                                />
-                                {decks && (
-                                    <div className={styles.casino}>
-                                        <CardActions>
-                                            <IconButton
-                                                type="button"
-                                                aria-label="search"
-                                                onClick={chooseRandomImg}
-                                            >
-                                                <CasinoIcon />
-                                            </IconButton>
-                                        </CardActions>
-                                    </div> 
-                                )}
-                                
-                            </div>
-                        </ListItem>
-                    </List> 
-                </CardContent>
-            </Card> 
-        </>
+                <div className={styles.action}>
+                    <button onClick={handleOpen} className={styles.updateButton} />
+                    {decks && (
+
+                        <button onClick={chooseRandomImg} className={styles.chooseRandomCard}>
+                            ?
+                        </button>
+                    )}
+                </div>
+        </div> 
     )
 }
 

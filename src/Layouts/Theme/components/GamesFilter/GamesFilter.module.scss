@@ -13,7 +13,7 @@
 
     .select {
         min-width: 150px;
-        max-height: 36px;
+        height: 40px;
     }
     
     .datePickers {
@@ -76,6 +76,7 @@
         border: none;
         padding: 0;
         align-self: end;
+        margin-bottom: 5px;
 
         &:hover {
             cursor: pointer;

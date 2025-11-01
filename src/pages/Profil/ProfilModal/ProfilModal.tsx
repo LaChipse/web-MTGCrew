@@ -93,10 +93,10 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
 
                     <div className={styles.secondBloc}>
                         <p style={{ color: 'var(--white)', fontSize: '14px' }}>Standard : {COLORS.map((color) => (
-                            <button style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primaryStd})} onClick={() => handleChangeTheme('std', color)}></button>
+                            <button key={color} style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primaryStd})} onClick={() => handleChangeTheme('std', color)} />
                         ))}</p>
                         <p style={{ color: 'var(--white)', fontSize: '14px' }}>Spécial : {COLORS.map((color) => (
-                            <button style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primarySpec})} onClick={() => handleChangeTheme('spec', color)}></button>
+                            <button key={color} style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primarySpec})} onClick={() => handleChangeTheme('spec', color)} />
                         ))}</p> 
                     </div>
 

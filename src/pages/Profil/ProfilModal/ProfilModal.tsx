@@ -14,7 +14,7 @@ type Props = {
     setOpen: (value: React.SetStateAction<boolean>) => void
 }
 
-const COLORS = ['#27E9FF', '#fc79efff', '#57f36fff', '#fa3d3dff', '#ffa51dff', '#F1FE00']
+const COLORS = ['#FFFFFF', '#F1FE00', '#ffa51dff', '#fa3d3dff', '#fc79efff', '#27E9FF', '#57f36fff'  ]
 
 const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const [nom, setNom] = useState(user.nom);
@@ -106,7 +106,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         onClick={handleUpdateUser}
                         className={styles.updateButton}
                     >
-                        {isPending ? <CircularProgress style={{ width: '30px', height: '30px', color: 'var(--primary)' }}/> : 'Modifier'}
+                        {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Modifier'}
                     </button>
                 </FormControl>
             </div>

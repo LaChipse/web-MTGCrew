@@ -32,6 +32,7 @@
 
     .gameInfos {
         display: flex;
+        justify-content: center;
 
         svg {
             color: var(--primary);

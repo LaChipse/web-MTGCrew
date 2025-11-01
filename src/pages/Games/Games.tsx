@@ -1,4 +1,4 @@
-import { Button, Drawer } from '@mui/material';
+import { Drawer } from '@mui/material';
 import 'dayjs/locale/fr';
 
 import { useEffect, useState } from 'react';
@@ -10,8 +10,9 @@ import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
 import DrawerSpcialGamesForm from './DrawerGamesForm/Special/DrawerSpecialGamesForm';
 import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGamesForm';
 
-import styles from './Games.module.scss';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import styles from './Games.module.scss';
+import Header from '../../Layouts/Theme/components/Header/Header';
 
 const Games = () => {
     const [page, setPage] = useState(1)
@@ -36,12 +37,16 @@ const Games = () => {
 
     return (
         <>
-        <div>
-            <div className={styles.addGames}>
-                <Button variant="contained" onClick={() => toggleDrawer(true)}>Ajouter une partie</Button>
-                <strong>Nombre de parties : {count}</strong>
+            <Header />
+
+            <div>
+                <div className={styles.addGames}>
+                    <strong>Nombre de parties : {count}</strong>
+                    <button onClick={() => toggleDrawer(true)} className={styles.add}>
+                        <div className={styles.addIcon} />
+                    </button>
+                </div>
             </div>
-        </div>
 
             { isGamesLoading ? (
                 <SmallLoading />
@@ -49,11 +54,57 @@ const Games = () => {
                 <GamesArray page={page} games={games} count={count} setPage={setPage} divider={20} />
             )}
 
-            <Drawer open={openStandard} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>
+            <Drawer 
+                sx={{
+                    color: "var(--white)",
+                    backdropFilter: 'blur(1px)',
+                    fontFamily: '"Akshar", sans-serif',
+                    letterSpacing: '0.3px',
+                    fontSize: 'smaller',
+                    '.MuiPaper-root':{
+                        bgcolor: "rgba(47, 51, 107, 0.3)",
+                        backdropFilter: 'blur(5px)',
+                        width: '500px'
+                    },
+
+                    '@media (max-width:600px)': {
+                        '.MuiPaper-root': {
+                            width: '100%',
+                        }
+                    }
+                }} 
+                open={openStandard} 
+                onClose={() => toggleDrawer(false)} 
+                anchor='right' 
+                className={styles.drawer}
+            >
                 <DrawerStandardGamesForm toggleDrawer={toggleDrawer} />
             </Drawer>
 
-            <Drawer open={openSpecial} onClose={() => toggleDrawer(false)} anchor='right' className={styles.drawer}>
+            <Drawer 
+                sx={{
+                    color: "var(--white)",
+                    backdropFilter: 'blur(1px)',
+                    fontFamily: '"Akshar", sans-serif',
+                    letterSpacing: '0.3px',
+                    fontSize: 'smaller',
+                    '.MuiPaper-root':{
+                        bgcolor: "rgba(47, 51, 107, 0.3)",
+                        backdropFilter: 'blur(5px)',
+                        width: '500px'
+                    },
+
+                    '@media (max-width:600px)': {
+                        '.MuiPaper-root': {
+                            width: '100%',
+                        }
+                    }
+                }} 
+                open={openSpecial} 
+                onClose={() => toggleDrawer(false)} 
+                anchor='right' 
+                className={styles.drawer}
+            >
                 <DrawerSpcialGamesForm toggleDrawer={toggleDrawer} />
             </Drawer>
         </>

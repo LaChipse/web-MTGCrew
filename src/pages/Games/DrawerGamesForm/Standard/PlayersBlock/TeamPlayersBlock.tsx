@@ -1,9 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
 import React, { Dispatch, SetStateAction } from "react";
-import { PlayersBlock } from "../DrawerStandardGamesForm";
 import { useGetAllDecks } from "../../../../../hooks/queries/decks/useGetAllDecks";
 import { useGetAllPlayers } from "../../../../../hooks/queries/joueurs/useGetAllPlayers";
+import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../../../../Layouts/Theme/components/GamesFilter/StyleMui";
+import { PlayersBlock } from "../DrawerStandardGamesForm";
 import styles from './PlayersBlock.module.scss';
 
 type Props = {
@@ -95,14 +96,14 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
         <>
             <div key={`secondBloc${index}`} className={styles.secondBloc}>
                 <FormControl size='small'>
-                    <InputLabel id="joueur">{`Joueur ${index + 1}`}</InputLabel>
+                    <label id="joueur">{`Joueur ${index + 1}`}</label>
                     <Select
-                        labelId="joueur"
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
                         id="joueurSelect"
                         value={config?.[index] ? config?.[index].userId : ''}
                         onChange={(e) => handleChangeJoueur(e, index)}
                         renderValue={() => (config?.[index] ? config[index].joueur : 'Sélectionner un joueur')}
-                        label="Joueur"
                     >
 
                         {
@@ -114,19 +115,19 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                 </FormControl>
 
                 <FormControl size='small'>
-                    <InputLabel id="deck">{`Deck ${index + 1}`}</InputLabel>
+                    <label id="deck">{`Deck ${index + 1}`}</label>
                     <Select
-                        labelId="deck"
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
                         id="deckSelect"
                         value={config?.[index] ? config?.[index].deckId : ''}
                         onChange={(e) => handleChangeDeck(e, index)}
                         renderValue={() => (config?.[index] ? config[index].deck : 'Sélectionner un deck')}
-                        label="Deck"
                     >
                         {
                             otherDecksNotSelected?.map((deck) => (
-                                <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
-                                    {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
+                                <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.owner]: isDeckUser(deck.userId, index) })}>
+                                    {deck.nom} <span className={styles.span}>{`(${getUser(deck.userId)})`}</span>
                                 </MenuItem>
                             ))
                         }
@@ -134,14 +135,14 @@ const TeamPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                 </FormControl>
 
                 <FormControl size='small'>
-                    <InputLabel id="team">{`Equipe`}</InputLabel>
+                    <label id="team">Equipe</label>
                     <Select
-                        labelId="team"
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
                         id="teamSelect"
                         value={config?.[index] ? config?.[index].team : ''}
                         onChange={(e) => handleChangeTeam(e, index)}
                         renderValue={() => (config?.[index] ? config[index].team : 'Sélectionner une équipe')}
-                        label="Equipe"
                     >
                         {
                             teams?.map((team) => (

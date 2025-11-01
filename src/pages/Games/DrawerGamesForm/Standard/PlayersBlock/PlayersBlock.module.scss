@@ -1,29 +1,27 @@
 .secondBloc {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    width: 100%;
 
     > div {
-        width: 200px;
+        flex: 1
     }
+}
+
+.span {
+    margin-left: 5px;
+    font-size: x-small;
+    font-style: italic;
 }
 
 .separator {
     height: 1px;
-    background: grey;
+    background: var(--primary);
     width: 50%;
 }
 
-.green {
-    background-color: #dbf7d8 !important;
-}
-
-@media (max-width: 600px) {
-    .secondBloc {
-        > div {
-            width: 350px;
-        }
-    }
+.owner {
+    background-color: rgba(0, 128, 0, 0.6) !important;
 }

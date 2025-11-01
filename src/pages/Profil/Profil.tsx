@@ -37,7 +37,7 @@ const Profil = () => {
 
     return (
         <>
-        <Header />
+            <Header />
             {user && (
                 <>
                     <ProfilCard 

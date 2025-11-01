@@ -1,7 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Box, CircularProgress, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
@@ -9,6 +7,7 @@ import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../../hooks/queries/games/useAddGame';
+import { DATE_PICKER_STYLE, SELECT_MENU_STYLE, SELECT_STYLE } from '../../../../Layouts/Theme/components/GamesFilter/StyleMui';
 import EachPlayersBlock from './PlayersBlock/EachPlayersBlock';
 import TeamPlayersBlock from './PlayersBlock/TeamPlayersBlock';
 import EachVictoryBlock from './VictoryBlock/EachVictoryBlock';
@@ -97,104 +96,102 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
         <>
             <header className={styles.header}>
                 <h2>Ajouter une partie</h2>
-                <IconButton onClick={() => toggleDrawer(false)} style={{ color: 'white' }}>
-                    <CloseIcon />
-                </IconButton>
+                <button onClick={() => toggleDrawer(false)}>X</button>
             </header>
 
             <Box className={styles.drawer}>
-                    <h3> Partie </h3>
-                    <div className={styles.firstBloc}>
-                        <FormControl className={styles.datePickerForm}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                                <DatePicker label="Date de la partie" value={date} onChange={setDate}/>
-                            </LocalizationProvider>
-                        </FormControl>
+                <h3> Configuration </h3>
+                <div className={styles.firstBloc}>
+                    <FormControl className={styles.datePickerForm}>
+                        <label id="partieDate">Date de la partie</label>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
+                            <DatePicker slotProps={DATE_PICKER_STYLE} className={styles.datePicker} value={date} onChange={setDate}/>
+                        </LocalizationProvider>
+                    </FormControl>
 
-                        <FormControl size='small'>
-                            <InputLabel id="partieType">Type de partie</InputLabel>
-                            <Select
-                                labelId="partieType"
-                                id="partieTypeSelect"
-                                value={type}
-                                onChange={handleTypeChange}
-                                label="Type de partie"
-                            >
-                                <MenuItem value={'each'}>Chacun pour soi</MenuItem>
-                                <MenuItem value={'team'}>Equipe</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
+                    <FormControl size='small'>
+                        <label id="user">Mode de jeu</label>
+                        <Select
+                            MenuProps={SELECT_MENU_STYLE}
+                            sx={SELECT_STYLE}
+                            id="partieTypeSelect"
+                            value={type}
+                            onChange={handleTypeChange}
+                        >
+                            <MenuItem value={'each'}>Chacun pour soi</MenuItem>
+                            <MenuItem value={'team'}>Equipe</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 
-                    {type === 'each' && (
-                        <>
-                            <h3> Joueurs </h3>
-                            <EachPlayersBlock
-                                config={config}
-                                setConfig={setConfig}
-                                configIndex={configIndex}
-                            />
-                        </>
-                    )}
+                {type === 'each' && (
+                    <>
+                        <h3> Joueurs </h3>
+                        <EachPlayersBlock
+                            config={config}
+                            setConfig={setConfig}
+                            configIndex={configIndex}
+                        />
+                    </>
+                )}
 
-                    {type === 'team' && (
-                        <>
-                            <h3> Equipes </h3>
-                            <TeamPlayersBlock
-                                config={config}
-                                setConfig={setConfig}
-                                configIndex={configIndex}
-                            />
-                        </>
-                    )}
-                    
-                    <IconButton className={classNames([styles.addIcon, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
-                        <AddIcon />
-                    </IconButton>
+                {type === 'team' && (
+                    <>
+                        <h3> Equipes </h3>
+                        <TeamPlayersBlock
+                            config={config}
+                            setConfig={setConfig}
+                            configIndex={configIndex}
+                        />
+                    </>
+                )}
+                
+                <IconButton className={classNames([styles.add, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
+                    <AddIcon className={styles.addIcon}/>
+                </IconButton>
 
-                    {type === 'each' && (
-                        <>
-                            <h3> Vainqueur </h3>
-                            <EachVictoryBlock 
-                                joueurs={config.map((conf) => ({joueur: conf.joueur, userId: conf.userId}))
-                                    .filter((item, index, self) => index === self
-                                    .findIndex((t) => t.userId === item.userId)
-                                )}
-                                victoire={victoire}
-                                setVictoire={setVictoire}
-                                typeVictoire={typeVictoire}
-                                setTypeVictoire={setTypeVictoire}
-                            />
-                        </>
-                    )}
+                {type === 'each' && (
+                    <>
+                        <h3> Vainqueur </h3>
+                        <EachVictoryBlock 
+                            joueurs={config.map((conf) => ({joueur: conf.joueur, userId: conf.userId}))
+                                .filter((item, index, self) => index === self
+                                .findIndex((t) => t.userId === item.userId)
+                            )}
+                            victoire={victoire}
+                            setVictoire={setVictoire}
+                            typeVictoire={typeVictoire}
+                            setTypeVictoire={setTypeVictoire}
+                        />
+                    </>
+                )}
 
-                    {type === 'team' && (
-                        <>
-                            <h3> Equipe victorieuse </h3>
-                            <TeamVictoryBlock 
-                                equipes={[...new Set(config.map((conf) => (conf.team)))]}
-                                victoire={victoire}
-                                setVictoire={setVictoire}
-                                typeVictoire={typeVictoire}
-                                setTypeVictoire={setTypeVictoire}
-                            />
-                        </>
-                    )}
+                {type === 'team' && (
+                    <>
+                        <h3> Equipe victorieuse </h3>
+                        <TeamVictoryBlock 
+                            equipes={[...new Set(config.map((conf) => (conf.team)))]}
+                            victoire={victoire}
+                            setVictoire={setVictoire}
+                            typeVictoire={typeVictoire}
+                            setTypeVictoire={setTypeVictoire}
+                        />
+                    </>
+                )}
 
                 <div className={styles.buttons}>
-                    <LoadingButton
-                        loading={isPending} 
-                        disabled={!(type && victoire && typeVictoire) || isPending || hasValidConfig()} 
+                    <button
                         type="submit" 
-                        variant="contained" 
+                        disabled={!(type && victoire && typeVictoire) || isPending || hasValidConfig()}
                         onClick={handleAddGameForm}
+                        className={classNames(styles.valide, {[styles.disabled]: !(type && victoire && typeVictoire) || isPending || hasValidConfig()})}
                     >
-                        Valider
-                    </LoadingButton>    
+                        {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Valider'}
+                    </button>    
 
-                    <Button className={styles.reset} onClick={handleResetForm} >
+                    <button className={styles.reset} onClick={handleResetForm} >
                         Reset
-                    </Button>
+                    </button>
                 </div>
             </Box>
         </>

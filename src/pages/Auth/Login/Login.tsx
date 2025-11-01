@@ -63,7 +63,7 @@ const Login = () => {
                     />
                 </FormControl>
                 
-                <button className={classNames({[styles.disabled]: !password || !prenom || !nom})} style={{marginTop: '20px'}} onClick={handleSubmit} >
+                <button disabled={!password || !prenom || !nom} className={classNames({[styles.disabled]: !password || !prenom || !nom})} style={{marginTop: '20px'}} onClick={handleSubmit} >
                     {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Se connecter'}
                 </button>
                 <button onClick={() => navigate(SIGNUP_PAGE)}>

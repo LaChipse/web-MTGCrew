@@ -1,18 +1,11 @@
 .thirdBloc {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
+    width: 100%;
 
     > div {
-        width: 200px;
-    }
-}
-
-@media (max-width: 600px) {
-    .thirdBloc {
-        > div {
-            width: 350px;
-        }
+        flex: 1
     }
 }

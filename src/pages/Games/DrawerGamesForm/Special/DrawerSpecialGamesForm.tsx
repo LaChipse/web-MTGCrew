@@ -1,7 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Box, CircularProgress, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
@@ -9,10 +7,11 @@ import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../../hooks/queries/games/useAddGame';
-import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
-import TreacheryVictoryBlock from './VictoryBlock/TreacheryVictoryBlock';
-import ArchenemyVictoryBlock from './VictoryBlock/ArchenemyVictoryBlock';
+import { DATE_PICKER_STYLE, SELECT_MENU_STYLE, SELECT_STYLE } from '../../../../Layouts/Theme/components/GamesFilter/StyleMui';
 import ArchenemyPlayersBlock from './PlayersBlock/ArchenemyPlayersBlock';
+import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
+import ArchenemyVictoryBlock from './VictoryBlock/ArchenemyVictoryBlock';
+import TreacheryVictoryBlock from './VictoryBlock/TreacheryVictoryBlock';
 import styles from './DrawerSpecialGamesForm.module.scss';
 
 export interface PlayersBlock {
@@ -96,28 +95,27 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
         <>
             <header className={styles.header}>
                 <h2>Ajouter une partie</h2>
-                <IconButton onClick={() => toggleDrawer(false)} style={{ color: 'white' }}>
-                    <CloseIcon />
-                </IconButton>
+                <button onClick={() => toggleDrawer(false)}>X</button>
             </header>
 
             <Box className={styles.drawer}>
                 <h3> Partie </h3>
                 <div className={styles.firstBloc}>
                     <FormControl className={styles.datePickerForm}>
+                        <label id="partieDate">Date de la partie</label>
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                            <DatePicker label="Date de la partie" value={date} onChange={setDate}/>
+                            <DatePicker slotProps={DATE_PICKER_STYLE} className={styles.datePicker} value={date} onChange={setDate}/>
                         </LocalizationProvider>
                     </FormControl>
 
                     <FormControl size='small'>
-                        <InputLabel id="partieType">Type de partie</InputLabel>
+                        <label id="partieType">Type de partie</label>
                         <Select
-                            labelId="partieType"
+                            MenuProps={SELECT_MENU_STYLE}
+                            sx={SELECT_STYLE}
                             id="partieTypeSelect"
                             value={type}
                             onChange={handleTypeChange}
-                            label="Type de partie"
                         >
                             <MenuItem value={'treachery'}>Treachery</MenuItem>
                             <MenuItem value={'archenemy'}>Archenemy</MenuItem>
@@ -147,8 +145,8 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                     </>
                 )}
                 
-                <IconButton className={classNames([styles.addIcon, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
-                    <AddIcon />
+                <IconButton className={classNames([styles.add, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
+                    <AddIcon className={styles.addIcon}/>
                 </IconButton>
 
                 {type === 'treachery' && (
@@ -176,19 +174,18 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                 )}
 
                 <div className={styles.buttons}>
-                    <LoadingButton
-                        loading={isPending} 
-                        disabled={!(type && victoire && typeVictoire) || isPending || hasValidConfig()} 
+                    <button
                         type="submit" 
-                        variant="contained" 
+                        disabled={!(type && victoire && typeVictoire) || isPending || hasValidConfig()}
                         onClick={handleAddGameForm}
+                        className={classNames(styles.valide, {[styles.disabled]: !(type && victoire && typeVictoire) || isPending || hasValidConfig()})}
                     >
-                        Valider
-                    </LoadingButton>    
+                        {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Valider'}
+                    </button>    
 
-                    <Button className={styles.reset} onClick={handleResetForm} >
+                    <button className={styles.reset} onClick={handleResetForm} >
                         Reset
-                    </Button>
+                    </button>
                 </div>
             </Box>
         </>

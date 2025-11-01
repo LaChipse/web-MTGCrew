@@ -57,7 +57,7 @@ const Navbar: React.FC<Props> = () => {
                 className={classNames({ [styles.isActive]: isActive() })}
             >
                 {
-                    isLoading ? <CircularProgress style={{ width: '30px', height: '30px' }} className={classNames(styles.circularLoader, { [styles.isLoading]: isLoading })} /> : (
+                    isLoading ? <CircularProgress style={{ width: '20px', height: '20px' }} className={classNames(styles.circularLoader, { [styles.isLoading]: isLoading })} /> : (
                         <span className={classNames(styles.icon, styles[icon], { [styles[`icon-active`]]: isActive() } )}></span>
                     )
                 }

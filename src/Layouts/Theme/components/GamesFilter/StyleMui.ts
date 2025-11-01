@@ -21,6 +21,7 @@ export const DATE_PICKER_STYLE = {
                 'button': {
                     color: 'var(--white)',
                     border: 'none',
+                    
                     '&.Mui-selected': {
                         backgroundColor: 'var(--primary)',
                         border: 'none',
@@ -49,6 +50,8 @@ export const SELECT_MENU_STYLE = {
             "& .MuiMenuItem-root": {
                 fontSize: 'smaller',
                 color: "var(--white)",
+                fontFamily: '"Akshar", sans-serif',
+                letterSpacing: '0.3px',
                 "&.Mui-selected": {
                     backgroundColor: 'var(--primary)',
                     border: 'none',
@@ -74,7 +77,8 @@ export const SELECT_STYLE = {
     borderRadius: "10px",
     fontFamily: '"Akshar", sans-serif',
     letterSpacing: '0.3px',
-    fontSize: 'smaller',
+    fontSize: 'small',
+    height: '45px',
     'fieldset':{
         border: 'none'
     },

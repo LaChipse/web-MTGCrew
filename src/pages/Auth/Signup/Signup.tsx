@@ -53,7 +53,7 @@ const Signup = () => {
                     />
                 </FormControl>
 
-                <button style={{marginTop: '20px'}} className={classNames({[styles.disabled]: !password || !prenom || !nom})} onClick={handleSignUpForm}>
+                <button disabled={!password || !prenom || !nom} style={{marginTop: '20px'}} className={classNames({[styles.disabled]: !password || !prenom || !nom})} onClick={handleSignUpForm}>
                     {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Créer un compte'}
                 </button>
                 <button onClick={() => navigate(LOGIN_PAGE)}>Déjà un compte</button>

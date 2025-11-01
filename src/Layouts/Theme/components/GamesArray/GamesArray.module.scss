@@ -1,20 +1,18 @@
-.tableau {
-    .green {
-        background-color: #dbf7d8 !important;
+.gamesArray {
+    overflow: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;
 
-        th, td {
-            color: rgb(29, 29, 29) !important;
-            border-bottom: 1px solid white;
-        }
+    .green {
+        background-color: rgba(33, 252, 66, 0.1);
     }
 
     .red {
-        background-color: #f7dbd6 !important;
+        background-color: rgba(250, 5, 5, 0.1);
+    }
 
-        th, td {
-            color: rgb(29, 29, 29) !important;
-            border-bottom: 1px solid white;
-        }
+    svg {
+        font-size: 1.2rem;
     }
 
     .actions {
@@ -24,35 +22,35 @@
     }
 
     .delete {
-        color: #FF0033 !important;
+        color: var(--error);
 
-        svg {
-            font-size: 1.3rem;
+        &:hover {
+            color: rgba(250, 5, 5, 0.8);
+            border: none
         }
     }
 
-    .infosDecks {
-        margin: auto;
-        justify-content: center;
+    .gameInfos {
         display: flex;
-        gap: 5px;
-        align-items: center;
+
+        svg {
+            color: var(--primary);
+
+            &:hover {
+                cursor: help;
+                color: rgba(39, 233, 255, 0.7)
+            }
+        }
     }
 }
 
 .pagination {
     button, div {
-        color: white;
-        margin-bottom: 10px;
+        color: var(--primary);
     }
 
-    button:hover {
-        color: rgb(29, 29, 29);
-        background-color: white !important;
-    }
-
-    button[aria-current] {
-        color: rgb(29, 29, 29);
-        background-color: white !important;
+    button:hover, button[aria-current] {
+        color: var(--background);
+        background-color: var(--primary);
     }
 }

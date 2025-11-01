@@ -42,6 +42,10 @@
         &:hover {
             cursor: pointer;
             background-color: var(--primary);
+
+            .signoutIcon {
+                background-color: var(--secondary);
+            }
         }
 
         .signoutIcon {
@@ -52,10 +56,6 @@
             background-color: var(--primary);
             --svg: url("../../../../../public/assets/signout.svg");
             margin: auto;
-
-            &:hover {
-                background-color: var(--secondary);
-            }
         }
     }
 }

@@ -1,7 +1,6 @@
-import FilterListIcon from '@mui/icons-material/FilterList';
 import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { IconButton, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
+import { IconButton, Pagination } from '@mui/material';
 import classNames from "classnames";
 import { useState } from 'react';
 import { GameResume } from '../../../../hooks/queries/games/useGetGames';
@@ -9,9 +8,8 @@ import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { PlayersBlock } from '../../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import { DateHelper } from '../../../../utils/DateHelper';
 import CustomTooltip from '../CustomTooltip/CustomTooltip';
-import GamesFilter from '../GamesFilter/GamesFilter';
-import styles from './GamesArray.module.scss';
 import GameDeleteModal from '../GameDeleteModal/GameDeleteModal';
+import styles from './GamesArray.module.scss';
 
 type Props = {
     games?: Array<GameResume>
@@ -25,7 +23,6 @@ type Props = {
 const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isHystoric }) => {
     const user = useAppSelector((state) => state.auth.user);
 
-    const [isOpen, setIsOpen] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [deletedGame, setDeletedGame] = useState<string>('')
 
@@ -38,15 +35,15 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
     }
 
     const formatVictoire = (type: string, victoire: string, config: Array<PlayersBlock>) => {
-        if (type === 'team') return <><strong>Equipe: </strong>{victoire}</>
-        if (type === 'each') return <><strong>Joueur: </strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
-        if (type === 'treachery' || type === 'archenemy') return <><strong>Role: </strong>{victoire}</>
+        if (type === 'team') return <><strong>Equipe :&nbsp;</strong>{victoire}</>
+        if (type === 'each') return <><strong>Joueur :&nbsp;</strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
+        if (type === 'treachery' || type === 'archenemy') return <><strong>Role : </strong>{victoire}</>
         else return '-'
     }
 
     const typeGame = (type: string, conf: PlayersBlock) => {
         if (type === 'team') return (<><strong>, Equipe: </strong>{conf.team}</>)
-        if (type === 'treachery' || type === 'archenemy') return (<><strong>, Role: </strong>{conf.role}</>)
+        if (type === 'treachery' || type === 'archenemy') return (<><strong>, Role :&nbsp;</strong>{conf.role}</>)
         else return ''
     }
 
@@ -56,7 +53,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                 {config.map((conf, index) => {
                     return (
                         <li key={`${conf.deckId}-${conf.userId}-${index}`} style={{ margin: 10, color: showWinnerStyle(victoire, conf) }}>
-                            <strong>Joueur: </strong>{conf.joueur}<strong>, Deck: </strong>{conf.deck}{typeGame(type, conf)}
+                            <strong>Joueur :&nbsp;</strong>{conf.joueur}<strong>, Deck :&nbsp;</strong>{conf.deck}{typeGame(type, conf)}
                         </li>
                     )
                 })}
@@ -105,50 +102,44 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
     }
 
     return (
-        <>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Pagination page={page} count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
-                <FilterListIcon style={{color: 'white'}} onClick={() => setIsOpen(true)}/>
-            </div>
-
-            <TableContainer className={styles.tableau}>
-                <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Date</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Type de partie</TableCell>
-                            <TableCell align="center" style={{ minWidth: "75px" }}>Victoire</TableCell>
-                            <TableCell align="center" style={{ minWidth: "50px" }}>Type de victoire</TableCell>
-                            <TableCell align='center' style={{ minWidth: '75px' }} className={styles.styckyRow}>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+        <>   
+            <div className={styles.gamesArray}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th align="center" style={{ minWidth: "75px" }}>Date</th>
+                            <th align="center" style={{ minWidth: "75px" }}>Type de partie</th>
+                            <th align="center" style={{ minWidth: "75px" }}>Victoire</th>
+                            <th align="center" style={{ minWidth: "50px" }}>Type de victoire</th>
+                            <th align='center' style={{ minWidth: '75px' }}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {games?.map((game) => (
-                            <TableRow key={game.id} className={classNames({ [styles[winnerStyle(game.victoire, game.config)]]: isHystoric })}>
-                                <TableCell align="center" component="th" scope="row">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</TableCell>
-                                <TableCell align="center">{ formatType(game.type) }</TableCell>
-                                <TableCell align="center">
-                                    <div className={styles.infosDecks}>
+                            <tr key={game.id} className={classNames({ [styles[winnerStyle(game.victoire, game.config)]]: isHystoric })}>
+                                <td align="center">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</td>
+                                <td align="center">{ formatType(game.type) }</td>
+                                <td align="center">
+                                    <div className={styles.gameInfos}>
                                         { formatVictoire(game.type, game.victoire, game.config) }
                                         <CustomTooltip title={formatConfig(game.victoire, game.type, game.config)} placement="top">
-                                            <VisibilityIcon style={{marginLeft: 5}} fontSize="small" color="primary"/>
+                                            <HelpIcon style={{ marginLeft: 5 }} fontSize="small"/>
                                         </CustomTooltip>
                                     </div>
-                                </TableCell>
-                                <TableCell align="center">{ game.typeVictoire }</TableCell>
-                                <TableCell align='center' className={styles.actions}>
-                                    <IconButton style={{padding: 1}} className={styles.delete} size='small' onClick={() => handleDeleteOpen(game.id)} value={game.id}><DeleteIcon/></IconButton>
-                                </TableCell>
-                            </TableRow>
+                                </td>
+                                <td align="center">{ game.typeVictoire }</td>
+                                <td align='center'>
+                                    <IconButton style={{padding: 1}} className={styles.delete} onClick={() => handleDeleteOpen(game.id)} value={game.id}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </td>
+                            </tr>
                         ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                    </tbody>
+                </table>
+            </div>
 
-            <GamesFilter
-                isOpen={isOpen}
-                handleSetIsOpen={setIsOpen}
-            />
+            <Pagination page={page} count={getPaginate()} onChange={handlePageChange} shape="rounded" size="small" className={styles.pagination}/>
 
             {deletedGame && (
                 <GameDeleteModal

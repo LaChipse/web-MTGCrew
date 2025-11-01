@@ -4,6 +4,7 @@ body {
     font-family: "Akshar", sans-serif;
     color: var(--primary);
     margin: 0;
+    letter-spacing: 0.3px;
     
     .layout {
         display: flex;
@@ -17,7 +18,7 @@ body {
             background-position: center;
             background-size: contain;
             background-color: var(--background);
-            padding: 20px 10px;
+            padding: 15px;
             overflow: auto;
             height: 100%;
 
@@ -25,6 +26,19 @@ body {
                 list-style: none;
                 padding: 0;
             }
+        }
+    }
+
+    select {
+        color: var(--white);
+        background-color: rgba(47, 51, 107, 0.4);
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        backdrop-filter: blur(7px);
+
+        &:hover {
+            cursor: pointer;
         }
     }
 
@@ -43,41 +57,41 @@ body {
             color: var(--secondary);
         }
     }
+    
+    table {
+        white-space: nowrap;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 1px;
+        border-radius: 10px;
 
-
-    // table {
-    //     thead {
-    //         tr {
-    //             th {
-    //                 background-color: rgb(198, 197, 201) !important;
-    //                 color: white !important;
-    //                 font-weight: 600 !important;
-    //                 font-size: 16px !important;
-    //                 padding: 9px !important;
-    //             }
-    //         }
-    //     }
-
-    //     tbody {
-    //         tr:nth-of-type(odd) {
-    //             background-color: #888888 !important;
-    //         }
-
-    //         tr:nth-of-type(even) {
-    //             background-color: rgb(29, 29, 29) !important;
-    //         }
-
-    //         th, td {
-    //             padding: 8px 12px !important;
-    //             color: white !important;
-    //         }
+        thead {
+            tr {
+                th {
+                    padding: 5px;
+                    background: none;
+                    color: var(--primary);
+                }
+            }
+        }
         
-    //         tr:last-child th,
-    //         tr:last-child td {
-    //             border-bottom: 0 !important;
-    //         }
-    //     }
-    // }
+        tbody {
+            tr:nth-of-type(odd) {
+                background-color: rgba(31, 35, 78, 0.7);
+            }
+
+            tr:nth-of-type(even) {
+                background-color: rgba(31, 35, 78, 0.3);
+            }
+
+
+            th, td {
+                padding: 8px 12px;
+                color: var(--white);
+                font-size: 14px;
+            }
+        }
+    }
 }
 
 h1, h2, h3, p, span {
@@ -85,5 +99,5 @@ h1, h2, h3, p, span {
 }
 
 button:focus {
-    outline: 0 !important;
+    outline: 0;
 }

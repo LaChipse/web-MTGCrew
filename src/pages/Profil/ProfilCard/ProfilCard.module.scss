@@ -1,7 +1,8 @@
 .profil {
     max-width: 450px;
     margin: auto;
-    background-color: var(--secondary);
+    background-color: rgba(47, 51, 107, 0.7);
+    backdrop-filter: blur(7px);
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
@@ -13,6 +14,10 @@
 
     .summary {
         flex: 2;
+
+        ul {
+            margin-bottom: 0;
+        }
 
         li {
             margin: 5px 0;
@@ -37,7 +42,7 @@
             margin-left: auto;
 
             &:hover {
-                background-color: var(--tertiary);
+                background-color: rgba(39, 233, 255, 0.7);
             }
     }
 
@@ -52,7 +57,7 @@
             margin: auto;
             margin-top: 20px;
             font-size: 30px;
-            background-color: var(--tertiary);
+            background-color: var(--secondary);
             border-radius: 10px;
 
             &:hover {

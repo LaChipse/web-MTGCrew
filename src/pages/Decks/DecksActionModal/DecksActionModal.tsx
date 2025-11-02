@@ -156,7 +156,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         >
             <div className={styles.modal}>
                 <div className={styles.container} ref={containerRef}>
-                    {/* <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                         <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                             illustrationUrl && (
                                 <>
@@ -178,12 +178,12 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         }
                         </h2>
                         <button className={styles.close} onClick={() => handleClose()}>X</button>
-                    </div> */}
-                    {isGetillustrationCardLoading ? (
+                    </div>
+                    {/* {isGetillustrationCardLoading ? (
                         <SmallLoading />
                     ) : (
-                        <>
-                            {/* <div className={styles.formBloc}>
+                        <> */}
+                            <div className={styles.formBloc}>
                                 <div style={{ width: '100%' }}>
                                     <FormControl className={styles.formControl}>
                                         <label>Nom du deck</label>
@@ -245,9 +245,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                         }
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
                                 
-                            <div className={styles.formBloc}>
+                            {/* <div className={styles.formBloc}>
                                 <FormControl className={styles.formControl}>
                                     <label id="radio-imprime-groupe">Deck imprimé ?</label>
                                     <RadioGroup
@@ -293,9 +293,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                         <MenuItem value={'5'}>5</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </div>
-                        </>
-                    )}
+                            </div> */}
+                        {/* </>
+                    )} */}
     
                     <button 
                         disabled={!couleurs.length || !nom.length || deck ? isUpdatePending : isAddPending} 

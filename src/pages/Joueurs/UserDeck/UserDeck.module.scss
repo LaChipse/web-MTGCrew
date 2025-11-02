@@ -13,7 +13,6 @@
     max-width: 750px;
     backdrop-filter: blur(5px);
     max-height: 80%;
-    border: 1px solid #000;
 
     div:first-child {
         border-radius: 15px;
@@ -72,7 +71,11 @@
             left: 0;
             position: sticky;
             z-index: 50;
-            background-color: rgba(6, 11, 63, 0.8);
+            background-color: rgba(47, 51, 107, 0.1);
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }

@@ -12,6 +12,10 @@
         left: 0;
         position: sticky;
         z-index: 50;
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     tbody tr:nth-child(odd) > th {

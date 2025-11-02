@@ -36,7 +36,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
+    const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
 
     useEffect(() => {
         if (deck && (deck !== deckFetch)) {
@@ -61,7 +61,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [deck, containerRef, illustrationUrl, deckFetch])
+    }, [deck, open, illustrationCard, illustrationUrl, deckFetch])
     
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
@@ -73,7 +73,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     }
 
     const handleCloseIllustration = () => {
-        // if (illustrationCard) setSearchCard(undefined)
+        if (illustrationCard) setSearchCard(undefined)
     };
 
     const handleCheckboxChange = (color: string) => {
@@ -126,6 +126,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     };
 
     const handleClose = () => {
+        handleCloseIllustration()
         setDeckFetch(undefined)
         setShowIllustration(false)
         setOpen(false);
@@ -148,10 +149,10 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     return (
         <Modal
             open={open}
-            onClick= {() => handleCloseIllustration()}
-            onClose={() => handleClose()}
+            onClose={handleClose}
             aria-labelledby="actionDeck"
             aria-describedby="action sur deck"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
                 <div className={styles.container} ref={containerRef}>
@@ -176,9 +177,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                             )
                         }
                         </h2>
-                        <button className={styles.close} onClick={() => handleClose()}>X</button>
+                        <button className={styles.close} onClick={handleClose}>X</button>
                     </div>
-                    {isAddPending ? (
+                    {isGetillustrationCardLoading ? (
                         <SmallLoading />
                     ) : (
                         <>
@@ -208,7 +209,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                                 <div className={styles.searchIcon} />
                                             </button>
                                         </div>
-                                        {/* {!!illustrationCard && illustrationCard.imageUris && (
+                                        {!!illustrationCard && illustrationCard.imageUris && (
                                             <Box className={styles.illustrationBox} sx={{ maxWidth: `${maxWidthBoxIllustration}px`}}>
                                                 <ImageListItem key={illustrationCard.id} className={styles.imageListItem}>
                                                     {Array.isArray(illustrationCard.imageUris[0]) ? 
@@ -225,7 +226,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                                     }
                                                 </ImageListItem>
                                             </Box>
-                                        )} */}
+                                        )}
                                     </Box>
                                 </div>
 

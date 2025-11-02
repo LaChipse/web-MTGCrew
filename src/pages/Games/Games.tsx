@@ -1,18 +1,16 @@
 import { Drawer } from '@mui/material';
 import 'dayjs/locale/fr';
-
 import { useEffect, useState } from 'react';
-
 import { useCountGames } from '../../hooks/queries/games/useCountGames';
 import { useGetGames } from '../../hooks/queries/games/useGetGames';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
 import DrawerSpcialGamesForm from './DrawerGamesForm/Special/DrawerSpecialGamesForm';
 import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGamesForm';
-
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
-import styles from './Games.module.scss';
 import Header from '../../Layouts/Theme/components/Header/Header';
+import GamesFilter from '../../Layouts/Theme/components/GamesFilter/GamesFilter';
+import styles from './Games.module.scss';
 
 const Games = () => {
     const [page, setPage] = useState(1)
@@ -45,6 +43,8 @@ const Games = () => {
                     <button className={styles.add} onClick={() => toggleDrawer(true)}>+</button>
                 </div>
             </div>
+
+            <GamesFilter />
 
             { isGamesLoading ? (
                 <SmallLoading />

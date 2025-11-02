@@ -1,4 +1,4 @@
-import { CircularProgress, FormControl, FormControlLabel, ImageListItem, MenuItem, Modal, Radio, RadioGroup, Select } from '@mui/material';
+import { FormControl, FormControlLabel, ImageListItem, MenuItem, Modal, Radio, RadioGroup, Select } from '@mui/material';
 import { Box } from '@mui/system';
 import classNames from 'classnames';
 import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
@@ -34,9 +34,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const [showIllustration, setShowIllustration] = useState<boolean>(false)
     const [maxWidthBoxIllustration, setMaxWidthBoxIllustration] = useState(0);
 
-    // const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
+    // const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
 
     useEffect(() => {
         if (deck && (deck !== deckFetch)) {
@@ -49,19 +49,19 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             setIllustrationUrl(deck.illustrationUrl)
         }
 
-        // if (containerRef.current) {
-        //     setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
-        // }
+        if (containerRef.current) {
+            setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
+        }
 
-        // const handleResize = () => {
-        //     if (containerRef.current) {
-        //         setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
-        //     }
-        // };
+        const handleResize = () => {
+            if (containerRef.current) {
+                setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
+            }
+        };
 
-        // window.addEventListener("resize", handleResize);
-        // return () => window.removeEventListener("resize", handleResize);
-    }, [deck, illustrationCard, illustrationUrl, deckFetch])
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [deck, containerRef, illustrationUrl, deckFetch])
     
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
@@ -73,7 +73,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     }
 
     const handleCloseIllustration = () => {
-        if (illustrationCard) setSearchCard(undefined)
+        // if (illustrationCard) setSearchCard(undefined)
     };
 
     const handleCheckboxChange = (color: string) => {
@@ -152,10 +152,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             onClose={() => handleClose()}
             aria-labelledby="actionDeck"
             aria-describedby="action sur deck"
-            style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
-                <div className={styles.container}>
+                <div className={styles.container} ref={containerRef}>
                     <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                         <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                             illustrationUrl && (
@@ -179,7 +178,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         </h2>
                         <button className={styles.close} onClick={() => handleClose()}>X</button>
                     </div>
-                    {isGetillustrationCardLoading ? (
+                    {isAddPending ? (
                         <SmallLoading />
                     ) : (
                         <>
@@ -209,7 +208,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                                 <div className={styles.searchIcon} />
                                             </button>
                                         </div>
-                                        {!!illustrationCard && illustrationCard.imageUris && (
+                                        {/* {!!illustrationCard && illustrationCard.imageUris && (
                                             <Box className={styles.illustrationBox} sx={{ maxWidth: `${maxWidthBoxIllustration}px`}}>
                                                 <ImageListItem key={illustrationCard.id} className={styles.imageListItem}>
                                                     {Array.isArray(illustrationCard.imageUris[0]) ? 
@@ -226,7 +225,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                                     }
                                                 </ImageListItem>
                                             </Box>
-                                        )}
+                                        )} */}
                                     </Box>
                                 </div>
 
@@ -298,10 +297,13 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                     )}
     
                     <button 
-                        // disabled={!couleurs.length || !nom.length || deck ? isUpdatePending : isAddPending} 
+                        disabled={
+                            (!couleurs.length || !nom.length) ||
+                            (deck ? isUpdatePending : isAddPending)
+                        }   
                         type="submit" 
                         onClick={handleActionDeck}
-                        // className={styles.updateButton}
+                        className={styles.updateButton}
                     >
                         {deck ? 'Modifier': 'Ajouter'}
                     </button>

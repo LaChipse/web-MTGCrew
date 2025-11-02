@@ -1,12 +1,19 @@
 import { Outlet } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useEffect } from 'react';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { setTheme } from '../../store/reducers/themeReducer';
 import styles from './ThemeLayout.module.scss'
 
 const ThemeLayout = () => {
     const theme = useSelector((state: RootState) => state.theme);
     const mode = useSelector((state: RootState) => state.type);
+    const user = useAppSelector((state) => state.auth.user);
+
+    const dispatch = useDispatch()
+
+    if (user) dispatch(setTheme({ primaryStd: user.colorStd, primarySpec: user.colorSpec}))
 
   // Applique les couleurs en CSS variables
     useEffect(() => {

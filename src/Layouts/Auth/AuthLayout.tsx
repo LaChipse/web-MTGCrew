@@ -14,13 +14,10 @@ const AuthLayout = () => {
     const dispatch = useDispatch()
     const user = useAppSelector((state) => state.auth.user);
     const currentPagePath = sessionStorage.getItem('currentPagePath')
-    const colorStd = sessionStorage.getItem('colorStd')
-    const colorSpec = sessionStorage.getItem('colorSpec')
     
     const { data: authUser, isLoading } = useGetUser();
     
-    if (colorStd) dispatch(setTheme({ primaryStd: colorStd }))
-    if (colorSpec) dispatch(setTheme({ primarySpec: colorSpec }))
+    if (user) dispatch(setTheme({ primaryStd: user.colorStd, primarySpec: user.colorSpec}))
 
     useEffect(() => {
         const handleLogin = () => {

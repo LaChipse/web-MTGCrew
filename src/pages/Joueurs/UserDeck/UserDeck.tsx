@@ -1,12 +1,12 @@
-import { Box, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import classNames from 'classnames';
 import React, { MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
 import { RANK } from '../../../utils/Enums/rank';
 import ImagePortal from '../../Decks/composants/ImagePortal/ImagePortal';
-import styles from './UserDeck.module.scss';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
+import styles from './UserDeck.module.scss';
 
 type Props = {
     userId: string
@@ -51,6 +51,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
         <Modal
             open={open}
             onClose={handleClose}
+            style={{ backdropFilter: 'blur(3px)'}}
             aria-labelledby="updateUser"
             aria-describedby="mise à jour profil"
         >
@@ -58,42 +59,42 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                 { isDecksLoading ? (
                     <SmallLoading />
                 ) : (
-                    <TableContainer className={styles.tableau}>
-                        <Table stickyHeader sx={{ minWidth: 700 }} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center" style={{ minWidth: "100px" }} className={styles.styckyFirstCell}>Nom</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "150px" }}>Couleurs</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "35px" }}>Rank</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "100px" }}>Nbr parties</TableCell>
-                                    <TableCell align="center" style={{ minWidth: "75px" }}>Victoires</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+                    <div className={styles.tableau}>
+                        <table aria-label="customized table">
+                            <thead>
+                                <tr>
+                                    <th align="center">Nom</th>
+                                    <th align="center">Couleurs</th>
+                                    <th align="center">Rank</th>
+                                    <th align="center">Nbr parties</th>
+                                    <th align="center">Victoires</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {decks?.map((deck) => (
-                                    <TableRow key={deck.nom}>
-                                        <TableCell align='center' style={{ fontWeight: 700 }} className={styles.styckyCol} component='th' scope='row'>
+                                    <tr key={deck.nom}>
+                                        <th align='center' style={{ fontWeight: 700 }} className={styles.styckyCol} scope='row'>
                                             { deck.illustrationUrl ?
                                                 <>
-                                                    <a style={{ fontWeight: 700, cursor: 'pointer', color: 'black', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
+                                                    <a style={{ fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
                                                     {openDeck?._id === deck._id && anchor && (
                                                         <ImagePortal anchor={anchor} illustrationUrl={openDeck.illustrationUrl}/>
                                                     )}
                                                 </>
                                                 : <>{deck.nom || '-'}</>
                                             }
-                                        </TableCell>
-                                        <TableCell style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs) || '-'}</TableCell>
-                                        <TableCell align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
+                                        </th>
+                                        <td style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs) || '-'}</td>
+                                        <td align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
                                             {deck.rank || '-'}
-                                        </TableCell>
-                                        <TableCell align="center"> { deck.parties?.[partieType] } </TableCell>
-                                        <TableCell align="center"> { deck.victoires?.[partieType] } </TableCell>
-                                    </TableRow>
+                                        </td>
+                                        <td align="center"> { deck.parties?.[partieType] } </td>
+                                        <td align="center"> { deck.victoires?.[partieType] } </td>
+                                    </tr>
                                 ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                            </tbody>
+                        </table>
+                    </div>
                 )}
             </Box>
         </Modal>

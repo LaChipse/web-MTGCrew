@@ -1,5 +1,6 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
+import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../../../../Layouts/Theme/components/GamesFilter/StyleMui";
 import { TYPE_VICTORY_VALUES } from "../../../../../utils/Enums/victoryType";
 import styles from './VictoryBlock.module.scss';
 
@@ -13,14 +14,14 @@ type Props = {
 
 const TeamVictoryBlock: React.FC<Props> = ({ equipes, victoire, setVictoire, typeVictoire, setTypeVictoire }) => (
     <div className={styles.thirdBloc}>
-        <FormControl size='small'>
-            <InputLabel id="victoire">Equipe victorieuse</InputLabel>
+        <FormControl >
+            <label id="victoryTeam">Equipe victorieuse</label>
             <Select
-                labelId="victoire"
+                MenuProps={SELECT_MENU_STYLE}
+                sx={SELECT_STYLE}
                 id="victoireSelect"
                 value={victoire}
                 onChange={(e) => setVictoire(e.target.value)}
-                label="Equipe victorieuse"
             >
                 {
                     equipes?.map((equipe) => (
@@ -32,14 +33,14 @@ const TeamVictoryBlock: React.FC<Props> = ({ equipes, victoire, setVictoire, typ
             </Select>
         </FormControl>
 
-        <FormControl size='small'>
-            <InputLabel id="typeVictoire">Type de victoire</InputLabel>
+        <FormControl >
+            <label id="typeVictoire">Type de victoire</label>
             <Select
-                labelId="typeVictoire"
+                MenuProps={SELECT_MENU_STYLE}
+                sx={SELECT_STYLE}
                 id="typeVictoireSelect"
                 value={typeVictoire}
                 onChange={(e) => setTypeVictoire(e.target.value)}
-                label="Type de victoire"
             >
                 {
                     TYPE_VICTORY_VALUES.map((type) => (

@@ -1,11 +1,12 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
 import React, { Dispatch, SetStateAction } from "react";
 import { useGetAllDecks } from "../../../../../hooks/queries/decks/useGetAllDecks";
 import { useGetAllPlayers } from "../../../../../hooks/queries/joueurs/useGetAllPlayers";
+import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../../../../Layouts/Theme/components/GamesFilter/StyleMui";
+import { ROLE_TYPE } from "../../../../../utils/Enums/roleType";
 import { PlayersBlock } from "../../Standard/DrawerStandardGamesForm";
 import styles from './PlayersBlock.module.scss';
-import { ROLE_TYPE } from "../../../../../utils/Enums/roleType";
 
 type Props = {
     config: Array<PlayersBlock>
@@ -93,15 +94,15 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
     const inputs = Array.from({ length: configIndex }, (_, index) => (
         <>
             <div key={`secondBloc${index}`} className={styles.secondBloc}>
-                <FormControl size='small'>
-                    <InputLabel id="joueur">{`Joueur ${index + 1}`}</InputLabel>
+                <FormControl >
+                    <label id="joueur">{`Joueur ${index + 1}`}</label>
                     <Select
-                        labelId="joueur"
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
                         id="joueurSelect"
                         value={config?.[index] ? config?.[index].userId : ''}
                         onChange={(e) => handleChangeJoueur(e, index)}
                         renderValue={() => (config?.[index] ? config[index].joueur : 'Sélectionner un joueur')}
-                        label="Joueur"
                     >
 
                         {
@@ -112,35 +113,35 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
                     </Select>
                 </FormControl>
 
-                <FormControl size='small'>
-                    <InputLabel id="deck">{`Deck ${index + 1}`}</InputLabel>
+                <FormControl >
+                    <label id="deck">{`Deck ${index + 1}`}</label>
                     <Select
-                        labelId="deck"
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
                         id="deckSelect"
                         value={config?.[index] ? config?.[index].deckId : ''}
                         onChange={(e) => handleChangeDeck(e, index)}
                         renderValue={() => (config?.[index] ? config[index].deck : 'Sélectionner un deck')}
-                        label="Deck"
                     >
                         {
                             otherDecksNotSelected?.map((deck) => (
-                                <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.green]: isDeckUser(deck.userId, index) })}>
-                                    {deck.nom} <span style={{marginLeft: '4px', color: 'grey', fontSize: '12px'}}>{`(${getUser(deck.userId)})`}</span>
+                                <MenuItem value={deck.id} key={deck.id} className={ classNames(styles.MenuItem, { [styles.owner]: isDeckUser(deck.userId, index) })}>
+                                    {deck.nom} <span className={styles.span}>{`(${getUser(deck.userId)})`}</span>
                                 </MenuItem>
                             ))
                         }
                     </Select>
                 </FormControl>
 
-                <FormControl size='small'>
-                    <InputLabel id="role">{`Rôle`}</InputLabel>
+                <FormControl >
+                    <label id="role">{`Rôle`}</label>
                     <Select
-                        labelId="role"
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
                         id="roleSelect"
                         value={config?.[index] ? config?.[index].role : ''}
                         onChange={(e) => handleChangeRole(e, index)}
                         renderValue={() => (config?.[index] ? config[index].role : 'Sélectionner un role')}
-                        label="Role"
                     >
                         {
                             Object.values(ROLE_TYPE).map((role) => (

@@ -1,46 +1,77 @@
 .profil {
     max-width: 450px;
-    margin: 20px 0;
+    margin: auto;
+    background-color: rgba(47, 51, 107, 0.7);
+    backdrop-filter: blur(7px);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
 
-    .headCard {
-        display: flex;
-        justify-content: space-between;
+    h2 {
+        margin: 0;
     }
 
-    .casino {
+    .summary {
+        flex: 2;
+
+        .liste {
+            color: var(--white)
+        }
+
+        ul {
+            margin-bottom: 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        .red {
+            color: var(--error)
+        }
+
+        .green {
+            color: var(--success)
+        }
+    }
+
+    .updateButton {
+        mask: var(--svg) no-repeat center;
+            mask-size: contain;
+            height: 20px;
+            width: 20px;
+            background-color: var(--primary);
+            --svg: url("../../../../public/assets/settings.svg");
+            margin-left: auto;
+
+            &:hover {
+                background-color: rgba(39, 233, 255, 0.6);
+            }
+    }
+
+    .action {
         display: flex;
-        justify-content: end;
+        flex-direction: column;
+        justify-content: space-between;
 
-        div {
-            padding: 0;
+        .chooseRandomCard {
+            height: 75px;
+            width: 50px;
+            margin: auto;
+            margin-bottom: 10px;
+            font-size: 30px;
+            background-color: var(--secondary);
+            border-radius: 10px;
 
-            button {
-                padding: 0;
+            &:hover {
+                color: var(--tertiary);
+                background-color: var(--primary);
             }
         }
     }
 
-    > div:first-child {
-        padding: 10px 16px;
-    }
 
-    .h2 {
-        margin-top: 0;
-        margin-bottom: 5px;
-    }
+    
 
-    .list {
-        display: flex;
-        flex-direction: column;
-        align-items: baseline;
-        padding: 5px 10px;
-    }
-
-    .red {
-        color: #c00000 !important
-    }
-
-    .green {
-        color: green !important
-    }
+    
 }

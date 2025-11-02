@@ -1,11 +1,14 @@
-import { Button } from '@mui/material';
 import { useState } from 'react';
-import DecksArray from './DecksArray/DecksArray';
+import Biceps from '../../components/Biceps';
+import Crown from '../../components/Crown';
+import Seringue from '../../components/Syringe';
 import { Deck, useGetDecks } from '../../hooks/queries/decks/useGetDecks';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import styles from './Decks.module.scss';
-import DecksActionModal from './DecksActionModal/DecksActionModal';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import DecksActionModal from './DecksActionModal/DecksActionModal';
+import DecksArray from './DecksArray/DecksArray';
+import Header from '../../Layouts/Theme/components/Header/Header';
+import styles from './Decks.module.scss';
 
 const Decks = () => {
     const [open, setOpen] = useState(false);
@@ -54,15 +57,19 @@ const Decks = () => {
 
     return (
         <>  
+            <Header />
+
             <div className={styles.headerBloc}>
                 <div>
-                    <p className={styles.highlights}><img src={`/assets/seringue.png`} alt='seringue' width="30px" height="30px" style={{marginRight: '5px'}}/><strong style={{marginRight: '5px'}}>{highestGamesPlayed ? highestGamesPlayed.nom : 'Non définie'}</strong>{highestGamesPlayed ? `(${Math.round(((highestGamesPlayed?.parties?.[partieType] || 0)/(countGames || 1)) * 100)}% parties jouées)` : 'Non défini'}</p>
-                    <p className={styles.highlights}><img src={`/assets/couronne.png`} alt='couronne' width="35px" height="px" style={{marginRight: '7px'}}/><strong style={{marginRight: '5px'}}>{decks?.length ? highestRatio()?.nom : 'Non définie'}</strong>{`(${Math.round(((highestRatio()?.victoires?.[partieType] || 0)/(highestRatio()?.parties?.[partieType]  || 1)) * 100)}% parties jouées gagnées)`}</p>
-                    <p className={styles.highlights}><img src={`/assets/muscle.png`} alt='muscle' width="30px" height="30px" style={{marginRight: '10px'}}/><strong style={{marginRight: '5px'}}>{moreVictory ? moreVictory?.nom : 'Non définie'}</strong>{moreVictory ? `(${Math.round(((moreVictory?.victoires?.[partieType] || 0)/(countVictories || 1)) * 100)}% totalité des victoires)` : 'Non défini'}</p>
+                    <p className={styles.highlights}><Seringue height='1.5em' width='1.5em' /><strong style={{marginRight: '5px'}}>{highestGamesPlayed ? highestGamesPlayed.nom : 'Non définie'}</strong>{highestGamesPlayed ? `(${Math.round(((highestGamesPlayed?.parties?.[partieType] || 0)/(countGames || 1)) * 100)}% parties jouées)` : 'Non défini'}</p>
+                    <p className={styles.highlights}><Crown height='1.5em' width='1.5em' /><strong style={{marginRight: '5px'}}>{decks?.length ? highestRatio()?.nom : 'Non définie'}</strong>{`(${Math.round(((highestRatio()?.victoires?.[partieType] || 0)/(highestRatio()?.parties?.[partieType]  || 1)) * 100)}% parties jouées gagnées)`}</p>
+                    <p className={styles.highlights}><Biceps height='1.5em' width='1.5em' /><strong style={{marginRight: '5px'}}>{moreVictory ? moreVictory?.nom : 'Non définie'}</strong>{moreVictory ? `(${Math.round(((moreVictory?.victoires?.[partieType] || 0)/(countVictories || 1)) * 100)}% totalité des victoires)` : 'Non défini'}</p>
                 </div>
                 
                 <div>
-                    <Button variant="contained" onClick={handleOpen} className={styles.addDeck}>Ajouter un deck</Button>
+                    <button onClick={handleOpen} className={styles.add}>
+                        <div className={styles.addIcon} />
+                    </button>
                 </div>
             </div>
 

@@ -1,14 +1,20 @@
-import { Button, Checkbox, Container, Divider, FormControl, FormControlLabel, InputLabel, ListItemText, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { Checkbox, Divider, FormControl, FormControlLabel, ListItemText, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import { useGetAllDecks } from "../../hooks/queries/decks/useGetAllDecks";
 import { useGetAllPlayers } from "../../hooks/queries/joueurs/useGetAllPlayers";
+import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../Layouts/Theme/components/GamesFilter/StyleMui";
+import Header from "../../Layouts/Theme/components/Header/Header";
 import SmallLoading from "../loader/SmallLoading/SmallLoading";
+import Result from "./Result/Result";
 import styles from './Matchmaking.module.scss';
-import classNames from "classnames";
+import { useDispatch } from "react-redux";
+import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
 
 const Matchmaking: React.FC = () => {
     const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers()
     const { data: decks, isLoading: isUsersDecksLaoding } = useGetAllDecks()
+    const dispatch = useDispatch()
 
     const [usersChecked, setUsersChecked] = useState<string[]>([]);
     const [nbrParties, setNbrParties] = useState<number | undefined>(undefined);
@@ -20,6 +26,16 @@ const Matchmaking: React.FC = () => {
     const [nbrTeam, setNbrTeam] = useState<number>(2)
     const [isExlusifsDecks, setIsExclusifsDecks] = useState<boolean>(true);
     const [configuration, setConfiguration] = useState<unknown[]>()
+
+    useEffect(() => {
+        if (hasAllDecksSelected) {
+            setAllUserDecksSelected([])
+            setIncludedDecks(decks!.map(d => d.id));
+        } else {
+            setIncludedDecks([]);
+            setAllUserDecksSelected([])
+        }
+    }, [hasAllDecksSelected, decks]);
 
     if (isUsersDecksLaoding || isUsersLaoding) return ( <SmallLoading /> )
 
@@ -92,17 +108,6 @@ const Matchmaking: React.FC = () => {
         setAllUserDecksSelected([])
     }
 
-    const handleHasAllDeckSelected = () => {
-        setHasAllDecksSelected((prev) => {
-            if (!prev) setIncludedDecks(decks!.map((d) => d.id))
-            else setIncludedDecks([])
-
-            return !prev
-        })
-
-        setAllUserDecksSelected([])
-    }
-
     const splitArray = (array: Array<Record<string, string>>, parts: number) => {
         const result: Array<Record<string, string>>[] = [];
         const n = array.length;
@@ -128,7 +133,12 @@ const Matchmaking: React.FC = () => {
 
         const selectedDecks = decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d)
                                     .filter((d) => !includedDecks.length ? d : includedDecks.includes(d.id))
-                                    .map((d) => ({ title: `${d.nom} (${users?.filter((u) => u.id === d.userId)[0].fullName})`, userId: d.userId, deckId: d.id}))
+                                    .map((d) => ({ nom: d.nom, user: users?.filter((u) => u.id === d.userId)[0].fullName, userId: d.userId, deckId: d.id}))
+
+        if ((selectedDecks.length < usersChecked.length) || (usersChecked.length === 0 && selectedDecks.length < users!.length)) {
+            dispatch(addErrorSnackbar('Vous n\'avez pas séléctionné suffisament de decks'))
+            return
+        }
 
         const useDeckIds: string[] = [];
 
@@ -143,7 +153,7 @@ const Matchmaking: React.FC = () => {
             const deck = isExlusifsDecks ? formatedSelectedDeck.splice(randomIndex, 1)[0] : selectedDecks.splice(randomIndex, 1)[0];
             useDeckIds.push(deck.deckId)
 
-            return { player: p.nom, title: deck.title, idDeck: deck.userId, deckId: deck.deckId };
+            return { player: p.nom, deckNom: deck.nom, deckPlayer: deck.user, idDeck: deck.userId, deckId: deck.deckId };
         });
 
         configSet = splitArray(configSet as Array<Record<string, string>>, nbrParties ? Number(nbrParties) : 1)
@@ -154,19 +164,20 @@ const Matchmaking: React.FC = () => {
 
     return (
         <>
-            <Container className={styles.container}>
+            <Header />
+            <div className={styles.container}>
                 <h2 style={{ textAlign: 'center' }}>Configurer le matchmaking</h2>
-                <div style={{ padding: '10px', display: 'flex', gap: '10px', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '10px', justifyContent: 'space-around', flexWrap: 'wrap' }}>
                     <FormControl className={styles.formControl}>
-                        <InputLabel id="joueursPrésents">{`Joueurs présents`}</InputLabel>
+                        <label id="joueursPrésents">{`Joueurs présents`}</label>
                         <Select
-                            labelId="joueursPrésents"
+                            MenuProps={SELECT_MENU_STYLE}
+                            sx={SELECT_STYLE}
                             id="joueursPrésents"
                             multiple
                             value={usersChecked}
                             onChange={(e) => handleChangeJoueurs(e)}
                             renderValue={() => (usersChecked.length)}
-                            label="Joueurs présents"
                         >
 
                             {users!.map((user) => (
@@ -179,7 +190,8 @@ const Matchmaking: React.FC = () => {
                     </FormControl>
 
                     <FormControl className={styles.formControl}>
-                        <TextField
+                        <label id="nbrParties">Nombre de parties</label>
+                        <input
                             placeholder="Nombre de parties"
                             id="nbrParties"
                             value={nbrParties}
@@ -188,45 +200,61 @@ const Matchmaking: React.FC = () => {
                     </FormControl>
 
                     <FormControl className={styles.formControl}>
-                        <InputLabel id="decksIncluded">{`Decks présents`}</InputLabel>
+                        <label id="decksIncluded">Decks présents</label>
                         <Select
-                            labelId="decksIncluded"
-                            id="decksIncluded"
-                            multiple
-                            value={includedDecks}
-                            onChange={(e) => handleChangeIncludedDecks(e)}
-                            renderValue={() => (includedDecks.length)}
-                            label="Decks présents"
                             MenuProps={{
+                                ...SELECT_MENU_STYLE, 
                                 MenuListProps: {
                                     // Empêche le MenuList de forcer le focus sur l'item sélectionné
                                     autoFocus: false,
                                     autoFocusItem: false,
                                 },
-                                // optionnel : conserve le menu monté (évite remontée/re-rendu)
-                                keepMounted: true,
                             }}
+                            sx={SELECT_STYLE}
+                            id="decksIncluded"
+                            multiple
+                            value={includedDecks}
+                            onChange={(e) => handleChangeIncludedDecks(e)}
+                            renderValue={() => (includedDecks.length)}
                         >
-
-                            <MenuItem key={'allDeck'} value={'allDeck'}>
-                                <Checkbox checked={hasAllDecksSelected} onChange={handleHasAllDeckSelected} />
+                            <MenuItem 
+                                key={'allDeck'} 
+                                value={'allDeck'}
+                                onClick={() => setHasAllDecksSelected(!hasAllDecksSelected)}
+                                className={classNames(styles.listItem, {[styles.isSelected]: hasAllDecksSelected})}
+                            >
+                                <Checkbox 
+                                    checked={hasAllDecksSelected} 
+                                    onChange={() => setHasAllDecksSelected(!hasAllDecksSelected)}
+                                />
                                 <ListItemText primary={hasAllDecksSelected ? 'Tout déselectionner' : 'Tout sélectionner'} />
                             </MenuItem>
 
-                            <Divider />
+                            <Divider style={{backgroundColor: 'var(--primary'}}/>
 
                             {users!.map((user) => (
-                                <MenuItem key={user.id} value={'user'} >
-                                    <Checkbox checked={allUserDecksSelected.includes(user.id)} onClick={() => handleAllUserDecksSelected(user.id)}/>
+                                <MenuItem 
+                                    key={user.id} 
+                                    value={'user'} 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleAllUserDecksSelected(user.id)
+                                    }}
+                                    className={classNames(styles.listItem, {[styles.isSelected]: allUserDecksSelected.includes(user.id)})}
+                                >
+                                    <Checkbox checked={allUserDecksSelected.includes(user.id)} onChange={() => handleAllUserDecksSelected(user.id)}/>
                                     <ListItemText primary={`Decks de ${user.fullName}`} />
                                 </MenuItem>
                             ))}
 
-                            <Divider />
+                            <Divider style={{backgroundColor: 'var(--primary'}}/>
 
                             {decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d).map((deck) => (
-                                <MenuItem key={deck.id} value={deck.id}>
-                                    <Checkbox checked={includedDecks.includes(deck.id)} onClick={() => handleChangeDeckSelected(deck.id)}/>
+                                <MenuItem key={deck.id} value={deck.id} onClick={(e) => {
+                                        e.preventDefault();
+                                        handleChangeDeckSelected(deck.id)
+                                    }}>
+                                    <Checkbox checked={includedDecks.includes(deck.id)} onChange={() => handleChangeDeckSelected(deck.id)}/>
                                     <ListItemText primary={`${deck.nom} (${users!.find((u) => deck.userId === u.id)?.fullName})`} />
                                 </MenuItem>
                             ))}
@@ -234,13 +262,13 @@ const Matchmaking: React.FC = () => {
                     </FormControl>
 
                     <FormControl className={styles.formControl}>
-                        <InputLabel id="Rank">Rank</InputLabel>
+                        <label id="Rank">Rank</label>
                         <Select
-                            labelId="Rank"
+                            MenuProps={SELECT_MENU_STYLE}
+                            sx={SELECT_STYLE}
                             id="Rank"
                             value={rank}
                             onChange={((e) => setRank(e.target.value))}
-                            label="Rank"
                         >
                             <MenuItem value={'all'}>Peu importe</MenuItem>
                             <MenuItem value={'1'}>1</MenuItem>
@@ -250,26 +278,16 @@ const Matchmaking: React.FC = () => {
                             <MenuItem value={'5'}>5</MenuItem>
                         </Select>
                     </FormControl>
-                </div>
-
-                <div style={{ padding: '10px', display: 'flex', gap: '10px', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-                    <FormControl className={styles.formControl}>
-                        <FormControlLabel 
-                            control={<Checkbox checked={isTeam} onChange={handleIsTeam} />} 
-                            label="Par équipe ?" 
-                            className={styles.checkBox}
-                        />
-                    </FormControl>
 
                     {isTeam && (
                         <FormControl className={styles.formControl}>
-                            <InputLabel id="team">Nombre d'équipe</InputLabel>
+                            <label id="team">Nombre d'équipe</label>
                             <Select
-                                labelId="team"
+                                MenuProps={SELECT_MENU_STYLE}
+                                sx={SELECT_STYLE}
                                 id="team"
                                 value={nbrTeam}
                                 onChange={((e) => setNbrTeam(Number(e.target.value)))}
-                                label="team"
                             >
                                 <MenuItem value={'2'}>2</MenuItem>
                                 <MenuItem value={'3'}>3</MenuItem>
@@ -277,51 +295,34 @@ const Matchmaking: React.FC = () => {
                             </Select>
                         </FormControl>
                     )}
-                    
-                    <FormControl style={{ flex: 1, minWidth: '250px' }}>
+                </div>
+
+                <div style={{ display: 'flex', gap: '10px', margin: '15px 0', flexWrap: 'wrap' }}>
+                    <FormControl className={styles.formControlCheckbox}>
                         <FormControlLabel 
-                            control={<Checkbox checked={isExlusifsDecks} onChange={handleExlusifsDecks} />} 
+                            control={<Checkbox checked={isTeam} className={classNames({[styles.checked]: isTeam})} onChange={handleIsTeam} />} 
+                            label="Par équipe ?" 
+                            className={styles.checkBox}
+                        />
+                    </FormControl>
+                    
+                    <FormControl className={styles.formControlCheckbox}>
+                        <FormControlLabel 
+                            control={<Checkbox checked={isExlusifsDecks} className={classNames({[styles.checked]: isExlusifsDecks})} onChange={handleExlusifsDecks} />} 
                             label="Ses decks exclusivement" 
                             className={styles.checkBox}
                         />
                     </FormControl>  
                 </div>
 
-                <Button type="submit" onClick={hanldeSetConfig}>{configuration?.length ? 'Relancer' : 'Valider'}</Button>
-                <Button type="submit" onClick={handleResetConfig}>Reset</Button>
-            </Container>
+                <div className={styles.buttons}>
+                    <button type="submit" style={{marginRight: '20px'}} onClick={hanldeSetConfig}>{configuration?.length ? 'Relancer' : 'Valider'}</button>
+                    <button type="submit" onClick={handleResetConfig}>Vider</button>
+                </div>
+            </div>
 
             {configuration && configuration.length && (
-                <Container style={{ marginTop: '15px', maxHeight: '500px' }} className={styles.container}>
-                    <h2 style={{ textAlign: 'center' }}>Résultat</h2>
-                    <div style={{ padding: '10px', overflow: 'auto', height: '280px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                        {configuration.map((config, index) => (
-                            <div key={`config-${index}`}>
-                                <h3 key={`h3-${index}`} style={{ margin: '0', color: 'grey' }}>{`Partie ${index + 1} :`}</h3>
-                                <div key={`subdiv-${index}`} className={classNames({[styles.containerTeam]: Array.isArray((config as Array<unknown>)[0])})}>
-                                    {(config as Array<unknown>).map((conf, index) => {
-                                        if (!Array.isArray(conf)) {
-                                            return (
-                                                <p key={`conf-${index}`} style={{ margin: '5px 0' }}>{`${(conf as Record<string, string>).player} : ${(conf as Record<string, string>).title}`}</p>
-                                            )
-                                        } else {
-                                            return (
-                                                <div key={`conf-${index}`}>
-                                                    <h4 key={`h4-${index}`} style={{ margin: '10px' }}>{`Equipe ${index + 1} :`}</h4>
-                                                        {conf.map((c, index) => {
-                                                            return (
-                                                                <p key={`conf-${index}`} style={{ margin: '5px 0' }}>{`${(c as Record<string, string>).player} : ${(c as Record<string, string>).title}`}</p>
-                                                            )
-                                                        })}
-                                                </div>
-                                            )
-                                        }
-                                    })}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </Container>
+                <Result configuration={configuration} />
             )}
         </>
     )

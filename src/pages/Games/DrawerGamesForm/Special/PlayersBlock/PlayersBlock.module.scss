@@ -1,29 +1,35 @@
 .secondBloc {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    width: 100%;
 
     > div {
-        width: 200px;
+        flex: 1
+    }
+}
+
+.MenuItem {
+    .span {
+        margin-left: 5px;
+        font-size: small;
+        font-style: italic;
+    }
+
+    &:hover {
+        span {
+            color: #ffff
+        }
     }
 }
 
 .separator {
     height: 1px;
-    background: grey;
+    background: var(--primary);
     width: 50%;
 }
 
-.green {
-    background-color: #dbf7d8 !important;
-}
-
-@media (max-width: 600px) {
-    .secondBloc {
-        > div {
-            width: 350px;
-        }
-    }
+.owner {
+    background-color: rgba(255, 255, 255, 0.3) !important;
 }

@@ -6,10 +6,10 @@ import { useDispatch } from 'react-redux';
 import { authActions } from '../../../store/reducers/authReducer';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 
-const updateUser = (nom: string, prenom: string, password?: string, ) => (
-    new Api<{ nom: string, prenom: string }>()
+const updateUser = (nom: string, prenom: string, colorStd: string, colorSpec: string, password?: string, ) => (
+    new Api<{ nom: string, prenom: string, colorStd: string, colorSpec:string }>()
         .setBearerToken()
-        .put('/user/update', {nom, prenom, password})
+        .put('/user/update', {nom, prenom, colorStd, colorSpec, password})
 )
 
 export const useUpdateUser = () => {
@@ -19,8 +19,8 @@ export const useUpdateUser = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {nom: string, prenom: string, password?: string}) => (
-                updateUser(data.nom, data.prenom, data.password)
+            mutationFn: (data: {nom: string, prenom: string, colorStd: string, colorSpec: string, password?: string}) => (
+                updateUser(data.nom, data.prenom, data.colorStd, data.colorSpec, data.password)
             ),
             onSuccess: (data) => {
                 useGetAllPlayers.reset(queryClient)
@@ -29,6 +29,8 @@ export const useUpdateUser = () => {
                         ...user,
                         nom: data.nom,
                         prenom: data.prenom,
+                        colorStd: data.colorStd,
+                        colorSpec: data.colorSpec
                     }));
                 }
                 dispatch(addSuccessSnackbar('Profil mis à jour'));

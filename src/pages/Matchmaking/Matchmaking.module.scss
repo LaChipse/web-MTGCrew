@@ -1,24 +1,43 @@
 .container {
-    background-color: white;
-    opacity: 0.9;
-    padding: 5px;
-    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    background: rgba(31, 35, 78, 0.6);
+    padding: 15px;
+    border-radius: 15px;
 }
 
 .formControl {
     flex: 1;
-    min-width: 250px;
-    max-width: 350px;
+    min-width: 250px !important;
+    max-width: 400px;
 }
 
-.containerTeam {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
+.listItem {
+    &:hover {
+        background-color: var(--primary);
+    }
+}
+
+.isSelected {
+    div span {
+        color: var(--background) !important;
+    }
+    background-color: var(--primary) !important;
+
+    &:hover {
+        background-color: rgba(25, 118, 210, 0.12) !important;
+
+        div span {
+            color: var(--white) !important;
+        }
+    }
 }
 
 .checkBox {
-    span{
-        color: rgba(0, 0, 0, 0.6);
+    .checked {
+        color: var(--primary) !important
+    }
+
+    span {
+        color: var(--white);
     }
 }

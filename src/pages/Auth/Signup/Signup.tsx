@@ -1,10 +1,10 @@
-import { MouseEvent, useState } from 'react'
-import { useSignup } from '../../../hooks/queries/useSignup';
-import { Button, FormControl, TextField } from '@mui/material';
+import { CircularProgress, FormControl } from '@mui/material';
+import { MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSignup } from '../../../hooks/queries/useSignup';
 import { LOGIN_PAGE } from '../../../router/routes';
-import { LoadingButton } from '@mui/lab';
 import styles from './Signup.module.scss';
+import classNames from 'classnames';
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -25,41 +25,38 @@ const Signup = () => {
             <h1>MTG CREW</h1>
             <div className={styles.form}>
                 <FormControl>
-                    <TextField
+                    <input
                         required
                         value={nom}
                         id="nomSignup"
-                        size="small"
                         onChange={(e) => setNom(e.target.value)}
                         placeholder="Nom"
                     />
                 </FormControl>
                 <FormControl>
-                    <TextField
+                    <input
                         required
                         value={prenom}
                         id="prenomSignup"
-                        size="small"
                         onChange={(e) => setPrenom(e.target.value)}
                         placeholder="Prénom"
                     />
                 </FormControl>
                 <FormControl>
-                    <TextField
+                    <input
                         required
                         type='password'
                         value={password}
                         id="passwordSignup"
-                        size="small"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"
                     />
                 </FormControl>
 
-                <LoadingButton disabled={ !nom || !prenom || !password } loading={isPending} variant="contained" onClick={handleSignUpForm} className={styles.submit}>
-                    Créer un compte
-                </LoadingButton>
-                <Button onClick={() => navigate(LOGIN_PAGE)}>Se connecter</Button>
+                <button disabled={!password || !prenom || !nom} style={{marginTop: '20px'}} className={classNames({[styles.disabled]: !password || !prenom || !nom})} onClick={handleSignUpForm}>
+                    {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Créer un compte'}
+                </button>
+                <button onClick={() => navigate(LOGIN_PAGE)}>Déjà un compte</button>
             </div>
         </div>
     )

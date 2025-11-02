@@ -1,47 +1,112 @@
-.form {
-    gap: 15px;
-}
 
-.formBloc {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    align-items: center;
-
-    .choices {
-        flex-direction: row;
-    }
-
-    .select {
-        min-width: 130px;
-    }
-}
-
-.submit {
-    width: fit-content;
-    min-width: fit-content;
-    align-items: center;
-    align-self: center;
-}
 
 .modal {
-    h2 {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-
     width: 70%;
-    border-radius: 25px;
+    border-radius: 15px;
     max-width: 800px;
     min-width: 300px;
-    height: 80%;
+    height: fit-content;
     padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-    max-height: 350px;
+    backdrop-filter: blur(5px);
+    background: rgba(31, 35, 78, 0.6);
+
+    .close {
+        height: 20px;
+        width: 20px;
+        justify-content: center;
+        align-self: center;
+        padding: 0;
+    }
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+        display: flex;
+        gap: 10px;
+
+        .look {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            align-self: center;
+
+            &:hover {
+                cursor: pointer;
+                background: none;
+
+                .lookIcon {
+                    background-color: rgba(39, 233, 255, 0.6);
+                }
+            }
+
+            .lookIcon {
+                mask: var(--svg) no-repeat center;
+                mask-size: contain;
+                height: 100%;
+                width: 100%;
+                background-color: var(--primary);
+                --svg: url("../../../../../public/assets/eye.svg");
+            }
+        }
+    }
+
+    .search {
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        align-self: center;
+
+        &:hover {
+            cursor: pointer;
+            background: none;
+
+            .addIcon {
+                background-color: rgba(39, 233, 255, 0.6);
+            }
+        }
+
+        .searchIcon {
+            mask: var(--svg) no-repeat center;
+            mask-size: contain;
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary);
+            --svg: url("../../../../../public/assets/search.svg");
+        }
+    }
+
+    
+
+    .formBloc {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        align-items: center;
+
+        .radioButton {
+            svg, span { 
+                color: var(--white);
+                font-family: "Akshar", sans-serif;
+            }
+        }
+
+        .choices {
+            flex-direction: row;
+        }
+    }
+
+    .updateButton {
+        width: fit-content;
+        align-self: center;
+    }
     
     .container {
         display: flex;
@@ -53,6 +118,37 @@
 
         .formControl {
             width: 100%;
+        }
+
+        .formCouleurs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .couleursBloc {
+                display: flex;
+                gap: 10px;
+
+                .checked {
+                    filter: brightness(1);
+                }
+
+                button {
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    padding: 0;
+                    border: none;
+                    filter: brightness(0.5);
+
+                    &:hover {
+                        border: none;
+                        filter: brightness(1);
+                    }
+                }
+            }
         }
 
         .paperIllustration {
@@ -89,16 +185,17 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
+
     .formBloc {
         flex-direction: column;
         width: 100%;
     }
 
     .modal {
-        height: 70%;
-        max-height: 70%;
+        height: fit-content;
         padding: 20px;
+        width: 80%;
     }
 
     .formControl {

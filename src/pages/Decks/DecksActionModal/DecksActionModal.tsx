@@ -1,15 +1,13 @@
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import SearchIcon from '@mui/icons-material/Search';
-import { LoadingButton } from '@mui/lab';
-import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, ImageListItem, InputBase, InputLabel, MenuItem, Modal, Paper, Radio, RadioGroup, Select, TextField } from '@mui/material';
+import { CircularProgress, FormControl, FormControlLabel, ImageListItem, MenuItem, Modal, Radio, RadioGroup, Select } from '@mui/material';
 import { Box } from '@mui/system';
 import classNames from 'classnames';
 import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
-import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
-import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
-import SmallLoading from '../../loader/SmallLoading/SmallLoading';
+import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
+import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
+import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/components/GamesFilter/StyleMui';
+import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import styles from './DecksActionModal.module.scss';
 
 type Props = {
@@ -17,6 +15,8 @@ type Props = {
     setOpen: (value: React.SetStateAction<boolean>) => void
     deck?: Deck
 }
+
+const DECK_COLORS= ['incolore', 'blanc', 'bleu', 'noir', 'rouge', 'vert']
 
 const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
@@ -76,10 +76,14 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         if (illustrationCard) setSearchCard(undefined)
     };
 
-    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value, checked } = e.target;
-
-        setCouleurs((prevCouleurs) => checked ? [...prevCouleurs, value] : prevCouleurs.filter((color) => color !== value));
+    const handleCheckboxChange = (color: string) => {
+        let newColors: Array<string>
+        if (couleurs.includes(color)) {
+            newColors = couleurs.filter((c) => c !== color)
+        } else {
+            newColors = [...couleurs, color]
+        }
+        setCouleurs(newColors)
     };
 
     const handleRadioImprimeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -148,33 +152,33 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             onClose={() => handleClose()}
             aria-labelledby="actionDeck"
             aria-describedby="axtion sur deck"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
-            <Box className={styles.modal}>
+            <div className={styles.modal}>
                 <div className={styles.container} ref={containerRef}>
-                    <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
-                        illustrationUrl && (
-                            <>
-                                <IconButton
-                                    type="button"
-                                    sx={{ p: '10px' }}
-                                    aria-label="search"
-                                    onClick={() => setShowIllustration(!showIllustration)}
-                                >
-                                    <RemoveRedEyeIcon />
-                                </IconButton>
-                                {showIllustration && (
-                                    <Box className={styles.illustrationShow}>
-                                        <img
-                                            src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
-                                            alt={illustrationUrl}
-                                            style={{ borderRadius: '10px', width: '150px' }}
-                                            loading="lazy"
-                                        />
-                                    </Box>
-                                )}
-                            </>
-                        )
-                    }</h2>
+                    <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                        <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
+                            illustrationUrl && (
+                                <>
+                                    <button onClick={() => setShowIllustration(!showIllustration)} className={styles.look}>
+                                            <div className={styles.lookIcon} />
+                                    </button>
+                                    {showIllustration && (
+                                        <Box className={styles.illustrationShow}>
+                                            <img
+                                                src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
+                                                alt={illustrationUrl}
+                                                style={{ borderRadius: '10px', width: '150px' }}
+                                                loading="lazy"
+                                            />
+                                        </Box>
+                                    )}
+                                </>
+                            )
+                        }
+                        </h2>
+                        <button className={styles.close} onClick={() => handleClose()}>X</button>
+                    </div>
                     {isGetillustrationCardLoading ? (
                         <SmallLoading />
                     ) : (
@@ -182,37 +186,29 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                             <div className={styles.formBloc}>
                                 <div style={{ width: '100%' }}>
                                     <FormControl className={styles.formControl}>
-                                        <TextField
+                                        <label>Nom du deck</label>
+                                        <input
                                             required
-                                            label="Nom"
                                             value={nom}
                                             id="Nom"
-                                            size="small"
                                             onChange={(e) => setNom(e.target.value)}
                                             placeholder="Nom du deck"
                                         />
                                     </FormControl>
 
                                     <Box style={{ position: 'relative' }}>
-                                        <Paper className={styles.paperIllustration} >
-                                            <InputBase
+                                        <div style={{display: 'flex', justifyContent: 'space-between', gap: '10px', marginTop: '10px'}}>
+                                            <input
                                                 id="illustration"
-                                                size="small"
+                                                style={{width: '100%'}}
                                                 value={nameInput}
-                                                style= {{ width: '100%' }}
                                                 onChange={(e) => setNameInput(e.target.value)}
-                                                placeholder="Choisissez votre illustration (nom en anglais)"
+                                                placeholder="Choisir votre illustration (anglais)"
                                             />
-                                            <IconButton
-                                                type="button"
-                                                sx={{ p: '10px' }}
-                                                aria-label="search"
-                                                onClick={() => handleSearchCard()}
-                                            >
-                                                <SearchIcon />
-                                            </IconButton>
-                                        </Paper>
-
+                                            <button onClick={handleSearchCard} className={styles.search}>
+                                                <div className={styles.searchIcon} />
+                                            </button>
+                                        </div>
                                         {!!illustrationCard && illustrationCard.imageUris && (
                                             <Box className={styles.illustrationBox} sx={{ maxWidth: `${maxWidthBoxIllustration}px`}}>
                                                 <ImageListItem key={illustrationCard.id} className={styles.imageListItem}>
@@ -234,94 +230,45 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     </Box>
                                 </div>
 
-                                <FormControl className={styles.formControl}>
-                                    <FormLabel id="checkbox-colors">Couleurs du deck</FormLabel>
-                                    <FormGroup className={styles.choices}>
-                                        <FormControlLabel 
-                                            value="incolore" 
-                                            style={{ color: 'grey' }} 
-                                            control={
-                                                <Checkbox style={{ color: 'grey'}} onChange={handleCheckboxChange} checked={couleurs.includes("incolore")} />
-                                            } 
-                                            label="Incolore" 
-                                        />
-                                        <FormControlLabel 
-                                            value="blanc" 
-                                            style={{ color: 'white', textShadow: '0 0 3px rgba(0, 0, 0, 0.8)' }} 
-                                            control={
-                                                <Checkbox 
-                                                    sx={{ 
-                                                        filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
-                                                        '&.Mui-checked': {
-                                                            color: '#1976d2', // couleur cochée
-                                                            filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.5))',
-                                                        },
-                                                    }}
-                                                    style={{ color: 'white' }} 
-                                                    onChange={handleCheckboxChange} 
-                                                    checked={couleurs.includes("blanc")} 
+                                <div className={classNames(styles.formControl, styles.formCouleurs)}>
+                                    <label id="checkbox-colors">Couleurs du deck</label>
+                                    <div className={styles.couleursBloc}>
+
+                                        {
+                                            DECK_COLORS.map((color) => (
+                                                <button 
+                                                    className={classNames(styles.buttonColor, {[styles.checked]: couleurs.includes(color)})} 
+                                                    onClick={() => handleCheckboxChange(color)} 
+                                                    style={{backgroundImage: `url(/assets/${color}.svg)`}} 
                                                 />
-                                            } 
-                                            label="Blanc" 
-                                        />
-                                        <FormControlLabel 
-                                            value="bleu" 
-                                            style={{ color: 'blue' }} 
-                                            control={
-                                                <Checkbox style={{ color: 'blue'}} onChange={handleCheckboxChange} checked={couleurs.includes("bleu")} />
-                                            } 
-                                            label="Bleu" 
-                                        />
-                                        <FormControlLabel 
-                                            value="noir" 
-                                            style={{ color: 'black' }} 
-                                            control={
-                                                <Checkbox style={{ color: 'black'}} onChange={handleCheckboxChange} checked={couleurs.includes("noir")} />
-                                            } 
-                                            label="Noir" 
-                                        />
-                                        <FormControlLabel 
-                                            value="rouge" 
-                                            style={{ color: 'red' }} 
-                                            control={
-                                                <Checkbox style={{ color: 'red'}} onChange={handleCheckboxChange} checked={couleurs.includes("rouge")} />
-                                            } 
-                                            label="Rouge"  
-                                        />
-                                        <FormControlLabel 
-                                            value="vert" 
-                                            style={{ color: 'green' }} 
-                                            control={
-                                                <Checkbox style={{ color: 'green'}} onChange={handleCheckboxChange} checked={couleurs.includes("vert")} />
-                                            } 
-                                            label="Vert" 
-                                        />
-                                    </FormGroup>
-                                </FormControl>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
                             </div>
                                 
                             <div className={styles.formBloc}>
                                 <FormControl className={styles.formControl}>
-                                    <FormLabel id="radio-imprime-groupe">Deck imprimé ?</FormLabel>
+                                    <label id="radio-imprime-groupe">Deck imprimé ?</label>
                                     <RadioGroup
                                         aria-labelledby="radio-imprime-groupe"
                                         defaultValue={deck && deck.isImprime ? true : false}
                                         name="radio-imprime-groupe"
                                         className={styles.choices}
                                     >
-                                        <FormControlLabel value={false} style={{ color: 'black' }} control={<Radio onChange={handleRadioImprimeChange} />} label="Non" />
-                                        <FormControlLabel value={true} style={{ color: 'black' }} control={<Radio onChange={handleRadioImprimeChange} />} label="Oui" />
+                                        <FormControlLabel value={false} className={styles.radioButton} control={<Radio onChange={handleRadioImprimeChange} />} label="Non" />
+                                        <FormControlLabel value={true} className={styles.radioButton} control={<Radio onChange={handleRadioImprimeChange} />} label="Oui" />
                                     </RadioGroup>
                                 </FormControl>
 
-                                <FormControl className={classNames([styles.select, styles.formControl])} size="small">
-                                    <InputLabel id="Type">Type</InputLabel>
+                                <FormControl className={classNames([styles.select, styles.formControl])}>
+                                    <label id="Type">Type</label>
                                     <Select
-                                        labelId="Type"
+                                        MenuProps={SELECT_MENU_STYLE}
+                                        sx={SELECT_STYLE}
                                         id="Type"
                                         value={type}
                                         onChange={((e) => setType(e.target.value))}
-                                        label="Type"
                                     >
                                         <MenuItem value={'aggro'}>Aggro</MenuItem>
                                         <MenuItem value={'midrange'}>Midrange</MenuItem>
@@ -330,14 +277,14 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     </Select>
                                 </FormControl>
 
-                                <FormControl className={classNames([styles.select, styles.formControl])} size="small">
-                                    <InputLabel id="Rank">Rank</InputLabel>
+                                <FormControl className={classNames([styles.select, styles.formControl])}>
+                                    <label id="Rank">Rank</label>
                                     <Select
-                                        labelId="Rank"
+                                        MenuProps={SELECT_MENU_STYLE}
+                                        sx={SELECT_STYLE}
                                         id="Rank"
                                         value={rank.toString()}
                                         onChange={((e) => setRank(Number(e.target.value)))}
-                                        label="Rank"
                                     >
                                         <MenuItem value={'1'}>1</MenuItem>
                                         <MenuItem value={'2'}>2</MenuItem>
@@ -349,19 +296,17 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                             </div>
                         </>
                     )}
-
-                    <LoadingButton 
+    
+                    <button 
                         disabled={!couleurs.length || !nom.length || deck ? isUpdatePending : isAddPending} 
-                        loading={deck ? isUpdatePending : isAddPending} 
                         type="submit" 
-                        variant="contained" 
-                        onClick={handleActionDeck} 
-                        className={styles.submit}
+                        onClick={handleActionDeck}
+                        className={styles.updateButton}
                     >
-                            {deck ? 'Modifié': 'Ajouté'}
-                    </LoadingButton>  
+                        {(deck ? isUpdatePending : isAddPending) ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : <>{deck ? 'Modifier': 'Ajouter'}</>}
+                    </button>
                 </div>
-            </Box>
+            </div>
         </Modal>
     )
 }

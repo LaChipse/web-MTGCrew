@@ -1,18 +1,23 @@
 .snackbar {
     width: 100%;
     justify-content: center !important;
+    color: var(--white) !important;
+    border-radius: 10px !important;
 }
 
 .success {
-    background-color: green !important;
+    background-color: rgba(33, 252, 66, 0.6) !important;
+    backdrop-filter: blur(6px);
 }
 
 .info {
-    background-color: blue !important;
+    background-color: rgb(1, 91, 194, 0.6) !important;
+    backdrop-filter: blur(6px);
 }
 
 .error {
-    background-color: red !important;
+    background-color: rgba(250, 5, 5, 0.6) !important;
+    backdrop-filter: blur(6px);
 }
 
 .message {
@@ -20,6 +25,14 @@
     align-items: center;
     gap: 12px;
     user-select: none;
+    
+
+    span {
+        color: var(--white) !important;
+        font-size: medium;
+        font-family: "Akshar", sans-serif;
+        font-weight: 600;
+    }
 
     > div {
         display: flex;

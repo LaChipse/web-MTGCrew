@@ -1,17 +1,18 @@
+import { Modal } from '@mui/material';
 import 'dayjs/locale/fr';
 import { useEffect, useState } from 'react';
+import { Deck } from '../../hooks/queries/decks/useGetDecks';
 import { useCountHistoryGames } from '../../hooks/queries/games/useCountHistoryGames';
 import { useGetHistoryGames } from '../../hooks/queries/games/useGetHistoryGames';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
+import Header from '../../Layouts/Theme/components/Header/Header';
 import Loading from '../loader/Loading/Loading';
+import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import styles from './Profil.module.scss';
 import ProfilCard from './ProfilCard/ProfilCard';
 import ProfilModal from './ProfilModal/ProfilModal';
-import { Modal } from '@mui/material';
-import { Box } from '@mui/system';
-import { Deck } from '../../hooks/queries/decks/useGetDecks';
-import styles from './Profil.module.scss';
-import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import GamesFilter from '../../Layouts/Theme/components/GamesFilter/GamesFilter';
 
 const Profil = () => {
     const [page, setPage] = useState(1)
@@ -36,6 +37,7 @@ const Profil = () => {
 
     return (
         <>
+            <Header />
             {user && (
                 <>
                     <ProfilCard 
@@ -54,9 +56,10 @@ const Profil = () => {
                 </>
             )}
 
+            <GamesFilter />
+
             <div className={styles.history}>
-                <h2 style={{color: 'rgb(197, 195, 195)', marginBottom: 15}}>Dernières parties jouées :</h2>
-                { isHistoryGamesLoading ? (
+                {isHistoryGamesLoading ? (
                     <SmallLoading />
                 ) :(
                     <GamesArray 
@@ -76,8 +79,9 @@ const Profil = () => {
                     onClose={()=>setDeckChoose(undefined)}
                     aria-labelledby="imgChoose"
                     aria-describedby="image choisie"
+                    style={{ backdropFilter: 'blur(3px)'}}
                 >
-                    <Box className={styles.imageModal}>
+                    <div className={styles.imageModal}>
                         <p style={{ margin: '5px', fontWeight: 'bold' }}>{deckChoose?.nom}</p>
                         {!!deckChoose!.illustrationUrl && (
                             <img
@@ -87,7 +91,7 @@ const Profil = () => {
                                 loading='lazy'
                             />
                         )}
-                    </Box>
+                    </div>
                 </Modal>
             )}
             

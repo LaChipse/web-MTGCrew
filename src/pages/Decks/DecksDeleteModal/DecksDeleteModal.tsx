@@ -1,8 +1,7 @@
-import { Button, Modal } from '@mui/material';
-import { Box } from '@mui/system';
+import { Modal } from '@mui/material';
 import React from 'react';
 import { useDeleteDeck } from '../../../hooks/queries/decks/useDeleteDeck';
-import styles from './DecksDeleteModal.module.scss'
+import styles from './DecksDeleteModal.module.scss';
 
 type Props = {
     open: boolean
@@ -31,15 +30,16 @@ const DecksDeleteModal: React.FC<Props> = ({ open, deletedDeck, setDeletedDeck, 
             onClose={handleClose}
             aria-labelledby="deleteDeck"
             aria-describedby="delete Deck"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
-            <Box className={styles.modal}>
+            <div className={styles.modal}>
                 <p id="deleteDeck">Etes-vous sûr de vouloir supprimer ce deck ?</p>
 
                 <div className={styles.buttons}>
-                    <Button onClick={handleClose}>Annuler</Button>
-                    <Button variant='contained' onClick={handleDelete}>Confirmer</Button>
+                    <button onClick={handleClose}>Annuler</button>
+                    <button className={styles.confirm} onClick={handleDelete}>Confirmer</button>
                 </div>
-            </Box>
+            </div>
         </Modal>
     )
 }

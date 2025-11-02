@@ -1,7 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import { TYPE_VICTORY_VALUES } from "../../../../../utils/Enums/victoryType";
 import styles from './VictoryBlock.module.scss';
+import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../../../../Layouts/Theme/components/GamesFilter/StyleMui";
 
 type Props = {
     joueurs: Array<{joueur?: string, userId?: string}>
@@ -13,14 +14,14 @@ type Props = {
 
 const EachVictoryBlock: React.FC<Props> = ({ joueurs, victoire, setVictoire, typeVictoire, setTypeVictoire }) => (
     <div className={styles.thirdBloc}>
-        <FormControl size='small'>
-            <InputLabel id="victoire">Vainqueur</InputLabel>
+        <FormControl >
+            <label id="victoire">Vainqueur</label>
             <Select
-                labelId="victoire"
+                MenuProps={SELECT_MENU_STYLE}
+                sx={SELECT_STYLE}
                 id="victoireSelect"
                 value={joueurs?.find((joueur) => joueur.userId === victoire)?.joueur}
                 onChange={(e) => setVictoire(e.target.value)}
-                label="Vainqueur"
             >
                 {
                     joueurs?.map((joueur) => (
@@ -32,14 +33,14 @@ const EachVictoryBlock: React.FC<Props> = ({ joueurs, victoire, setVictoire, typ
             </Select>
         </FormControl>
 
-        <FormControl size='small'>
-            <InputLabel id="typeVictoire">Type de victoire</InputLabel>
+        <FormControl >
+            <label id="typeVictoire">Type de victoire</label>
             <Select
-                labelId="typeVictoire"
+                MenuProps={SELECT_MENU_STYLE}
+                sx={SELECT_STYLE}
                 id="typeVictoireSelect"
                 value={typeVictoire}
                 onChange={(e) => setTypeVictoire(e.target.value)}
-                label="Type de victoire"
             >
                 {
                     TYPE_VICTORY_VALUES.map((type) => (

@@ -6,17 +6,17 @@ import { TYPE_VICTORY } from '../../utils/Enums/victoryType';
 export interface filtersGames {
     startDate: Dayjs | null,
     endDate: Dayjs | null,
-    victoryRole?: ROLE_TYPE,
-    winnerId?: string,
-    typeOfVictory?: TYPE_VICTORY,
+    victoryRole?: ROLE_TYPE | '',
+    winnerId?: string | '',
+    typeOfVictory?: TYPE_VICTORY | '',
 }
 
 const initialState: filtersGames = {
     startDate: null,
     endDate: null,
-    victoryRole: undefined,
-    winnerId: undefined,
-    typeOfVictory: undefined
+    victoryRole: '',
+    winnerId: '',
+    typeOfVictory: ''
 };
 
 const gameFiltersSlice = createSlice({
@@ -29,22 +29,16 @@ const gameFiltersSlice = createSlice({
         setEndDate: (state, action: PayloadAction<Dayjs | null>) => {
             state.endDate = action.payload;
         },
-        setVictoryRole: (state, action: PayloadAction<ROLE_TYPE | undefined>) => {
+        setVictoryRole: (state, action: PayloadAction<ROLE_TYPE | ''>) => {
             state.victoryRole = action.payload;
         },
-        setWinnerId: (state, action: PayloadAction<string | undefined>) => {
+        setWinnerId: (state, action: PayloadAction<string | ''>) => {
             state.winnerId = action.payload;
         },
-        setTypeOfVictory: (state, action: PayloadAction<TYPE_VICTORY | undefined>) => {
+        setTypeOfVictory: (state, action: PayloadAction<TYPE_VICTORY | ''>) => {
             state.typeOfVictory = action.payload;
         },
-        clearGameFiltersState: (state) => {
-            state.endDate = null;
-            state.startDate = null;
-            state.victoryRole = undefined;
-            state.winnerId = undefined;
-            state.typeOfVictory = undefined;
-        },
+        clearGameFiltersState: () => initialState
     },
 });
 

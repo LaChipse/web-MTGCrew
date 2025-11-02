@@ -1,11 +1,11 @@
-import { Button, FormControl, TextField } from '@mui/material';
+import { CircularProgress, FormControl } from '@mui/material';
 import { MouseEvent, useEffect, useState } from 'react';
-import { SIGNUP_PAGE } from '../../../router/routes';
-import { useLogin } from '../../../hooks/queries/useLogin';
 import { useNavigate } from 'react-router-dom';
-import { LoadingButton } from '@mui/lab';
+import { useLogin } from '../../../hooks/queries/useLogin';
 import { useAppSelector } from '../../../hooks/useAppSelector';
+import { SIGNUP_PAGE } from '../../../router/routes';
 import styles from './Login.module.scss';
+import classNames from 'classnames';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -34,41 +34,41 @@ const Login = () => {
             <h1>MTG CREW</h1>
             <div className={styles.form}>
                 <FormControl>
-                    <TextField
+                    <input
                         required
+                        type='text'
                         value={nom}
-                        id="nom"
-                        size="small"
+                        id="nomProfil"
                         onChange={(e) => setNom(e.target.value)}
                         placeholder="Nom"
                     />
                 </FormControl>
                 <FormControl>
-                    <TextField
+                    <input
                         required
+                        type='text'
                         value={prenom}
-                        id="prenom"
-                        size="small"
+                        id="prenomProfil"
                         onChange={(e) => setPrenom(e.target.value)}
-                        placeholder="Prenom"
+                        placeholder="Prénom"
                     />
                 </FormControl>
                 <FormControl>
-                    <TextField
-                        required
+                    <input
                         type='password'
                         value={password}
-                        id="password"
-                        size="small"
+                        id="passwordProfil"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"
                     />
                 </FormControl>
                 
-                <LoadingButton loading={isPending} variant="contained" onClick={handleSubmit} className={styles.submit}>
-                    Se connecter
-                </LoadingButton>
-                <Button onClick={() => navigate(SIGNUP_PAGE)}>Créer un compte</Button>
+                <button disabled={!password || !prenom || !nom} className={classNames({[styles.disabled]: !password || !prenom || !nom})} style={{marginTop: '20px'}} onClick={handleSubmit} >
+                    {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Se connecter'}
+                </button>
+                <button onClick={() => navigate(SIGNUP_PAGE)}>
+                    Créer un compte
+                </button>
             </div>
         </div>
     )

@@ -36,22 +36,22 @@
     }
 
     .profil {
-        --svg: url("../../../../../public/assets/Profil.svg");
+        --svg: url("/assets/Profil.svg");
     }
 
     .decks {
-        --svg: url("../../../../../public/assets/Decks.svg");
+        --svg: url("/assets/Decks.svg");
     }
 
     .games {
-        --svg: url("../../../../../public/assets/Parties.svg");
+        --svg: url("/assets/Parties.svg");
     }
 
     .joueurs {
-        --svg: url("../../../../../public/assets/Joueurs.svg");
+        --svg: url("/assets/Joueurs.svg");
     }
 
     .matchmaking {
-        --svg: url("../../../../../public/assets/Matchmaking.svg");
+        --svg: url("/assets/Matchmaking.svg");
     }
 }

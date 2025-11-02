@@ -51,7 +51,7 @@
                 height: 100%;
                 width: 100%;
                 background-color: var(--primary);
-                --svg: url("../../../../../public/assets/eye.svg");
+                --svg: url("/assets/eye.svg");
             }
         }
     }
@@ -79,7 +79,7 @@
             height: 100%;
             width: 100%;
             background-color: var(--primary);
-            --svg: url("../../../../../public/assets/search.svg");
+            --svg: url("/assets/search.svg");
         }
     }
 

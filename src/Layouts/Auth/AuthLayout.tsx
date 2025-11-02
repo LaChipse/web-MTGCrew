@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import Loading from "../../pages/loader/Loading/Loading";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useGetUser } from "../../hooks/queries/useGetUser";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { authActions } from "../../store/reducers/authReducer";
+import Loading from "../../pages/loader/Loading/Loading";
 import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
-import { setTheme } from "../../store/reducers/themeReducer";
+import { authActions } from "../../store/reducers/authReducer";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
@@ -16,8 +15,6 @@ const AuthLayout = () => {
     const currentPagePath = sessionStorage.getItem('currentPagePath')
     
     const { data: authUser, isLoading } = useGetUser();
-    
-    if (user) dispatch(setTheme({ primaryStd: user.colorStd, primarySpec: user.colorSpec}))
 
     useEffect(() => {
         const handleLogin = () => {

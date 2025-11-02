@@ -68,7 +68,7 @@ const Decks = () => {
                 
                 <div>
                     <button onClick={handleOpen} className={styles.add}>
-                        <div className={styles.addIcon} />
+                        <span style={{ fontSize: '18px' }}>+</span>
                     </button>
                 </div>
             </div>

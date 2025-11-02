@@ -20,19 +20,9 @@
             cursor: pointer;
             background-color: var(--primary);
 
-            .addIcon {
-                background-color: var(--secondary);
+            span {
+                color: var(--secondary) ;
             }
-        }
-
-        .addIcon {
-            mask: var(--svg) no-repeat center;
-            mask-size: contain;
-            height: 100%;
-            width: 100%;
-            background-color: var(--primary);
-            --svg: url("../../../../../public/assets/add.svg");
-            margin: auto;
         }
     }
 }

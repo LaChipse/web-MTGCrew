@@ -30,6 +30,7 @@ const DecksDeleteModal: React.FC<Props> = ({ open, deletedDeck, setDeletedDeck, 
             onClose={handleClose}
             aria-labelledby="deleteDeck"
             aria-describedby="delete Deck"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
                 <p id="deleteDeck">Etes-vous sûr de vouloir supprimer ce deck ?</p>

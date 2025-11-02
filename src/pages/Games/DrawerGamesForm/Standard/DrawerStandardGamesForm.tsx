@@ -109,7 +109,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                         </LocalizationProvider>
                     </FormControl>
 
-                    <FormControl size='small'>
+                    <FormControl >
                         <label id="user">Mode de jeu</label>
                         <Select
                             MenuProps={SELECT_MENU_STYLE}

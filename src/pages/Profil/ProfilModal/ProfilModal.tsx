@@ -14,7 +14,7 @@ type Props = {
     setOpen: (value: React.SetStateAction<boolean>) => void
 }
 
-const COLORS = ['#FFFFFF', '#F1FE00', '#ffa51dff', '#fa3d3dff', '#fc79efff', '#27E9FF', '#57f36fff'  ]
+const COLORS = ['#FFFFFF', '#F1FE00', '#ffa51dff', '#fa3d3dff', '#ff97f5ff', '#27E9FF', '#57f36fff'  ]
 
 const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const [nom, setNom] = useState(user.nom);
@@ -52,6 +52,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
             onClose={handleClose}
             aria-labelledby="updateUser"
             aria-describedby="mise à jour profil"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
                 <h2 id="updateUser">Modifier son profil</h2>

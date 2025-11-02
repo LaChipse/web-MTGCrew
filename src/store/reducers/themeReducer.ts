@@ -13,7 +13,7 @@ export interface ThemeColors {
 
 const initialState: ThemeColors = {
     primaryStd: '#27E9FF',
-    primarySpec: '#fc79efff',
+    primarySpec: '#ff97f5ff',
     secondary: '#1f234eff',
     tertiary: '#2f336bff',
     background: '#21213aff',

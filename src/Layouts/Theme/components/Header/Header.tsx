@@ -3,10 +3,10 @@ import React, { useEffect, useState, useTransition } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
+import SmallLoading from '../../../../pages/loader/SmallLoading/SmallLoading';
 import { LOGIN_PAGE } from '../../../../router/routes';
 import { switchType } from '../../../../store/reducers/typeReducer';
 import styles from './Header.module.scss';
-import { CircularProgress } from '@mui/material';
 
 type Props = unknown
 
@@ -51,7 +51,7 @@ const Header: React.FC<Props> = () => {
             </div>
             <button className={styles.signout}>
                 { showLoader ? 
-                    <CircularProgress style={{ width: '30px', height: '30px' }} className={styles.circularLoader} /> 
+                    <SmallLoading style={{ width: '50px', height: '50px'}} /> 
                     : <div className={styles.signoutIcon} onClick={handleLogout} /> 
                 }
             </button>

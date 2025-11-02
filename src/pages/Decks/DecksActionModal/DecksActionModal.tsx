@@ -152,6 +152,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             onClose={() => handleClose()}
             aria-labelledby="actionDeck"
             aria-describedby="axtion sur deck"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
                 <div className={styles.container} ref={containerRef}>
@@ -260,7 +261,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     </RadioGroup>
                                 </FormControl>
 
-                                <FormControl className={classNames([styles.select, styles.formControl])} size="small">
+                                <FormControl className={classNames([styles.select, styles.formControl])}>
                                     <label id="Type">Type</label>
                                     <Select
                                         MenuProps={SELECT_MENU_STYLE}
@@ -276,7 +277,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     </Select>
                                 </FormControl>
 
-                                <FormControl className={classNames([styles.select, styles.formControl])} size="small">
+                                <FormControl className={classNames([styles.select, styles.formControl])}>
                                     <label id="Rank">Rank</label>
                                     <Select
                                         MenuProps={SELECT_MENU_STYLE}

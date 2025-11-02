@@ -14,7 +14,7 @@ type Props = {
 
 const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVictoire, setTypeVictoire }) => (
     <div className={styles.thirdBloc}>
-        <FormControl size='small'>
+        <FormControl >
             <label id="victoire">Role victorieux</label>
             <Select
                 MenuProps={SELECT_MENU_STYLE}
@@ -33,7 +33,7 @@ const TreacheryVictoryBlock: React.FC<Props> = ({ victoire, setVictoire, typeVic
             </Select>
         </FormControl>
 
-        <FormControl size='small'>
+        <FormControl >
             <label id="typeVictoire">Type de victoire</label>
             <Select
                 MenuProps={SELECT_MENU_STYLE}

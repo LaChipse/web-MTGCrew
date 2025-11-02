@@ -94,7 +94,7 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
     const inputs = Array.from({ length: configIndex }, (_, index) => (
         <>
             <div key={`secondBloc${index}`} className={styles.secondBloc}>
-                <FormControl size='small'>
+                <FormControl >
                     <label id="joueur">{`Joueur ${index + 1}`}</label>
                     <Select
                         MenuProps={SELECT_MENU_STYLE}
@@ -113,7 +113,7 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
                     </Select>
                 </FormControl>
 
-                <FormControl size='small'>
+                <FormControl >
                     <label id="deck">{`Deck ${index + 1}`}</label>
                     <Select
                         MenuProps={SELECT_MENU_STYLE}
@@ -133,7 +133,7 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
                     </Select>
                 </FormControl>
 
-                <FormControl size='small'>
+                <FormControl >
                     <label id="role">{`Rôle`}</label>
                     <Select
                         MenuProps={SELECT_MENU_STYLE}

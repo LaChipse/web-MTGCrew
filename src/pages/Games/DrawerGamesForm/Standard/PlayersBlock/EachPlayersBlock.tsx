@@ -76,7 +76,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
     const inputs = Array.from({ length: configIndex }, (_, index) => (
         <>
             <div key={`secondBloc${index}`} className={styles.secondBloc}>
-                <FormControl size='small'>
+                <FormControl >
                     <label id="user">{`Joueur ${index + 1}`}</label>
                     <Select
                         MenuProps={SELECT_MENU_STYLE}
@@ -95,7 +95,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                     </Select>
                 </FormControl>
 
-                <FormControl size='small'>
+                <FormControl >
                     <label id="user">{`Deck ${index + 1}`}</label>
                     <Select
                         MenuProps={SELECT_MENU_STYLE}

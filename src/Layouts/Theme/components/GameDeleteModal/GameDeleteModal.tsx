@@ -29,6 +29,7 @@ const GameDeleteModal: React.FC<Props> = ({ open, deletedGame, setDeletedDeck, s
             onClose={handleClose}
             aria-labelledby="deleteGame"
             aria-describedby="delete Game"
+            style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
                 <p id="deleteGame">Etes-vous sûr de vouloir supprimer cette partie ?</p>

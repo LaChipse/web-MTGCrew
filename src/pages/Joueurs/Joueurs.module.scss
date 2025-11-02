@@ -4,47 +4,52 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
 
+    svg {
+        font-size: 1.2rem;
+    }
+
     .styckyCol {
         left: 0;
         position: sticky;
-        z-index: 11;
+        z-index: 50;
     }
 
-    .styckyRow {
-        top: 0;
-        position: sticky;
-        z-index: 10;
-    }
-
-    .styckyFirstCell {
-        top: 0;
-        left: 0;
-        position: sticky;
-        z-index: 15;
-    }
-
-    tbody tr:nth-child(odd)  > th {
-        background-color: rgb(43, 42, 42);
+    tbody tr:nth-child(odd) > th {
+        background-color: rgba(31, 35, 78, 0.7);
+        backdrop-filter: blur(7px);
     }
 
     tbody tr:nth-child(even) > th {
-        background-color: rgb(29, 29, 29);
+        background-color: rgba(31, 35, 78, 0.7);
+        backdrop-filter: blur(7px);
     }
 
     .red {
-        color: #FF0033 !important
+        color: var(--error)
     }
 
     .green {
-        color: #00ff00 !important
+        color: var(--success)
     }
 
     .infosDecks {
         margin: auto;
         justify-content: center;
         display: flex;
-        gap: 5px;
         align-items: center;
+
+        button:hover {
+            border: none
+        }
+
+        svg {
+            color: var(--primary);
+
+            &:hover {
+                cursor: help;
+                color: rgba(39, 233, 255, 0.6)
+            }
+        }
     }
 }
 
@@ -53,4 +58,10 @@
     align-items: center;
     margin: 10px 0;
     font-size: 15px;
+    color: var(--white);
+
+    svg {
+        margin-right: 15px;
+        color: var(--primary)
+    }
 }

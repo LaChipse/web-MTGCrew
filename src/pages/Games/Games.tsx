@@ -60,7 +60,7 @@ const Games = () => {
                     backdropFilter: 'blur(1px)',
                     fontFamily: '"Akshar", sans-serif',
                     letterSpacing: '0.3px',
-                    fontSize: 'small',
+                    fontSize: 'medium',
                     '.MuiPaper-root':{
                         bgcolor: "rgba(47, 51, 107, 0.3)",
                         backdropFilter: 'blur(5px)',
@@ -87,7 +87,7 @@ const Games = () => {
                     backdropFilter: 'blur(1px)',
                     fontFamily: '"Akshar", sans-serif',
                     letterSpacing: '0.3px',
-                    fontSize: 'small',
+                    fontSize: 'medium',
                     '.MuiPaper-root':{
                         bgcolor: "rgba(47, 51, 107, 0.3)",
                         backdropFilter: 'blur(5px)',

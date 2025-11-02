@@ -59,7 +59,7 @@ const Profil = () => {
             <GamesFilter />
 
             <div className={styles.history}>
-                { isHistoryGamesLoading ? (
+                {isHistoryGamesLoading ? (
                     <SmallLoading />
                 ) :(
                     <GamesArray 
@@ -79,6 +79,7 @@ const Profil = () => {
                     onClose={()=>setDeckChoose(undefined)}
                     aria-labelledby="imgChoose"
                     aria-describedby="image choisie"
+                    style={{ backdropFilter: 'blur(3px)'}}
                 >
                     <div className={styles.imageModal}>
                         <p style={{ margin: '5px', fontWeight: 'bold' }}>{deckChoose?.nom}</p>

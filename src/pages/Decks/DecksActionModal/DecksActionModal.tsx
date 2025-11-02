@@ -155,8 +155,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
-                {/* <div className={styles.container} ref={containerRef}>
-                    <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                <div className={styles.container} ref={containerRef}>
+                    {/* <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                         <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                             illustrationUrl && (
                                 <>
@@ -178,12 +178,12 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         }
                         </h2>
                         <button className={styles.close} onClick={() => handleClose()}>X</button>
-                    </div>
+                    </div> */}
                     {isGetillustrationCardLoading ? (
                         <SmallLoading />
                     ) : (
                         <>
-                            <div className={styles.formBloc}>
+                            {/* <div className={styles.formBloc}>
                                 <div style={{ width: '100%' }}>
                                     <FormControl className={styles.formControl}>
                                         <label>Nom du deck</label>
@@ -245,7 +245,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                                 
                             <div className={styles.formBloc}>
                                 <FormControl className={styles.formControl}>
@@ -305,8 +305,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                     >
                         {(deck ? isUpdatePending : isAddPending) ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : <>{deck ? 'Modifier': 'Ajouter'}</>}
                     </button>
-                </div> */}
-                <h1>TEST</h1>
+                </div>
             </div>
         </Modal>
     )

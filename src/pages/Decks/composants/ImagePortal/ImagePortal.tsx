@@ -16,7 +16,7 @@ const ImagePortal: React.FC<Props> = ({ anchor, illustrationUrl }) => (
                 anchor.bottom + 210 > window.innerHeight // si dépasse vers le bas
                     ? anchor.top - 220 // place au-dessus
                     : anchor.bottom, // sinon en dessous
-                left: anchor.left + anchor.width / 2,
+                left: anchor.left + anchor.width / 2 + 20,
                 transform: 'translateX(-50%)',
                 zIndex: 9999,
                 padding: '5px',

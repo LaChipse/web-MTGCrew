@@ -37,8 +37,8 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleImage
                         {user?.prenom} {user?.nom?.charAt(0)}.
                     </h2>
                     <ul>
-                        <li>{`Nombre de decks = ${user.nbrDecks}`}</li>
-                        <li>{`Nombre de parties = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}</li>
+                        <li className={styles.liste}>{`Nombre de decks = ${user.nbrDecks}`}</li>
+                        <li className={styles.liste}>{`Nombre de parties = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}</li>
                         <li className={styles[colorVictory()]}>{`Victoires = ${user.victoires[partieType]} (${ratioVictory()}%)`}</li>
                     </ul>
                 </div>

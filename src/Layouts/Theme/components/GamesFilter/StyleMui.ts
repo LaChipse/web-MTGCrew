@@ -48,7 +48,7 @@ export const SELECT_MENU_STYLE = {
             letterSpacing: '0.3px',
             backdropFilter: 'blur(7px)',
             "& .MuiMenuItem-root": {
-                fontSize: 'smaller',
+                fontSize: 'small',
                 color: "var(--white)",
                 fontFamily: '"Akshar", sans-serif',
                 letterSpacing: '0.3px',
@@ -60,9 +60,10 @@ export const SELECT_MENU_STYLE = {
                     "&:hover": {
                         color: "var(--white)"
                     }
+
                 },
                 "&:hover": {
-                    backgroundColor: 'var(--primary)',
+                    backgroundColor: 'var(--primary) !important',
                     border: 'none',
                     color: 'var(--secondary)'
                 },
@@ -78,7 +79,7 @@ export const SELECT_STYLE = {
     fontFamily: '"Akshar", sans-serif',
     letterSpacing: '0.3px',
     fontSize: 'small',
-    height: '45px',
+    height: '40px',
     'fieldset':{
         border: 'none'
     },

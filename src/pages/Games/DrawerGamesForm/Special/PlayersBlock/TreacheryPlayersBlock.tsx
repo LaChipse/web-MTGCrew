@@ -125,7 +125,7 @@ const TreacheryPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex
                     >
                         {
                             otherDecksNotSelected?.map((deck) => (
-                                <MenuItem value={deck.id} key={deck.id} className={ classNames({ [styles.owner]: isDeckUser(deck.userId, index) })}>
+                                <MenuItem value={deck.id} key={deck.id} className={ classNames(styles.MenuItem, { [styles.owner]: isDeckUser(deck.userId, index) })}>
                                     {deck.nom} <span className={styles.span}>{`(${getUser(deck.userId)})`}</span>
                                 </MenuItem>
                             ))

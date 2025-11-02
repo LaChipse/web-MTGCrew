@@ -60,14 +60,14 @@ const Games = () => {
                     backdropFilter: 'blur(1px)',
                     fontFamily: '"Akshar", sans-serif',
                     letterSpacing: '0.3px',
-                    fontSize: 'smaller',
+                    fontSize: 'small',
                     '.MuiPaper-root':{
                         bgcolor: "rgba(47, 51, 107, 0.3)",
                         backdropFilter: 'blur(5px)',
                         width: '500px'
                     },
 
-                    '@media (max-width:600px)': {
+                    '@media (max-width:650px)': {
                         '.MuiPaper-root': {
                             width: '100%',
                         }
@@ -87,14 +87,14 @@ const Games = () => {
                     backdropFilter: 'blur(1px)',
                     fontFamily: '"Akshar", sans-serif',
                     letterSpacing: '0.3px',
-                    fontSize: 'smaller',
+                    fontSize: 'small',
                     '.MuiPaper-root':{
                         bgcolor: "rgba(47, 51, 107, 0.3)",
                         backdropFilter: 'blur(5px)',
                         width: '500px'
                     },
 
-                    '@media (max-width:600px)': {
+                    '@media (max-width:650px)': {
                         '.MuiPaper-root': {
                             width: '100%',
                         }

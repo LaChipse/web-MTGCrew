@@ -19,6 +19,7 @@ const ThemeLayout = () => {
         root.style.setProperty('--white', theme.white);
         root.style.setProperty('--success', theme.success);
         root.style.setProperty('--error', theme.error);
+        root.style.setProperty('--currentColor', mode.isStandard ? theme.primaryStd : theme.primarySpec);
     }, [theme, mode]);
 
     return (

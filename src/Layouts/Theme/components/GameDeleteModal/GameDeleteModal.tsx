@@ -1,8 +1,7 @@
-import { Button, Modal } from '@mui/material';
-import { Box } from '@mui/system';
+import { Modal } from '@mui/material';
 import React from 'react';
 import { useDeleteGame } from '../../../../hooks/queries/games/useDeleteGame';
-import styles from './GameDeleteModal.module.scss'
+import styles from './GameDeleteModal.module.scss';
 
 type Props = {
     open: boolean
@@ -31,14 +30,14 @@ const GameDeleteModal: React.FC<Props> = ({ open, deletedGame, setDeletedDeck, s
             aria-labelledby="deleteGame"
             aria-describedby="delete Game"
         >
-            <Box className={styles.modal}>
+            <div className={styles.modal}>
                 <p id="deleteGame">Etes-vous sûr de vouloir supprimer cette partie ?</p>
 
                 <div className={styles.buttons}>
-                    <Button onClick={handleClose}>Annuler</Button>
-                    <Button variant='contained' onClick={handleDelete}>Confirmer</Button>
+                    <button onClick={handleClose}>Annuler</button>
+                    <button className={styles.confirm} onClick={handleDelete}>Confirmer</button>
                 </div>
-            </Box>
+            </div>
         </Modal>
     )
 }

@@ -189,7 +189,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                         {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Valider'}
                     </button>    
 
-                    <button className={styles.reset} onClick={handleResetForm} >
+                    <button onClick={handleResetForm} >
                         Reset
                     </button>
                 </div>

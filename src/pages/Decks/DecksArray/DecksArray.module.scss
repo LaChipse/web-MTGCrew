@@ -1,32 +1,26 @@
 .tableau {
     margin-top: 20px;
     overflow: auto;
-    height: 100%;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+
+    svg {
+            font-size: 1.2rem;
+        }
 
     .styckyCol {
         left: 0;
         position: sticky;
     }
 
-    .styckyRow {
-        top: 0;
-        position: sticky;
-        z-index: 10;
-    }
-
-    .styckyFirstCell {
-        top: 0;
-        left: 0;
-        position: sticky;
-        z-index: 15;
-    }
-
     tbody tr:nth-child(odd) > th {
-        background-color: rgb(43, 42, 42);
+        background-color: rgba(31, 35, 78, 0.7);
+        backdrop-filter: blur(7px);
     }
 
     tbody tr:nth-child(even) > th {
-        background-color: rgb(29, 29, 29);
+        background-color: rgba(31, 35, 78, 0.7);
+        backdrop-filter: blur(7px);
     }
 
     .actions {
@@ -36,27 +30,31 @@
     }
 
     .delete {
-        color: #FF0033 !important;
+        color: var(--error);
 
-        svg {
-            font-size: 1.3rem;
+        &:hover {
+            color: rgba(250, 5, 5, 0.8);
+            border: none
         }
     }
 
     .edit {
-        color: #1976d2 !important;
+        color: rgb(19, 190, 182);
 
-        svg {
-            font-size: 1.3rem;
+        &:hover {
+            color: var(--tertiary);
+            border: none
         }
+
+        
     }
 
     .red {
-        color: #FF0033 !important
+        color: var(--error)
     }
 
     .green {
-        color: #00ff00 !important
+        color: var(--success)
     }
         
 
@@ -68,31 +66,30 @@
 
     .rank {
         font-weight: 600;
-        border: 1px solid white !important;
     }
 
     .A {
-        background-color: #c00000;
-        color: white;
+        background-color: rgb(192, 0, 0, 0.4);
+        color: var(--white);
     }
 
     .B {
-        background-color: #ffc000;
-        color: rgb(29, 29, 29) !important;
+        background-color: rgba(255, 192, 0, 0.4);
+        color: var(--background);
     }
 
     .C {
-        background-color: #ffff00;
-        color: rgb(29, 29, 29) !important;
+        background-color: rgba(255, 255, 0, 0.6);
+        color: var(--background);
     }
 
     .D {
-        background-color: #00ff00;
-        color: rgb(29, 29, 29) !important;
+        background-color: rgba(0, 255, 0, 0.4);
+        color: var(--background);
     }
 
     .E {
-        background-color: #00b050;
-        color: white;
+        background-color: rgba(5, 163, 76, 0.4);
+        color: var(--white);
     }
 }

@@ -114,7 +114,7 @@ const Joueurs = () => {
                                 <tr>
                                     <th align="center">Nom</th>
                                     <th align="center">Nbr decks</th>
-                                    <th align="center">Nombre de parties</th>
+                                    <th align="center">Nbr de parties</th>
                                     <th align="center">Ratio toutes victoires <br/> et 100 dernières</th>
                                     <th align="center">Deck le plus joué</th>
                                     <th align="center">Meilleur deck</th>

@@ -80,8 +80,8 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
             || (config?.team === victoire) 
         )
 
-        if (isWinner) return '#00ff00'
-        return '#FF0033'
+        if (isWinner) return 'var(--success)'
+        return 'var(--error)'
     }
 
     const getPaginate = () => {

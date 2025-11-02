@@ -10,7 +10,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import classNames from 'classnames';
 import styles from './MainSnackBar.module.scss'
 
-const DEFAULT_SNACKBAR_HIDE = 4000;
+const DEFAULT_SNACKBAR_HIDE = 2000;
 
 type Props = unknown
 

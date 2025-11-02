@@ -7,14 +7,20 @@ import { useGetUser } from "../../hooks/queries/useGetUser";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { authActions } from "../../store/reducers/authReducer";
 import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
+import { setTheme } from "../../store/reducers/themeReducer";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const user = useAppSelector((state) => state.auth.user);
     const currentPagePath = sessionStorage.getItem('currentPagePath')
-
+    const colorStd = sessionStorage.getItem('colorStd')
+    const colorSpec = sessionStorage.getItem('colorSpec')
+    
     const { data: authUser, isLoading } = useGetUser();
+    
+    if (colorStd) dispatch(setTheme({ primaryStd: colorStd }))
+    if (colorSpec) dispatch(setTheme({ primarySpec: colorSpec }))
 
     useEffect(() => {
         const handleLogin = () => {
@@ -35,9 +41,7 @@ const AuthLayout = () => {
             }
         };
 
-        if (!user && !isLoading) {
-            handleLogin();
-        }
+        if (!user && !isLoading) handleLogin();
     }, [user, authUser, navigate, isLoading, dispatch, currentPagePath]);
 
     if (user) return <Outlet />;

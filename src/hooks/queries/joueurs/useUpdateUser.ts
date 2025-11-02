@@ -25,6 +25,9 @@ export const useUpdateUser = () => {
             onSuccess: (data) => {
                 useGetAllPlayers.reset(queryClient)
                 if (user) {
+                    sessionStorage.setItem('colorStd', data.colorStd)
+                    sessionStorage.setItem('colorSpec', data.colorSpec)
+
                     dispatch(authActions.updateState({
                         ...user,
                         nom: data.nom,

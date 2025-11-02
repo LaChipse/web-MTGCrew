@@ -34,7 +34,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const [showIllustration, setShowIllustration] = useState<boolean>(false)
     const [maxWidthBoxIllustration, setMaxWidthBoxIllustration] = useState(0);
 
-    const containerRef = useRef<HTMLDivElement>(null);
+    // const containerRef = useRef<HTMLDivElement>(null);
 
     const { data: illustrationCard, isLoading: isGetillustrationCardLoading } = useGetCardByName(searchCard)
 
@@ -49,19 +49,19 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             setIllustrationUrl(deck.illustrationUrl)
         }
 
-        if (containerRef.current) {
-            setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
-        }
+        // if (containerRef.current) {
+        //     setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
+        // }
 
-        const handleResize = () => {
-            if (containerRef.current) {
-                setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
-            }
-        };
+        // const handleResize = () => {
+        //     if (containerRef.current) {
+        //         setMaxWidthBoxIllustration(containerRef.current.offsetWidth - 5);
+        //     }
+        // };
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [deck, containerRef, illustrationCard, illustrationUrl, deckFetch])
+        // window.addEventListener("resize", handleResize);
+        // return () => window.removeEventListener("resize", handleResize);
+    }, [deck, illustrationCard, illustrationUrl, deckFetch])
     
     const handleSearchCard = () => {
         if (nameInput) setSearchCard(nameInput)
@@ -155,8 +155,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
-                <div className={styles.container} ref={containerRef}>
-                    {/* <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                <div className={styles.container}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                         <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                             illustrationUrl && (
                                 <>
@@ -295,13 +295,13 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                 </FormControl>
                             </div>
                         </>
-                    )} */}
+                    )}
     
                     <button 
-                        disabled={!couleurs.length || !nom.length || deck ? isUpdatePending : isAddPending} 
+                        // disabled={!couleurs.length || !nom.length || deck ? isUpdatePending : isAddPending} 
                         type="submit" 
                         onClick={handleActionDeck}
-                        className={styles.updateButton}
+                        // className={styles.updateButton}
                     >
                         {deck ? 'Modifier': 'Ajouter'}
                     </button>

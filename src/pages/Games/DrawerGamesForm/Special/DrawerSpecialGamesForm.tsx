@@ -95,7 +95,7 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
         <>
             <header className={styles.header}>
                 <h2>Ajouter une partie</h2>
-                <button onClick={() => toggleDrawer(false)}>X</button>
+                <button style={{height: '30px', width: '30px'}} onClick={() => toggleDrawer(false)}>X</button>
             </header>
 
             <Box className={styles.drawer}>

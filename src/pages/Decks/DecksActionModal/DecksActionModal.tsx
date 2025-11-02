@@ -230,7 +230,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     </Box>
                                 </div>
 
-                                <div className={classNames(styles.formControl, styles.formCouleurs)}>
+                                {/* <div className={classNames(styles.formControl, styles.formCouleurs)}>
                                     <label id="checkbox-colors">Couleurs du deck</label>
                                     <div className={styles.couleursBloc}>
 
@@ -244,7 +244,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                             ))
                                         }
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                                 
                             <div className={styles.formBloc}>

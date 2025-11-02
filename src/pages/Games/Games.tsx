@@ -43,7 +43,7 @@ const Games = () => {
                 <div className={styles.addGames}>
                     <strong>Nombre de parties : {count}</strong>
                     <button onClick={() => toggleDrawer(true)} className={styles.add}>
-                        <span style={{ fontSize: '18px' }}>+</span>
+                        <span>+</span>
                     </button>
                 </div>
             </div>

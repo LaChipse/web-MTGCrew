@@ -7,6 +7,7 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import Loading from "../../pages/loader/Loading/Loading";
 import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
 import { authActions } from "../../store/reducers/authReducer";
+import { setTheme } from "../../store/reducers/themeReducer";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const AuthLayout = () => {
     const user = useAppSelector((state) => state.auth.user);
     const currentPagePath = sessionStorage.getItem('currentPagePath')
     
+    if (user) dispatch(setTheme({primarySpec: user.colorSpec, primaryStd: user.colorStd}))
     const { data: authUser, isLoading } = useGetUser();
 
     useEffect(() => {

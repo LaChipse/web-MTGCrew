@@ -39,15 +39,17 @@ const Header: React.FC<Props> = () => {
         startTransition(() => navigate(LOGIN_PAGE))
     }
 
-    const handleSwitch = () => {
+    const handleSwitch = (type: string) => {
+        if (isStandard && type === 'standard') return
+        if (!isStandard && type === 'special') return
         dispatch(switchType())
     }
 
     return (
         <div className={styles.header}>
             <div>
-                <button className={classNames(styles.stdButton, {[styles.isActive]: isStandard})} onClick={handleSwitch}>Standard</button>
-                <button className={classNames(styles.specButton, {[styles.isActive]: !isStandard})} onClick={handleSwitch}>Special</button>
+                <button className={classNames(styles.stdButton, {[styles.isActive]: isStandard})} onClick={() => handleSwitch('standard')}>Standard</button>
+                <button className={classNames(styles.specButton, {[styles.isActive]: !isStandard})} onClick={() => handleSwitch('special')}>Special</button>
             </div>
             <button className={styles.signout}>
                 { showLoader ? 

@@ -21,6 +21,9 @@ const GamesFilter: React.FC = () => {
     
     return (
         <div className={styles.blockFilters}>
+            <button onClick={() => dispatch(clearGameFiltersState())} className={styles.clearButton}>
+                <div className={styles.clearButtonIcon} />
+            </button>
             <div className={styles.datePickers}>
                 <div className={styles.filtre}>
                     <label id="startDate">Date de debut</label>
@@ -49,49 +52,47 @@ const GamesFilter: React.FC = () => {
             </div>
 
             <div className={styles.filtres}>
-                <div>
-                    {isStandard ? (
-                        <div className={styles.filtre}>
-                            <label id="user">Vainqueur</label>
-                            <Select
-                                MenuProps={SELECT_MENU_STYLE}
-                                sx={SELECT_STYLE}
-                                id="userSelect"
-                                value={filters.winnerId}
-                                onChange={(e) => dispatch(setWinnerId(e.target.value))} 
-                                className={styles.select}
-                            >
-                                {     
-                                    users?.map((user) => (
-                                        <MenuItem value={user.id} key={user.id}>
-                                            {user.fullName}
-                                        </MenuItem>
-                                    ))   
-                                }
-                            </Select>
-                        </div>
-                    ) : (
-                        <div className={styles.filtre}>
-                            <label id="victoire">Role victorieux</label>
-                            <Select
-                                MenuProps={SELECT_MENU_STYLE}
-                                sx={SELECT_STYLE}
-                                id="victoireSelect"
-                                value={filters.victoryRole}
-                                onChange={(e) => dispatch(setVictoryRole(e.target.value as ROLE_TYPE))}
-                                className={styles.select}
-                            >
-                                {
-                                    Object.values(ROLE_TYPE).map((role) => (
-                                        <MenuItem value={role} key={role}>
-                                            {role}
-                                        </MenuItem>
-                                    ))
-                                }
-                            </Select>
-                        </div>
-                    )}
-                </div>
+                {isStandard ? (
+                    <div className={styles.filtre}>
+                        <label id="user">Vainqueur</label>
+                        <Select
+                            MenuProps={SELECT_MENU_STYLE}
+                            sx={SELECT_STYLE}
+                            id="userSelect"
+                            value={filters.winnerId}
+                            onChange={(e) => dispatch(setWinnerId(e.target.value))} 
+                            className={styles.select}
+                        >
+                            {     
+                                users?.map((user) => (
+                                    <MenuItem value={user.id} key={user.id}>
+                                        {user.fullName}
+                                    </MenuItem>
+                                ))   
+                            }
+                        </Select>
+                    </div>
+                ) : (
+                    <div className={styles.filtre}>
+                        <label id="victoire">Role victorieux</label>
+                        <Select
+                            MenuProps={SELECT_MENU_STYLE}
+                            sx={SELECT_STYLE}
+                            id="victoireSelect"
+                            value={filters.victoryRole}
+                            onChange={(e) => dispatch(setVictoryRole(e.target.value as ROLE_TYPE))}
+                            className={styles.select}
+                        >
+                            {
+                                Object.values(ROLE_TYPE).map((role) => (
+                                    <MenuItem value={role} key={role}>
+                                        {role}
+                                    </MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </div>
+                )}
 
                 <div className={styles.filtre}>
                     <label id="typeOfVictory">Type de victoire</label>
@@ -112,9 +113,7 @@ const GamesFilter: React.FC = () => {
                         }
                     </Select>
                 </div>
-                <button onClick={() => dispatch(clearGameFiltersState())} className={styles.clearButton}>
-                    <div className={styles.clearButtonIcon} />
-                </button>
+                
             </div>
         </div>
     )

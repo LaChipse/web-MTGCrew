@@ -67,9 +67,7 @@ const Decks = () => {
                 </div>
                 
                 <div>
-                    <button onClick={handleOpen} className={styles.add}>
-                        <span>+</span>
-                    </button>
+                    <button className={styles.add} onClick={handleOpen}>+</button>
                 </div>
             </div>
 

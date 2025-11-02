@@ -42,9 +42,7 @@ const Games = () => {
             <div>
                 <div className={styles.addGames}>
                     <strong>Nombre de parties : {count}</strong>
-                    <button onClick={() => toggleDrawer(true)} className={styles.add}>
-                        <span>+</span>
-                    </button>
+                    <button className={styles.add} onClick={() => toggleDrawer(true)}>+</button>
                 </div>
             </div>
 

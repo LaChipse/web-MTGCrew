@@ -9,6 +9,8 @@ import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
 import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/components/GamesFilter/StyleMui';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import styles from './DecksActionModal.module.scss';
+import { useDispatch } from 'react-redux';
+import { addErrorSnackbar } from '../../../store/reducers/snackbarReducer';
 
 type Props = {
     open: boolean
@@ -21,6 +23,7 @@ const DECK_COLORS= ['incolore', 'blanc', 'bleu', 'noir', 'rouge', 'vert']
 const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateDeck();
     const { mutate: updateAdd, isPending: isAddPending } = useAddDeck();
+    const dispatch = useDispatch()
 
     const [deckFetch, setDeckFetch] = useState<Deck>()
     const [nom, setNom] = useState('');
@@ -145,8 +148,10 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         )
     }
 
-    return (
-        <Modal
+    const handleText = () => {
+        try {
+            return (
+<Modal
             open={open}
             onClick= {() => handleCloseIllustration()}
             onClose={() => handleClose()}
@@ -230,7 +235,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                     </Box>
                                 </div>
 
-                                {/* <div className={classNames(styles.formControl, styles.formCouleurs)}>
+                                <div className={classNames(styles.formControl, styles.formCouleurs)}>
                                     <label id="checkbox-colors">Couleurs du deck</label>
                                     <div className={styles.couleursBloc}>
 
@@ -244,7 +249,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                             ))
                                         }
                                     </div>
-                                </div> */}
+                                </div>
                             </div>
                                 
                             <div className={styles.formBloc}>
@@ -308,6 +313,15 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                 </div>
             </div>
         </Modal>
+            )
+        } catch (error) {
+            dispatch(addErrorSnackbar(`ERROR : ${error}`))
+            return <div>{`ERROR : ${error}`}</div>
+        }
+    }
+
+    return (
+        handleText()
     )
 }
 

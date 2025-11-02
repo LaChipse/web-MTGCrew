@@ -151,12 +151,12 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             onClick= {() => handleCloseIllustration()}
             onClose={() => handleClose()}
             aria-labelledby="actionDeck"
-            aria-describedby="axtion sur deck"
+            aria-describedby="action sur deck"
             style={{ backdropFilter: 'blur(3px)'}}
         >
             <div className={styles.modal}>
                 <div className={styles.container} ref={containerRef}>
-                    <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                    {/* <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                         <h2 id="actionDeck">{deck ? 'Modifier un deck': 'Ajouter un deck'} {
                             illustrationUrl && (
                                 <>
@@ -179,10 +179,10 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         </h2>
                         <button className={styles.close} onClick={() => handleClose()}>X</button>
                     </div>
-                    {/* {isGetillustrationCardLoading ? (
+                    {isGetillustrationCardLoading ? (
                         <SmallLoading />
                     ) : (
-                        <> */}
+                        <>
                             <div className={styles.formBloc}>
                                 <div style={{ width: '100%' }}>
                                     <FormControl className={styles.formControl}>
@@ -247,7 +247,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                 </div>
                             </div>
                                 
-                            {/* <div className={styles.formBloc}>
+                            <div className={styles.formBloc}>
                                 <FormControl className={styles.formControl}>
                                     <label id="radio-imprime-groupe">Deck imprimé ?</label>
                                     <RadioGroup
@@ -293,8 +293,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                         <MenuItem value={'5'}>5</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </div> */}
-                        {/* </>
+                            </div>
+                        </>
                     )} */}
     
                     <button 
@@ -303,7 +303,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         onClick={handleActionDeck}
                         className={styles.updateButton}
                     >
-                        {(deck ? isUpdatePending : isAddPending) ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : <>{deck ? 'Modifier': 'Ajouter'}</>}
+                        {deck ? 'Modifier': 'Ajouter'}
                     </button>
                 </div>
             </div>

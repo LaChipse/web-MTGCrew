@@ -127,7 +127,7 @@ const Joueurs = () => {
                                         <td align="center">
                                             <div className={styles.infosDecks}>
                                                 { user.nbrDecks }
-                                                <IconButton onClick={() => handleOpenModal(user.id)}>
+                                                <IconButton style={{padding: 0}} onClick={() => handleOpenModal(user.id)}>
                                                     <InfoIcon fontSize="small" color="primary" />
                                                 </IconButton> 
                                             </div></td>

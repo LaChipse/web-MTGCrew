@@ -1,13 +1,13 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Box, CircularProgress, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
 import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../../hooks/queries/games/useAddGame';
-import { DATE_PICKER_STYLE, SELECT_MENU_STYLE, SELECT_STYLE } from '../../../../Layouts/Theme/components/GamesFilter/StyleMui';
+import { SELECT_MENU_STYLE, SELECT_STYLE, STYLED_PAPER } from '../../../../Layouts/Theme/components/GamesFilter/StyleMui';
 import EachPlayersBlock from './PlayersBlock/EachPlayersBlock';
 import TeamPlayersBlock from './PlayersBlock/TeamPlayersBlock';
 import EachVictoryBlock from './VictoryBlock/EachVictoryBlock';
@@ -105,7 +105,14 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                     <FormControl className={styles.datePickerForm}>
                         <label id="partieDate">Date de la partie</label>
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                            <DatePicker slotProps={DATE_PICKER_STYLE} className={styles.datePicker} value={date} onChange={setDate}/>
+                            <DesktopDatePicker 
+                                slots={{
+                                    desktopPaper: STYLED_PAPER,
+                                }}  
+                                className={styles.datePicker} 
+                                value={date} 
+                                onChange={setDate}
+                            />
                         </LocalizationProvider>
                     </FormControl>
 

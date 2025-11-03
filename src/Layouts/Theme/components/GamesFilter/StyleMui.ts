@@ -1,49 +1,6 @@
 import { Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const DATE_PICKER_STYLE = { 
-    popper: { 
-        sx: { 
-            '.MuiPaper-root': { 
-                backgroundColor: 'rgba(47, 51, 107, 0.2)', 
-                borderRadius: 10, 
-                color: 'var(--primary)', 
-                fontFamily: '"Akshar", sans-serif', 
-                letterSpacing: '0.3px', 
-                backdropFilter: 'blur(7px)', 
-                '.MuiPickersCalendarHeader-labelContainer': { 
-                    fontFamily: '"Akshar", sans-serif', 
-                    letterSpacing: '0.3px', 
-                }, 
-                '.MuiDateCalendar-root': { 
-                    maxHeight: '300px' 
-                }, 
-                '.MuiPickersArrowSwitcher-root button, .MuiPickersCalendarHeader-labelContainer button':{ 
-                    height: '25px', 
-                    width: '25px', 
-                }, 
-                'span': { 
-                    color: 'var(--white)', 
-                }, 
-                'button': { 
-                    color: 'var(--white)', 
-                    border: 'none', 
-                    '&.Mui-selected': { 
-                        backgroundColor: 'var(--primary)', 
-                        border: 'none', 
-                        color: 'var(--secondary)' 
-                    }, 
-                    '&:hover': { 
-                        backgroundColor: 'var(--primary)', 
-                        border: 'none', 
-                        color: 'var(--secondary)' 
-                    } 
-                } 
-            },
-        }, 
-    }, 
-}
-
 export const STYLED_PAPER = styled(Paper)({
     color: 'var(--primary)', 
     fontFamily: '"Akshar", sans-serif', 

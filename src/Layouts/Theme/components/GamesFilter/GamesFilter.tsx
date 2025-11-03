@@ -1,5 +1,5 @@
 import { MenuItem, Select } from '@mui/material';
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
@@ -8,8 +8,8 @@ import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { clearGameFiltersState, setEndDate, setStartDate, setTypeOfVictory, setVictoryRole, setWinnerId } from '../../../../store/reducers/gameFiltersReducer';
 import { ROLE_TYPE } from '../../../../utils/Enums/roleType';
 import { TYPE_VICTORY } from '../../../../utils/Enums/victoryType';
+import { SELECT_MENU_STYLE, SELECT_STYLE, STYLED_PAPER } from './StyleMui';
 import styles from './GamesFilter.module.scss';
-import { DATE_PICKER_STYLE, SELECT_MENU_STYLE, SELECT_STYLE, STYLED_PAPER } from './StyleMui';
 
 const GamesFilter: React.FC = () => {
     dayjs.locale('fr')
@@ -30,7 +30,6 @@ const GamesFilter: React.FC = () => {
                     <label id="startDate">Date de debut</label>
                     
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                        
                         <DesktopDatePicker 
                             slots={{
                                 desktopPaper: STYLED_PAPER,
@@ -39,15 +38,16 @@ const GamesFilter: React.FC = () => {
                             value={filters.startDate} 
                             onChange={(d) => dispatch(setStartDate(d!.startOf('day').add(1, 'second')))}
                             shouldDisableDate={(date) => date.isAfter(filters.endDate)}
-                            />
-                    
+                        />
                     </LocalizationProvider>
                 </div>
                 <div className={styles.filtre}>
                     <label id="endDate">Date de fin</label>
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
-                        <DatePicker 
-                            slotProps={DATE_PICKER_STYLE}
+                        <DesktopDatePicker 
+                            slots={{
+                                desktopPaper: STYLED_PAPER,
+                            }} 
                             className={styles.datePicker} 
                             value={filters.endDate} 
                             onChange={(d) => dispatch(setEndDate(d!.endOf('day')))} 

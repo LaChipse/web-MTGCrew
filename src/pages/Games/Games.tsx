@@ -46,11 +46,13 @@ const Games = () => {
 
             <GamesFilter />
 
-            { isGamesLoading ? (
-                <SmallLoading />
-            ) : (
-                <GamesArray page={page} games={games} count={count} setPage={setPage} divider={20} />
-            )}
+            <div style={{marginTop: '20px'}}>
+                { isGamesLoading ? (
+                    <SmallLoading />
+                ) : (
+                    <GamesArray page={page} games={games} count={count} setPage={setPage} divider={20} />
+                )}
+            </div>
 
             <Drawer 
                 sx={{

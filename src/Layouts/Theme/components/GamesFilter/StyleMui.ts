@@ -1,45 +1,38 @@
 export const DATE_PICKER_STYLE = {
-    popper: { 
-        sx: {
-            '.MuiPaper-root': {
-                backgroundColor: 'rgba(47, 51, 107, 0.2)',
-                borderRadius: 10,
-                color: 'var(--primary)',
-                fontFamily: '"Akshar", sans-serif',
-                letterSpacing: '0.3px',
-                backdropFilter: 'blur(7px)',
-                '.MuiPickersCalendarHeader-labelContainer': {
-                    fontFamily: '"Akshar", sans-serif',
-                    letterSpacing: '0.3px',
-                },
-                '.MuiDateCalendar-root': {
-                    maxHeight: '300px'
-                },
-                '.MuiPickersArrowSwitcher-root button, .MuiPickersCalendarHeader-labelContainer button':{
-                    height: '25px',
-                    width: '25px',
-                },
-                'span': {
-                    color: 'var(--white)',
-                },
-                'button': {
-                    color: 'var(--white)',
-                    border: 'none',
-                    '&.Mui-selected': {
-                        backgroundColor: 'var(--primary)',
-                        border: 'none',
-                        color: 'var(--secondary)'
-                    },
-                    '&:hover': {
-                        backgroundColor: 'var(--primary)',
-                        border: 'none',
-                        color: 'var(--secondary)'
-                    }
-                }
-            },
-        }, 
-    },
+  popper: {
+    disablePortal: true,
+    sx: {
+      '.MuiPaper-root': {
+        backgroundColor: 'rgba(47, 51, 107, 0.2)',
+        WebkitBackdropFilter: 'blur(7px)',
+        backdropFilter: 'blur(7px)',
+        borderRadius: 2,
+        color: 'var(--primary)',
+        fontFamily: '"Akshar", sans-serif',
+        letterSpacing: '0.3px',
+      },
+
+      '.MuiPickersCalendarHeader-labelContainer': {
+        fontFamily: '"Akshar", sans-serif',
+      },
+
+      '.MuiDateCalendar-root': {
+        maxHeight: '300px',
+      },
+
+      'button': {
+        color: 'var(--white) !important',
+        border: 'none',
+
+        '&.Mui-selected': {
+          backgroundColor: 'var(--primary)',
+          color: 'var(--secondary)',
+        },
+      },
+    }
+  },
 }
+
 
 export const SELECT_MENU_STYLE = {
     PaperProps: {

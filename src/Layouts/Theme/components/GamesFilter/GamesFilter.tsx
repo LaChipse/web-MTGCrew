@@ -21,16 +21,17 @@ const GamesFilter: React.FC = () => {
     
     return (
         <div className={styles.blockFilters}>
-            <button onClick={() => dispatch(clearGameFiltersState())} className={styles.clearButton}>
+            
+            <div className={styles.datePickers}>
+                <button onClick={() => dispatch(clearGameFiltersState())} className={styles.clearButton}>
                 <div className={styles.clearButtonIcon} />
             </button>
-            <div className={styles.datePickers}>
                 <div className={styles.filtre}>
                     <label id="startDate">Date de debut</label>
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'fr'}>
                         <DatePicker
                             slotProps={DATE_PICKER_STYLE}
-                            className={styles.datePicker} 
+                            className={styles.datePicker}
                             value={filters.startDate} 
                             onChange={(d) => dispatch(setStartDate(d!.startOf('day').add(1, 'second')))}
                             shouldDisableDate={(date) => date.isAfter(filters.endDate)}

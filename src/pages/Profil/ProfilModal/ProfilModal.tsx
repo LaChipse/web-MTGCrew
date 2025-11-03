@@ -1,12 +1,13 @@
-import { CircularProgress, FormControl, Modal } from '@mui/material';
+import { FormControl, Modal } from '@mui/material';
 import classNames from 'classnames';
 import React, { MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
+import { useAppSelector } from '../../../hooks/useAppSelector';
 import { AuthUser } from '../../../store/reducers/authReducer';
 import { setTheme } from '../../../store/reducers/themeReducer';
+import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import styles from './ProfilModal.module.scss';
-import { useAppSelector } from '../../../hooks/useAppSelector';
 
 type Props = {
     user: AuthUser
@@ -93,7 +94,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                     </div>
 
                     <div className={styles.secondBloc}>
-                        <p style={{ color: 'var(--white)', fontSize: '14px' }}>Standard : {COLORS.map((color) => (
+                        <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '15px' }}>Standard : {COLORS.map((color) => (
                             <button key={color} style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primaryStd})} onClick={() => handleChangeTheme('std', color)} />
                         ))}</p>
                         <p style={{ color: 'var(--white)', fontSize: '14px' }}>Spécial : {COLORS.map((color) => (
@@ -107,7 +108,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         onClick={handleUpdateUser}
                         className={styles.updateButton}
                     >
-                        {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Modifier'}
+                        { isPending ? <SmallLoading heightContainer='100%' dimensionLoader='10px' borderWidth='3px' />: 'Modifier'}
                     </button>
                 </FormControl>
             </div>

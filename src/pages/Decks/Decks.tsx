@@ -77,7 +77,7 @@ const Decks = () => {
             />
 
             { isDecksLoading ? (
-                <SmallLoading />
+                <SmallLoading heightContainer='70%' dimensionLoader='150px' borderWidth='10px'/>
             ) : (
                 <DecksArray decks={decks} partieType={partieType} />
             )}

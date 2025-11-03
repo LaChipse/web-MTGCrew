@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, CircularProgress, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ import EachPlayersBlock from './PlayersBlock/EachPlayersBlock';
 import TeamPlayersBlock from './PlayersBlock/TeamPlayersBlock';
 import EachVictoryBlock from './VictoryBlock/EachVictoryBlock';
 import TeamVictoryBlock from './VictoryBlock/TeamVictoryBlock';
+import SmallLoading from '../../../loader/SmallLoading/SmallLoading';
 import styles from './DrawerStandardGamesForm.module.scss';
 
 export interface PlayersBlock {
@@ -193,7 +194,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                         onClick={handleAddGameForm}
                         className={classNames(styles.valide, {[styles.disabled]: !(type && victoire && typeVictoire) || isPending || hasValidConfig()})}
                     >
-                        {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Valider'}
+                        { isPending ? <SmallLoading heightContainer='100%' dimensionLoader='10px' borderWidth='3px' /> : 'Valider'}
                     </button>    
 
                     <button onClick={handleResetForm} >

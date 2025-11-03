@@ -57,7 +57,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
         >
             <Box className={styles.modal}>
                 { isDecksLoading ? (
-                    <SmallLoading />
+                    <SmallLoading heightContainer='70vh' dimensionLoader='150px' borderWidth='10px' />
                 ) : (
                     <div className={styles.tableau}>
                         <table aria-label="customized table">

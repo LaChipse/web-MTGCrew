@@ -97,11 +97,12 @@ const Joueurs = () => {
 
     return (
         <>
+            <Header />
+
             { isUsersLaoding || isUsersDecksLaoding ? (
-                <SmallLoading />
+                <SmallLoading heightContainer='80vh' dimensionLoader='150px' borderWidth='10px' />
             ) : (
                 <>
-                    <Header />
                     <div>
                         <p className={styles.highlights}><Seringue height='1.5em' width='1.5em' /><strong style={{marginRight: '5px'}}>{highestGamesPlayed?.fullName}</strong>{`(${Math.round(((highestGamesPlayed?.partiesJouees?.[partieType] || 0)/(count || 1)) * 100)}% parties jouées)`}</p>
                         <p className={styles.highlights}><Crown height='1.5em' width='1.5em' /><strong style={{marginRight: '5px'}}>{highestRatio()?.fullName}</strong>{`(${Math.round(((highestRatio()?.victoires?.[partieType] || 0)/(highestRatio()?.partiesJouees?.[partieType] || 1)) * 100)}% parties jouées gagnées)`}</p>

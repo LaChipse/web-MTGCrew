@@ -179,8 +179,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         </h2>
                         <button className={styles.close} onClick={handleClose}>X</button>
                     </div>
-                    {isGetillustrationCardLoading ? (
-                        <SmallLoading />
+                    { isGetillustrationCardLoading ? (
+                        <SmallLoading heightContainer='70vh' dimensionLoader='150px' borderWidth='10px'/>
                     ) : (
                         <>
                             <div className={styles.formBloc}>

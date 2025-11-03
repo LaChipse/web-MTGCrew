@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, CircularProgress, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
@@ -8,6 +8,7 @@ import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
 import { useAddGame } from '../../../../hooks/queries/games/useAddGame';
 import { SELECT_MENU_STYLE, SELECT_STYLE, STYLED_PAPER } from '../../../../Layouts/Theme/components/GamesFilter/StyleMui';
+import SmallLoading from '../../../loader/SmallLoading/SmallLoading';
 import ArchenemyPlayersBlock from './PlayersBlock/ArchenemyPlayersBlock';
 import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
 import ArchenemyVictoryBlock from './VictoryBlock/ArchenemyVictoryBlock';
@@ -187,7 +188,7 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                         onClick={handleAddGameForm}
                         className={classNames(styles.valide, {[styles.disabled]: !(type && victoire && typeVictoire) || isPending || hasValidConfig()})}
                     >
-                        {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Valider'}
+                        { isPending ? <SmallLoading heightContainer='100%' dimensionLoader='10px' borderWidth='3px' /> : 'Valider'}
                     </button>    
 
                     <button onClick={handleResetForm} >

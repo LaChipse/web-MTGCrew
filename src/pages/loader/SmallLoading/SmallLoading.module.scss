@@ -1,41 +1,25 @@
 .verticallyCentered {
   display: flex;
   align-items: center;
-  height: 100%;
-}
-
-.loader {
-  display: flex;
-  width: 100%;
-  height: 300px;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  filter: opacity(0.8);
-
-  img {
-    position: absolute; 
-  }
-
-  .mainImg {
-    animation: bounce 2s ease-in-out infinite, spin 12s linear infinite;
-  }
 }
 
-
-@keyframes bounce {
-  0%, 100% {
-    transform: scale(0.5);
-  }
-  50% {
-    transform: scale(0.6);
-  }
+.spinner {
+  display: flex;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite, colors 3s linear infinite;
 }
 
 @keyframes spin {
-  from {
-    rotate: 0deg;
-  }
-  to {
-    rotate: 360deg;
-  }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes colors {
+  0%   { border-top-color: #F3F56C99; border-left-color: #F3F56C99; border-bottom-color: #F3F56C99 }
+  20%  { border-top-color: #FA050599; border-left-color: #FA050599; border-bottom-color: #FA050599 }
+  40%  { border-top-color: #27E9FF99; border-left-color: #27E9FF99; border-bottom-color: #27E9FF99 }
+  60%  { border-top-color: #05FA2A99; border-left-color: #05FA2A99; border-bottom-color: #05FA2A99 }
+  80%  { border-top-color: #88888899; border-left-color: #88888899; border-bottom-color: #88888899 }
+  100% { border-top-color: #F3F56C99; border-left-color: #F3F56C99; border-bottom-color: #F3F56C99 }
 }

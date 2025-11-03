@@ -37,7 +37,7 @@ const Matchmaking: React.FC = () => {
         }
     }, [hasAllDecksSelected, decks]);
 
-    if (isUsersDecksLaoding || isUsersLaoding) return ( <SmallLoading /> )
+    if (isUsersDecksLaoding || isUsersLaoding) return ( <SmallLoading heightContainer='90vh' dimensionLoader='150px' borderWidth='10px' /> )
 
     const handleChangeJoueurs = (event: SelectChangeEvent<typeof usersChecked>) => {
         const { target: { value } } = event;

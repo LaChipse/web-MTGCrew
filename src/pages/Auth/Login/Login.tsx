@@ -1,11 +1,12 @@
-import { CircularProgress, FormControl } from '@mui/material';
+import { FormControl } from '@mui/material';
+import classNames from 'classnames';
 import { MouseEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../../hooks/queries/useLogin';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { SIGNUP_PAGE } from '../../../router/routes';
+import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import styles from './Login.module.scss';
-import classNames from 'classnames';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -64,7 +65,7 @@ const Login = () => {
                 </FormControl>
                 
                 <button disabled={!password || !prenom || !nom} className={classNames({[styles.disabled]: !password || !prenom || !nom})} style={{marginTop: '20px'}} onClick={handleSubmit} >
-                    {isPending ? <CircularProgress style={{ width: '10px', height: '10px', color: 'var(--primary)' }}/> : 'Se connecter'}
+                    { isPending ? <SmallLoading heightContainer='100%' dimensionLoader='10px' borderWidth='3px' /> : 'Se connecter'}
                 </button>
                 <button onClick={() => navigate(SIGNUP_PAGE)}>
                     Créer un compte

@@ -53,7 +53,7 @@ const Header: React.FC<Props> = () => {
             </div>
             <button className={styles.signout}>
                 { showLoader ? 
-                    <SmallLoading style={{ width: '50px', height: '50px'}} /> 
+                    <SmallLoading dimensionLoader='15px' heightContainer='100%' borderWidth='3px'/> 
                     : <div className={styles.signoutIcon} onClick={handleLogout} /> 
                 }
             </button>

@@ -1,8 +1,8 @@
-import { CircularProgress } from '@mui/material';
 import classNames from 'classnames';
 import React, { useEffect, useState, useTransition } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SmallLoading from '../../../../pages/loader/SmallLoading/SmallLoading';
 import { clearGameFiltersState } from '../../../../store/reducers/gameFiltersReducer';
 import styles from './Navbar.module.scss';
 
@@ -57,7 +57,7 @@ const Navbar: React.FC<Props> = () => {
                 className={classNames({ [styles.isActive]: isActive() })}
             >
                 {
-                    isLoading ? <CircularProgress style={{ width: '20px', height: '20px' }} className={styles.circularLoader} /> : (
+                    isLoading ? <SmallLoading heightContainer='100%' dimensionLoader='15px' borderWidth='3px' /> : (
                         <span className={classNames(styles.icon, styles[icon], { [styles[`icon-active`]]: isActive() } )}></span>
                     )
                 }

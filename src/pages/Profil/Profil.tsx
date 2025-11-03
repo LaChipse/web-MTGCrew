@@ -59,8 +59,8 @@ const Profil = () => {
             <GamesFilter />
 
             <div className={styles.history}>
-                {isHistoryGamesLoading ? (
-                    <SmallLoading />
+                { isHistoryGamesLoading ? (
+                    <SmallLoading heightContainer='50vh' dimensionLoader='150px' borderWidth='10px' />
                 ) :(
                     <GamesArray 
                         games={gameHistory} 

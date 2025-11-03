@@ -9,17 +9,15 @@ import Router from './router/Router';
 import { store } from './store/store';
 
 const App = () => (
-  <>
-        <ReduxProvider store={store}>
-          <QueryClientProvider>
-            <FullscreenLoader />
-            <Suspense fallback={<Loading />}>
-              <Router />
-            </Suspense>
-            {createPortal(<MainSnackbar />, document.body)}
-          </QueryClientProvider>
-        </ReduxProvider>
-  </>
+  <ReduxProvider store={store}>
+    <QueryClientProvider>
+      <FullscreenLoader />
+      <Suspense fallback={<Loading />}>
+        <Router />
+      </Suspense>
+      {createPortal(<MainSnackbar />, document.body)}
+    </QueryClientProvider>
+  </ReduxProvider>
 );
 
 export default App;

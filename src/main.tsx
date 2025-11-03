@@ -1,8 +1,8 @@
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { registerSW } from 'virtual:pwa-register';
 import App from "./App";
-import { SpeedInsights } from "@vercel/speed-insights/react";
-import { registerSW } from 'virtual:pwa-register'
 import "./index.css";
 
 const updateSW = registerSW({

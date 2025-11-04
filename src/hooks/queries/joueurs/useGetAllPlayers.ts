@@ -13,19 +13,31 @@ export interface User {
     hundredGameWins: number
 }
 
-const getAllPlayers = async (isStandard: boolean) => (
-    await new Api<Array<User>>()
-        .get(`/user/all/${isStandard}`)
-)
+const getAllPlayers = async (isStandard: boolean, sort?: { key: string, direction: -1 | 1 }) => {
+    let params = undefined
 
-export const useGetAllPlayers = () => {
+    if (sort) {
+        params = new URLSearchParams({
+            sortKey: sort.key,
+            sortDirection: sort.direction.toString(),
+        });
+    }
+
+    return (
+        await new Api<Array<User>>()
+            .get(`/user/all/${isStandard}?${params ? params?.toString() : ''}`)
+    )
+}
+
+export const useGetAllPlayers = (sort?: { key: string, direction: -1 | 1 }) => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
 
     return (
-    useQuery({
-        queryKey: ['getAllPlayers', isStandard],
-        queryFn: () => getAllPlayers(isStandard),
-    })
-)};
+        useQuery({
+            queryKey: ['getAllPlayers', isStandard, sort],
+            queryFn: () => getAllPlayers(isStandard, sort),
+        })
+    )
+};
 
 useGetAllPlayers.reset = resetQueries(['getAllPlayers']);

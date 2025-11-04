@@ -9,16 +9,19 @@
 .success {
     background-color: rgba(33, 252, 66, 0.6) !important;
     backdrop-filter: blur(6px);
+    margin: auto !important;
 }
 
 .info {
     background-color: rgb(1, 91, 194, 0.6) !important;
     backdrop-filter: blur(6px);
+    margin: auto !important;
 }
 
 .error {
     background-color: rgba(250, 5, 5, 0.6) !important;
     backdrop-filter: blur(6px);
+    margin: auto !important;
 }
 
 .message {

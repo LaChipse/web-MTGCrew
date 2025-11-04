@@ -15,16 +15,27 @@ export interface Deck {
     isImprime: boolean
 }
 
-const getDecks = async () => (
-    await new Api<Array<Deck>>()
-        .setBearerToken()
-        .get('/deck/mine')
-)
+const getDecks = async (sort?: { key: string, direction: -1 | 1 }) => {
+    let params = undefined
 
-export const useGetDecks = () => (
+    if (sort) {
+        params = new URLSearchParams({
+            sortKey: sort.key,
+            sortDirection: sort.direction.toString(),
+        });
+    }
+
+    return (
+        await new Api<Array<Deck>>()
+            .setBearerToken()
+            .get(`/deck/mine?${params ? params?.toString() : ''}`)
+    )
+}
+
+export const useGetDecks = (sort?: { key: string, direction: -1 | 1 }) => (
     useQuery({
-        queryKey: ['getDecks'],
-        queryFn: () => getDecks(),
+        queryKey: ['getDecks',sort],
+        queryFn: () => getDecks(sort),
     })
 );
 

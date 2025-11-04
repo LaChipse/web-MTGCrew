@@ -3,6 +3,7 @@ import { Deck, useGetDecks } from '../../../hooks/queries/decks/useGetDecks';
 import { useCountGames } from '../../../hooks/queries/games/useCountGames';
 import { AuthUser } from '../../../store/reducers/authReducer';
 import styles from './ProfilCard.module.scss';
+import classNames from 'classnames';
 
 type Props = {
     user: AuthUser
@@ -39,7 +40,7 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleImage
                     <ul>
                         <li className={styles.liste}>{`Nombre de decks = ${user.nbrDecks}`}</li>
                         <li className={styles.liste}>{`Nombre de parties = ${user.partiesJouees[partieType]} (${Math.round((user.partiesJouees[partieType]/(count || 1)) * 100)}%)`}</li>
-                        <li className={styles[colorVictory()]}>{`Victoires = ${user.victoires[partieType]} (${ratioVictory()}%)`}</li>
+                        <li className={classNames(styles[colorVictory()], styles.lastLi)}>{`Victoires = ${user.victoires[partieType]} (${ratioVictory()}%)`}</li>
                     </ul>
                 </div>
 

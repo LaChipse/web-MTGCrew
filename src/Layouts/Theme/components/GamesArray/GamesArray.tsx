@@ -111,7 +111,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                             <th align="center" style={{ minWidth: "75px" }}>Type de partie</th>
                             <th align="center" style={{ minWidth: "75px" }}>Victoire</th>
                             <th align="center" style={{ minWidth: "50px" }}>Type de victoire</th>
-                            <th align='center' style={{ minWidth: '75px' }}>Actions</th>
+                            <th align='center' style={{ minWidth: '75px' }}></th>
                         </tr>
                     </thead>
                     <tbody>

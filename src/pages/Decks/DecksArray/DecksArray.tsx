@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { IconButton } from '@mui/material';
 import classNames from 'classnames';
-import { MouseEvent, useState } from 'react';
+import { Dispatch, MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { RANK } from '../../../utils/Enums/rank';
 import { toTitleCase } from '../../../utils/ToTitleCase';
@@ -14,9 +14,14 @@ import styles from './DecksArray.module.scss';
 type Props = {
     decks?: Array<Deck>
     partieType: 'standard' | 'special'
+    sortConfig: { key: string; direction: 1 | -1 }
+    handleSetSortConfig: Dispatch<React.SetStateAction<{
+        key: string;
+        direction: 1 | -1;
+    }>>
 }
 
-const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
+const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetSortConfig }) => {
     const [open, setOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
 
@@ -25,6 +30,21 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
 
     const [openDeck, setOpenDeck] = useState<Deck | null>(null); // deck actuellement ouvert
     const [anchor, setAnchor] = useState<DOMRect | null>(null);
+
+    const SortArrow = ({ column }: { column: string }) => {
+        if (sortConfig?.key !== column) return (<span className={styles.arrowDisabled}>{"▲"}</span>);
+        return <span className={styles.arrow}>{sortConfig.direction === 1 ? "▲" : "▼"}</span>;
+    };
+
+    const requestSort = (key: string) => {
+        let direction: -1 | 1 = 1;
+
+        if (sortConfig?.key === key && sortConfig.direction === 1) {
+            direction = -1;
+        }
+
+        handleSetSortConfig({ key, direction });
+    };
 
     const handleClick = (deck: Deck, event: MouseEvent) => {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -79,13 +99,13 @@ const DecksArray: React.FC<Props> = ({ decks, partieType }) => {
                 <table aria-label='deck table'>
                     <thead>
                         <tr>
-                            <th align='center' >Nom</th>
+                            <th align='center' onClick={() => requestSort("nom")}>Nom <SortArrow column="nom" /></th>
                             <th align='center' >Couleurs</th>
-                            <th align='center' >Type</th>
-                            <th align='center' >Rank</th>
-                            <th align='center' >Nbr parties</th>
-                            <th align='center' >Victoires</th>
-                            <th align='center' >Actions</th>
+                            <th align='center' onClick={() => requestSort("type")}>Type <SortArrow column="type" /></th>
+                            <th align='center' onClick={() => requestSort("rank")}>Rank <SortArrow column="rank" /></th>
+                            <th align='center' onClick={() => requestSort(`parties.${partieType}`)}>Nbr parties <SortArrow column={`parties.${partieType}`} /></th>
+                            <th align='center' onClick={() => requestSort(`victoires.${partieType}`)}>Victoires <SortArrow column={`victoires.${partieType}`} /></th>
+                            <th align='center' ></th>
                         </tr>
                     </thead>
                     <tbody>

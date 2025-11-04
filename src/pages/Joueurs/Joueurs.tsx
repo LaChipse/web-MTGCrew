@@ -1,27 +1,44 @@
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton } from "@mui/material";
 import { useState } from "react";
+import Biceps from '../../components/Biceps';
+import Crown from '../../components/Crown';
+import Seringue from '../../components/Syringe';
 import { useCountGames } from "../../hooks/queries/games/useCountGames";
 import { useGetAllPlayers, User } from "../../hooks/queries/joueurs/useGetAllPlayers";
 import { useGetUsersDecks } from "../../hooks/queries/joueurs/useGetUsersDecks";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import Header from '../../Layouts/Theme/components/Header/Header';
 import SmallLoading from "../loader/SmallLoading/SmallLoading";
 import UserDeckModal from "./UserDeck/UserDeck";
 import styles from './Joueurs.module.scss';
-import Seringue from '../../components/Syringe';
-import Crown from '../../components/Crown';
-import Biceps from '../../components/Biceps';
-import Header from '../../Layouts/Theme/components/Header/Header';
 
 const Joueurs = () => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
-    
-    const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers()
-    const { data: usersDecks, isLoading: isUsersDecksLaoding } = useGetUsersDecks()
-    const { data: count } = useCountGames(isStandard, {startDate: null, endDate: null})
 
     const [open, setOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState('')
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 1 | -1 }>({ key: 'prenom', direction: 1 });
+
+    const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers(sortConfig)
+    const { data: usersDecks, isLoading: isUsersDecksLaoding } = useGetUsersDecks()
+    const { data: count } = useCountGames(isStandard, {startDate: null, endDate: null})
+
+    const SortArrow = ({ column }: { column: string }) => {
+        if (sortConfig?.key !== column) return (<span className={styles.arrowDisabled}>{"▲"}</span>);
+        return <span className={styles.arrow}>{sortConfig.direction === 1 ? "▲" : "▼"}</span>;
+    };
+
+    const requestSort = (key: string) => {
+        let direction: -1 | 1 = 1;
+
+        if (sortConfig?.key === key && sortConfig.direction === 1) {
+            direction = -1;
+        }
+
+        setSortConfig({ key, direction });
+    };
+
     const partieType = isStandard ? 'standard' : 'special'
 
     const countVictories = users?.reduce((sum, user) => sum + user.victoires[partieType], 0)
@@ -113,10 +130,10 @@ const Joueurs = () => {
                         <table aria-label="customized table">
                             <thead>
                                 <tr>
-                                    <th align="center">Nom</th>
-                                    <th align="center">Nbr decks</th>
-                                    <th align="center">Nbr de parties</th>
-                                    <th align="center">Ratio toutes victoires <br/> et 100 dernières</th>
+                                    <th align="center" onClick={() => requestSort("prenom")}>Nom <SortArrow column="prenom" /></th>
+                                    <th align="center" onClick={() => requestSort("nbrDecks")}>Nbr decks <SortArrow column="nbrDecks" /></th>
+                                    <th align="center" onClick={() => requestSort("partiesJouees")}>Nbr de parties <SortArrow column="partiesJouees" /></th>
+                                    <th align="center" onClick={() => requestSort("victoires")}>Ratio toutes victoires <br/> et 100 dernières <SortArrow column="victoires" /></th>
                                     <th align="center">Deck le plus joué</th>
                                     <th align="center">Meilleur deck</th>
                                 </tr>

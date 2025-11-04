@@ -16,10 +16,27 @@ type Props = {
 }
 
 const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) => {
-    const { data: decks, isLoading: isDecksLoading } = useGetUserDeck(userId);
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 1 | -1 }>({ key: 'nom', direction: 1 });
+
+    const { data: decks, isLoading: isDecksLoading } = useGetUserDeck(userId, sortConfig);
 
     const [openDeck, setOpenDeck] = useState<Deck | null>(null); // deck actuellement ouvert
     const [anchor, setAnchor] = useState<DOMRect | null>(null);
+
+    const SortArrow = ({ column }: { column: string }) => {
+        if (sortConfig?.key !== column) return (<span className={styles.arrowDisabled}>{"▲"}</span>);
+        return <span className={styles.arrow}>{sortConfig.direction === 1 ? "▲" : "▼"}</span>;
+    };
+
+    const requestSort = (key: string) => {
+        let direction: -1 | 1 = 1;
+
+        if (sortConfig?.key === key && sortConfig.direction === 1) {
+            direction = -1;
+        }
+
+        setSortConfig({ key, direction });
+    };
 
     const handleClick = (deck: Deck, event: MouseEvent) => {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -63,11 +80,11 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                         <table aria-label="customized table">
                             <thead>
                                 <tr>
-                                    <th align="center">Nom</th>
+                                    <th align="center" onClick={() => requestSort("nom")}>Nom <SortArrow column="nom" /></th>
                                     <th align="center">Couleurs</th>
-                                    <th align="center">Rank</th>
-                                    <th align="center">Nbr parties</th>
-                                    <th align="center">Victoires</th>
+                                    <th align="center" onClick={() => requestSort("rank")}>Rank <SortArrow column="rank" /></th>
+                                    <th align="center" onClick={() => requestSort(`parties.${partieType}`)}>Nbr parties <SortArrow column={`parties.${partieType}`} /></th>
+                                    <th align="center" onClick={() => requestSort(`victoires.${partieType}`)}>Victoires <SortArrow column={`victoires.${partieType}`} /></th>
                                 </tr>
                             </thead>
                             <tbody>

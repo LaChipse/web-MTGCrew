@@ -12,7 +12,9 @@ import styles from './Decks.module.scss';
 
 const Decks = () => {
     const [open, setOpen] = useState(false);
-    const { data: decks, isLoading: isDecksLoading } = useGetDecks()
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 1 | -1 }>({ key: 'nom', direction: 1 });
+
+    const { data: decks, isLoading: isDecksLoading } = useGetDecks(sortConfig)
     const isStandard = useAppSelector((state) => state.type.isStandard);
 
     const partieType = isStandard ? 'standard' : 'special'
@@ -79,7 +81,7 @@ const Decks = () => {
             { isDecksLoading ? (
                 <SmallLoading heightContainer='70%' dimensionLoader='150px' borderWidth='10px'/>
             ) : (
-                <DecksArray decks={decks} partieType={partieType} />
+                <DecksArray decks={decks} partieType={partieType} sortConfig={sortConfig} handleSetSortConfig={setSortConfig}/>
             )}
         </>
     )

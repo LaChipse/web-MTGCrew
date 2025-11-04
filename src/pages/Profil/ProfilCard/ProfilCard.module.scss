@@ -4,7 +4,7 @@
     background-color: rgba(47, 51, 107, 0.7);
     backdrop-filter: blur(7px);
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px;
     display: flex;
 
     h2 {
@@ -16,6 +16,10 @@
 
         .liste {
             color: var(--white)
+        }
+
+        .lastLi {
+            margin-bottom: 0;
         }
 
         ul {
@@ -58,7 +62,7 @@
             height: 75px;
             width: 50px;
             margin: auto;
-            margin-bottom: 10px;
+            margin-bottom: 0;
             font-size: 30px;
             background-color: var(--secondary);
             border-radius: 10px;

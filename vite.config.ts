@@ -3,6 +3,13 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler' // or "modern"
+      }
+    }
+  },
   plugins: [
     react(),
     VitePWA({

@@ -89,7 +89,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                             </thead>
                             <tbody>
                                 {decks?.map((deck) => (
-                                    <tr key={deck.nom}>
+                                    <tr key={deck._id}>
                                         <th align='center' style={{ fontWeight: 700 }} className={styles.styckyCol} scope='row'>
                                             { deck.illustrationUrl ?
                                                 <>

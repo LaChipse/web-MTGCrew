@@ -57,8 +57,8 @@ const Login = () => {
                 <FormControl>
                     <input
                         type='password'
-                        value={password}
                         id="passwordProfil"
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"
                     />

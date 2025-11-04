@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Dayjs } from 'dayjs';
 import { ROLE_TYPE } from '../../utils/Enums/roleType';
 import { TYPE_VICTORY } from '../../utils/Enums/victoryType';
 
 export interface filtersGames {
-    startDate: Dayjs | null,
-    endDate: Dayjs | null,
+    startDate: string | null,
+    endDate: string | null,
     victoryRole?: ROLE_TYPE | '',
     winnerId?: string | '',
     typeOfVictory?: TYPE_VICTORY | '',
@@ -23,10 +22,10 @@ const gameFiltersSlice = createSlice({
     name: 'filtersGames',
     initialState,
     reducers: {
-        setStartDate: (state, action: PayloadAction<Dayjs | null>) => {
+        setStartDate: (state, action: PayloadAction<string | null>) => {
             state.startDate = action.payload;
         },
-        setEndDate: (state, action: PayloadAction<Dayjs | null>) => {
+        setEndDate: (state, action: PayloadAction<string | null>) => {
             state.endDate = action.payload;
         },
         setVictoryRole: (state, action: PayloadAction<ROLE_TYPE | ''>) => {

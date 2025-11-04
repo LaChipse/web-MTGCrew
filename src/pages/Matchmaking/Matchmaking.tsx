@@ -1,15 +1,15 @@
 import { Checkbox, Divider, FormControl, FormControlLabel, ListItemText, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useGetAllDecks } from "../../hooks/queries/decks/useGetAllDecks";
 import { useGetAllPlayers } from "../../hooks/queries/joueurs/useGetAllPlayers";
 import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../Layouts/Theme/components/GamesFilter/StyleMui";
 import Header from "../../Layouts/Theme/components/Header/Header";
-import SmallLoading from "../loader/SmallLoading/SmallLoading";
-import Result from "./Result/Result";
-import styles from './Matchmaking.module.scss';
-import { useDispatch } from "react-redux";
 import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
+import SmallLoading from "../loader/SmallLoading/SmallLoading";
+import styles from './Matchmaking.module.scss';
+import Result from "./Result/Result";
 
 const Matchmaking: React.FC = () => {
     const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers()
@@ -17,7 +17,7 @@ const Matchmaking: React.FC = () => {
     const dispatch = useDispatch()
 
     const [usersChecked, setUsersChecked] = useState<string[]>([]);
-    const [nbrParties, setNbrParties] = useState<number | undefined>(undefined);
+    const [nbrParties, setNbrParties] = useState<number>(1);
     const [includedDecks, setIncludedDecks] = useState<string[]>([]);
     const [hasAllDecksSelected, setHasAllDecksSelected] = useState<boolean>(false);
     const [allUserDecksSelected, setAllUserDecksSelected] = useState<string[]>([])
@@ -81,11 +81,6 @@ const Matchmaking: React.FC = () => {
             return formatedPrev 
         })
     }
-
-    const handleNbrParties = (value: string) => {
-        if (!!value && isNaN(Number(value))) setNbrParties(1)
-        else setNbrParties( value ? Number(value) : undefined);
-    };
 
     const handleIsTeam = () => {
         setIsTeam(!isTeam)
@@ -195,7 +190,7 @@ const Matchmaking: React.FC = () => {
                             placeholder="Nombre de parties"
                             id="nbrParties"
                             value={nbrParties}
-                            onChange={(e) => handleNbrParties(e.target.value)}
+                            onChange={(e) => setNbrParties(Number(e.target.value))}
                         />
                     </FormControl>
 

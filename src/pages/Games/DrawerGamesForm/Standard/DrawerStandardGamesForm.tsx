@@ -154,7 +154,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                     </>
                 )}
                 
-                <IconButton className={classNames([styles.add, { [styles.hasPlayer]: !!type }])} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
+                <IconButton className={styles.add} onClick={() => setConfigIndex((prev) => prev + 1)} disabled={!canAddPlayer()}>
                     <AddIcon className={styles.addIcon}/>
                 </IconButton>
 

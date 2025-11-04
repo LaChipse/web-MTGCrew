@@ -32,6 +32,7 @@ const Signup = () => {
                         id="nomSignup"
                         onChange={(e) => setNom(e.target.value)}
                         placeholder="Nom"
+                        autoComplete="off"
                     />
                 </FormControl>
                 <FormControl>
@@ -41,6 +42,7 @@ const Signup = () => {
                         id="prenomSignup"
                         onChange={(e) => setPrenom(e.target.value)}
                         placeholder="Prénom"
+                        autoComplete="off"
                     />
                 </FormControl>
                 <FormControl>
@@ -51,6 +53,7 @@ const Signup = () => {
                         id="passwordSignup"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"
+                        autoComplete="new-password"
                     />
                 </FormControl>
 

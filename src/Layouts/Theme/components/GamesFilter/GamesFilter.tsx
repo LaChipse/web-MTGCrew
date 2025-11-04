@@ -35,8 +35,12 @@ const GamesFilter: React.FC = () => {
                                 desktopPaper: STYLED_PAPER,
                             }} 
                             className={styles.datePicker}
-                            value={filters.startDate} 
-                            onChange={(d) => dispatch(setStartDate(d!.startOf('day').add(1, 'second')))}
+                            value={filters.startDate ? dayjs(filters.startDate) : null} 
+                            onChange={(date) => {
+                                if (!date) return;
+                                const formatted = date.startOf('day').add(1, 'second').toISOString();
+                                dispatch(setStartDate(formatted));
+                            }}
                             shouldDisableDate={(date) => date.isAfter(filters.endDate)}
                         />
                     </LocalizationProvider>
@@ -49,8 +53,12 @@ const GamesFilter: React.FC = () => {
                                 desktopPaper: STYLED_PAPER,
                             }} 
                             className={styles.datePicker} 
-                            value={filters.endDate} 
-                            onChange={(d) => dispatch(setEndDate(d!.endOf('day')))} 
+                            value={filters.endDate ? dayjs(filters.endDate) : null}
+                            onChange={(date) => {
+                                if (!date) return;
+                                const formatted = date.endOf('day').add(1, 'second').toISOString();
+                                dispatch(setEndDate(formatted));
+                            }}
                             shouldDisableDate={(date) => date.isBefore(filters.startDate)}
                         />
                     </LocalizationProvider>

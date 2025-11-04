@@ -180,7 +180,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                         <button className={styles.close} onClick={handleClose}>X</button>
                     </div>
                     { isGetillustrationCardLoading ? (
-                        <SmallLoading heightContainer='70vh' dimensionLoader='150px' borderWidth='10px'/>
+                        <SmallLoading heightContainer='20vh' dimensionLoader='150px' borderWidth='10px'/>
                     ) : (
                         <>
                             <div className={styles.formBloc}>
@@ -237,6 +237,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                         {
                                             DECK_COLORS.map((color) => (
                                                 <button 
+                                                    key={color}
                                                     className={classNames(styles.buttonColor, {[styles.checked]: couleurs.includes(color)})} 
                                                     onClick={() => handleCheckboxChange(color)} 
                                                     style={{backgroundImage: `url(/assets/${color}.svg)`}} 

@@ -17,7 +17,7 @@
   }
 
   .mainImg {
-    transform: scale(0.4);
+    transform: scale(0.6);
   }
 
   .loader1,
@@ -31,59 +31,44 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: dashed;
-    border-top-color: #272729;
     aspect-ratio: 1;
   }
 
   .loader1 {
     height: calc(120%);
-    border-left-color: #f0ebc5;
-    border-right-color: #005ca9;
+    border-left-color: #27E9FF;
+    border-top-color: #27E9FF;
+    border-bottom-color: #27E9FF;
+    animation: loading-first 6s linear infinite;
   }
 
   .loader2 {
-    height: calc(100% - 30px);
-    border-left-color: #747471;
-    border-right-color: #e30713;
+    height: calc(100% - 50px);
+    border-left-color: #F3F56C;
+    border-top-color: #F3F56C;
+    animation: loading-second 4s linear infinite;
   }
 
   .loader3 {
-    height: calc(100% - 30px);
-    border-left-color: #009d3c;
-    border-right-color: #f0ebc5;
+    height: calc(100% - 60px);
+    border-left-color: #FA0505;
+    border-top-color: #FA0505;
+    animation: loading-third 2.5s linear infinite;
   }
 
   .loader4 {
-    height: calc(100% - 30px);
-    border-left-color: #005ca9;
-    border-right-color: #747471;
+    height: calc(100% - 170px);
+    border-left-color: #05FA2A;
+    border-top-color: #05FA2A;
+    border-bottom-color: #05FA2A;
+    animation: loading-fourth 2s linear infinite;
   }
 
   .loader5 {
-    height: calc(100% - 30px);
-    border-left-color: #e30713;
-    border-right-color: #009d3c;
-  }
-
-  .loader1 {
-    animation: loading-first 6s linear infinite;
-
-    .loader2 {
-      animation: loading-second 4s linear infinite;
-
-      .loader3 {
-        animation: loading-third 2.5s linear infinite;
-
-        .loader4 {
-          animation: loading-fourth 2s linear infinite;
-
-          .loader5 {
-            animation: loading-fourth 3s linear infinite;
-          }
-        }
-      }
-    }
+    height: calc(100% - 50px);
+    border-left-color: #888888;
+    border-top-color: #888888;
+    animation: loading-fifth 1s linear infinite;
   }
 }
 

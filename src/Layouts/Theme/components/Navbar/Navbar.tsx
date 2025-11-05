@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useEffect, useState, useTransition, ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SmallLoading from '../../../../pages/loader/SmallLoading/SmallLoading';
@@ -42,7 +42,7 @@ const Navbar: React.FC<Props> = () => {
         });
     };
 
-    const handleNavigation = (callback: (key: string, path: string, label: string) => JSX.Element, navTab: string) => {
+    const handleNavigation = (callback: (key: string, path: string, label: string) => ReactElement, navTab: string) => {
         return callback(navTab, `/${navTab}`, navTab)
     }
 

@@ -48,7 +48,7 @@ const Games = () => {
 
             <div style={{marginTop: '20px'}}>
                 { isGamesLoading ? (
-                    <SmallLoading heightContainer='70vh' dimensionLoader='150px' borderWidth='10px' />
+                    <SmallLoading heightContainer='50vh' dimensionLoader='150px' borderWidth='10px' />
                 ) : (
                     <GamesArray page={page} games={games} count={count} setPage={setPage} divider={20} />
                 )}

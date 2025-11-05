@@ -60,7 +60,7 @@ const Profil = () => {
 
             <div className={styles.history}>
                 { isHistoryGamesLoading ? (
-                    <SmallLoading heightContainer='50vh' dimensionLoader='150px' borderWidth='10px' />
+                    <SmallLoading heightContainer='40vh' dimensionLoader='150px' borderWidth='10px' />
                 ) :(
                     <GamesArray 
                         games={gameHistory} 
@@ -73,7 +73,7 @@ const Profil = () => {
                 )}
             </div>
 
-            {deckChoose && (
+            { deckChoose && (
                 <Modal
                     open={!!deckChoose}
                     onClose={()=>setDeckChoose(undefined)}

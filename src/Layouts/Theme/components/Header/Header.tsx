@@ -36,7 +36,7 @@ const Header: React.FC<Props> = () => {
     const handleLogout = () => {
         sessionStorage.clear();
         localStorage.clear();
-        startTransition(() => navigate(LOGIN_PAGE))
+        startTransition(() => { void navigate(LOGIN_PAGE) })
     }
 
     const handleSwitch = (type: string) => {

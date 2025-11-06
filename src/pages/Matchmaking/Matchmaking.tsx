@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Checkbox, Divider, FormControl, FormControlLabel, ListItemText, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
@@ -128,7 +129,7 @@ const Matchmaking: React.FC = () => {
 
         const selectedDecks = decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d)
                                     .filter((d) => !includedDecks.length ? d : includedDecks.includes(d.id))
-                                    .map((d) => ({ nom: d.nom, user: users?.filter((u) => u.id === d.userId)[0].fullName, userId: d.userId, deckId: d.id}))
+                                    .map((d) => ({ nom: d.nom, user: users?.filter((u) => u.id === d.userId)[0].fullName, userId: d.userId, deckId: d.id, imageUrl: d.imageUrl}))
 
         if ((selectedDecks.length < usersChecked.length) || (usersChecked.length === 0 && selectedDecks.length < users!.length)) {
             dispatch(addErrorSnackbar('Vous n\'avez pas séléctionné suffisament de decks'))
@@ -148,7 +149,9 @@ const Matchmaking: React.FC = () => {
             const deck = isExlusifsDecks ? formatedSelectedDeck.splice(randomIndex, 1)[0] : selectedDecks.splice(randomIndex, 1)[0];
             useDeckIds.push(deck.deckId)
 
-            return { player: p.nom, deckNom: deck.nom, deckPlayer: deck.user, idDeck: deck.userId, deckId: deck.deckId };
+            console.debug('deck', deck)
+
+            return { player: p.nom, deckNom: deck.nom, deckPlayer: deck.user, idDeck: deck.userId, deckId: deck.deckId, imageUrl: deck.imageUrl };
         });
 
         configSet = splitArray(configSet as Array<Record<string, string>>, nbrParties ? Number(nbrParties) : 1)

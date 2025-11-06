@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
 
-export type ImageUrisType = Array<Record<'imageUrlSmall' | 'imageUrlNormal', string>>
+export type ImageUrisType = Array<Record<'imageUrlSmall' | 'imageUrlNormal' | 'imageArt', string>>
 
 export interface CardByName {
     id: string,

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { FormControl, FormControlLabel, ImageListItem, MenuItem, Modal, Radio, RadioGroup, Select } from '@mui/material';
 import { Box } from '@mui/system';
 import classNames from 'classnames';
@@ -29,6 +30,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     const [type, setType] = useState<string>('');
     const [isImprime, setIsImprime] = useState(false);
     const [illustrationUrl, setIllustrationUrl] = useState<string>('')
+    const [imageArt, setImageArt] = useState<string>('')
     const [nameInput, setNameInput] = useState('');
     const [searchCard, setSearchCard] = useState<string>()
     const [showIllustration, setShowIllustration] = useState<boolean>(false)
@@ -47,6 +49,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
             setType(deck.type)
             setIsImprime(deck.isImprime)
             setIllustrationUrl(deck.illustrationUrl)
+            setImageArt(deck.imageArt)
         }
 
         if (containerRef.current) {
@@ -67,8 +70,9 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         if (nameInput) setSearchCard(nameInput)
     }
 
-    const handleSetIllustraiton = (url: string) => {
+    const handleSetIllustraiton = (url: string, art?: string) => {
         setIllustrationUrl(url);
+        setImageArt(art || url)
         setSearchCard(undefined)
     }
 
@@ -93,7 +97,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         else setIsImprime(false)
     }
 
-    const getIllustrationUrl = (illustrationCard: Record<'imageUrlSmall' | 'imageUrlNormal', string>) => {
+    const getIllustrationUrl = (illustrationCard: Record<'imageUrlSmall' | 'imageUrlNormal' | 'imageArt', string>) => {
         if (illustrationCard.imageUrlNormal) return illustrationCard.imageUrlNormal;
         if (illustrationCard.imageUrlSmall) return illustrationCard.imageUrlSmall;
         return ''
@@ -106,13 +110,13 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
 
     const handleUpdateDeck = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        updateMutate({ id: deck!._id, illustrationUrl: illustrationUrl || '', nom, couleurs, isImprime, rank, type });
+        updateMutate({ id: deck!._id, illustrationUrl: illustrationUrl || '', imageArt, nom, couleurs, isImprime, rank, type });
         setOpen(false)
     };
 
     const handleAddDeckForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        updateAdd({ nom, illustrationUrl: illustrationUrl || '', couleurs: [...new Set(couleurs)], isImprime, rank, type });
+        updateAdd({ nom, illustrationUrl: illustrationUrl || '', imageArt, couleurs: [...new Set(couleurs)], isImprime, rank, type });
 
         setNom('')
         setCouleurs([])
@@ -123,6 +127,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         setNameInput('')
         setIllustrationUrl('')
         setSearchCard(undefined)
+        setImageArt('')
     };
 
     const handleClose = () => {
@@ -132,7 +137,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         setOpen(false);
     };
 
-    const getImageDisplay = (iU: Record<"imageUrlSmall" | "imageUrlNormal", string>) => {
+    const getImageDisplay = (iU: Record<"imageUrlSmall" | "imageUrlNormal" | "imageArt", string>) => {
         return (
             <img
                 key={iU.imageUrlNormal}
@@ -141,7 +146,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                 alt={getIllustrationUrl(iU)}
                 loading="lazy"
                 style={{ cursor: 'pointer', borderRadius: '10px', width: '150px' }}
-                onClick={() => handleSetIllustraiton(getIllustrationUrl(iU))}
+                onClick={() => handleSetIllustraiton(getIllustrationUrl(iU), iU.imageArt)}
             />
         )
     }
@@ -149,6 +154,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
     return (
         <Modal
             open={open}
+            onClick={() => { if(showIllustration) setShowIllustration(false)}}
             onClose={handleClose}
             aria-labelledby="actionDeck"
             aria-describedby="action sur deck"

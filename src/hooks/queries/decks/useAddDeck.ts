@@ -9,10 +9,10 @@ import { authActions } from '../../../store/reducers/authReducer';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 
-const addDeck = async (nom: string, illustrationUrl: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
+const addDeck = async (nom: string, illustrationUrl: string, imageArt:string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()
         .setBearerToken()
-        .post('/deck/add', {nom, illustrationUrl, couleurs, isImprime, rank, type})
+        .post('/deck/add', {nom, illustrationUrl, imageArt, couleurs, isImprime, rank, type})
 )
 
 export const useAddDeck = () => {
@@ -22,8 +22,8 @@ export const useAddDeck = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {nom: string, illustrationUrl: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string}) => (
-                addDeck(data.nom, data.illustrationUrl, data.couleurs, data.isImprime, data.rank, data.type)
+            mutationFn: (data: {nom: string, illustrationUrl: string, imageArt:string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string}) => (
+                addDeck(data.nom, data.illustrationUrl, data.imageArt, data.couleurs, data.isImprime, data.rank, data.type)
             ),
             onSuccess: () => {
                 dispatch(addSuccessSnackbar('Deck ajouté !'))

@@ -7,6 +7,7 @@ export interface Deck {
     _id: string,
     nom: string,
     illustrationUrl: string,
+    imageArt: string,
     couleurs: Array<string>
     type: string
     rank: number

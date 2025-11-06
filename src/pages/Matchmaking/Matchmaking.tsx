@@ -129,7 +129,7 @@ const Matchmaking: React.FC = () => {
 
         const selectedDecks = decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d)
                                     .filter((d) => !includedDecks.length ? d : includedDecks.includes(d.id))
-                                    .map((d) => ({ nom: d.nom, user: users?.filter((u) => u.id === d.userId)[0].fullName, userId: d.userId, deckId: d.id, imageUrl: d.imageUrl}))
+                                    .map((d) => ({ nom: d.nom, user: users?.filter((u) => u.id === d.userId)[0].fullName, userId: d.userId, deckId: d.id, imageUrl: d.imageArt || d.imageUrl}))
 
         if ((selectedDecks.length < usersChecked.length) || (usersChecked.length === 0 && selectedDecks.length < users!.length)) {
             dispatch(addErrorSnackbar('Vous n\'avez pas séléctionné suffisament de decks'))
@@ -149,9 +149,7 @@ const Matchmaking: React.FC = () => {
             const deck = isExlusifsDecks ? formatedSelectedDeck.splice(randomIndex, 1)[0] : selectedDecks.splice(randomIndex, 1)[0];
             useDeckIds.push(deck.deckId)
 
-            console.debug('deck', deck)
-
-            return { player: p.nom, deckNom: deck.nom, deckPlayer: deck.user, idDeck: deck.userId, deckId: deck.deckId, imageUrl: deck.imageUrl };
+            return { player: p.nom, idPlayer: p.id, deckNom: deck.nom, deckPlayer: deck.user, deckId: deck.deckId, imageUrl: deck.imageUrl };
         });
 
         configSet = splitArray(configSet as Array<Record<string, string>>, nbrParties ? Number(nbrParties) : 1)
@@ -203,7 +201,6 @@ const Matchmaking: React.FC = () => {
                             MenuProps={{
                                 ...SELECT_MENU_STYLE, 
                                 MenuListProps: {
-                                    // Empêche le MenuList de forcer le focus sur l'item sélectionné
                                     autoFocus: false,
                                     autoFocusItem: false,
                                 },

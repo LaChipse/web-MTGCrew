@@ -43,9 +43,6 @@ const Result: React.FC<Props> = ({configuration}) => {
                                             <div key={`conf-${index}`}>
                                                 <h4 key={`h4-${index}`} style={{ margin: '10px' }}>{`Equipe ${index + 1} :`}</h4>
                                                 { conf.map((c, index) => (configPartie(c as Record<string, string>, index))) }
-                                                { conf.length < 5 && (
-                                                    <button style={{ marginTop: '10px' }} onClick={() => handleSetConf(conf)}>LANCER !</button>
-                                                )}
                                             </div>
                                         )
                                     }

@@ -43,21 +43,21 @@
   }
 
   .loader2 {
-    height: calc(100% - 50px);
+    height: calc(100% - 45px);
     border-left-color: #F3F56C;
     border-top-color: #F3F56C;
     animation: loading-second 4s linear infinite;
   }
 
   .loader3 {
-    height: calc(100% - 60px);
+    height: calc(100% - 65px);
     border-left-color: #FA0505;
     border-top-color: #FA0505;
     animation: loading-third 2.5s linear infinite;
   }
 
   .loader4 {
-    height: calc(100% - 170px);
+    height: calc(100% - 190px);
     border-left-color: #05FA2A;
     border-top-color: #05FA2A;
     border-bottom-color: #05FA2A;
@@ -65,7 +65,7 @@
   }
 
   .loader5 {
-    height: calc(100% - 50px);
+    height: calc(100% - 35px);
     border-left-color: #888888;
     border-top-color: #888888;
     animation: loading-fifth 1s linear infinite;

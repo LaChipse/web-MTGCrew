@@ -24,7 +24,7 @@ const Joueurs = () => {
     const { data: usersDecks, isLoading: isUsersDecksLaoding } = useGetUsersDecks()
     const { data: count } = useCountGames(isStandard, {startDate: null, endDate: null})
 
-    const SortArrow = ({ column }: { column: string }) => {
+    const sortArrow = (column: string ) => {
         if (sortConfig?.key !== column) return (<span className={styles.arrowDisabled}>{"▲"}</span>);
         return <span className={styles.arrow}>{sortConfig.direction === 1 ? "▲" : "▼"}</span>;
     };
@@ -130,10 +130,10 @@ const Joueurs = () => {
                         <table aria-label="customized table">
                             <thead>
                                 <tr>
-                                    <th align="center" onClick={() => requestSort("prenom")}>Nom <SortArrow column="prenom" /></th>
-                                    <th align="center" onClick={() => requestSort("nbrDecks")}>Nbr decks <SortArrow column="nbrDecks" /></th>
-                                    <th align="center" onClick={() => requestSort("partiesJouees")}>Nbr de parties <SortArrow column="partiesJouees" /></th>
-                                    <th align="center" onClick={() => requestSort("victoires")}>Ratio toutes victoires <br/> et 100 dernières <SortArrow column="victoires" /></th>
+                                    <th align="center" onClick={() => requestSort("prenom")}>Nom {sortArrow("prenom")}</th>
+                                    <th align="center" onClick={() => requestSort("nbrDecks")}>Nbr decks {sortArrow("nbrDecks")}</th>
+                                    <th align="center" onClick={() => requestSort("partiesJouees")}>Nbr de parties {sortArrow("partiesJouees")}</th>
+                                    <th align="center" onClick={() => requestSort("victoires")}>Ratio toutes victoires <br/> et 100 dernières {sortArrow("victoires")}</th>
                                     <th align="center">Deck le plus joué</th>
                                     <th align="center">Meilleur deck</th>
                                 </tr>

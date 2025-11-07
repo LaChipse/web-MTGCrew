@@ -17,6 +17,7 @@ type PlayerState = {
     life: number
     poison: number
     dead: boolean
+    isAlmostDead: boolean
 }
 
 type PlayerStateMap = Record<string, PlayerState>
@@ -36,6 +37,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                     life: 40,
                     poison: 0,
                     dead: false,
+                    isAlmostDead: false,
                 }
             })
 
@@ -82,6 +84,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                 ...prev[id],
                 life: prev[id].life + delta,
                 dead: prev[id].life + delta <= 0,
+                isAlmostDead: (prev[id].life + delta <= 10) && (prev[id].life + delta > 10),
             },
         }))
 
@@ -100,6 +103,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                 ...prev[id],
                 poison: prev[id].poison + delta,
                 dead: prev[id].poison + delta >= 10,
+                isAlmostDead: (prev[id].poison + delta >= 7) && (prev[id].poison + delta < 10),
             },
         }))
 
@@ -135,6 +139,10 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         return statePlayers[idPlayer] && statePlayers[idPlayer].dead
     }
 
+    const isAlmostDead = (idPlayer: string) => {
+        return statePlayers[idPlayer] && statePlayers[idPlayer].isAlmostDead
+    }
+
     const areAllOtherDead = (idPlayer: string) => {
         return Object.entries(statePlayers)
             .filter(([playerId]) => playerId !== idPlayer)
@@ -159,7 +167,12 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                         }}
                         data-bg={c.imageUrl}
                     >  
-                        <img key={`img-${c.idPlayer}`} className={classNames(styles.img, {[styles.dead]: isPlayerDead(c.idPlayer), [styles.winner]: areAllOtherDead(c.idPlayer)})} src={c.imageUrl} id={c.imageUrl} />
+                        <img 
+                            key={`img-${c.idPlayer}`} 
+                            className={classNames(styles.img, {[styles.dead]: isPlayerDead(c.idPlayer), [styles.winner]: areAllOtherDead(c.idPlayer), [styles.almostDead]: isAlmostDead(c.idPlayer)})} 
+                            src={c.imageUrl}    
+                            id={c.imageUrl} 
+                        />
                         <div className={styles.title}>
                             <p>{c.player} {getPlayerState(c.idPlayer)}</p>
                             <span>{c.deckNom}</span>
@@ -170,13 +183,21 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                                     <h2 className={styles.life}>
                                         <Life height='20px' width='20px' />
                                         <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, -1)}}>-</button>
-                                            <span className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})}>{statePlayers?.[c.idPlayer]?.life ?? 40}</span>
+                                            <span 
+                                                className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})} 
+                                            >
+                                                {statePlayers?.[c.idPlayer]?.life ?? 40}
+                                            </span>
                                         <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, 1)}}>+</button>
                                     </h2>
                                     <span className={styles.life}>
                                         <Poison height='20px' width='20px' />
                                         <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changePoison(c.idPlayer, -1)}}>-</button>
-                                            <span className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})}>{statePlayers?.[c.idPlayer]?.poison ?? 0}</span>
+                                            <span 
+                                                className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})}
+                                            >
+                                                {statePlayers?.[c.idPlayer]?.poison ?? 0}
+                                            </span>
                                         <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changePoison(c.idPlayer, 1)}}>+</button>
                                     </span>
                                 </div>

@@ -11,7 +11,7 @@ type Props = {
 const LoosingModal: React.FC<Props> = ({ isFullWidth, idPlayer, open, setOpen }) => (
     <div
         className={styles.modal}
-        style={{ display: open ? 'block' : 'none', transform: `translate(calc(${isFullWidth ? '49vw' : '24vw'} - 80px), -50%)`}}
+        style={{ display: open ? 'block' : 'none', transform: `translate(calc(${isFullWidth ? '49vw' : '24vw'} - 90px), -50%)`}}
     >
         <div>
             <p id="deleteDeck">Avez-vous perdu ?</p>

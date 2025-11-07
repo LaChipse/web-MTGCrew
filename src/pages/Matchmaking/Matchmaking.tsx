@@ -256,7 +256,7 @@ const Matchmaking: React.FC = () => {
                                         handleChangeDeckSelected(deck.id)
                                     }}>
                                     <Checkbox checked={includedDecks.includes(deck.id)} onChange={() => handleChangeDeckSelected(deck.id)}/>
-                                    <ListItemText primary={`${deck.nom} (${users!.find((u) => deck.userId === u.id)?.fullName})`} />
+                                    <ListItemText primary={<><b>{deck.nom}</b><span>{` (${users!.find((u) => deck.userId === u.id)?.fullName})`}</span></>} />
                                 </MenuItem>
                             ))}
                         </Select>

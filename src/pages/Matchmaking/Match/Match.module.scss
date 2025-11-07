@@ -14,15 +14,15 @@
     display: flex;
 
     .displayLife {
-            filter: grayscale(70%);
+        filter: grayscale(70%);
 
-            button:hover {
-                border: 1px solid var(--primary);
-                background-color: var(--secondary);
-                border-radius: 10px;
-                color: var(--primary);
-            }
+        button:hover {
+            border: 1px solid var(--primary);
+            background-color: var(--secondary);
+            border-radius: 10px;
+            color: var(--primary);
         }
+    }
 
     .life {
         display: flex;
@@ -58,6 +58,10 @@
     filter: opacity(0.5);
     position: absolute;
     z-index: 1;
+
+    &.almostDead {
+        animation: heartbeat 1.4s infinite;
+    }
 
     &.dead {
         filter: grayscale(90%) opacity(0.3);
@@ -99,4 +103,13 @@
     position: relative;
     min-height: 49vh;
     min-width: 49vw;
+}
+
+@keyframes heartbeat {
+    0% {transform: scale(1); }
+    10% {transform: scale(1.1); }
+    25% {transform: scale(0.98); }
+    30% {transform: scale(1.04); }
+    45% {transform: scale(0.995); }
+    100% {transform: scale(1); }
 }

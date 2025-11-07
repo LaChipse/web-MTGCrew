@@ -3,10 +3,10 @@ import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import Life from '../../../components/Life'
 import Poison from '../../../components/Poison'
-import LoosingModal from '../LoosingModal/LoosingModal'
-import styles from './Match.module.scss'
 import Tombstone from '../../../components/Tombstone'
 import Trophey from '../../../components/Trophey'
+import LoosingModal from '../LoosingModal/LoosingModal'
+import styles from './Match.module.scss'
 
 type Props = {
     toggleDrawer: (isOpened: boolean) => void
@@ -67,6 +67,12 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             default:
                 return {display: "grid"};
         }
+    }
+
+    const isFullWidth = (i: number) => {
+        if (conf.length === 2 || conf.length === 1) return true
+        if (conf.length === 3 && i === 2) return true
+        return false
     }
 
     const changeLife = (id: string, delta: number) => {
@@ -146,35 +152,34 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             <div style={{ height: "100vh", width: "100%", ...gridCOnfig() }}>
                 {conf.map((c, index) => (
                     <div
+                        key={c.idPlayer}
                         className={styles.imgContainer}
                         style={{
                             gridColumn: getGridColumn(conf.length, index),
                         }}
                         data-bg={c.imageUrl}
                     >  
-                    <img className={classNames(styles.img, {[styles.dead]: isPlayerDead(c.idPlayer), [styles.winner]: areAllOtherDead(c.idPlayer)})} src={c.imageUrl} id={c.imageUrl} />
+                        <img key={`img-${c.idPlayer}`} className={classNames(styles.img, {[styles.dead]: isPlayerDead(c.idPlayer), [styles.winner]: areAllOtherDead(c.idPlayer)})} src={c.imageUrl} id={c.imageUrl} />
                         <div className={styles.title}>
                             <p>{c.player} {getPlayerState(c.idPlayer)}</p>
                             <span>{c.deckNom}</span>
                         </div>
                         <div className={styles.lifeContainer}>
-                            <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose}/>
-                            {!modalPlayerOpen[c.idPlayer] && (
-                                <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} isFullWidth={isFullWidth(index)}/>
+                                <div style={{display: 'flex', flexDirection: 'column', margin: 'auto'}} className={classNames({[styles.displayLife]: modalPlayerOpen[c.idPlayer]})}>
                                     <h2 className={styles.life}>
                                         <Life height='20px' width='20px' />
-                                        <button onClick={() => {changeLife(c.idPlayer, -1)}}>-</button>
+                                        <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, -1)}}>-</button>
                                             <span className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})}>{statePlayers?.[c.idPlayer]?.life ?? 40}</span>
-                                        <button onClick={() => {changeLife(c.idPlayer, 1)}}>+</button>
+                                        <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, 1)}}>+</button>
                                     </h2>
                                     <span className={styles.life}>
                                         <Poison height='20px' width='20px' />
-                                        <button onClick={() => {changePoison(c.idPlayer, -1)}}>-</button>
+                                        <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changePoison(c.idPlayer, -1)}}>-</button>
                                             <span className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})}>{statePlayers?.[c.idPlayer]?.poison ?? 0}</span>
-                                        <button onClick={() => {changePoison(c.idPlayer, 1)}}>+</button>
+                                        <button disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changePoison(c.idPlayer, 1)}}>+</button>
                                     </span>
                                 </div>
-                            )}
                         </div>
                     </div>
                 ))}

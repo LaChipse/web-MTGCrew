@@ -1,10 +1,12 @@
 .modal {
-    position: relative;
+    position: absolute;
     background-color: var(--white);
     border-radius: 15px;
     padding: 10px;
     text-align: center;
     border: 1px solid var(--primary);
+    width: 175px;
+    bottom: 0;
 
     .containt {
         display: flex;

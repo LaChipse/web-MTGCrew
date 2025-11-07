@@ -1,3 +1,4 @@
+
 .close {
     position: absolute;
     margin: 10px;
@@ -6,9 +7,22 @@
 }
 
 .lifeContainer {
-    z-index: 2;
+    z-index: 100;
     position: relative;
-    margin: auto;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .displayLife {
+            filter: grayscale(70%);
+
+            button:hover {
+                border: 1px solid var(--primary);
+                background-color: var(--secondary);
+                border-radius: 10px;
+                color: var(--primary);
+            }
+        }
 
     .life {
         display: flex;

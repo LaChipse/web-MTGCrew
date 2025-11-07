@@ -1,9 +1,8 @@
 import { FormControl, Modal } from '@mui/material';
-import classNames from 'classnames';
 import React, { MouseEvent, useState } from 'react';
+import { ColorResult, HuePicker } from 'react-color';
 import { useDispatch } from 'react-redux';
 import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
-import { useAppSelector } from '../../../hooks/useAppSelector';
 import { AuthUser } from '../../../store/reducers/authReducer';
 import { setTheme } from '../../../store/reducers/themeReducer';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
@@ -15,17 +14,15 @@ type Props = {
     setOpen: (value: React.SetStateAction<boolean>) => void
 }
 
-const COLORS = ['#FFFFFF', '#F1FE00', '#ffa51dff', '#fa3d3dff', '#ff97f5ff', '#27E9FF', '#57f36fff'  ]
-
 const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const [nom, setNom] = useState(user.nom);
     const [prenom, setPrenom] = useState(user.prenom);
     const [password, setPassword] = useState('');
     const [colorStd, setColorStd] = useState(user.colorStd)
     const [colorSpec, setColorSpec] = useState(user.colorSpec)
+    
 
     const dispatch = useDispatch();
-    const theme = useAppSelector((state) => state.theme)
 
     const { mutate, isPending } = useUpdateUser();
 
@@ -40,11 +37,11 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
         setOpen(false);
     };
 
-    const handleChangeTheme = (mode: 'std' | 'spec', color: string) => {
-        if (mode === 'std') setColorStd(color);
-        if (mode === 'spec') setColorSpec(color);
+    const handleChangeColor = (mode: 'std' | 'spec', color: ColorResult) => {
+        if (mode === 'std') setColorStd(color.hex);
+        if (mode === 'spec') setColorSpec(color.hex);
 
-        dispatch(setTheme({[mode === 'std' ? 'primaryStd' : 'primarySpec']: color}))
+        dispatch(setTheme({[mode === 'std' ? 'primaryStd' : 'primarySpec']: color.hex}))
     }
 
     return (
@@ -94,12 +91,12 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                     </div>
 
                     <div className={styles.secondBloc}>
-                        <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '15px' }}>Standard : {COLORS.map((color) => (
-                            <button key={color} style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primaryStd})} onClick={() => handleChangeTheme('std', color)} />
-                        ))}</p>
-                        <p style={{ color: 'var(--white)', fontSize: '14px' }}>Spécial : {COLORS.map((color) => (
-                            <button key={color} style={{backgroundColor: color}} className={classNames(styles.radioColor, {[styles.isActive]: color === theme.primarySpec})} onClick={() => handleChangeTheme('spec', color)} />
-                        ))}</p> 
+                        <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '15px' }}>Standard : 
+                            <HuePicker width='190px' color={colorStd} onChange={(color) => handleChangeColor('std', color) } />
+                        </p>
+                        <p style={{ color: 'var(--white)', fontSize: '14px' }}>Spécial : 
+                            <HuePicker width='190px' color={colorSpec} onChange={(color) => handleChangeColor('spec', color) } />
+                        </p> 
                     </div>
 
                     <button 

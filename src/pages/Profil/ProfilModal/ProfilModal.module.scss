@@ -39,14 +39,8 @@
             align-items: center;
         }
 
-        .radioColor {
-            border: none;
-            height: 20px;
-            width: 20px;
-
-            &.isActive {
-                border: 2px solid var(--white)
-            }
+        .hue-horizontal {
+            border-radius: 10px !important;
         }
     }
 

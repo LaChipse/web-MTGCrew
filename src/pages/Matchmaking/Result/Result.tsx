@@ -6,9 +6,10 @@ import styles from './Result.module.scss';
 
 type Props = {
     configuration: Array<unknown>
+    ref?: React.Ref<HTMLDivElement> 
 }
 
-const Result: React.FC<Props> = ({configuration}) => {
+const Result: React.FC<Props> = ({configuration, ref}) => {
     const [selectedConf, setSelectedCong] = useState<Array<Record<string, string>>>()
     const [isOpened, setIsOpened] = useState(false);
 
@@ -29,7 +30,7 @@ const Result: React.FC<Props> = ({configuration}) => {
 
     return (
         <>
-            <div style={{ marginTop: '15px', maxHeight: '500px' }} className={styles.container}>
+            <div ref={ref} style={{ marginTop: '15px', maxHeight: '500px' }} className={styles.container}>
                 <h2 style={{ textAlign: 'center' }}>Résultat</h2>
                 <div style={{ padding: '10px', overflow: 'auto', height: '280px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {configuration.map((config, index) => (

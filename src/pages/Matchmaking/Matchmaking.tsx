@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { Checkbox, Divider, FormControl, FormControlLabel, ListItemText, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useGetAllDecks } from "../../hooks/queries/decks/useGetAllDecks";
 import { useGetAllPlayers } from "../../hooks/queries/joueurs/useGetAllPlayers";
@@ -16,6 +16,8 @@ const Matchmaking: React.FC = () => {
     const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers()
     const { data: decks, isLoading: isUsersDecksLaoding } = useGetAllDecks()
     const dispatch = useDispatch()
+
+    const resultRef = useRef<HTMLDivElement>(null)
 
     const [usersChecked, setUsersChecked] = useState<string[]>([]);
     const [nbrParties, setNbrParties] = useState<number>(1);
@@ -156,6 +158,10 @@ const Matchmaking: React.FC = () => {
         if (isTeam) configSet = configSet.map((cS) => splitArray(cS as Array<Record<string, string>>, nbrTeam))
 
         setConfiguration(configSet)
+
+        setTimeout(() => {
+            resultRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }, 10)
     }
 
     return (
@@ -317,7 +323,7 @@ const Matchmaking: React.FC = () => {
             </div>
 
             {configuration && configuration.length && (
-                <Result configuration={configuration} />
+                <Result ref={resultRef} configuration={configuration} />
             )}
         </>
     )

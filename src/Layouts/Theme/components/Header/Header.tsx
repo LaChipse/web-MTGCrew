@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import classNames from 'classnames';
 import React, { useEffect, useState, useTransition } from 'react';
 import { useDispatch } from 'react-redux';

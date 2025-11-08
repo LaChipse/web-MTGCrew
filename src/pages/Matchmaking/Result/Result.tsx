@@ -31,8 +31,8 @@ const Result: React.FC<Props> = ({configuration, ref}) => {
     return (
         <>
             <div ref={ref} style={{ marginTop: '15px', maxHeight: '500px' }} className={styles.container}>
-                <h2 style={{ textAlign: 'center' }}>Résultat</h2>
-                <div style={{ padding: '10px', overflow: 'auto', height: '280px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h2 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}>Résultat</h2>
+                <div style={{ padding: '10px 0', overflow: 'auto', height: '280px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {configuration.map((config, index) => (
                         <div key={`config-${index}`}>
                             <h3 key={`h3-${index}`} style={{ margin: '0', color: 'var(--white)' }}>{`Partie ${index + 1} :`}</h3>

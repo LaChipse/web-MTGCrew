@@ -168,7 +168,7 @@ const Matchmaking: React.FC = () => {
         <>
             <Header />
             <div className={styles.container}>
-                <h2 style={{ textAlign: 'center', paddingTop: '0' }}>Configurer le matchmaking</h2>
+                <h2 style={{ textAlign: 'center', marginTop: '10px' }}>Configurer le matchmaking</h2>
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'space-around', flexWrap: 'wrap' }}>
                     <FormControl className={styles.formControl}>
                         <label id="joueursPrésents">{`Joueurs présents`}</label>

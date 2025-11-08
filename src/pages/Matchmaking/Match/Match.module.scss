@@ -12,11 +12,11 @@
     font-size: 1.5rem;
     overflow: hidden;
     position: relative;
-    min-height: 49vh;
-    min-width: 49vw;
+    min-height: 50vh;
+    min-width: 50vw;
 
     &.deadthContainer {
-        filter: blur(0.6px) grayscale(90%);
+        filter: grayscale(90%);
     }
 
     .lifeButtonPlus {
@@ -30,13 +30,15 @@
         z-index: 2;
         border: none;
         background: transparent;
-        font-size: larger;
+        font-size: 35px;
         border-radius: 0;
+        color: var(--white);
+        text-shadow: 2px 2px black;
 
         &:hover {
             border: none;
             background: transparent;
-            color: var(--white);
+            color: var(--primary);
         }
     }
 
@@ -82,16 +84,15 @@
         text-align: center;
         margin: 10px;
         line-height: 0.8;
+        text-shadow: 2px 2px black;
 
         p {
             color: var(--white);
-            text-shadow: 1px 1px black;
             margin: 0;
         }
 
         span {
             margin-top: 0;
-            text-shadow: 1px 1px black;
             font-size: medium;
         }
         
@@ -121,10 +122,10 @@
             gap: 10px;
             margin: 0;
             justify-content: center;
+            text-shadow: 2px 2px black;
 
             span {
                 color: var(--white);
-                text-shadow: 1px 1px black;
 
                 &.deadLife {
                     color: var(--error)
@@ -192,13 +193,13 @@
     0% {
     transform: scale(1);
     filter: opacity(0.5) brightness(100%) blur(0px);
-  }
-  40% {
-    transform: scale(1.03);
-    filter: opacity(0.5) brightness(150%) blur(0.5px);
-  }
-  100% {
-    transform: scale(1);
-    filter: opacity(0.5) brightness(100%) blur(0px);
-  }
+    }
+    40% {
+        transform: scale(1.03);
+        filter: opacity(0.5) brightness(150%) blur(0.5px);
+    }
+    100% {
+        transform: scale(1);
+        filter: opacity(0.5) brightness(100%) blur(0px);
+    }
 }

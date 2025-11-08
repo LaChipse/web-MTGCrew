@@ -91,10 +91,10 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                     </div>
 
                     <div className={styles.secondBloc}>
-                        <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '15px' }}>Standard : 
+                        <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '15px', display: 'flex', justifyContent: 'space-between' }}>Standard : 
                             <HuePicker width='190px' color={colorStd} onChange={(color) => handleChangeColor('std', color) } />
                         </p>
-                        <p style={{ color: 'var(--white)', fontSize: '14px' }}>Spécial : 
+                        <p style={{ color: 'var(--white)', fontSize: '14px', display: 'flex', justifyContent: 'space-between' }}>Spécial : 
                             <HuePicker width='190px' color={colorSpec} onChange={(color) => handleChangeColor('spec', color) } />
                         </p> 
                     </div>

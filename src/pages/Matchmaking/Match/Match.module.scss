@@ -6,95 +6,6 @@
     z-index: 1000;
 }
 
-.lifeContainer {
-    z-index: 100;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    display: flex;
-
-    .displayLife {
-        filter: grayscale(70%);
-
-        button:hover {
-            border: 1px solid var(--primary);
-            background-color: var(--secondary);
-            border-radius: 10px;
-            color: var(--primary);
-        }
-    }
-
-    .life {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin: 0;
-        justify-content: center;
-
-        button {
-            padding: 0;
-            height: 20px;
-            width: 20px;
-        }
-
-        span {
-            color: var(--white);
-            text-shadow: 1px 1px black;
-
-            &.deadLife {
-                color: var(--error)
-            }
-
-            &.winnerLife {
-                color: var(--success)
-            }
-        }
-    }
-}
-
-.img {
-    height: 100%;
-    width: 100%;
-    filter: opacity(0.5);
-    position: absolute;
-    z-index: 1;
-
-    &.almostDead {
-        animation: heartbeat 1.4s infinite;
-    }
-
-    &.dead {
-        filter: grayscale(90%) opacity(0.3);
-    }
-
-    &.winner {
-        filter: opacity(1) contrast(100%);
-    }
-}
-
-
-
-.title {
-    position: absolute;
-    z-index: 1;
-    text-align: center;
-    margin: 10px;
-    line-height: 0.8;
-
-    p {
-        color: var(--white);
-        text-shadow: 1px 1px black;
-        margin: 0;
-    }
-
-    span {
-        margin-top: 0;
-        text-shadow: 1px 1px black;
-        font-size: medium;
-    }
-    
-}
-
 .imgContainer {
     border: 1px solid var(--primary);
     display: flex;
@@ -103,6 +14,128 @@
     position: relative;
     min-height: 49vh;
     min-width: 49vw;
+
+    &.deadthContainer {
+        filter: blur(0.6px) grayscale(90%);
+    }
+
+    .lifeButtonPlus {
+        right: 0;
+    }
+
+    .lifeButtonLess, .lifeButtonPlus {
+        width: 50%;
+        position: absolute;
+        height: 100%;
+        z-index: 2;
+        border: none;
+        background: transparent;
+        font-size: larger;
+        border-radius: 0;
+
+        &:hover {
+            border: none;
+            background: transparent;
+            color: var(--white);
+        }
+    }
+
+    .hited {
+        animation: hurtImg 0.1s ease;
+    }
+
+    .hitedButton {
+        animation: hurt 0.3s ease;
+    }
+
+    .healed {
+        animation: healingImg 0.3s ease-in-out;
+    }
+
+    .healedButton {
+        animation: healing 0.3s ease-in-out;
+    }
+
+    .img {
+        height: 100%;
+        width: 100%;
+        filter: opacity(0.5);
+        position: absolute;
+        z-index: 1;
+
+        &.almostDead {
+            animation: heartbeat 1.4s infinite;
+        }
+
+        &.dead {
+            filter: grayscale(90%) opacity(0.3);
+        }
+
+        &.winner {
+            filter: opacity(1) contrast(100%);
+        }
+    }
+
+    .title {
+        position: absolute;
+        z-index: 1;
+        text-align: center;
+        margin: 10px;
+        line-height: 0.8;
+
+        p {
+            color: var(--white);
+            text-shadow: 1px 1px black;
+            margin: 0;
+        }
+
+        span {
+            margin-top: 0;
+            text-shadow: 1px 1px black;
+            font-size: medium;
+        }
+        
+    }
+
+    .lifeContainer {
+        z-index: 1;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        display: flex;
+
+        .displayLife {
+            filter: grayscale(70%);
+
+            button:hover {
+                border: 1px solid var(--primary);
+                background-color: var(--secondary);
+                border-radius: 10px;
+                color: var(--primary);
+            }
+        }
+
+        .life {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            justify-content: center;
+
+            span {
+                color: var(--white);
+                text-shadow: 1px 1px black;
+
+                &.deadLife {
+                    color: var(--error)
+                }
+
+                &.winnerLife {
+                    color: var(--success)
+                }
+            }
+        }
+    }
 }
 
 @keyframes heartbeat {
@@ -112,4 +145,60 @@
     30% {transform: scale(1.04); }
     45% {transform: scale(0.995); }
     100% {transform: scale(1); }
+}
+
+
+@keyframes hurt {
+    0% {
+        background-color: rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes hurtImg {
+    0% {
+        transform: scale(1); 
+    }
+    45% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1); 
+    }
+}
+
+@keyframes healing {
+    0% {
+        background-color: rgba(0, 255, 85, 0.0);
+        box-shadow: 0 0 0px rgba(0, 255, 85, 0.0);
+    }
+    40% {
+        background-color: rgba(0, 255, 85, 0.15);
+        box-shadow: 0 0 12px rgba(0, 255, 85, 0.3);
+    }
+    60% {
+        background-color: rgba(0, 255, 85, 0.25);
+        box-shadow: 0 0 16px rgba(0, 255, 85, 0.5);
+    }
+    100% {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+@keyframes healingImg {
+    0% {
+    transform: scale(1);
+    filter: opacity(0.5) brightness(100%) blur(0px);
+  }
+  40% {
+    transform: scale(1.03);
+    filter: opacity(0.5) brightness(150%) blur(0.5px);
+  }
+  100% {
+    transform: scale(1);
+    filter: opacity(0.5) brightness(100%) blur(0px);
+  }
 }

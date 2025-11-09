@@ -130,6 +130,7 @@
         margin: 15px;
         line-height: 0.8;
         text-shadow: 2px 2px black;
+        bottom: 0;
 
         p {
             color: var(--white);
@@ -139,24 +140,6 @@
         span {
             margin-top: 0;
             font-size: medium;
-        }
-    }
-
-    .index {
-        position: absolute;
-        z-index: 1;
-        text-align: center;
-        bottom: 0;
-        margin: 10px;
-        line-height: 0.8;
-        text-shadow: 2px 2px black;
-
-        &.impairIndex {
-            right: 0;
-        }
-
-        p {
-            margin: 0;
         }
     }
 

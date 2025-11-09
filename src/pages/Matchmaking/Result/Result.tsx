@@ -48,7 +48,7 @@ const Result: React.FC<Props> = ({configuration, ref}) => {
                                         )
                                     }
                                 })}
-                                { (config as Array<Record<string, string>>).length < 5 && !Array.isArray((config as Array<Record<string, string>>)[0]) && (
+                                { (config as Array<Record<string, string>>).length < 6 && !Array.isArray((config as Array<Record<string, string>>)[0]) && (
                                     <button style={{ marginTop: '10px' }} onClick={() => handleSetConf(config as Array<Record<string, string>>)}>LANCER !</button>
                                 )}
                             </div>

@@ -103,6 +103,8 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             case 3:
             case 4 :
                 return {display: "grid", 'gridTemplateColumns': '1fr 1fr'}
+            case 5 :
+                return {display: "grid", 'gridTemplateColumns': '1fr 1fr 1fr 1fr 1fr 1fr'}
             default:
                 return {display: "grid"};
         }
@@ -151,21 +153,23 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                     break;
             }
         } 
-    }
 
-    const getHandlePosition = (index: number) => {
-        switch (index) {
-            case 0:
-                return {bottom: 0, marginRight: '5px', right: 0}
-            case 1:
-                return {bottom: 0, marginLeft: '5px', left: 0}
-            case 2:
-                return {top: 0, marginRight: '5px', right: 0}
-            case 3:
-                return {top: 0, marginLeft: '5px', left: 0}
-            default:
-                break;
-        }
+        if (length === 5 ) {
+            switch (index) {
+                case 0:
+                    return '1 / 3'
+                case 1:
+                    return '3 / 5'
+                case 2:
+                    return '5 / 7'
+                case 3:
+                    return '1 / 4'
+                case 4:
+                    return '4 / 7'
+                default:
+                    break;
+            }
+        } 
     }
 
     const handleClose = (id: string, isDead: boolean) => {
@@ -212,11 +216,18 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                         key={c.idPlayer}
                         data-id={c.idPlayer}
                         id={`${index}`}
-                        className={classNames('draggable', styles.imgContainer, {[styles.deadthContainer]: !c.imageUrl && isPlayerDead(c.idPlayer)})}
+                        className={
+                            classNames('draggable', styles.imgContainer, 
+                                {
+                                    [styles.deadthContainer]: !c.imageUrl && isPlayerDead(c.idPlayer), 
+                                    [styles.responsiveCard]: (matchConf.length !== 5) || (matchConf.length === 5 && (index === 3 || index === 4))
+                                }
+                            )
+                        }
                         style={{ gridColumn: getGridColumn(matchConf.length, index) }}
                         data-bg={c.imageUrl}
                     >  
-                        <div className={classNames("drag-handle", styles.draggableButton)} style={{ position: 'absolute', zIndex: 100000, color: 'var(--white)', ...getHandlePosition(index)}}>☰</div>
+                        <div className={classNames("drag-handle", styles.draggableButton)} style={{ position: 'absolute', zIndex: 100000, color: 'var(--white)', bottom: 0,marginLeft: '10px', margin: '5px', left: 0}}>☰</div>
                         <button className={classNames(styles.lifeButtonLess, {[styles.hitedButton]: hited[c.idPlayer]})} disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, -1)}}>-</button>
 
                         <img 

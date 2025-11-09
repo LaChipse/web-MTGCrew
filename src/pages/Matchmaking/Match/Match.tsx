@@ -114,7 +114,18 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     }
 
     const getGridColumn = (length: number, index: number ) => {
-        if (length === 3 && index === 2) return "1 / -1"
+        if (length === 3) {
+            switch (index) {
+                case 0:
+                    return "1";
+                case 1:
+                    return "2"
+                case 2:
+                    return "1 / -1" 
+                default:
+                    break;
+            }
+        }
         return 0
     }
 

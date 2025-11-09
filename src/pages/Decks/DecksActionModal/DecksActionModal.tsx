@@ -293,7 +293,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                         value={rank.toString()}
                                         onChange={((e) => setRank(Number(e.target.value)))}
                                     >
-                                        <MenuItem value={'0'}>0</MenuItem>
+                                        <MenuItem value={'0'}>RIP</MenuItem>
                                         <MenuItem value={'1'}>1</MenuItem>
                                         <MenuItem value={'2'}>2</MenuItem>
                                         <MenuItem value={'3'}>3</MenuItem>

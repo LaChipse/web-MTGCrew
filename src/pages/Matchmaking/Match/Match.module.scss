@@ -68,6 +68,10 @@
     border-radius: 15px;
     margin: 2px;
 
+    .draggableButton:hover {
+        cursor: grab;
+    }
+
     &.deadthContainer {
         filter: grayscale(90%);
     }
@@ -92,6 +96,7 @@
             border: none;
             background: transparent;
             color: var(--primary);
+            cursor: default;
         }
     }
 
@@ -130,7 +135,7 @@
         margin: 15px;
         line-height: 0.8;
         text-shadow: 2px 2px black;
-        bottom: 0;
+        width: 100%;
 
         p {
             color: var(--white);

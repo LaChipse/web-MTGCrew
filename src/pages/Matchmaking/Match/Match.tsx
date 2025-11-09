@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Sortable from 'sortablejs'
 import Tombstone from '../../../components/Tombstone'
 import Trophey from '../../../components/Trophey'
@@ -29,25 +29,32 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [showSettings, setShowSettings] = useState(false)
     const [matchConf, setMatchConf] = useState(conf)
 
-    const containerField = document.getElementById("draggableContain");
+    const containerRef = useRef<HTMLDivElement>(null);
+    const matchConfRef = useRef(matchConf);
+
+    // Mettre à jour le ref à chaque changement de state
+    useEffect(() => {
+        matchConfRef.current = matchConf;
+    }, [matchConf]);
 
     useEffect(() => {
-        if (containerField) {
-            Sortable.create(containerField, {
-                animation: 200,
-                swapThreshold: 0.65,
-                draggable: ".draggable",
-                handle: ".drag-handle",
+        if (!containerRef.current || !matchConfRef) return;
 
-                onMove: function (evt) {     
-                    const newArr = [...matchConf];
-                    [newArr[Number(evt.related.id)], newArr[Number(evt.dragged.id)]] = [newArr[Number(evt.dragged.id)], newArr[Number(evt.related.id)]];
-                    setMatchConf(newArr);
-                },
-            });
-        }
+        const sortable = Sortable.create(containerRef.current, {
+            swapThreshold: 0.65,
+            draggable: ".draggable",
+            handle: ".drag-handle",
 
-    }, [containerField, matchConf])
+            onMove(evt) {
+                const newArr = [...matchConfRef.current]; 
+                [newArr[Number(evt.related.id)], 
+                newArr[Number(evt.dragged.id)]] = [newArr[Number(evt.dragged.id)], newArr[Number(evt.related.id)]]; 
+                setMatchConf(newArr);
+            },
+        });
+
+        return () => sortable.destroy();
+    }, []);
 
     useEffect(() => {
         setStatePlayers((prev) => {
@@ -146,6 +153,21 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         } 
     }
 
+    const getHandlePosition = (index: number) => {
+        switch (index) {
+            case 0:
+                return {bottom: 0, marginRight: '5px', right: 0}
+            case 1:
+                return {bottom: 0, marginLeft: '5px', left: 0}
+            case 2:
+                return {top: 0, marginRight: '5px', right: 0}
+            case 3:
+                return {top: 0, marginLeft: '5px', left: 0}
+            default:
+                break;
+        }
+    }
+
     const handleClose = (id: string, isDead: boolean) => {
         setModalPlayerOpen((prev) => ({
             ...prev,
@@ -184,7 +206,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         <div>
             <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
 
-            <div id='draggableContain' style={{ height: "100vh", width: "100%", ...gridCOnfig() }}>
+            <div ref={containerRef} style={{ height: "100vh", width: "100%", ...gridCOnfig() }}>
                 {matchConf.map((c, index) => (
                     <div
                         key={c.idPlayer}
@@ -194,7 +216,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                         style={{ gridColumn: getGridColumn(matchConf.length, index) }}
                         data-bg={c.imageUrl}
                     >  
-                        <div className="drag-handle" style={{ position: 'absolute', zIndex: 100000, color: 'var(--white)', marginLeft: '5px'}}>☰</div>
+                        <div className={classNames("drag-handle", styles.draggableButton)} style={{ position: 'absolute', zIndex: 100000, color: 'var(--white)', ...getHandlePosition(index)}}>☰</div>
                         <button className={classNames(styles.lifeButtonLess, {[styles.hitedButton]: hited[c.idPlayer]})} disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, -1)}}>-</button>
 
                         <img 

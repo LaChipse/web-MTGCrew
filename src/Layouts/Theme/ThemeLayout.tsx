@@ -17,6 +17,7 @@ const ThemeLayout = () => {
         root.style.setProperty('--tertiary', theme.tertiary);
         root.style.setProperty('--background', theme.background);
         root.style.setProperty('--white', theme.white);
+        root.style.setProperty('--black', theme.black);
         root.style.setProperty('--success', theme.success);
         root.style.setProperty('--error', theme.error);
         root.style.setProperty('--currentColor', mode.isStandard ? theme.primaryStd : theme.primarySpec);

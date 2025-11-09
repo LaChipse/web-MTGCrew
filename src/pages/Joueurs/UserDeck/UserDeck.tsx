@@ -23,7 +23,7 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
     const [openDeck, setOpenDeck] = useState<Deck | null>(null); // deck actuellement ouvert
     const [anchor, setAnchor] = useState<DOMRect | null>(null);
 
-    const SortArrow = ({ column }: { column: string }) => {
+    const sortArrow = (column: string) => {
         if (sortConfig?.key !== column) return (<span className={styles.arrowDisabled}>{"▲"}</span>);
         return <span className={styles.arrow}>{sortConfig.direction === 1 ? "▲" : "▼"}</span>;
     };
@@ -80,11 +80,11 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                         <table aria-label="customized table">
                             <thead>
                                 <tr>
-                                    <th align="center" onClick={() => requestSort("nom")}>Nom <SortArrow column="nom" /></th>
+                                    <th align="center" onClick={() => requestSort("nom")}>Nom {sortArrow('nom')}</th>
                                     <th align="center">Couleurs</th>
-                                    <th align="center" onClick={() => requestSort("rank")}>Rank <SortArrow column="rank" /></th>
-                                    <th align="center" onClick={() => requestSort(`parties.${partieType}`)}>Nbr parties <SortArrow column={`parties.${partieType}`} /></th>
-                                    <th align="center" onClick={() => requestSort(`victoires.${partieType}`)}>Victoires <SortArrow column={`victoires.${partieType}`} /></th>
+                                    <th align="center" onClick={() => requestSort("rank")}>Rank {sortArrow('rank')}</th>
+                                    <th align="center" onClick={() => requestSort(`parties.${partieType}`)}>Nbr parties {sortArrow(`parties.${partieType}`)}</th>
+                                    <th align="center" onClick={() => requestSort(`victoires.${partieType}`)}>Victoires {sortArrow(`victoires.${partieType}`)}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,8 +102,8 @@ const UserDeckModal: React.FC<Props> = ({ userId, open, partieType, setOpen }) =
                                             }
                                         </th>
                                         <td style={{lineHeight: 0.5}} align="center">{formatArray(deck.couleurs) || '-'}</td>
-                                        <td align="center" className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
-                                            {deck.rank || '-'}
+                                        <td align="center" className={classNames([styles[RANK[deck.rank].toLocaleUpperCase()], styles.rank])}>
+                                            {deck.rank === 0 ? 'RIP' : deck.rank || '-'}
                                         </td>
                                         <td align="center"> { deck.parties?.[partieType] } </td>
                                         <td align="center"> { deck.victoires?.[partieType] } </td>

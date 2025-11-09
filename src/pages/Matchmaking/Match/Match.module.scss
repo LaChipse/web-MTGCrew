@@ -1,9 +1,60 @@
 
 .close {
     position: absolute;
-    margin: 10px;
-    right: 0px;
+    margin: 5px;
+    top: 5px;
+    right: 5px;
     z-index: 1000;
+}
+
+.settingsButton {
+    position: absolute;
+    margin: 10px;
+    right: 5px;
+    top: 40px;
+    z-index: 1000;
+
+    mask: var(--svg) no-repeat center;
+    mask-size: contain;
+    height: 20px;
+    width: 20px;
+    background-color: var(--primary);
+    --svg: url("/assets/settings.svg");
+    margin-left: auto;
+
+    &:hover {
+        background-color: var(--primary);
+        opacity: 0.6;
+    }
+}
+
+.settings {
+    position: fixed;
+    z-index: 1000;
+    background-color: var(--background);
+    backdrop-filter: blur(1px);
+    padding: 0 10px;
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    gap: 10px;
+
+    p {
+        width: 60px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 5px;
+    }
+
+    > div {
+        width: fit-content;
+    }
+
+    .playerIndex {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
 .imgContainer {
@@ -12,8 +63,10 @@
     font-size: 1.5rem;
     overflow: hidden;
     position: relative;
-    min-height: 50vh;
-    min-width: 50vw;
+    min-height: 47.5vh;
+    min-width: 47.5vw;
+    border-radius: 15px;
+    margin: 2px;
 
     &.deadthContainer {
         filter: grayscale(90%);
@@ -42,16 +95,8 @@
         }
     }
 
-    .hited {
-        animation: hurtImg 0.1s ease;
-    }
-
     .hitedButton {
         animation: hurt 0.3s ease;
-    }
-
-    .healed {
-        animation: healingImg 0.3s ease-in-out;
     }
 
     .healedButton {
@@ -82,7 +127,7 @@
         position: absolute;
         z-index: 1;
         text-align: center;
-        margin: 10px;
+        margin: 15px;
         line-height: 0.8;
         text-shadow: 2px 2px black;
 
@@ -95,7 +140,24 @@
             margin-top: 0;
             font-size: medium;
         }
-        
+    }
+
+    .index {
+        position: absolute;
+        z-index: 1;
+        text-align: center;
+        bottom: 0;
+        margin: 10px;
+        line-height: 0.8;
+        text-shadow: 2px 2px black;
+
+        &.impairIndex {
+            right: 0;
+        }
+
+        p {
+            margin: 0;
+        }
     }
 
     .lifeContainer {
@@ -158,18 +220,6 @@
     }
 }
 
-@keyframes hurtImg {
-    0% {
-        transform: scale(1); 
-    }
-    45% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1); 
-    }
-}
-
 @keyframes healing {
     0% {
         background-color: rgba(0, 255, 85, 0.0);
@@ -186,20 +236,5 @@
     100% {
         background-color: transparent;
         box-shadow: none;
-    }
-}
-
-@keyframes healingImg {
-    0% {
-    transform: scale(1);
-    filter: opacity(0.5) brightness(100%) blur(0px);
-    }
-    40% {
-        transform: scale(1.03);
-        filter: opacity(0.5) brightness(150%) blur(0.5px);
-    }
-    100% {
-        transform: scale(1);
-        filter: opacity(0.5) brightness(100%) blur(0px);
     }
 }

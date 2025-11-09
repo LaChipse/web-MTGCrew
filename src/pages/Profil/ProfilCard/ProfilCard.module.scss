@@ -41,16 +41,17 @@
 
     .updateButton {
         mask: var(--svg) no-repeat center;
-            mask-size: contain;
-            height: 20px;
-            width: 20px;
-            background-color: var(--primary);
-            --svg: url("/assets/settings.svg");
-            margin-left: auto;
+        mask-size: contain;
+        height: 20px;
+        width: 20px;
+        background-color: var(--primary);
+        --svg: url("/assets/settings.svg");
+        margin-left: auto;
 
-            &:hover {
-                background-color: rgba(39, 233, 255, 0.6);
-            }
+        &:hover {
+            background-color: var(--primary);
+            opacity: 0.6;
+        }
     }
 
     .action {

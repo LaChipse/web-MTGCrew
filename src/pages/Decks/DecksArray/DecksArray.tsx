@@ -31,7 +31,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetS
     const [openDeck, setOpenDeck] = useState<Deck | null>(null); // deck actuellement ouvert
     const [anchor, setAnchor] = useState<DOMRect | null>(null);
 
-    const SortArrow = ({ column }: { column: string }) => {
+    const sortArrow = (column: string) => {
         if (sortConfig?.key !== column) return (<span className={styles.arrowDisabled}>{"▲"}</span>);
         return <span className={styles.arrow}>{sortConfig.direction === 1 ? "▲" : "▼"}</span>;
     };
@@ -99,12 +99,12 @@ const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetS
                 <table aria-label='deck table'>
                     <thead>
                         <tr>
-                            <th align='center' onClick={() => requestSort("nom")}>Nom <SortArrow column="nom" /></th>
+                            <th align='center' onClick={() => requestSort("nom")}>Nom {sortArrow('nom')}</th>
                             <th align='center' >Couleurs</th>
-                            <th align='center' onClick={() => requestSort("type")}>Type <SortArrow column="type" /></th>
-                            <th align='center' onClick={() => requestSort("rank")}>Rank <SortArrow column="rank" /></th>
-                            <th align='center' onClick={() => requestSort(`parties.${partieType}`)}>Nbr parties <SortArrow column={`parties.${partieType}`} /></th>
-                            <th align='center' onClick={() => requestSort(`victoires.${partieType}`)}>Victoires <SortArrow column={`victoires.${partieType}`} /></th>
+                            <th align='center' onClick={() => requestSort("type")}>Type {sortArrow('type')}</th>
+                            <th align='center' onClick={() => requestSort("rank")}>Rank {sortArrow('rank')}</th>
+                            <th align='center' onClick={() => requestSort(`parties.${partieType}`)}>Nbr parties {sortArrow(`parties.${partieType}`)}</th>
+                            <th align='center' onClick={() => requestSort(`victoires.${partieType}`)}>Victoires {sortArrow(`parties.${partieType}`)}</th>
                             <th align='center' ></th>
                         </tr>
                     </thead>
@@ -124,8 +124,8 @@ const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetS
                                 </th>
                                 <td style={{lineHeight: 0.5}} align='center'>{formatArray(deck.couleurs)}</td>
                                 <td align='center'>{toTitleCase(deck.type) || '-'}</td>
-                                <td align='center' className={classNames([styles[RANK[deck.rank - 1].toLocaleUpperCase()], styles.rank])}>
-                                    {deck.rank  || '-'}
+                                <td align='center' className={classNames([styles[RANK[deck.rank].toLocaleUpperCase()], styles.rank])}>
+                                    {deck.rank === 0 ? 'RIP' : deck.rank || '-'}
                                 </td>
                                 <td align='center'>{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</td>
                                 <td align='center'>{`${deck.victoires?.[partieType]}`} {<span className={styles[colorVictory(deck)]} >{`(${ratioVictory(deck)}%)`}</span>}</td>

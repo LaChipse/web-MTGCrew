@@ -1,1 +1,1 @@
-export const RANK = ['E', 'D', 'C', 'B', 'A']
+export const RANK = ['RIP', 'E', 'D', 'C', 'B', 'A']

@@ -7,6 +7,7 @@ export interface ThemeColors {
     tertiary: string,
     background: string,
     white: string;
+    black: string;
     success: string;
     error: string;
 }
@@ -18,8 +19,9 @@ const initialState: ThemeColors = {
     tertiary: '#2f336bff',
     background: '#21213aff',
     white: '#ffffffcc',
+    black: '#221e1eff',
     success: '#21fc42ff',
-    error: '#FA0505'
+    error: '#FA0505',
 
 };
 

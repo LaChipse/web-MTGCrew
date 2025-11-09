@@ -12,8 +12,7 @@ const ImagePortal: React.FC<Props> = ({ anchor, illustrationUrl }) => (
         <Box
             sx={{
                 position: 'fixed',
-                top:
-                anchor.bottom + 210 > window.innerHeight // si dépasse vers le bas
+                top: anchor.bottom + 210 > window.innerHeight // si dépasse vers le bas
                     ? anchor.top - 220 // place au-dessus
                     : anchor.bottom, // sinon en dessous
                 left: anchor.left + anchor.width / 2 + 20,
@@ -23,7 +22,7 @@ const ImagePortal: React.FC<Props> = ({ anchor, illustrationUrl }) => (
                 borderRadius: '10px',
                 backgroundColor: 'transparent', // ou un fond si tu veux un effet popover
             }}
-            >
+        >
             <img
                 src={`${illustrationUrl}?w=164&h=164&fit=crop&auto=format`}
                 alt={illustrationUrl}

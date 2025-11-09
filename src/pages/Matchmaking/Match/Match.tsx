@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/set-state-in-effect */
+import { MenuItem, Select } from '@mui/material'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import Tombstone from '../../../components/Tombstone'
 import Trophey from '../../../components/Trophey'
+import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/components/GamesFilter/StyleMui'
 import LoosingModal from '../LoosingModal/LoosingModal'
 import styles from './Match.module.scss'
 
@@ -25,6 +27,9 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [modalPlayerOpen, setModalPlayerOpen] = useState<Record<string, boolean>>({})
     const [hited, setHited] = useState<Record<string, boolean>>({})
     const [healed, setHealed] = useState<Record<string, boolean>>({})
+    const [matchConf, setMatchConf] = useState<Array<Record<string, string>>>(conf)
+    const [showSettings, setShowSettings] = useState(false)
+    const [anchor, setAnchor] = useState<DOMRect | null>(null);
 
     useEffect(() => {
         setStatePlayers((prev) => {
@@ -32,7 +37,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
 
             const newState: PlayerStateMap = {}
 
-            conf.forEach((c) => {
+            matchConf.forEach((c) => {
                 newState[c.idPlayer] = {
                     life: 40,
                     poison: 0,
@@ -49,17 +54,24 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
 
             const newState: Record<string, boolean> = {}
 
-            conf.forEach((c) => {
+            matchConf.forEach((c) => {
                 newState[c.idPlayer] = false
             })
 
             return newState
         })
-    }, [conf])
+
+        const handleResize = () => {
+            if (showSettings) setShowSettings(false);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [matchConf, showSettings])
 
 
     const gridCOnfig = () => {
-        switch (conf.length) {
+        switch (matchConf.length) {
             case 1:
             case 2:
                 return {display: "grid"}
@@ -72,8 +84,8 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     }
 
     const isFullWidth = (i: number) => {
-        if (conf.length === 2 || conf.length === 1) return true
-        if (conf.length === 3 && i === 2) return true
+        if (matchConf.length === 2 || matchConf.length === 1) return true
+        if (matchConf.length === 3 && i === 2) return true
         return false
     }
 
@@ -140,15 +152,63 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         if (areAllOtherDead(id)) return <Trophey height='20px' width='20px' color='var(--success)'/>
     }
 
+    const handleShowSettings = (event: MouseEvent) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setAnchor(rect);
+        setShowSettings(!showSettings)
+        
+    }
+
+    const handleChangeMatchConfig = (oldIndex: number, newIndex: number) => {
+        const newArr = [...matchConf];
+        [newArr[oldIndex], newArr[newIndex - 1]] = [newArr[newIndex - 1], newArr[oldIndex]];
+        setMatchConf(newArr);
+    }
+
     return (
-        <>
+        <div>
             <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
+            <button onClick={handleShowSettings} className={styles.settingsButton} />
+
+            {showSettings && (
+                <div
+                    className={styles.settings} 
+                    style={{
+                        top: anchor!.bottom + 210 > window.innerHeight // si dépasse vers le bas
+                            ? anchor!.top - 220 // place au-dessus
+                            : anchor!.bottom + 5, // sinon en dessous
+                        left: anchor!.left - 120}}
+                    >
+                    {matchConf.map((c, index) => (
+                        <div className={styles.playerIndex}>
+                            <p>{c.player}</p>
+                            <Select
+                                MenuProps={SELECT_MENU_STYLE}
+                                sx={{
+                                    ...SELECT_STYLE,
+                                    height: '30px'
+                                }}
+                                id="Position"
+                                value={index + 1}
+                                onChange={(e) => handleChangeMatchConfig(index, Number(e.target.value))}
+                            >
+                                {
+                                    matchConf.map((_, index) => (
+                                        <MenuItem value={index + 1}>{index + 1}</MenuItem>
+                                    ))
+                                }
+                                </Select>
+                        </div>
+                    ))}
+                </div>
+            )}
+
             <div style={{ height: "100vh", width: "100%", ...gridCOnfig() }}>
-                {conf.map((c, index) => (
+                {matchConf.map((c, index) => (
                     <div
                         key={c.idPlayer}
                         className={classNames(styles.imgContainer, {[styles.deadthContainer]: !c.imageUrl && isPlayerDead(c.idPlayer)})}
-                        style={{ gridColumn: getGridColumn(conf.length, index) }}
+                        style={{ gridColumn: getGridColumn(matchConf.length, index) }}
                         data-bg={c.imageUrl}
                     >  
 
@@ -161,9 +221,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                                 {
                                     [styles.dead]: isPlayerDead(c.idPlayer), 
                                     [styles.winner]: areAllOtherDead(c.idPlayer), 
-                                    [styles.almostDead]: isAlmostDead(c.idPlayer), 
-                                    [styles.hited]: hited[c.idPlayer],
-                                    [styles.healed]: healed[c.idPlayer],
+                                    [styles.almostDead]: isAlmostDead(c.idPlayer),
                                 }
                             )} 
                             src={c.imageUrl}    
@@ -173,6 +231,10 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                         <div className={styles.title}>
                             <p>{c.player} {getPlayerState(c.idPlayer)}</p>
                             <span>{c.deckNom}</span>
+                        </div>
+
+                        <div className={classNames(styles.index, {[styles.impairIndex]: (index + 1) % 2 !== 0})}>
+                            <p>{index + 1}</p>
                         </div>
 
                         <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} isFullWidth={isFullWidth(index)}/>
@@ -193,7 +255,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 

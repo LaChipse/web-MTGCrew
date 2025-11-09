@@ -39,7 +39,8 @@
 
             &:hover {
                 cursor: help;
-                color: rgba(39, 233, 255, 0.6)
+                color: var(--primary);
+                opacity: 0.6;
             }
         }
     }

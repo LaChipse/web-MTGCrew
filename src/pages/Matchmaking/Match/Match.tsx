@@ -6,6 +6,8 @@ import Tombstone from '../../../components/Tombstone'
 import Trophey from '../../../components/Trophey'
 import LoosingModal from '../LoosingModal/LoosingModal'
 import styles from './Match.module.scss'
+import DamageCommanderModal from '../DamageCommanderModal/DamageCommanderModal'
+import Shield from '../../../components/Shield'
 
 type Props = {
     toggleDrawer: (isOpened: boolean) => void
@@ -17,6 +19,7 @@ type PlayerState = {
     poison: number
     dead: boolean
     isAlmostDead: boolean
+    damageCommander: Record<string, number>
 }
 
 type PlayerStateMap = Record<string, PlayerState>
@@ -28,11 +31,11 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [healed, setHealed] = useState<Record<string, boolean>>({})
     const [showSettings, setShowSettings] = useState(false)
     const [matchConf, setMatchConf] = useState(conf)
+    const [commanderModalIsOpen, setCommanderModalIsOpen] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null);
     const matchConfRef = useRef(matchConf);
 
-    // Mettre à jour le ref à chaque changement de state
     useEffect(() => {
         matchConfRef.current = matchConf;
     }, [matchConf]);
@@ -57,6 +60,10 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     }, []);
 
     useEffect(() => {
+        const othersPlayers = (id: string) => matchConf
+            .filter((c) => c.idPlayer !== id)
+            .reduce((acc, c) => ({ ...acc, [c.idPlayer]: 0 }), {} as Record<string, number>);
+
         setStatePlayers((prev) => {
             if (Object.keys(prev).length > 0) return prev
 
@@ -68,6 +75,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                     poison: 0,
                     dead: false,
                     isAlmostDead: false,
+                    damageCommander: {...othersPlayers(c.idPlayer)}
                 }
             })
 
@@ -93,7 +101,6 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, [matchConf, showSettings])
-
 
     const gridCOnfig = () => {
         switch (matchConf.length) {
@@ -204,11 +211,48 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const getPlayerState = (id: string) => {
         if (isPlayerDead(id)) return <Tombstone height='20px' width='20px' color='var(--error)'/>
         if (areAllOtherDead(id)) return <Trophey height='20px' width='20px' color='var(--success)'/>
+        if (isAlomstDeadByCommander(id)) return <Shield className={styles.shiedlIcon} height='20px' width='20px' color='var(--error)'/>
+    }
+
+    const isAlomstDeadByCommander = (idPlayer: string) => {
+        return Object.values(statePlayers).some((playerState) =>
+            ((playerState.damageCommander[idPlayer] ?? 0) > 17) && ((playerState.damageCommander[idPlayer] ?? 0) < 21)
+        );
+    }
+
+    const handleSetDamageCommander = (from: string, to: string, damage: number) => {
+        setStatePlayers((prev) => ({
+            ...prev,
+            [from]: {
+                ...prev[from],
+                damageCommander: {
+                    ...prev[from].damageCommander,
+                    [to]: damage,
+                }, 
+            },
+            [to]: {
+                ...prev[to],
+                dead: damage > 20
+            }
+        }))
+
+        if (damage > 20) {
+            setModalPlayerOpen((prev) => ({
+                ...prev,
+                [to]: true,
+            }))
+        }
+
+        setTimeout(() => {
+            setCommanderModalIsOpen(false)
+        }, 200)
     }
 
     return (
         <div>
             <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
+            <Shield className={styles.commanderButton} onClick={() => setCommanderModalIsOpen(true)} height='50px' width='50px' color='var(--primary)'/>
+            <DamageCommanderModal onSetOpen={setCommanderModalIsOpen} open={commanderModalIsOpen} conf={matchConf} handleSetDamageCommander={handleSetDamageCommander} />
 
             <div ref={containerRef} style={{ height: "100vh", width: "100%", ...gridCOnfig() }}>
                 {matchConf.map((c, index) => (

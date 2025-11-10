@@ -91,12 +91,7 @@ export const SELECT_MENU_STYLE = {
                     "&.Mui-selected": {
                         backgroundColor: 'var(--primary)',
                         color: 'var(--secondary)',
-                        "&:hover": {
-                            color: 'var(--white)',
-                            ".MuiTypography-root": {
-                                color: 'var(--white)',
-                            },
-                        },
+                        
                         ".MuiTypography-root": {
                             color: 'var(--secondary)',
                         },

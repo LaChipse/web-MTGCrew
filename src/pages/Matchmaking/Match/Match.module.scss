@@ -6,6 +6,22 @@
     z-index: 1000;
 }
 
+.shiedlIcon {
+    animation: pulseOpacity 0.8s ease-in-out infinite alternate;
+}
+
+.commanderButton {
+    position: absolute;
+    z-index: 5000;
+    top: 47.5vh;
+    left: 47.5vw;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}
+
 .settingsButton {
     position: absolute;
     margin: 10px;
@@ -236,4 +252,9 @@
         background-color: transparent;
         box-shadow: none;
     }
+}
+
+@keyframes pulseOpacity {
+    from { opacity: 1; }
+    to   { opacity: 0.3; }
 }

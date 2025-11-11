@@ -3,12 +3,14 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/components/GamesFilter/StyleMui';
 import NumberSpinnerInput from './NumberSpinnerInput/NumberSpinnerInput';
 import classNames from 'classnames';
+import { PlayerStateMap } from '../Match/Match';
 import styles from './DamageCommanderModal.module.scss'
 
 type Props = {
+    statePlayers: PlayerStateMap
     conf: Array<Record<string, string>>
     open: boolean
-    handleSetDamageCommander: (from: string, to: string, damage: number) => void
+    onSetDamageCommander: (from: string, to: string, damage: number) => void
     onSetOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -18,19 +20,45 @@ interface DamageCommanderState {
     damage: number
 }
 
-const DamageCommanderModal: React.FC<Props> = ({ conf, open, handleSetDamageCommander, onSetOpen}) => {
+const DamageCommanderModal: React.FC<Props> = ({ statePlayers, conf, open, onSetDamageCommander, onSetOpen}) => {
     const [damageCommanderState, setDamageCommanderState] = useState<DamageCommanderState>({damage: 0} as DamageCommanderState)
 
     const handleAttackingPlayerChange = (attackingPlayer: string) => {
-        setDamageCommanderState((prev) => ({...prev, from: attackingPlayer}))
+        setDamageCommanderState((prev) => {
+            let valueDamage = 0;
+            if (damageCommanderState.to) {
+                valueDamage = statePlayers[attackingPlayer].damageCommander[damageCommanderState.to]
+            }
+            return {...prev, damage: valueDamage, from: attackingPlayer}
+        })
     }
 
     const handleDefendingPlayerChange = (defendingPlayer: string) => {
-        setDamageCommanderState((prev) => ({...prev, to: defendingPlayer}))
+        setDamageCommanderState((prev) => {
+            let valueDamage = 0;
+            if (damageCommanderState.from) {
+                valueDamage = statePlayers[damageCommanderState.from].damageCommander[defendingPlayer]
+            }
+            return {...prev, damage: valueDamage, to: defendingPlayer}
+        })
     }
 
     const handleDamageChange = (damage: number) => {
         setDamageCommanderState((prev) => ({...prev, damage}))
+    }
+
+    const handleClose = () => {
+        onSetOpen(false);
+        setDamageCommanderState({damage: 0} as DamageCommanderState)
+    }
+
+    const handleSetDamageCommander = () => {
+        onSetDamageCommander(damageCommanderState.from, damageCommanderState.to, damageCommanderState.damage)
+    }
+
+    const getDamagedCommander = (defensorId: string) => {
+        if (damageCommanderState.from) return (`(${statePlayers[damageCommanderState.from].damageCommander[defensorId] || 0})`)
+        return ''
     }
 
     return (
@@ -53,7 +81,6 @@ const DamageCommanderModal: React.FC<Props> = ({ conf, open, handleSetDamageComm
                             onChange={(e) => handleAttackingPlayerChange(e.target.value as string)}
                         >
                             {conf.map((c) => (
-
                                 <MenuItem value={c.idPlayer}>{c.player}</MenuItem>
                             ))}
                         </Select>
@@ -81,20 +108,19 @@ const DamageCommanderModal: React.FC<Props> = ({ conf, open, handleSetDamageComm
                             onChange={(e) => handleDefendingPlayerChange(e.target.value as string)}
                         >
                             {conf.map((c) => (
-
-                                <MenuItem value={c.idPlayer}>{c.player}</MenuItem>
+                                <MenuItem value={c.idPlayer}>{`${c.player} ${getDamagedCommander(c.idPlayer)}`}</MenuItem>
                             ))}
                         </Select>
                     </div>
-                    <div style={{marginTop: 'auto', display: 'flex', gap: '10px'}}>
+                    <div style={{marginTop: 'auto', display: 'flex', gap: '15px'}}>
                         <button 
                             disabled={!damageCommanderState.from || !damageCommanderState.to} 
-                            onClick={() => handleSetDamageCommander(damageCommanderState.from, damageCommanderState.to, damageCommanderState.damage)}
+                            onClick={handleSetDamageCommander}
                             className={classNames({[styles.disabled]: !damageCommanderState.from || !damageCommanderState.to})}
                         >
-                            Ok
+                            Valider
                         </button>
-                        <button onClick={() => onSetOpen(false)}>X</button>
+                        <button onClick={handleClose}>X</button>
                     </div>
                 </div>
             </div>

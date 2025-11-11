@@ -22,13 +22,12 @@
         color: var(--background) !important;
     }
     background-color: var(--primary) !important;
+    opacity: 0.8;
+}
 
-    &:hover {
-        background-color: rgba(25, 118, 210, 0.12) !important;
-
-        div span {
-            color: var(--white) !important;
-        }
+.name:hover {
+    b {
+        font-weight: 500;
     }
 }
 

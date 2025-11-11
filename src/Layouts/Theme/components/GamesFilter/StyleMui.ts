@@ -55,8 +55,10 @@ export const SELECT_MENU_STYLE = {
                     backgroundColor: 'var(--primary)',
                     border: 'none',
                     color: 'var(--secondary)',
+                    opacity: 0.8,
                     "&:hover": {
-                        color: "var(--white)"
+                        color: "var(--white)",
+                        opacity: 1,
                     }
                 },
                 "&:hover": {
@@ -81,9 +83,6 @@ export const SELECT_MENU_STYLE = {
                     "&:hover" : {
                         backgroundColor: 'var(--primary)',
                         color: 'var(--secondary)',
-                        ".Mui-checked": {
-                            color: 'var(--primary)'
-                        },
                         ".MuiTypography-root": {
                             color: 'var(--secondary)',
                         },
@@ -91,7 +90,11 @@ export const SELECT_MENU_STYLE = {
                     "&.Mui-selected": {
                         backgroundColor: 'var(--primary)',
                         color: 'var(--secondary)',
-                        
+                        opacity: 0.8,
+                        '&:hover':{
+                            backgroundColor: 'var(--primary)',
+                            opacity: 1
+                        },
                         ".MuiTypography-root": {
                             color: 'var(--secondary)',
                         },

@@ -22,7 +22,7 @@ type PlayerState = {
     damageCommander: Record<string, number>
 }
 
-type PlayerStateMap = Record<string, PlayerState>
+export type PlayerStateMap = Record<string, PlayerState>
 
 const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [statePlayers, setStatePlayers] = useState<PlayerStateMap>({});
@@ -251,8 +251,10 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     return (
         <div>
             <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
-            <Shield className={styles.commanderButton} onClick={() => setCommanderModalIsOpen(true)} height='50px' width='50px' color='var(--primary)'/>
-            <DamageCommanderModal onSetOpen={setCommanderModalIsOpen} open={commanderModalIsOpen} conf={matchConf} handleSetDamageCommander={handleSetDamageCommander} />
+            <div className={styles.commanderButton}>
+                <Shield onClick={() => setCommanderModalIsOpen(true)} height='50px' width='50px' color='var(--primary)'/>
+            </div>
+            <DamageCommanderModal statePlayers={statePlayers} onSetOpen={setCommanderModalIsOpen} open={commanderModalIsOpen} conf={matchConf} onSetDamageCommander={handleSetDamageCommander} />
 
             <div ref={containerRef} style={{ height: "100vh", width: "100%", ...gridCOnfig() }}>
                 {matchConf.map((c, index) => (

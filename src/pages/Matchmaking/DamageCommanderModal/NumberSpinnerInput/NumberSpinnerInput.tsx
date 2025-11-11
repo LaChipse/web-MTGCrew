@@ -33,7 +33,7 @@ const NumberSpinnerInput: React.FC<NumberSpinnerProps> = ({
 
     return (
         <div style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-            <button className={styles.incrementButton} onClick={increment}>+</button>
+            <button className={styles.incrementButton} onClick={decrement}>-</button>
             <input
                 value={value}
                 onChange={handleInput}
@@ -42,8 +42,7 @@ const NumberSpinnerInput: React.FC<NumberSpinnerProps> = ({
                 step={step}
                 style={{width: value > 9 ? '20px' : '10px'}}
             />
-
-            <button className={styles.incrementButton} onClick={decrement}>-</button>
+            <button className={styles.incrementButton} onClick={increment}>+</button>
         </div>
     );
 };

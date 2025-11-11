@@ -251,7 +251,7 @@ const Matchmaking: React.FC = () => {
                             <Divider style={{backgroundColor: 'var(--primary'}}/>
 
                             {decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d).map((deck) => (
-                                <MenuItem key={deck.id} value={deck.id} onClick={(e) => {
+                                <MenuItem key={deck.id} value={deck.id}  className={styles.name} onClick={(e) => {
                                         e.preventDefault();
                                         handleChangeDeckSelected(deck.id)
                                     }}>

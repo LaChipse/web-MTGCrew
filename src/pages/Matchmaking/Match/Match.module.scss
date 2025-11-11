@@ -13,13 +13,17 @@
 .commanderButton {
     position: absolute;
     z-index: 5000;
-    top: 47.5vh;
-    left: 47.5vw;
+    top: 47vh;
+    width: 100%;
+    text-align: center;
 
-    &:hover {
-        cursor: pointer;
-        opacity: 0.8;
+    svg {
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
     }
+    
 }
 
 .settingsButton {

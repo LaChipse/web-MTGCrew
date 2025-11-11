@@ -241,6 +241,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                 [to]: {
                     ...prev[to],
                     life: prev[to].life - damage,
+                    isAlmostDead: (prev[to].life - damage <= 10) && (prev[to].life - damage > 0),
                     dead: prev[from].damageCommander[to] + damage > 20 || (prev[to].life - (damage - prev[from].damageCommander[to]) <= 0 )
                 }
             }

@@ -4,6 +4,7 @@
     top: 5px;
     right: 5px;
     z-index: 1000;
+    padding: 5px 9px;
 }
 
 .shiedlIcon {
@@ -16,11 +17,13 @@
     top: 47vh;
     width: 100%;
     text-align: center;
+    
 
     svg {
+        opacity: 1;
         &:hover {
             cursor: pointer;
-            opacity: 0.8;
+            opacity: 0.6;
         }
     }
     

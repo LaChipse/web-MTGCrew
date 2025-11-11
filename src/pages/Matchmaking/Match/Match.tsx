@@ -221,27 +221,30 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     }
 
     const handleSetDamageCommander = (from: string, to: string, damage: number) => {
-        setStatePlayers((prev) => ({
-            ...prev,
-            [from]: {
-                ...prev[from],
-                damageCommander: {
-                    ...prev[from].damageCommander,
-                    [to]: damage,
-                }, 
-            },
-            [to]: {
-                ...prev[to],
-                dead: damage > 20
+        setStatePlayers((prev) => {
+            if (prev[from].damageCommander[to] + damage > 20 || prev[to].life - damage <= 0) {
+                setModalPlayerOpen((prev) => ({
+                    ...prev,
+                    [to]: true,
+                }))
             }
-        }))
 
-        if (damage > 20) {
-            setModalPlayerOpen((prev) => ({
+            return {
                 ...prev,
-                [to]: true,
-            }))
-        }
+                [from]: {
+                    ...prev[from],
+                    damageCommander: {
+                        ...prev[from].damageCommander,
+                        [to]: prev[from].damageCommander[to] + damage,
+                    }, 
+                },
+                [to]: {
+                    ...prev[to],
+                    life: prev[to].life - damage,
+                    dead: prev[from].damageCommander[to] + damage > 20 || (prev[to].life - (damage - prev[from].damageCommander[to]) <= 0 )
+                }
+            }
+        })
 
         setTimeout(() => {
             setCommanderModalIsOpen(false)

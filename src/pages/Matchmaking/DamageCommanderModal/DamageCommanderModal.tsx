@@ -24,23 +24,11 @@ const DamageCommanderModal: React.FC<Props> = ({ statePlayers, conf, open, onSet
     const [damageCommanderState, setDamageCommanderState] = useState<DamageCommanderState>({damage: 0} as DamageCommanderState)
 
     const handleAttackingPlayerChange = (attackingPlayer: string) => {
-        setDamageCommanderState((prev) => {
-            let valueDamage = 0;
-            if (damageCommanderState.to) {
-                valueDamage = statePlayers[attackingPlayer].damageCommander[damageCommanderState.to]
-            }
-            return {...prev, damage: valueDamage, from: attackingPlayer}
-        })
+        setDamageCommanderState((prev) => ({...prev, from: attackingPlayer}))
     }
 
     const handleDefendingPlayerChange = (defendingPlayer: string) => {
-        setDamageCommanderState((prev) => {
-            let valueDamage = 0;
-            if (damageCommanderState.from) {
-                valueDamage = statePlayers[damageCommanderState.from].damageCommander[defendingPlayer]
-            }
-            return {...prev, damage: valueDamage, to: defendingPlayer}
-        })
+        setDamageCommanderState((prev) => ({...prev, to: defendingPlayer}))
     }
 
     const handleDamageChange = (damage: number) => {
@@ -53,7 +41,8 @@ const DamageCommanderModal: React.FC<Props> = ({ statePlayers, conf, open, onSet
     }
 
     const handleSetDamageCommander = () => {
-        onSetDamageCommander(damageCommanderState.from, damageCommanderState.to, damageCommanderState.damage)
+        onSetDamageCommander(damageCommanderState.from, damageCommanderState.to, damageCommanderState.damage);
+        setDamageCommanderState({damage: 0} as DamageCommanderState)
     }
 
     const getDamagedCommander = (defensorId: string) => {
@@ -80,7 +69,7 @@ const DamageCommanderModal: React.FC<Props> = ({ statePlayers, conf, open, onSet
                             value={damageCommanderState.from || ''}
                             onChange={(e) => handleAttackingPlayerChange(e.target.value as string)}
                         >
-                            {conf.map((c) => (
+                            {conf.filter((c) => damageCommanderState.to ? c.idPlayer !== damageCommanderState.to : c).map((c) => (
                                 <MenuItem value={c.idPlayer}>{c.player}</MenuItem>
                             ))}
                         </Select>
@@ -107,7 +96,7 @@ const DamageCommanderModal: React.FC<Props> = ({ statePlayers, conf, open, onSet
                             value={damageCommanderState.to || ''}
                             onChange={(e) => handleDefendingPlayerChange(e.target.value as string)}
                         >
-                            {conf.map((c) => (
+                            {conf.filter((c) => damageCommanderState.from ? c.idPlayer !== damageCommanderState.from : c).map((c) => (
                                 <MenuItem value={c.idPlayer}>{`${c.player} ${getDamagedCommander(c.idPlayer)}`}</MenuItem>
                             ))}
                         </Select>
@@ -120,7 +109,7 @@ const DamageCommanderModal: React.FC<Props> = ({ statePlayers, conf, open, onSet
                         >
                             Valider
                         </button>
-                        <button onClick={handleClose}>X</button>
+                        <button style={{padding: '5px 9px'}} onClick={handleClose}>X</button>
                     </div>
                 </div>
             </div>

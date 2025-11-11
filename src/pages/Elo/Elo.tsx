@@ -62,7 +62,7 @@ const Elo = () => {
                             <tr>
                                 <th align='center'>Nom</th>
                                 <th align='center'>Joueur</th>
-                                <th align='center' >Nbr parties</th>
+                                <th align='center' >Parties</th>
                                 <th align='center'>Points</th>
                             </tr>
                         </thead>

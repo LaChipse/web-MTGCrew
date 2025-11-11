@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Box, Checkbox, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import classNames from 'classnames';
@@ -35,6 +35,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
     const [config, setConfig] = useState<Array<PlayersBlock>>([{}])
     const [victoire, setVictoire] = useState<string>('')
     const [typeVictoire, setTypeVictoire] = useState<string>('')
+    const [isRanked, setIsRanked] = useState(false)
 
     const { mutate, isPending } = useAddGame();
 
@@ -64,7 +65,7 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
     const handleAddGameForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        mutate({date, type, config, victoire, typeVictoire, isStandard: true});
+        mutate({date, type, config, victoire, typeVictoire, isStandard: true, isRanked});
         
         setType('')
         setDate(null)
@@ -130,11 +131,22 @@ const DrawerStandardGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
                             <MenuItem value={'team'}>Equipe</MenuItem>
                         </Select>
                     </FormControl>
+
+                    
                 </div>
+                <div style={{ width: '100%'}}>
+                    <Checkbox
+                        style={{color: 'var(--primary)'}}
+                        checked={isRanked} 
+                        onChange={() => setIsRanked(!isRanked)}
+                    />
+                    <label id='isRanked' style={{color: 'var(--white)', fontSize: 'medium'}}>Ranked ?</label>
+                </div>
+                
 
                 {type === 'each' && (
                     <>
-                        <h3> Joueurs </h3>
+                        <h3 style={{ marginTop: '0'}}> Joueurs </h3>
                         <EachPlayersBlock
                             config={config}
                             setConfig={setConfig}

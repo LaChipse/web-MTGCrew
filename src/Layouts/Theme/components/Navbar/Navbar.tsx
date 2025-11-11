@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import classNames from 'classnames';
 import React, { useEffect, useState, useTransition, ReactElement } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,7 +17,7 @@ const Navbar: React.FC<Props> = () => {
     const [isPending, startTransition] = useTransition();
     const [showLoader, setShowLoader] = useState(false);
     const [nextPath, setNextPath] = useState('')
-    const navTabs = ['profil', 'decks', 'games', 'joueurs', 'matchmaking']
+    const navTabs = ['profil', 'decks', 'games', 'joueurs', 'matchmaking', 'elo']
 
     useEffect(() => {
         let timeout: NodeJS.Timeout | null = null;

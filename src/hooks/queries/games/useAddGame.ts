@@ -12,11 +12,12 @@ import { useCountGames } from './useCountGames';
 import { useGetDecks } from '../decks/useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 import { useGetHistoryGames } from './useGetHistoryGames';
+import { useGetAllDecks } from '../decks/useGetAllDecks';
 
-const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean) => (
+const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean, isRanked: boolean) => (
     await new Api<{ config: Array<PlayersBlock>, victoire:string }>()
         .setBearerToken()
-        .post('/game/add', {date, type, config, victoire, typeVictoire, isStandard})
+        .post('/game/add', {date, type, config, victoire, typeVictoire, isStandard, isRanked})
 )
 
 export const useAddGame = () => {
@@ -29,8 +30,8 @@ export const useAddGame = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean}) => (
-                addGame(data.date, data.type, data.config, data.victoire, data.typeVictoire, data.isStandard)
+            mutationFn: (data: {date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean, isRanked: boolean}) => (
+                addGame(data.date, data.type, data.config, data.victoire, data.typeVictoire, data.isStandard, data.isRanked)
             ),
             onSuccess: (data) => {
                 dispatch(addSuccessSnackbar('Partie ajoutée !'))
@@ -61,6 +62,7 @@ export const useAddGame = () => {
                 useGetAllPlayers.reset(queryClient)
                 useGetUsersDecks.reset(queryClient)
                 useGetHistoryGames.reset(queryClient)
+                useGetAllDecks.reset(queryClient)
             }
         })
     );

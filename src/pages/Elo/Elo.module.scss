@@ -1,0 +1,19 @@
+.noData {
+    height: 80vh;
+    text-align: center;
+    display: flex;
+    
+    h1 {
+        margin: auto;
+    }
+}
+
+.selectRank {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    > div {
+        height: 30px;
+    }
+}

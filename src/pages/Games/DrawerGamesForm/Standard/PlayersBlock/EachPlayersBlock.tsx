@@ -108,7 +108,7 @@ const EachPlayersBlock: React.FC<Props> = ({ config, setConfig, configIndex }) =
                         {
                             otherDecksNotSelected?.map((deck) => (
                                 <MenuItem value={deck.id} key={deck.id} className={classNames(styles.MenuItem, { [styles.owner]: isDeckUser(deck.userId, index) })}>
-                                    {deck.nom} <span className={styles.span}>{`(${getUser(deck.userId)})`}</span>
+                                    <div className={styles.name}>{deck.nom}</div> <span className={styles.span}>{`(${getUser(deck.userId)})`}</span>
                                 </MenuItem>
                             ))
                         }

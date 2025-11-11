@@ -10,6 +10,7 @@ const JoueursPge = React.lazy(() => import('../pages/Joueurs/Joueurs'))
 const Login = React.lazy(() => import('../pages/Auth/Login/Login'));
 const Signup = React.lazy(() => import('../pages/Auth/Signup/Signup'));
 const MatchmakingPage = React.lazy(() => import('../pages/Matchmaking/Matchmaking'));
+const EloPage = React.lazy(() => import('../pages/Elo/Elo'));
 
 const AuthLayout = React.lazy(() => import('../Layouts/Auth/AuthLayout'));
 const ThemeLayout = React.lazy(() => import('../Layouts/Theme/ThemeLayout'));
@@ -34,6 +35,7 @@ const Router = () => (
                             <Route path={ROUTES.GAMES_PAGE} element={<GamesPage />} />
                             <Route path={ROUTES.JOUEURS_PAGE} element={<JoueursPge />} />
                             <Route path={ROUTES.MATCHMAKING_PAGE} element={<MatchmakingPage />} />
+                            <Route path={ROUTES.ELO_PAGE} element={<EloPage />} />
                         </Route>
                     </Route>
                 </Route>

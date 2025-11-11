@@ -33,4 +33,12 @@
 .owner {
     background-color: var(--primary) !important;
     opacity: 0.8;
+
+        .name {
+            color: var(--secondary);
+        
+            &:hover {
+                color: var(--secondary) !important
+            }
+    }
 }

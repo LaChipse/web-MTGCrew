@@ -31,6 +31,10 @@ export const JOUEURS_PAGE = '/joueurs'
  */
 export const MATCHMAKING_PAGE = '/matchmaking'
 /**
+ * Elo
+ */
+export const ELO_PAGE = '/elo'
+/**
  * Page par défaut.
  */
 export const DEFAULT_PAGE_PATH = PROFIL_PAGE;

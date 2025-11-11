@@ -17,13 +17,11 @@ export interface Deck {
 }
 
 const getDecks = async (sort?: { key: string, direction: -1 | 1 }) => {
-    let params = undefined
+    const params = new URLSearchParams();
 
     if (sort) {
-        params = new URLSearchParams({
-            sortKey: sort.key,
-            sortDirection: sort.direction.toString(),
-        });
+        params.append('sortKey', String(sort.key))
+        params.append('sortDirection', String(sort.direction.toString()))
     }
 
     return (
@@ -35,7 +33,7 @@ const getDecks = async (sort?: { key: string, direction: -1 | 1 }) => {
 
 export const useGetDecks = (sort?: { key: string, direction: -1 | 1 }) => (
     useQuery({
-        queryKey: ['getDecks',sort],
+        queryKey: ['getDecks', sort],
         queryFn: () => getDecks(sort),
     })
 );

@@ -63,7 +63,7 @@ const DrawerSpecialGamesForm: React.FC<Props> = ({ toggleDrawer }) => {
 
     const handleAddGameForm = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        mutate({date, type, config, victoire, typeVictoire, isStandard: false});
+        mutate({date, type, config, victoire, typeVictoire, isStandard: false, isRanked: false});
         
         setType('')
         setDate(null)

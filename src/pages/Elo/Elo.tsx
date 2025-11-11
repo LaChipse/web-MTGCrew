@@ -56,20 +56,20 @@ const Elo = () => {
             { isDecksLoading || isUseresLoading ? (
                 <SmallLoading heightContainer='70%' dimensionLoader='150px' borderWidth='10px'/>
             ) : (
-                <div>
+                <div className={styles.tableau}>
                     <table aria-label='deck table'>
                         <thead>
                             <tr>
                                 <th align='center'>Nom</th>
                                 <th align='center'>Joueur</th>
-                                <th align='center' >Parties Jouées</th>
+                                <th align='center' >Nbr parties</th>
                                 <th align='center'>Points</th>
                             </tr>
                         </thead>
                         <tbody>
                             {decks?.map((deck) => (
                                 <tr key={deck.nom}>
-                                    <th align='center' style={{fontWeight: 700}} scope='row'>
+                                    <th align='center' className={styles.styckyCol} style={{fontWeight: 700}} scope='row'>
                                         <>{deck.nom}</>
                                     </th>
                                     <td align='center'>{getUserName(deck.userId)}</td>

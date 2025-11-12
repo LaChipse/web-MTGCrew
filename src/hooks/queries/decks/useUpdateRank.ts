@@ -6,9 +6,9 @@ import { useGetDecks } from './useGetDecks';
 import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 import { useGetAllDecks } from './useGetAllDecks';
 
-const updateRank = async (rank: number) => (
+const updateRank = async () => (
     new Api<{modifiedDeck: number}>()
-        .put('/deck/updateRank' , {rank})
+        .put('/deck/updateRank')
 )
 
 export const useUpdateRank = () => {
@@ -17,11 +17,12 @@ export const useUpdateRank = () => {
 
     return (
         useMutation({
-            mutationFn: (rank: number) => (
-                updateRank(rank)
+            mutationFn: () => (
+                updateRank()
             ),
             onSuccess: () => {
                 dispatch(addSuccessSnackbar('Rank mis à jour !'))
+                
                 useGetDecks.reset(queryClient)
                 useGetUsersDecks.reset(queryClient)
                 useGetAllDecks.reset(queryClient)

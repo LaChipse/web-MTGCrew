@@ -41,7 +41,7 @@ const Elo = () => {
     };
 
     const handleUpdateRank =() => {
-        updateRank(rank)
+        updateRank()
     }
 
     const handleOpenImage = (deck: DeckResume) => {

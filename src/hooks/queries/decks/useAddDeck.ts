@@ -8,6 +8,7 @@ import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 import { authActions } from '../../../store/reducers/authReducer';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
+import { useGetAllDecks } from './useGetAllDecks';
 
 const addDeck = async (nom: string, illustrationUrl: string, imageArt:string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()
@@ -39,6 +40,7 @@ export const useAddDeck = () => {
                 useGetDecks.reset(queryClient)
                 useGetAllPlayers.reset(queryClient)
                 useGetUsersDecks.reset(queryClient)
+                useGetAllDecks.reset(queryClient)
             }
         })
     );

@@ -1,19 +1,27 @@
 import { MenuItem, Select } from '@mui/material';
-import { useState } from 'react';
-import { useGetAllDecks } from '../../hooks/queries/decks/useGetAllDecks';
+import { MouseEvent, useState } from 'react';
+import { DeckResume, useGetAllDecks } from '../../hooks/queries/decks/useGetAllDecks';
 import { useGetAllPlayers } from '../../hooks/queries/joueurs/useGetAllPlayers';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../Layouts/Theme/components/GamesFilter/StyleMui';
 import Header from '../../Layouts/Theme/components/Header/Header';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import ImagePortal from '../Decks/composants/ImagePortal/ImagePortal';
 import styles from './Elo.module.scss';
+import { useUpdateRank } from '../../hooks/queries/decks/useUpdateRank';
 
 const Elo = () => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
 
     const [rank, setRank] = useState(1);
+
+    const [openDeck, setOpenDeck] = useState<DeckResume | null>(null); // deck actuellement ouvert
+    const [anchor, setAnchor] = useState<DOMRect | null>(null);
+    const [search, setSearch] = useState('')
+
     const { data: decks, isLoading: isDecksLoading } = useGetAllDecks({ key: 'elo', direction: -1 }, { rank })
     const {data: users, isLoading: isUseresLoading } = useGetAllPlayers()
+    const { mutate: updateRank } = useUpdateRank();
 
     if (!isStandard) return ( 
         <>
@@ -26,16 +34,54 @@ const Elo = () => {
         </>
     )
 
+    const handleClick = (deck: DeckResume, event: MouseEvent) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setAnchor(rect);
+        handleOpenImage(deck);
+    };
+
+    const handleUpdateRank =() => {
+        updateRank(rank)
+    }
+
+    const handleOpenImage = (deck: DeckResume) => {
+        setOpenDeck((prev) => (prev === deck ? null : deck));
+    }
+
     const getUserName = (userId: string) => {
         return users?.find((u) => u.id === userId)?.fullName
+    }
+
+    const colorByPoint = (elo: number) => {
+        if (elo >= 5) return 'rgba(6, 190, 50, 0.9)'
+        if (elo === 4) return 'rgba(7, 150, 40, 0.8)'
+        if (elo === 3) return 'rgba(8, 110, 30, 0.7)'
+        if (elo === 2) return 'rgba(9, 70, 20, 0.6)'
+        if (elo === 1) return 'rgba(10, 30, 10, 0.5)'
+        if (elo === -1) return 'rgba(30, 10, 10, 0.5)'
+        if (elo === -2) return 'rgba(70, 9, 20, 0.6)'
+        if (elo === -3) return 'rgba(110, 8, 30, 0.7)'
+        if (elo === -4) return 'rgba(150, 7, 40, 0.8)'
+        if (elo <= -5) return 'rgba(190, 6, 50, 0.9)'
+        return ''
     }
 
     return (
         <>  
             <Header />
 
+            <div style={{width: '250px', marginBottom: '15px'}}>
+                <input
+                    id="searcDeck"
+                    style={{ width: '100%' }}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Cherchez votre deck"
+                />
+            </div>
+
             <div className={styles.selectRank}>
-                <label id='rank'>Rank</label>
+                <label id='rank'>Rank : </label>
                 <Select
                     MenuProps={SELECT_MENU_STYLE}
                     sx={SELECT_STYLE}
@@ -49,9 +95,8 @@ const Elo = () => {
                     <MenuItem value={'4'}>4</MenuItem>
                     <MenuItem value={'5'}>5</MenuItem>
                 </Select>
+                <button style={{marginLeft: '15px'}} onClick={handleUpdateRank}>Mettre à niveau les ranks</button>                
             </div>
-
-            
 
             { isDecksLoading || isUseresLoading ? (
                 <SmallLoading heightContainer='70%' dimensionLoader='150px' borderWidth='10px'/>
@@ -67,10 +112,18 @@ const Elo = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {decks?.map((deck) => (
-                                <tr key={deck.nom}>
+                            {decks?.filter((d) => (d.nom.toLocaleLowerCase()).includes(search.toLocaleLowerCase())).map((deck) => (
+                                <tr key={deck.id} style={{backgroundColor: colorByPoint(deck.elo)}}>
                                     <th align='center' className={styles.styckyCol} style={{fontWeight: 700}} scope='row'>
-                                        <>{deck.nom}</>
+                                        { deck.imageUrl ?
+                                        <>
+                                            <a style={{ cursor: 'pointer', color: 'white', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
+                                            {openDeck && openDeck?.id === deck.id && anchor && (
+                                                <ImagePortal anchor={anchor} illustrationUrl={openDeck.imageUrl}/>
+                                            )}
+                                        </>
+                                        : <>{deck.nom}</>
+                                    }
                                     </th>
                                     <td align='center'>{getUserName(deck.userId)}</td>
                                     <td align='center'>{deck.games.standard}</td>

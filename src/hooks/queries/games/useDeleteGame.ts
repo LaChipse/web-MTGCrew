@@ -11,6 +11,7 @@ import { useCountGames } from './useCountGames';
 import { useCountHistoryGames } from './useCountHistoryGames';
 import { useAppSelector } from '../../useAppSelector';
 import { authActions } from '../../../store/reducers/authReducer';
+import { useGetAllDecks } from '../decks/useGetAllDecks';
 
 const deleteGame = (id: string, ) => (
     new Api<GameResume & {isStandard: boolean}>()
@@ -50,6 +51,7 @@ export const useDeleteGame = () => {
             }
 
             useGetDecks.reset(queryClient)
+            useGetAllDecks.reset(queryClient)
             useGetUsersDecks.reset(queryClient)
             useGetAllPlayers.reset(queryClient)
             useGetGames.reset(queryClient)

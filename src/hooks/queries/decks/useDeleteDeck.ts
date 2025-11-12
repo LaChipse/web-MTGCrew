@@ -8,6 +8,7 @@ import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
 import { useAppSelector } from '../../useAppSelector';
 import { authActions } from '../../../store/reducers/authReducer';
 import { useGetUserDeck } from './useGetUserDeck';
+import { useGetAllDecks } from './useGetAllDecks';
 
 const deleteDeck = (id: string, ) => (
     new Api<{ token: string }>()
@@ -38,6 +39,7 @@ export const useDeleteDeck = () => {
             useGetDecks.reset(queryClient)
             useGetAllPlayers.reset(queryClient)
             useGetUsersDecks.reset(queryClient)
+            useGetAllDecks.reset(queryClient)
         }
     })
 };

@@ -8,6 +8,7 @@ import { useAppSelector } from '../../useAppSelector';
 import { useGetUserDeck } from './useGetUserDeck';
 import { useGetGames } from '../games/useGetGames';
 import { useGetHistoryGames } from '../games/useGetHistoryGames';
+import { useGetAllDecks } from './useGetAllDecks';
 
 const updateDeck = async (id:string, illustrationUrl: string, imageArt: string, nom: string, couleurs: Array<string>, isImprime: boolean, rank: number, type?: string) => (
     await new Api<{ token: string }>()
@@ -33,6 +34,7 @@ export const useUpdateDeck = () => {
                 useGetUsersDecks.reset(queryClient)
                 useGetGames.reset(queryClient)
                 useGetHistoryGames.reset(queryClient)
+                useGetAllDecks.reset(queryClient)
             }
         })
     );

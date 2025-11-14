@@ -1,12 +1,10 @@
 import { FormControl, Modal } from '@mui/material';
 import React, { MouseEvent, useState } from 'react';
-import { ChromePicker, ColorResult } from 'react-color';
-import { useDispatch } from 'react-redux';
 import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
 import { AuthUser } from '../../../store/reducers/authReducer';
-import { setTheme } from '../../../store/reducers/themeReducer';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import styles from './ProfilModal.module.scss';
+import ColorPickerModal from './ColorPickerModal/ColorPickerModal';
 
 type Props = {
     user: AuthUser
@@ -20,10 +18,7 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const [password, setPassword] = useState('');
     const [colorStd, setColorStd] = useState(user.colorStd)
     const [colorSpec, setColorSpec] = useState(user.colorSpec)
-    const [isPickColorStdOpen, setIsPickColorStdOpen] = useState(false)
-    const [isPickColorSpecOpen, setIsPickColorSpecOpen] = useState(false)
-    
-    const dispatch = useDispatch();
+    const [isPickColorOpen, setIsPickColorOpen] = useState<'std' | 'spec' | undefined>()
 
     const { mutate, isPending } = useUpdateUser();
 
@@ -38,21 +33,11 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
         setOpen(false);
     };
 
-    const handleChangeColor = (mode: 'std' | 'spec', color: ColorResult) => {
-        if (mode === 'std') setColorStd(color.hex);
-        if (mode === 'spec') setColorSpec(color.hex);
-
-        dispatch(setTheme({[mode === 'std' ? 'primaryStd' : 'primarySpec']: color.hex}))
-    }
-
-    const handleColoStdPickerChange = () => {
-        if (isPickColorSpecOpen) setIsPickColorSpecOpen(false)
-        setIsPickColorStdOpen(!isPickColorStdOpen)
-    }
-
-    const handleColoSpecPickerChange = () => {
-        if (isPickColorStdOpen) setIsPickColorStdOpen(false)
-        setIsPickColorSpecOpen(!isPickColorSpecOpen)
+    const handleColorPickerChange = (type: 'std' | 'spec') => {
+        setIsPickColorOpen((prev) => {
+            if (prev === type) return undefined
+            return type
+        })
     }
 
 
@@ -106,23 +91,13 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Standard</p>
                             <div>
-                                <div className={styles.clorPickerButton} style={{backgroundColor: colorStd}} onClick={handleColoStdPickerChange}></div>
-                                { isPickColorStdOpen && 
-                                    <div style={{ position: 'fixed', marginTop: '7px'}}>
-                                        <ChromePicker color={ colorStd } className={styles.colorPicker} onChange={(color) => handleChangeColor('std', color)}/>
-                                    </div>
-                                }
+                                <div className={styles.clorPickerButton} style={{backgroundColor: colorStd}} onClick={() => handleColorPickerChange('std')}></div>
                             </div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Spécial</p>
                             <div>
-                                <div className={styles.clorPickerButton} style={{backgroundColor: colorSpec}} onClick={handleColoSpecPickerChange}></div>
-                                { isPickColorSpecOpen && 
-                                    <div style={{ position: 'fixed', marginTop: '7px'}}>
-                                        <ChromePicker color={ colorSpec } className={styles.colorPicker} onChange={(color) => handleChangeColor('spec', color)}/>
-                                    </div>
-                                }
+                                <div className={styles.clorPickerButton} style={{backgroundColor: colorSpec}} onClick={() => handleColorPickerChange('spec')}></div>
                             </div>
                         </div>
                     </div>
@@ -136,6 +111,14 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         { isPending ? <SmallLoading heightContainer='100%' dimensionLoader='10px' borderWidth='3px' />: 'Modifier'}
                     </button>
                 </FormControl>
+
+                <ColorPickerModal 
+                    color={isPickColorOpen === 'std' ? colorStd : colorSpec}
+                    isPickColorOpen={!!isPickColorOpen}
+                    setColor={isPickColorOpen === 'std' ? setColorStd : setColorSpec}
+                    type={isPickColorOpen}
+                    setIsPickColorOpen={setIsPickColorOpen}
+                />
             </div>
         </Modal>
     )

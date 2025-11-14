@@ -1,6 +1,6 @@
 import { FormControl, Modal } from '@mui/material';
 import React, { MouseEvent, useState } from 'react';
-import { ColorResult, HuePicker } from 'react-color';
+import { ChromePicker, ColorResult } from 'react-color';
 import { useDispatch } from 'react-redux';
 import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
 import { AuthUser } from '../../../store/reducers/authReducer';
@@ -20,8 +20,9 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
     const [password, setPassword] = useState('');
     const [colorStd, setColorStd] = useState(user.colorStd)
     const [colorSpec, setColorSpec] = useState(user.colorSpec)
+    const [isPickColorStdOpen, setIsPickColorStdOpen] = useState(false)
+    const [isPickColorSpecOpen, setIsPickColorSpecOpen] = useState(false)
     
-
     const dispatch = useDispatch();
 
     const { mutate, isPending } = useUpdateUser();
@@ -43,6 +44,17 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
 
         dispatch(setTheme({[mode === 'std' ? 'primaryStd' : 'primarySpec']: color.hex}))
     }
+
+    const handleColoStdPickerChange = () => {
+        if (isPickColorSpecOpen) setIsPickColorSpecOpen(false)
+        setIsPickColorStdOpen(!isPickColorStdOpen)
+    }
+
+    const handleColoSpecPickerChange = () => {
+        if (isPickColorStdOpen) setIsPickColorStdOpen(false)
+        setIsPickColorSpecOpen(!isPickColorSpecOpen)
+    }
+
 
     return (
         <Modal
@@ -91,12 +103,28 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                     </div>
 
                     <div className={styles.secondBloc}>
-                        <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '15px', display: 'flex', justifyContent: 'space-between' }}>Standard : 
-                            <HuePicker width='190px' color={colorStd} onChange={(color) => handleChangeColor('std', color) } />
-                        </p>
-                        <p style={{ color: 'var(--white)', fontSize: '14px', display: 'flex', justifyContent: 'space-between' }}>Spécial : 
-                            <HuePicker width='190px' color={colorSpec} onChange={(color) => handleChangeColor('spec', color) } />
-                        </p> 
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Standard</p>
+                            <div>
+                                <div className={styles.clorPickerButton} style={{backgroundColor: colorStd}} onClick={handleColoStdPickerChange}></div>
+                                { isPickColorStdOpen && 
+                                    <div style={{ position: 'fixed', marginTop: '7px'}}>
+                                        <ChromePicker color={ colorStd } className={styles.colorPicker} onChange={(color) => handleChangeColor('std', color)}/>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Spécial</p>
+                            <div>
+                                <div className={styles.clorPickerButton} style={{backgroundColor: colorSpec}} onClick={handleColoSpecPickerChange}></div>
+                                { isPickColorSpecOpen && 
+                                    <div style={{ position: 'fixed', marginTop: '7px'}}>
+                                        <ChromePicker color={ colorSpec } className={styles.colorPicker} onChange={(color) => handleChangeColor('spec', color)}/>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
 
                     <button 

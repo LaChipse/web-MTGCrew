@@ -80,14 +80,11 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         if (illustrationCard) setSearchCard(undefined)
     };
 
-    const handleCheckboxChange = (color: string) => {
-        let newColors: Array<string>
-        if (couleurs.includes(color)) {
-            newColors = couleurs.filter((c) => c !== color)
-        } else {
-            newColors = [...couleurs, color]
-        }
-        setCouleurs(newColors)
+    const handleColorChange = (color: string) => {
+        setCouleurs(((prev) => {
+            const newColors = prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+            return newColors
+        }))
     };
 
     const handleRadioImprimeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -245,7 +242,7 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                                 <button 
                                                     key={color}
                                                     className={classNames(styles.buttonColor, {[styles.checked]: couleurs.includes(color)})} 
-                                                    onClick={() => handleCheckboxChange(color)} 
+                                                    onClick={() => handleColorChange(color)} 
                                                     style={{backgroundImage: `url(/assets/${color}.svg)`}} 
                                                 />
                                             ))

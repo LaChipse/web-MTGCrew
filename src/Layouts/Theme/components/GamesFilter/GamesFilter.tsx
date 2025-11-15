@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { useGetAllPlayers } from '../../../../hooks/queries/joueurs/useGetAllPlayers';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
-import { clearGameFiltersState, setEndDate, setStartDate, setTypeOfVictory, setVictoryRole, setWinnerId } from '../../../../store/reducers/gameFiltersReducer';
+import { clearGameFiltersState, setEndDate, setIsRanked, setStartDate, setTypeOfVictory, setVictoryRole, setWinnerId } from '../../../../store/reducers/gameFiltersReducer';
 import { ROLE_TYPE } from '../../../../utils/Enums/roleType';
 import { TYPE_VICTORY } from '../../../../utils/Enums/victoryType';
 import { SELECT_MENU_STYLE, SELECT_STYLE, STYLED_PAPER } from './StyleMui';
@@ -125,6 +125,25 @@ const GamesFilter: React.FC = () => {
                                 </MenuItem>
                             ))
                         }
+                    </Select>
+                </div>
+
+                <div className={styles.filtre}>
+                    <label id="isRanked">Ranked ?</label>
+                    <Select
+                        MenuProps={SELECT_MENU_STYLE}
+                        sx={SELECT_STYLE}
+                        id="isRankedSelect"
+                        value={filters.isRanked}
+                        onChange={(e) => dispatch(setIsRanked(e.target.value === 'true' ? true : false))}
+                        className={styles.select}
+                    >
+                        <MenuItem value={'true'} key={'oui'}>
+                            Oui
+                        </MenuItem>
+                        <MenuItem value={'false'} key={'non'}>
+                            Non
+                        </MenuItem>
                     </Select>
                 </div>
                 

@@ -8,6 +8,7 @@ export interface filtersGames {
     victoryRole?: ROLE_TYPE | '',
     winnerId?: string | '',
     typeOfVictory?: TYPE_VICTORY | '',
+    isRanked?: boolean | ''
 }
 
 const initialState: filtersGames = {
@@ -15,7 +16,8 @@ const initialState: filtersGames = {
     endDate: null,
     victoryRole: '',
     winnerId: '',
-    typeOfVictory: ''
+    typeOfVictory: '',
+    isRanked: ''
 };
 
 const gameFiltersSlice = createSlice({
@@ -37,9 +39,12 @@ const gameFiltersSlice = createSlice({
         setTypeOfVictory: (state, action: PayloadAction<TYPE_VICTORY | ''>) => {
             state.typeOfVictory = action.payload;
         },
+        setIsRanked: (state, action: PayloadAction<boolean | ''>) => {
+            state.isRanked = action.payload;
+        },
         clearGameFiltersState: () => initialState
     },
 });
 
-export const { setStartDate, setEndDate, setTypeOfVictory, setVictoryRole, setWinnerId, clearGameFiltersState } = gameFiltersSlice.actions;
+export const { setStartDate, setEndDate, setTypeOfVictory, setIsRanked, setVictoryRole, setWinnerId, clearGameFiltersState } = gameFiltersSlice.actions;
 export const gameFiltersReducer = gameFiltersSlice.reducer;

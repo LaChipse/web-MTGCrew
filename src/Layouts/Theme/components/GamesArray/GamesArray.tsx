@@ -109,6 +109,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                         <tr>
                             <th align="center" style={{ minWidth: "75px" }}>Date</th>
                             <th align="center" style={{ minWidth: "75px" }}>Type de partie</th>
+                            <th align="center" style={{ minWidth: "75px" }}>Ranked ?</th>
                             <th align="center" style={{ minWidth: "75px" }}>Victoire</th>
                             <th align="center" style={{ minWidth: "50px" }}>Type de victoire</th>
                             <th align='center' style={{ minWidth: '75px' }}></th>
@@ -119,6 +120,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                             <tr key={game.id} className={classNames({ [styles[winnerStyle(game.victoire, game.config)]]: isHystoric })}>
                                 <td align="center">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</td>
                                 <td align="center">{ formatType(game.type) }</td>
+                                <td align="center">{ game.isRanked ? 'Oui' : 'Non' }</td>
                                 <td align="center">
                                     <div className={styles.gameInfos}>
                                         { formatVictoire(game.type, game.victoire, game.config) }

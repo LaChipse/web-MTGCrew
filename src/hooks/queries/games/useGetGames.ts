@@ -10,7 +10,8 @@ export interface GameResume {
     type: string,
     config: Array<PlayersBlock>,
     victoire: string, 
-    typeVictoire: string
+    typeVictoire: string,
+    isRanked: boolean,
 }
 
 const getGames = async (isStandard: boolean, page: number, filters: filtersGames) => {

@@ -27,6 +27,7 @@ export const useDeleteDeck = () => {
         ),
         onSuccess: () => {
             dispatch(addSuccessSnackbar('Deck supprimé !'))
+            
             if (user) {
                 dispatch(authActions.updateState({
                     ...user,

@@ -28,6 +28,10 @@ const handleError422 = (dispatch: AppDispatch,  message?: string) => {
     dispatch(addErrorSnackbar(message ? message : 'Données envoyées invalides'));
 };
 
+const handleError500 = (dispatch: AppDispatch,  message?: string) => {
+    dispatch(addErrorSnackbar(message ? message : 'Erreur serveur'));
+};
+
 export const useQueryErrorHandler = () => {
     const dispatch = useAppDispatch();
 
@@ -54,6 +58,9 @@ export const useQueryErrorHandler = () => {
                 break;
             case 422:
                 handleError422(dispatch, error.body);
+                break;
+            case 500:
+                handleError500(dispatch, error.body);
                 break;
             default:
                 handleUnknownError(dispatch);

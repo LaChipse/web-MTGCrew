@@ -8,6 +8,7 @@ import { useGetAllDecks } from './useGetAllDecks';
 
 const updateRank = async () => (
     new Api<{modifiedDeck: number}>()
+        .setBearerToken()
         .put('/deck/updateRank')
 )
 

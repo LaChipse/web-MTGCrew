@@ -15,6 +15,7 @@ import { useGetAllDecks } from '../decks/useGetAllDecks';
 
 const deleteGame = (id: string, ) => (
     new Api<GameResume & {isStandard: boolean}>()
+        .setBearerToken()
         .delete('/game/delete', {id})
 )
 

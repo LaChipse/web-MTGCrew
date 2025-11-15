@@ -10,6 +10,8 @@ import ImagePortal from '../Decks/composants/ImagePortal/ImagePortal';
 import styles from './Elo.module.scss';
 import { useUpdateRank } from '../../hooks/queries/decks/useUpdateRank';
 
+type formatedDeck = DeckResume & { owner?: string } 
+
 const Elo = () => {
     const isStandard = useAppSelector((state) => state.type.isStandard);
 
@@ -17,7 +19,8 @@ const Elo = () => {
 
     const [openDeck, setOpenDeck] = useState<DeckResume | null>(null); // deck actuellement ouvert
     const [anchor, setAnchor] = useState<DOMRect | null>(null);
-    const [search, setSearch] = useState('')
+    const [searchDeck, setSearchDeck] = useState('')
+    const [searchUser, setSearchUser] = useState('')
 
     const { data: decks, isLoading: isDecksLoading } = useGetAllDecks({ key: 'elo', direction: -1 }, { rank })
     const {data: users, isLoading: isUseresLoading } = useGetAllPlayers()
@@ -34,6 +37,22 @@ const Elo = () => {
         </>
     )
 
+    const formatDeckWithOwner = () => {
+        const formatedDecks = decks!.map((d) => ({
+            ...d,
+            owner: users?.find((u) => u.id === d.userId)!.fullName
+        }))
+
+        const filteredByDeckName = filterDeck(formatedDecks, 'nom', searchDeck)
+        const filteredByUserNameAndDeck = filterDeck(filteredByDeckName, 'owner', searchUser)
+
+        return filteredByUserNameAndDeck
+    }
+
+    const filterDeck = (formatedDecks: Array<formatedDeck>, key: keyof formatedDeck, searchValue: string) => {
+        return formatedDecks.filter((d) => ((d[key] as string).toLocaleLowerCase()).includes(searchValue.toLocaleLowerCase()))
+    }
+
     const handleClick = (deck: DeckResume, event: MouseEvent) => {
         const rect = event.currentTarget.getBoundingClientRect();
         setAnchor(rect);
@@ -46,10 +65,6 @@ const Elo = () => {
 
     const handleOpenImage = (deck: DeckResume) => {
         setOpenDeck((prev) => (prev === deck ? null : deck));
-    }
-
-    const getUserName = (userId: string) => {
-        return users?.find((u) => u.id === userId)?.fullName
     }
 
     const colorByPoint = (elo: number) => {
@@ -74,9 +89,19 @@ const Elo = () => {
                 <input
                     id="searcDeck"
                     style={{ width: '100%' }}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Cherchez votre deck"
+                    value={searchDeck}
+                    onChange={(e) => setSearchDeck(e.target.value)}
+                    placeholder="Cherchez un deck"
+                />
+            </div>
+
+            <div style={{width: '250px', marginBottom: '20px'}}>
+                <input
+                    id="searcUser"
+                    style={{ width: '100%' }}
+                    value={searchUser}
+                    onChange={(e) => setSearchUser(e.target.value)}
+                    placeholder="Cherchez un joueur"
                 />
             </div>
 
@@ -112,7 +137,7 @@ const Elo = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {decks?.filter((d) => (d.nom.toLocaleLowerCase()).includes(search.toLocaleLowerCase())).map((deck) => (
+                            {formatDeckWithOwner().filter((d) => (d.nom.toLocaleLowerCase()).includes(searchDeck.toLocaleLowerCase())).map((deck) => (
                                 <tr key={deck.id} style={{backgroundColor: colorByPoint(deck.elo)}}>
                                     <th align='center' className={styles.styckyCol} style={{fontWeight: 700}} scope='row'>
                                         { deck.imageUrl ?
@@ -125,7 +150,7 @@ const Elo = () => {
                                         : <>{deck.nom}</>
                                     }
                                     </th>
-                                    <td align='center'>{getUserName(deck.userId)}</td>
+                                    <td align='center'>{deck.owner}</td>
                                     <td align='center'>{deck.games.standard}</td>
                                     <td align='center'>{deck.elo}</td>
                                 </tr>

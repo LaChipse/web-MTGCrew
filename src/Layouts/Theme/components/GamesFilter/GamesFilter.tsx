@@ -67,7 +67,7 @@ const GamesFilter: React.FC = () => {
 
             <div className={styles.filtres}>
                 {isStandard ? (
-                    <div className={styles.filtre}>
+                    <div className={styles.filtreWinner}>
                         <label id="user">Vainqueur</label>
                         <Select
                             MenuProps={SELECT_MENU_STYLE}
@@ -87,7 +87,7 @@ const GamesFilter: React.FC = () => {
                         </Select>
                     </div>
                 ) : (
-                    <div className={styles.filtre}>
+                    <div className={styles.filtreWinner}>
                         <label id="victoire">Role victorieux</label>
                         <Select
                             MenuProps={SELECT_MENU_STYLE}

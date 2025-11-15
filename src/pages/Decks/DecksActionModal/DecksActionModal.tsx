@@ -2,7 +2,7 @@
 import { FormControl, FormControlLabel, ImageListItem, MenuItem, Modal, Radio, RadioGroup, Select } from '@mui/material';
 import { Box } from '@mui/system';
 import classNames from 'classnames';
-import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
 import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
@@ -80,12 +80,15 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
         if (illustrationCard) setSearchCard(undefined)
     };
 
-    const handleColorChange = (color: string) => {
-        setCouleurs(((prev) => {
-            const newColors = prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
-            return newColors
-        }))
-    };
+    const handleColorChange = useCallback((color: string) => {
+        setCouleurs((prev) => {
+            const set = new Set(prev);
+            if (set.has(color)) set.delete(color);
+            else set.add(color);
+
+            return Array.from(set);
+        });
+    }, []);
 
     const handleRadioImprimeChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
@@ -241,8 +244,8 @@ const DecksActionModal: React.FC<Props> = ({ open, setOpen, deck }) => {
                                             DECK_COLORS.map((color) => (
                                                 <button 
                                                     key={color}
-                                                    className={classNames(styles.buttonColor, {[styles.checked]: couleurs.includes(color)})} 
-                                                    onClick={() => handleColorChange(color)} 
+                                                    className={classNames({[styles.checked]: couleurs.includes(color)})} 
+                                                    onPointerDown={() => handleColorChange(color)} 
                                                     style={{backgroundImage: `url(/assets/${color}.svg)`}} 
                                                 />
                                             ))

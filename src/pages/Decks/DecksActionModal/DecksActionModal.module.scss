@@ -135,8 +135,6 @@
                 }
 
                 button {
-                    background-repeat: no-repeat;
-                    background-position: center;
                     border-radius: 50%;
                     width: 30px;
                     height: 30px;
@@ -146,7 +144,6 @@
 
                     &:hover {
                         border: none;
-                        filter: brightness(1);
                     }
                 }
             }

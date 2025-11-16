@@ -14,7 +14,7 @@ const LoosingModal: React.FC<Props> = ({ isFullWidth, idPlayer, open, setOpen })
         style={{ display: open ? 'block' : 'none', transform: `translate(calc(${isFullWidth ? '49vw' : '24vw'} - 90px), -50%)`}}
     >
         <div>
-            <p id="deleteDeck">Avez-vous perdu ?</p>
+            <p id="deleteDeck">Mort ?</p>
 
             <div  className={styles.containt}>
                 <button onClick={() => setOpen(idPlayer, false)}>Non</button>

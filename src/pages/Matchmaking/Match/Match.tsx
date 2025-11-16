@@ -32,9 +32,14 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [showSettings, setShowSettings] = useState(false)
     const [matchConf, setMatchConf] = useState(conf)
     const [commanderModalIsOpen, setCommanderModalIsOpen] = useState(false)
+    const [lifeChange, setLifeChange] = useState<Record<string, number>>({})
+    const [isFading, setIsFading] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const matchConfRef = useRef(matchConf);
+
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const fadeRef = useRef<NodeJS.Timeout | null>(null)
 
     useEffect(() => {
         matchConfRef.current = matchConf;
@@ -126,6 +131,10 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const changeLife = (id: string, delta: number) => {
         if (delta === -1 ) setHited({[id]: true})
         if (delta === 1) setHealed({[id]: true})
+
+        setLifeChange({
+            [id]: (lifeChange[id] || 0) + delta
+        })
             
         setStatePlayers((prev) => ({
             ...prev,
@@ -145,6 +154,18 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         }
         setTimeout(() => setHited({[id]: false}), 300);
         setTimeout(() => setHealed({[id]: false}), 300);
+
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+        timeoutRef.current = setTimeout(() => {
+            setIsFading(true); // déclenche la classe fade-out
+
+            // après la durée du fade (300ms), on reset réellement
+            fadeRef.current = setTimeout(() => {
+                setLifeChange({});
+                setIsFading(false);
+            }, 300);
+        }, 3000);
     }
 
     const getGridColumn = (length: number, index: number ) => {
@@ -252,6 +273,13 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         }, 200)
     }
 
+    const needRotate = (length: number, index: number) => {
+        if (length === 2 && index === 0) return true
+        if ((length === 3 && index === 0) || (length === 3 && index === 1)) return true
+        if ((length === 4 && index === 0) || (length === 4 && index === 1)) return true
+        if ((length === 5 && index === 0) || (length === 5 && index === 1) || (length === 5 && index === 2)) return true
+    }
+
     return (
         <div>
             <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
@@ -269,6 +297,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                         className={
                             classNames('draggable', styles.imgContainer, 
                                 {
+                                    [styles.rotate]: needRotate(matchConf.length, index),
                                     [styles.deadthContainer]: !c.imageUrl && isPlayerDead(c.idPlayer), 
                                     [styles.responsiveCard]: (matchConf.length !== 5) || (matchConf.length === 5 && (index === 3 || index === 4))
                                 }
@@ -302,15 +331,18 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                         <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} isFullWidth={isFullWidth(index)}/>
 
                         <div className={styles.lifeContainer}>
-                                <div style={{display: 'flex', flexDirection: 'column', margin: 'auto'}} className={classNames({[styles.displayLife]: modalPlayerOpen[c.idPlayer]})}>
-                                    <h2 className={styles.life}>
-                                            <span 
-                                                className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})} 
-                                            >
-                                                {statePlayers?.[c.idPlayer]?.life ?? 40}
-                                            </span>
-                                    </h2>
-                                </div>
+                            <div style={{display: 'flex', flexDirection: 'column', margin: 'auto'}} className={classNames({[styles.displayLife]: modalPlayerOpen[c.idPlayer]})}>
+                                <h2 className={styles.life}>
+                                        <span 
+                                            className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})} 
+                                        >
+                                            {statePlayers?.[c.idPlayer]?.life ?? 40}
+                                        </span>
+                                </h2>
+                            </div>
+                                {(lifeChange[c.idPlayer] || lifeChange[c.idPlayer] === 0) && (
+                                    <span className={classNames(styles.lifeChange, {[styles.fadeOut]: isFading})}>( {lifeChange[c.idPlayer]} )</span>
+                                )}
                         </div>
 
                         <button className={classNames(styles.lifeButtonPlus, {[styles.healedButton]: healed[c.idPlayer]})} disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, 1)}}>+</button>

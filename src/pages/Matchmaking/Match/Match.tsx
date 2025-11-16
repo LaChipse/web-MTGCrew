@@ -122,10 +122,11 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         }
     }
 
-    const isFullWidth = (i: number) => {
-        if (matchConf.length === 2 || matchConf.length === 1) return true
-        if (matchConf.length === 3 && i === 2) return true
-        return false
+    const getWidthDecalage = (i: number) => {
+        if (matchConf.length === 2 || matchConf.length === 1) return 49
+        if (matchConf.length === 3 && i === 2) return 49
+        if ((matchConf.length === 5 && i === 0) || (matchConf.length === 5 && i === 1) || (matchConf.length === 5 && i === 2)) return 16
+        return 24
     }
 
     const changeLife = (id: string, delta: number) => {
@@ -328,7 +329,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                             <span>{c.deckNom}</span>
                         </div>
                             
-                        <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} isFullWidth={isFullWidth(index)}/>
+                        <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} widthDecalage={getWidthDecalage(index)}/>
 
                         <div className={styles.lifeContainer}>
                             <div style={{display: 'flex', flexDirection: 'column', margin: 'auto'}} className={classNames({[styles.displayLife]: modalPlayerOpen[c.idPlayer]})}>

@@ -2,16 +2,16 @@ import React from 'react';
 import styles from './LoosingModal.module.scss';
 
 type Props = {
-    isFullWidth: boolean
+    widthDecalage: number
     idPlayer: string
     open: boolean
     setOpen: (id: string, isDead: boolean) => void
 }
 
-const LoosingModal: React.FC<Props> = ({ isFullWidth, idPlayer, open, setOpen }) => (
+const LoosingModal: React.FC<Props> = ({ widthDecalage, idPlayer, open, setOpen }) => (
     <div
         className={styles.modal}
-        style={{ display: open ? 'block' : 'none', transform: `translate(calc(${isFullWidth ? '49vw' : '24vw'} - 59px), -50%)`}}
+        style={{ display: open ? 'block' : 'none', transform: `translate(calc(${widthDecalage}vw - 59px), -50%)`}}
     >
         <div>
             <p id="deleteDeck">Mort ?</p>

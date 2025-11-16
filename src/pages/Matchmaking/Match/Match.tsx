@@ -327,7 +327,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                             <p>{c.player} {getPlayerState(c.idPlayer)}</p>
                             <span>{c.deckNom}</span>
                         </div>
-
+                            
                         <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} isFullWidth={isFullWidth(index)}/>
 
                         <div className={styles.lifeContainer}>

@@ -1,8 +1,8 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import { TYPE_VICTORY_VALUES } from "../../../../../utils/Enums/victoryType";
-import styles from './VictoryBlock.module.scss';
 import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../../../../Layouts/Theme/components/GamesFilter/StyleMui";
+import styles from './VictoryBlock.module.scss';
 
 type Props = {
     joueurs: Array<{joueur?: string, userId?: string}>

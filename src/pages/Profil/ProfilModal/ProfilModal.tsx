@@ -7,8 +7,8 @@ import ColorPickerModal from './ColorPickerModal/ColorPickerModal';
 import { COLOR_BY_THEME } from '../../../utils/Enums/theme';
 import { useAppSelector } from '../../../hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
-import styles from './ProfilModal.module.scss';
 import { switchType } from '../../../store/reducers/typeReducer';
+import styles from './ProfilModal.module.scss';
 
 type Props = {
     user: AuthUser

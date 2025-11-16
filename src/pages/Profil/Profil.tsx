@@ -9,10 +9,10 @@ import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
 import Header from '../../Layouts/Theme/components/Header/Header';
 import Loading from '../loader/Loading/Loading';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
-import styles from './Profil.module.scss';
 import ProfilCard from './ProfilCard/ProfilCard';
 import ProfilModal from './ProfilModal/ProfilModal';
 import GamesFilter from '../../Layouts/Theme/components/GamesFilter/GamesFilter';
+import styles from './Profil.module.scss';
 
 const Profil = () => {
     const [page, setPage] = useState(1)

@@ -5,9 +5,9 @@ import Sortable from 'sortablejs'
 import Tombstone from '../../../components/Tombstone'
 import Trophey from '../../../components/Trophey'
 import LoosingModal from '../LoosingModal/LoosingModal'
-import styles from './Match.module.scss'
 import DamageCommanderModal from '../DamageCommanderModal/DamageCommanderModal'
 import Shield from '../../../components/Shield'
+import styles from './Match.module.scss'
 
 type Props = {
     toggleDrawer: (isOpened: boolean) => void

@@ -2,8 +2,8 @@ import React from 'react';
 import { Deck, useGetDecks } from '../../../hooks/queries/decks/useGetDecks';
 import { useCountGames } from '../../../hooks/queries/games/useCountGames';
 import { AuthUser } from '../../../store/reducers/authReducer';
-import styles from './ProfilCard.module.scss';
 import classNames from 'classnames';
+import styles from './ProfilCard.module.scss';
 
 type Props = {
     user: AuthUser

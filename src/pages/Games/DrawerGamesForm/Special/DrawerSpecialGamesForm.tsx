@@ -2,7 +2,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { Box, FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import classNames from 'classnames';
 import dayjs, { Dayjs } from "dayjs";
 import 'dayjs/locale/fr';
 import React, { MouseEvent, useState } from "react";
@@ -13,6 +12,7 @@ import ArchenemyPlayersBlock from './PlayersBlock/ArchenemyPlayersBlock';
 import TreacheryPlayersBlock from './PlayersBlock/TreacheryPlayersBlock';
 import ArchenemyVictoryBlock from './VictoryBlock/ArchenemyVictoryBlock';
 import TreacheryVictoryBlock from './VictoryBlock/TreacheryVictoryBlock';
+import classNames from 'classnames';
 import styles from './DrawerSpecialGamesForm.module.scss';
 
 export interface PlayersBlock {

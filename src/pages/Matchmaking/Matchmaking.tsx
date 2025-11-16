@@ -9,8 +9,8 @@ import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../Layouts/Theme/components/
 import Header from "../../Layouts/Theme/components/Header/Header";
 import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
 import SmallLoading from "../loader/SmallLoading/SmallLoading";
-import styles from './Matchmaking.module.scss';
 import Result from "./Result/Result";
+import styles from './Matchmaking.module.scss';
 
 const Matchmaking: React.FC = () => {
     const { data: users, isLoading: isUsersLaoding } = useGetAllPlayers()

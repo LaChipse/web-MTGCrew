@@ -1,28 +1,27 @@
 import { Modal } from '@mui/material';
 import React from 'react';
-import { ChromePicker, ColorResult } from 'react-color';
 import { useDispatch } from 'react-redux';
 import { setTheme } from '../../../../store/reducers/themeReducer';
+import { COLOR_BY_THEME, THEME } from '../../../../utils/Enums/theme';
+import { getTheme } from '../../../../utils/GetTheme';
 import styles from './ColorPickerModal.module.scss';
 
 type Props = {
     isPickColorOpen: boolean
-    type?: 'std' | 'spec'
-    color: string
     setIsPickColorOpen: React.Dispatch<React.SetStateAction<"std" | "spec" | undefined>>
-    setColor: React.Dispatch<React.SetStateAction<string>>
+    setColor: React.Dispatch<React.SetStateAction<THEME>>
 }
 
-const ColorPickerModal: React.FC<Props> = ({ isPickColorOpen, type, color, setIsPickColorOpen, setColor }) => {
+const ColorPickerModal: React.FC<Props> = ({ isPickColorOpen, setIsPickColorOpen, setColor }) => {
     const dispatch = useDispatch();
 
     const handleClose = () => {
         setIsPickColorOpen(undefined);
     };
 
-    const handleChangeColor = (color: ColorResult) => {
-        setColor(color.hex);
-        dispatch(setTheme({[type === 'std' ? 'primaryStd' : 'primarySpec']: color.hex}))
+    const handleChangeColor = (theme: THEME) => {
+        setColor(theme);
+        dispatch(setTheme((getTheme(theme))))
     }
 
     return (
@@ -33,7 +32,23 @@ const ColorPickerModal: React.FC<Props> = ({ isPickColorOpen, type, color, setIs
             aria-describedby="mise à jour couleur"
         >
             <div className={styles.modal}>
-                <ChromePicker color={ color } className={styles.colorPicker} onChange={(color) => handleChangeColor(color)}/>
+                {
+                    Object.values(THEME).map((t) => (
+                        <div key={t} style={{display: 'flex', alignItems: 'center'}}>
+                            <p style={{marginBottom: '5px', marginTop: '5px'}}>{t.toUpperCase()} :</p>
+                            <button 
+                                style={{
+                                    backgroundColor: COLOR_BY_THEME[t].tertiary, 
+                                    height: '20px', 
+                                    width: '20 px', 
+                                    marginLeft: '5px',
+                                    borderRadius: '10px'
+                                }}
+                                onClick={() => handleChangeColor(t)}
+                            />
+                        </div>
+                    ))
+                }
             </div>
 
         </Modal>

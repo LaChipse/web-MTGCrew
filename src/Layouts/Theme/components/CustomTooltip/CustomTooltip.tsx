@@ -8,7 +8,7 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
         margin: 0,
         fontSize: '13px',
         backdropFilter: 'blur(5px)',
-        background: 'rgba(31, 35, 78, 0.7)',
+        background: 'var(--tertiaryOpacity)',
         borderRadius: 15
     },
     [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]: {

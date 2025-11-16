@@ -62,7 +62,7 @@ const Games = () => {
                     letterSpacing: '0.3px',
                     fontSize: 'medium',
                     '.MuiPaper-root':{
-                        bgcolor: "rgba(47, 51, 107, 0.3)",
+                        bgcolor: "var(--secondaryOpacity)",
                         backdropFilter: 'blur(5px)',
                         width: '500px'
                     },
@@ -89,7 +89,7 @@ const Games = () => {
                     letterSpacing: '0.3px',
                     fontSize: 'medium',
                     '.MuiPaper-root':{
-                        bgcolor: "rgba(47, 51, 107, 0.3)",
+                        bgcolor: "var(--secondaryOpacity)",
                         backdropFilter: 'blur(5px)',
                         width: '500px'
                     },

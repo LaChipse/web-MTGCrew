@@ -75,7 +75,7 @@
     display: flex;
     justify-content: space-between;
     padding: 15px;
-    background-color: rgba(31, 35, 78, 0.4);
+    background-color: var(--secondaryOpacity);
 
     h2 {
         margin: 0
@@ -97,7 +97,7 @@
 
 .datePickerForm {
     .datePicker {
-        background-color: rgba(47, 51, 107, 0.7);
+        background-color: var(--tertiaryOpacity);
         color: var(--white);
         border-radius: 10px;
         border: none;

@@ -41,16 +41,16 @@ const Header: React.FC<Props> = () => {
     }
 
     const handleSwitch = (type: string) => {
-        if (isStandard && type === 'standard') return
-        if (!isStandard && type === 'special') return
+        if (isStandard && type === 'std') return
+        if (!isStandard && type === 'spec') return
         dispatch(switchType())
     }
 
     return (
         <div className={styles.header}>
             <div>
-                <button className={classNames(styles.stdButton, {[styles.isActive]: isStandard})} onClick={() => handleSwitch('standard')}>Standard</button>
-                <button className={classNames(styles.specButton, {[styles.isActive]: !isStandard})} onClick={() => handleSwitch('special')}>Special</button>
+                <button className={classNames(styles.stdButton, {[styles.isActive]: isStandard})} onClick={() => handleSwitch('std')}>Standard</button>
+                <button className={classNames(styles.specButton, {[styles.isActive]: !isStandard})} onClick={() => handleSwitch('spec')}>Special</button>
             </div>
             <button className={styles.signout}>
                 { showLoader ? 

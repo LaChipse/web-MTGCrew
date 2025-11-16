@@ -8,7 +8,7 @@ export const STYLED_PAPER = styled(Paper)({
     backdropFilter: 'blur(7px)',
     borderRadius: '15px',
     border: 'none',
-    backgroundColor: 'rgba(47, 51, 107, 0.2)',
+    backgroundColor: 'var(--tertiaryOpacity)',
     'div, span, button': { 
         fontFamily: '"Akshar", sans-serif', 
         letterSpacing: '0.3px', 
@@ -23,7 +23,7 @@ export const STYLED_PAPER = styled(Paper)({
             border: 'none', 
             color: 'var(--secondary)',
             '&:hover': { 
-                backgroundColor: 'rgba(39, 233, 255, 0.7)', 
+                backgroundColor: 'var(--primary)',
                 border: 'none', 
                 color: 'var(--secondary)' 
             } 
@@ -40,7 +40,7 @@ export const STYLED_PAPER = styled(Paper)({
 export const SELECT_MENU_STYLE = {
     PaperProps: {
         sx: {
-            backgroundColor: 'rgba(47, 51, 107, 0.2)',
+            backgroundColor: 'var(--tertiaryOpacity)',
             borderBottomRightRadius: 10,
             borderBottomLeftRadius: 10,
             fontFamily: '"Akshar", sans-serif',
@@ -113,7 +113,8 @@ export const SELECT_MENU_STYLE = {
 
 export const SELECT_STYLE = {
     color: "var(--white)",
-    bgcolor: "rgba(47, 51, 107, 0.7)",
+    bgcolor: "var(--tertiaryOpacity)",
+    opacity: 0.9,
     borderRadius: "10px",
     fontFamily: '"Akshar", sans-serif',
     letterSpacing: '0.3px',

@@ -5,9 +5,10 @@ import { useAppSelector } from '../../useAppSelector';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../../store/reducers/authReducer';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
+import { THEME } from '../../../utils/Enums/theme';
 
-const updateUser = (nom: string, prenom: string, colorStd: string, colorSpec: string, password?: string, ) => (
-    new Api<{ nom: string, prenom: string, colorStd: string, colorSpec:string }>()
+const updateUser = (nom: string, prenom: string, colorStd: THEME, colorSpec: THEME, password?: string, ) => (
+    new Api<{ nom: string, prenom: string, colorStd: THEME, colorSpec: THEME }>()
         .setBearerToken()
         .put('/user/update', {nom, prenom, colorStd, colorSpec, password})
 )
@@ -19,7 +20,7 @@ export const useUpdateUser = () => {
 
     return (
         useMutation({
-            mutationFn: (data: {nom: string, prenom: string, colorStd: string, colorSpec: string, password?: string}) => (
+            mutationFn: (data: {nom: string, prenom: string, colorStd: THEME, colorSpec: THEME, password?: string}) => (
                 updateUser(data.nom, data.prenom, data.colorStd, data.colorSpec, data.password)
             ),
             onSuccess: (data) => {

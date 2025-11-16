@@ -81,7 +81,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
         )
 
         if (isWinner) return 'var(--success)'
-        return 'var(--error)'
+        return 'var(--white)'
     }
 
     const getPaginate = () => {

@@ -21,7 +21,7 @@
         width: 500px;
 
         .datePicker {
-            background-color: rgba(47, 51, 107, 0.7);
+            background-color: var(--tertiaryOpacity);
             color: var(--white);
             border-radius: 10px;
             border: none;

@@ -1,7 +1,7 @@
 .profil {
     max-width: 450px;
     margin: auto;
-    background-color: rgba(47, 51, 107, 0.7);
+    background-color: var(--tertiaryOpacity);
     backdrop-filter: blur(7px);
     border-radius: 15px;
     padding: 15px;

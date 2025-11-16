@@ -31,13 +31,7 @@
         text-overflow: ellipsis;
     }
 
-    tbody tr:nth-child(odd) > th {
-        background-color: rgba(31, 35, 78, 0.7);
-        backdrop-filter: blur(7px);
-    }
-
-    tbody tr:nth-child(even) > th {
-        background-color: rgba(31, 35, 78, 0.7);
+    tbody tr > th {
         backdrop-filter: blur(7px);
     }
 

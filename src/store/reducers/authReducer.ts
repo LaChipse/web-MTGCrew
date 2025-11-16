@@ -1,6 +1,7 @@
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { THEME } from '../../utils/Enums/theme';
 
 export interface PartiesTypes {
     standard: number,
@@ -14,8 +15,8 @@ export interface AuthUser {
     nbrDecks: number,
     partiesJouees: PartiesTypes,
     victoires: PartiesTypes,
-    colorStd: string,
-    colorSpec: string,
+    colorStd: THEME,
+    colorSpec: THEME,
 }
 
 export interface AuthState {

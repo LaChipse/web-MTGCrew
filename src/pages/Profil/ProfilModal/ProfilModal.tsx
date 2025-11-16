@@ -3,8 +3,12 @@ import React, { MouseEvent, useState } from 'react';
 import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
 import { AuthUser } from '../../../store/reducers/authReducer';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
-import styles from './ProfilModal.module.scss';
 import ColorPickerModal from './ColorPickerModal/ColorPickerModal';
+import { COLOR_BY_THEME } from '../../../utils/Enums/theme';
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import { useDispatch } from 'react-redux';
+import styles from './ProfilModal.module.scss';
+import { switchType } from '../../../store/reducers/typeReducer';
 
 type Props = {
     user: AuthUser
@@ -13,6 +17,9 @@ type Props = {
 }
 
 const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
+    const dispatch = useDispatch();
+    const isStandard = useAppSelector((state) => state.type.isStandard);
+
     const [nom, setNom] = useState(user.nom);
     const [prenom, setPrenom] = useState(user.prenom);
     const [password, setPassword] = useState('');
@@ -38,6 +45,10 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
             if (prev === type) return undefined
             return type
         })
+
+        if (isStandard && type === 'std') return
+        if (!isStandard && type === 'spec') return
+        dispatch(switchType())
     }
 
 
@@ -91,13 +102,13 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Standard</p>
                             <div>
-                                <div className={styles.clorPickerButton} style={{backgroundColor: colorStd}} onClick={() => handleColorPickerChange('std')}></div>
+                                <div className={styles.clorPickerButton} style={{backgroundColor: COLOR_BY_THEME[colorStd].tertiary}} onClick={() => handleColorPickerChange('std')}></div>
                             </div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Spécial</p>
                             <div>
-                                <div className={styles.clorPickerButton} style={{backgroundColor: colorSpec}} onClick={() => handleColorPickerChange('spec')}></div>
+                                <div className={styles.clorPickerButton} style={{backgroundColor: COLOR_BY_THEME[colorSpec].tertiary}} onClick={() => handleColorPickerChange('spec')}></div>
                             </div>
                         </div>
                     </div>
@@ -112,11 +123,9 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                     </button>
                 </FormControl>
 
-                <ColorPickerModal 
-                    color={isPickColorOpen === 'std' ? colorStd : colorSpec}
+                <ColorPickerModal
                     isPickColorOpen={!!isPickColorOpen}
                     setColor={isPickColorOpen === 'std' ? setColorStd : setColorSpec}
-                    type={isPickColorOpen}
                     setIsPickColorOpen={setIsPickColorOpen}
                 />
             </div>

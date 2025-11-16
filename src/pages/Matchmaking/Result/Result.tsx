@@ -65,7 +65,7 @@ const Result: React.FC<Props> = ({configuration, ref}) => {
                     letterSpacing: '0.3px',
                     fontSize: 'medium',
                     '.MuiPaper-root':{
-                        bgcolor: "rgba(47, 51, 107, 0.6)",
+                        bgcolor: "var(--tertiaryOpacity)",
                         backdropFilter: 'blur(3px)',
                         width: '100vw'
                     },

@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ThemeColors {
-    primaryStd: string;
-    primarySpec: string;
+    primary: string;
     secondary: string;
+    secondaryOpacity: string,
     tertiary: string,
+    tertiaryOpacity: string,
     background: string,
     white: string;
     black: string;
@@ -13,10 +14,11 @@ export interface ThemeColors {
 }
 
 const initialState: ThemeColors = {
-    primaryStd: '#27E9FF',
-    primarySpec: '#ff97f5ff',
-    secondary: '#1f234eff',
-    tertiary: '#2f336bff',
+    primary: '#27E9FF',
+    secondary: 'rgba(31, 35, 78, 1)',
+    secondaryOpacity: 'rgba(31, 35, 78, 0.7)',
+    tertiary: 'rgba(47, 51, 107, 1)',
+    tertiaryOpacity: 'rgba(47, 51, 107, 0.7)',
     background: '#21213aff',
     white: '#ffffffcc',
     black: '#221e1eff',

@@ -8,10 +8,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(31, 35, 78, 0.4);
+    background: var(--secondaryOpacity);
     width: 80%;
     max-width: 750px;
-    backdrop-filter: blur(5px);
     max-height: 80%;
 
     .arrow {
@@ -66,12 +65,14 @@
         background-color: rgba(34, 30, 30, 0.8);
     }
 
-    tbody tr:nth-of-type(odd) {
-        background-color: rgba(47, 51, 107, 0.3);
+    tbody tr:nth-of-type(odd) .styckyCol {
+        background-color: var(--secondary);
+        opacity: 0.8;
     }
 
-    tbody tr:nth-of-type(even) {
-        background-color: rgba(47, 51, 107, 0.1);
+    tbody tr:nth-of-type(even) .styckyCol {
+        background-color: var(--tertiary);
+        opacity: 0.8;
     }
 
     .tableau {
@@ -88,7 +89,6 @@
             left: 0;
             position: sticky;
             z-index: 50;
-            background-color: #1b1d37e5;
             max-width: 100px;
             white-space: nowrap;
             overflow: hidden;

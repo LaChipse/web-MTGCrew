@@ -13,17 +13,17 @@ export const COLOR_BY_THEME = {
         primary: 'rgba(0, 243, 255, 1)',
         secondary: 'rgba(20, 24, 66, 1)',
         secondaryOpacity: 'rgba(20, 24, 66, 0.7)',
-        tertiary: 'rgba(61, 63, 96, 1)',
-        tertiaryOpacity: 'rgba(61, 63, 96, 0.6)',
+        tertiary: 'rgba(54, 58, 117, 1)',
+        tertiaryOpacity: 'rgba(54, 58, 117, 0.6)',
         background: 'rgba(18, 18, 38, 1)',
     },
 
     [THEME.WHITE]: {
         primary: 'rgba(241, 241, 228, 1)',
-        secondary: 'rgba(69, 70, 55, 1)',
-        secondaryOpacity: 'rgba(69, 70, 55, 0.7)',
-        tertiary: 'rgba(145, 147, 122, 1)',
-        tertiaryOpacity: 'rgba(145, 147, 122, 0.6)',
+        secondary: 'rgba(91, 91, 73, 1)',
+        secondaryOpacity: 'rgba(91, 91, 73, 0.7)',
+        tertiary: 'rgba(181, 183, 164, 1)',
+        tertiaryOpacity: 'rgba(181, 183, 164, 0.6)',
         background: 'rgba(32, 32, 22, 1)',
     },
 
@@ -47,10 +47,10 @@ export const COLOR_BY_THEME = {
 
     [THEME.BLACK]: {
         primary: 'rgba(221, 216, 216, 1)',
-        secondary: 'rgba(62, 62, 64, 1)',
-        secondaryOpacity: 'rgba(62, 62, 64, 0.7)',
-        tertiary: 'rgba(139, 132, 132, 1)',
-        tertiaryOpacity: 'rgba(139, 132, 132, 0.6)',
+        secondary: 'rgba(55, 55, 55, 1)',
+        secondaryOpacity: 'rgba(55, 55, 55, 0.7)',
+        tertiary: 'rgba(109, 109, 115, 1)',
+        tertiaryOpacity: 'rgba(109, 109, 115, 0.6)',
         background: 'rgba(0, 0, 0, 1)',
     },
 

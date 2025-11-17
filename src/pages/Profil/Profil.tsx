@@ -67,8 +67,7 @@ const Profil = () => {
                         divider={10} 
                         page={page}
                         setPage={setPage}
-                        count={count} 
-                        isHystoric 
+                        count={count}
                     />
                 )}
             </div>

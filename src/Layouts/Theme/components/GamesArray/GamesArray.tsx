@@ -1,10 +1,8 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpIcon from '@mui/icons-material/Help';
 import { IconButton, Pagination } from '@mui/material';
-import classNames from "classnames";
 import { useState } from 'react';
 import { GameResume } from '../../../../hooks/queries/games/useGetGames';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { PlayersBlock } from '../../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import { DateHelper } from '../../../../utils/DateHelper';
 import CustomTooltip from '../CustomTooltip/CustomTooltip';
@@ -17,12 +15,9 @@ type Props = {
     setPage: React.Dispatch<React.SetStateAction<number>>
     divider: number
     count?: number
-    isHystoric?: boolean
 }
 
-const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isHystoric }) => {
-    const user = useAppSelector((state) => state.auth.user);
-
+const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider }) => {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [deletedGame, setDeletedGame] = useState<string>('')
 
@@ -60,18 +55,6 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
             </ul>
         </>
     )
-
-    const winnerStyle = (victoire: string, config: Array<PlayersBlock>) => {
-        const userPlayer = config.find((conf) => conf.userId === user?.id)
-        const isWinner = (
-            (userPlayer?.userId === victoire) 
-            || (victoire === 'Seigneur' ? (userPlayer?.role === victoire || userPlayer?.role === 'Gardien') : userPlayer?.role === victoire) 
-            || (userPlayer?.team === victoire) 
-        )
-
-        if (isWinner) return 'green'
-        return 'red'
-    }
 
     const showWinnerStyle = (victoire: string, config: PlayersBlock) => {
         const isWinner = (
@@ -117,7 +100,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider, isH
                     </thead>
                     <tbody>
                         {games?.map((game) => (
-                            <tr key={game.id} className={classNames({ [styles[winnerStyle(game.victoire, game.config)]]: isHystoric })}>
+                            <tr key={game.id}>
                                 <td align="center">{ game?.date ? DateHelper.formatAsFrenchDate(game?.date) : '-' }</td>
                                 <td align="center">{ formatType(game.type) }</td>
                                 <td align="center">{ game.isRanked ? 'Oui' : 'Non' }</td>

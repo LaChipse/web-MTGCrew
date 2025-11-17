@@ -37,32 +37,34 @@
     }
 
     .rank {
-        font-weight: 700;
+        font-weight: 800;
         color: var(--white);
+        text-shadow: 1px 1px black;
     }
 
     .A {
-        background-color: rgb(192, 0, 0, 0.4);
+        font-size: large;
+        color: rgb(255, 0, 200);
     }
 
     .B {
-        background-color: rgba(255, 192, 0, 0.4);
+        font-size: large;
+        color: rgb(255, 0, 0);
     }
 
     .C {
-        background-color: rgba(255, 255, 0, 0.6);
+        font-size: large;
+        color: rgb(255, 153, 0);
     }
 
     .D {
-        background-color: rgba(0, 255, 0, 0.4);
+        font-size: large;
+        color: rgb(238, 255, 0);
     }
 
     .E {
-        background-color: rgba(5, 163, 76, 0.4);
-    }
-
-    .RIP {
-        background-color: rgba(34, 30, 30, 0.8);
+        font-size: large;
+        color: rgb(0, 255, 128);
     }
 
     tbody tr:nth-of-type(odd) .styckyCol {

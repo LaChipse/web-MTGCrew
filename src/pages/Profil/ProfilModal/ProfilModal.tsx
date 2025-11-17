@@ -102,13 +102,13 @@ const ProfilModal: React.FC<Props> = ({ user, open, setOpen }) => {
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Standard</p>
                             <div>
-                                <div className={styles.clorPickerButton} style={{backgroundColor: COLOR_BY_THEME[colorStd].tertiary}} onClick={() => handleColorPickerChange('std')}></div>
+                                <div className={styles.clorPickerButton} style={{backgroundColor: COLOR_BY_THEME[colorStd].secondary}} onClick={() => handleColorPickerChange('std')}></div>
                             </div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <p style={{ color: 'var(--white)', fontSize: '14px', marginBottom: '5px', display: 'flex' }}>Spécial</p>
                             <div>
-                                <div className={styles.clorPickerButton} style={{backgroundColor: COLOR_BY_THEME[colorSpec].tertiary}} onClick={() => handleColorPickerChange('spec')}></div>
+                                <div className={styles.clorPickerButton} style={{backgroundColor: COLOR_BY_THEME[colorSpec].secondary}} onClick={() => handleColorPickerChange('spec')}></div>
                             </div>
                         </div>
                     </div>

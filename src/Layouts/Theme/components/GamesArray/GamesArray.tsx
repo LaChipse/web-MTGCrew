@@ -32,7 +32,7 @@ const GamesArray: React.FC<Props> = ({ games, page, setPage, count, divider }) =
     const formatVictoire = (type: string, victoire: string, config: Array<PlayersBlock>) => {
         if (type === 'team') return <><strong>Equipe :&nbsp;</strong>{victoire}</>
         if (type === 'each') return <><strong>Joueur :&nbsp;</strong>{config.find((conf) => conf.userId === victoire)?.joueur}</>
-        if (type === 'treachery' || type === 'archenemy') return <><strong>Role : </strong>{victoire}</>
+        if (type === 'treachery' || type === 'archenemy') return <><strong>Role :&nbsp;</strong>{victoire}</>
         else return '-'
     }
 

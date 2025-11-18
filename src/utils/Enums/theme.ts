@@ -98,7 +98,7 @@ export const COLOR_BY_THEME = {
         tertiary: 'rgba(253, 168, 239, 1)',
         tertiaryOpacity: 'rgba(253, 168, 239, 0.6)',
         tertiaryRow: 'rgba(253, 168, 239, 0.2)',
-        background: 'rgba(191, 150, 187, 1)',
+        background: 'rgba(164, 111, 158, 1)',
     },
 
     [THEME.FLASH_BLUE]: {
@@ -109,7 +109,7 @@ export const COLOR_BY_THEME = {
         tertiary: 'rgba(168, 253, 241, 1)',
         tertiaryOpacity: 'rgba(168, 245, 253, 0.6)',
         tertiaryRow: 'rgba(168, 245, 253, 0.1)',
-        background: 'rgba(99, 151, 157, 1)',
+        background: 'rgba(59, 98, 102, 1)',
     },
 
     [THEME.FLASH_GREEN]: {
@@ -120,17 +120,17 @@ export const COLOR_BY_THEME = {
         tertiary: 'rgba(183, 253, 168, 1)',
         tertiaryOpacity: 'rgba(183, 253, 168, 0.6)',
         tertiaryRow: 'rgba(183, 253, 168, 0.1)',
-        background: 'rgba(90, 128, 80, 1)',
+        background: 'rgba(79, 108, 71, 1)',
     },
 
     [THEME.FLASH_RED]: {
         primary: 'rgba(255, 255, 255, 1)',
-        secondary: 'rgba(255, 46, 46, 1)',
-        secondaryOpacity: 'rgba(255, 46, 46, 0.7)',
-        secondaryRow: 'rgba(255, 46, 46, 0.1)',
+        secondary: 'rgba(255, 64, 64, 1)',
+        secondaryOpacity: 'rgba(255, 64, 64, 0.7)',
+        secondaryRow: 'rgba(255, 64, 64, 0.1)',
         tertiary: 'rgba(246, 110, 110, 1)',
         tertiaryOpacity: 'rgba(246, 110, 110, 0.6)',
         tertiaryRow: 'rgba(246, 110, 110, 0.1)',
-        background: 'rgba(191, 150, 150, 1)',
+        background: 'rgba(185, 122, 122, 1)',
     }
 }

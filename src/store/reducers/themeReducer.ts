@@ -4,8 +4,10 @@ export interface ThemeColors {
     primary: string;
     secondary: string;
     secondaryOpacity: string,
+    secondaryRow: string,
     tertiary: string,
     tertiaryOpacity: string,
+    tertiaryRow: string,
     background: string,
     white: string;
     black: string;
@@ -14,13 +16,15 @@ export interface ThemeColors {
 }
 
 const initialState: ThemeColors = {
-    primary: '#27E9FF',
-    secondary: 'rgba(31, 35, 78, 1)',
-    secondaryOpacity: 'rgba(31, 35, 78, 0.7)',
-    tertiary: 'rgba(47, 51, 107, 1)',
-    tertiaryOpacity: 'rgba(47, 51, 107, 0.7)',
-    background: '#21213aff',
-    white: '#ffffffcc',
+    primary: 'rgba(85, 246, 255, 1)',
+    secondary: 'rgba(20, 24, 66, 1)',
+    secondaryOpacity: 'rgba(20, 24, 66, 0.7)',
+    secondaryRow: 'rgba(20, 24, 66, 0.1)',
+    tertiary: 'rgba(54, 58, 117, 1)',
+    tertiaryOpacity: 'rgba(54, 58, 117, 0.6)',
+    tertiaryRow: 'rgba(54, 58, 117, 0.1)',
+    background: 'rgba(18, 18, 38, 1)',
+    white: '#ffffffff',
     black: '#221e1eff',
     success: '#21fc42ff',
     error: '#FA0505',

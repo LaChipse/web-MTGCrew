@@ -35,14 +35,13 @@ const ColorPickerModal: React.FC<Props> = ({ isPickColorOpen, setIsPickColorOpen
                 {
                     Object.values(THEME).map((t) => (
                         <div key={t} style={{display: 'flex', alignItems: 'center'}}>
-                            <p style={{marginBottom: '5px', marginTop: '5px'}}>{t.toUpperCase()} :</p>
                             <button 
                                 style={{
                                     backgroundColor: COLOR_BY_THEME[t].tertiary, 
-                                    height: '20px', 
-                                    width: '20 px', 
+                                    height: '30px', 
+                                    width: '40px', 
                                     marginLeft: '5px',
-                                    borderRadius: '10px'
+                                    borderRadius: '5px'
                                 }}
                                 onClick={() => handleChangeColor(t)}
                             />

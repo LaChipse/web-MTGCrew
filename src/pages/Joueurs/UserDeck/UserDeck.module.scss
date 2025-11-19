@@ -3,7 +3,7 @@
     border-radius: 15px;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px 15px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -43,38 +43,33 @@
     }
 
     .A {
-        font-size: large;
         color: rgb(255, 0, 200);
     }
 
     .B {
-        font-size: large;
         color: rgb(255, 0, 0);
     }
 
     .C {
-        font-size: large;
         color: rgb(255, 153, 0);
     }
 
     .D {
-        font-size: large;
         color: rgb(238, 255, 0);
     }
 
     .E {
-        font-size: large;
         color: rgb(0, 255, 128);
     }
 
     tbody tr:nth-of-type(odd) .styckyCol {
-        background-color: var(--secondaryOpacity);
-        opacity: 0.8;
+        background-color: var(--secondaryRow);
+        backdrop-filter: blur(1px);
     }
 
     tbody tr:nth-of-type(even) .styckyCol {
-        background-color: var(--tertiaryOpacity);
-        opacity: 0.8;
+        background-color: var(--tertiaryRow);
+        backdrop-filter: blur(1px);
     }
 
     .tableau {

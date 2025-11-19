@@ -68,12 +68,12 @@
     }
 
     tbody tr:nth-of-type(odd) .styckyCol {
-        background-color: var(--secondary);
+        background-color: var(--secondaryOpacity);
         opacity: 0.8;
     }
 
     tbody tr:nth-of-type(even) .styckyCol {
-        background-color: var(--tertiary);
+        background-color: var(--tertiaryOpacity);
         opacity: 0.8;
     }
 

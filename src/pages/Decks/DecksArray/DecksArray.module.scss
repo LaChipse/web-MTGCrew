@@ -35,12 +35,6 @@
         backdrop-filter: blur(7px);
     }
 
-    .actions {
-        display: flex;
-        gap: 3px;
-        justify-content: center;
-    }
-
     .delete {
         color: var(--error);
 

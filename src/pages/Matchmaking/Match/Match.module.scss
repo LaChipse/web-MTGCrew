@@ -149,9 +149,10 @@
     .img {
         height: 100%;
         width: 100%;
-        filter: opacity(0.5);
+        filter: opacity(0.7);
         position: absolute;
         z-index: 1;
+        background-color: var(--background);
 
         &.almostDead {
             animation: heartbeat 1.4s infinite;

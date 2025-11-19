@@ -101,6 +101,15 @@ body {
         }
         
         tbody {
+            td:first-child { border-top-left-radius: 10px; }
+            td:last-child { border-top-right-radius: 10px; }
+
+            td:first-child { border-bottom-left-radius: 10px; }
+            td:last-child { border-bottom-right-radius: 10px; }
+
+            th:first-child { border-top-left-radius: 10px; }
+            th:first-child { border-bottom-left-radius: 10px; }
+
             tr:nth-of-type(odd) {
                 background-color: var(--tertiaryRow);
             }

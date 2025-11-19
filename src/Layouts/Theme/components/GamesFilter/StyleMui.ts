@@ -41,8 +41,7 @@ export const SELECT_MENU_STYLE = {
     PaperProps: {
         sx: {
             backgroundColor: 'var(--tertiaryOpacity)',
-            borderBottomRightRadius: 10,
-            borderBottomLeftRadius: 10,
+            borderRadius: '10px',
             fontFamily: '"Akshar", sans-serif',
             letterSpacing: '0.3px',
             backdropFilter: 'blur(7px)',
@@ -84,6 +83,9 @@ export const SELECT_MENU_STYLE = {
                         backgroundColor: 'var(--primary)',
                         color: 'var(--secondary)',
                         ".MuiTypography-root": {
+                            color: 'var(--secondary)',
+                        },
+                        ".MuiCheckbox-root": {
                             color: 'var(--secondary)',
                         },
                     },

@@ -130,8 +130,8 @@ const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetS
                                 <td align='center'>{`${deck.parties?.[partieType]} (${Math.round((deck.parties?.[partieType] / (countGames || 1)) * 100)}%)`}</td>
                                 <td align='center'>{`${deck.victoires?.[partieType]}`} {<span className={styles[colorVictory(deck)]} >{`(${ratioVictory(deck)}%)`}</span>}</td>
                                 <td align='center' className={styles.actions}>
-                                    <IconButton style={{padding: 1}} className={styles.edit} onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
-                                    <IconButton style={{padding: 1}} className={styles.delete} onClick={() => handleDeleteOpen(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
+                                    <IconButton style={{padding: 1, marginRight: 2}} className={styles.edit} onClick={() => handleOpen(deck)}><ModeEditIcon/></IconButton>
+                                    <IconButton style={{padding: 1, marginLeft: 2}} className={styles.delete} onClick={() => handleDeleteOpen(deck._id)} value={deck._id}><DeleteIcon/></IconButton>
                                 </td>
                             </tr>
                         ))}

@@ -2,11 +2,12 @@
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
 import Sortable from 'sortablejs'
+import Historical from '../../../components/Historical'
+import Shield from '../../../components/Shield'
 import Tombstone from '../../../components/Tombstone'
 import Trophey from '../../../components/Trophey'
-import LoosingModal from '../LoosingModal/LoosingModal'
 import DamageCommanderModal from '../DamageCommanderModal/DamageCommanderModal'
-import Shield from '../../../components/Shield'
+import LoosingModal from '../LoosingModal/LoosingModal'
 import styles from './Match.module.scss'
 
 type Props = {
@@ -34,6 +35,8 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [commanderModalIsOpen, setCommanderModalIsOpen] = useState(false)
     const [lifeChange, setLifeChange] = useState<Record<string, number>>({})
     const [isFading, setIsFading] = useState(false);
+    const [historic, setHistoric] = useState<Array<string>>([])
+    const [openHistoric, setOpenHistoric] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null);
     const matchConfRef = useRef(matchConf);
@@ -161,12 +164,23 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         timeoutRef.current = setTimeout(() => {
             setIsFading(true); // déclenche la classe fade-out
 
+            setHistoric((prev) => {
+                    const player = conf.find((c) => c.idPlayer === id)!.player
+                    const currentLifeChange = lifeChange[id] || 0
+                    const line = delta > 0 ? 
+                        `${player} a gagné ${Math.abs(currentLifeChange) + 1} PV`
+                        : `${player} a perdu ${Math.abs(currentLifeChange) + 1} PV`;
+
+                    return [...prev, line]
+                })
+
             // après la durée du fade (300ms), on reset réellement
             fadeRef.current = setTimeout(() => {
+                
                 setLifeChange({});
                 setIsFading(false);
             }, 300);
-        }, 3000);
+        }, 1000);
     }
 
     const getGridColumn = (length: number, index: number ) => {
@@ -214,6 +228,14 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                 dead: isDead,
             },
         }))
+
+        if (isDead) {
+            setHistoric((prev) => {
+                const player = conf.find((c) => c.idPlayer === id)!.player
+                const line = `${player} est mort`;
+                return [...prev, line];
+            });
+        }
     }
 
     const isPlayerDead = (idPlayer: string) => {
@@ -269,6 +291,14 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             }
         })
 
+        setHistoric((prev) => {
+            const attacking = conf.find((c) => c.idPlayer === from)!.player;
+            const defensor = conf.find((c) => c.idPlayer === to)!.player;
+
+            const line = `${attacking} a infligé ${Math.abs(damage)} dmg à ${defensor}`;
+            return [...prev, line];
+        });
+
         setTimeout(() => {
             setCommanderModalIsOpen(false)
         }, 200)
@@ -283,7 +313,20 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
 
     return (
         <div>
-            <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
+            <div className={styles.actionMatch}>
+                <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
+                <Historical onClick={() => setOpenHistoric(!openHistoric)} className={styles.historical} height='30px' width='30px' color='var(--primary)'></Historical>
+            </div>
+
+            {openHistoric && (
+                <div className={styles.historicalModal}>
+                    {
+                        historic.map((h) => (
+                            <span>{h}</span>
+                        ))
+                    }
+                </div>
+            )}
             <div className={styles.commanderButton}>
                 <Shield onClick={() => setCommanderModalIsOpen(true)} height='50px' width='50px' color='var(--primary)'/>
             </div>

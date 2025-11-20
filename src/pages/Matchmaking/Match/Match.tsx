@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import classNames from 'classnames'
-import { useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import Sortable from 'sortablejs'
 import Historical from '../../../components/Historical'
 import Shield from '../../../components/Shield'
@@ -35,7 +35,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
     const [commanderModalIsOpen, setCommanderModalIsOpen] = useState(false)
     const [lifeChange, setLifeChange] = useState<Record<string, number>>({})
     const [isFading, setIsFading] = useState(false);
-    const [historic, setHistoric] = useState<Array<string>>([])
+    const [historic, setHistoric] = useState<Array<ReactNode>>([])
     const [openHistoric, setOpenHistoric] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -165,14 +165,14 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             setIsFading(true); // déclenche la classe fade-out
 
             setHistoric((prev) => {
-                    const player = conf.find((c) => c.idPlayer === id)!.player
-                    const currentLifeChange = lifeChange[id] || 0
-                    const line = delta > 0 ? 
-                        `${player} a gagné ${Math.abs(currentLifeChange) + 1} PV`
-                        : `${player} a perdu ${Math.abs(currentLifeChange) + 1} PV`;
+                const player = conf.find((c) => c.idPlayer === id)!.player
+                const currentLifeChange = lifeChange[id] || 0
+                const line = delta > 0 ? 
+                    <span>{player} &nbsp;<span style={{color: 'var(--success)'}}>+{Math.abs(currentLifeChange) + 1}</span> PV</span>
+                    : <span>{player} &nbsp;<span style={{color: 'var(--error)'}}>-{Math.abs(currentLifeChange) + 1}</span> PV</span>;
 
-                    return [...prev, line]
-                })
+                return [...prev, line]
+            })
 
             // après la durée du fade (300ms), on reset réellement
             fadeRef.current = setTimeout(() => {
@@ -232,7 +232,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         if (isDead) {
             setHistoric((prev) => {
                 const player = conf.find((c) => c.idPlayer === id)!.player
-                const line = `${player} est mort`;
+                const line = <span><strong>{player} est mort</strong></span>;
                 return [...prev, line];
             });
         }
@@ -295,7 +295,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             const attacking = conf.find((c) => c.idPlayer === from)!.player;
             const defensor = conf.find((c) => c.idPlayer === to)!.player;
 
-            const line = `${attacking} a infligé ${Math.abs(damage)} dmg à ${defensor}`;
+            const line =<span>{attacking} =&nbsp;<span style={{ color: 'var(--error)'}}>{Math.abs(damage)}</span> cmder dmg =&gt; &nbsp;{defensor}</span>;
             return [...prev, line];
         });
 
@@ -322,7 +322,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                 <div className={styles.historicalModal}>
                     {
                         historic.map((h) => (
-                            <span>{h}</span>
+                            <>{h}</>
                         ))
                     }
                 </div>

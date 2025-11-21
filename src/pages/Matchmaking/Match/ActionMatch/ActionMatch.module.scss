@@ -30,14 +30,17 @@
     top: 40px;
     left: 5px;
     z-index: 1000;
-    padding: 5px 9px;
+    padding: 10px 0 10px 10px;
     background-color: var(--secondaryOpacity);
     max-height: 300px;
-    overflow: auto;
     border-radius: 10px;
 
-    span {
-        color: var(--white);
-    }
+    > div {
+        overflow: auto;
+        padding-right: 10px;
 
+        span {
+            color: var(--white);
+        }
+    }
 }

@@ -23,7 +23,7 @@ const LifeContainer: React.FC<Props> = ({ isModalPlayerOpen, statePlayers, idPla
                     </span>
             </h2>
         </div>
-            {(lifeChangeCount || lifeChangeCount === 0) && (
+            {(lifeChangeCount !== 0 && lifeChangeCount !== undefined) && (
                 <span className={classNames(styles.lifeChange, {[styles.fadeOut]: isFading})}>( {lifeChangeCount} )</span>
             )}
     </div>

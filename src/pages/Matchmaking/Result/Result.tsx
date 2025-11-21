@@ -59,7 +59,13 @@ const Result: React.FC<Props> = ({configuration, ref}) => {
             </div>
 
             <Drawer 
-                sx={DRAWER_STYLE} 
+                sx={{
+                    ...DRAWER_STYLE,
+                    '.MuiPaper-root':{
+                        bgcolor: "var(--black)",
+                        width: '100vw'
+                    },
+                }}
                 open={isOpened} 
                 onClose={() => setIsOpened(false)} 
                 anchor='right'

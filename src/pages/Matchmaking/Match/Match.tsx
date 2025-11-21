@@ -165,23 +165,23 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
         timeoutRef.current = setTimeout(() => {
             setIsFading(true); // déclenche la classe fade-out
 
+            const currentLifeChange = (lifeChange[id] || 0) + delta
+            const player = conf.find((c) => c.idPlayer === id)!.player
+
             setHistoric((prev) => {
-                const player = conf.find((c) => c.idPlayer === id)!.player
-                const currentLifeChange = lifeChange[id] || 0
-                const line = delta > 0 ? 
-                    <span>{player} &nbsp;<span style={{color: 'var(--success)'}}>+{Math.abs(currentLifeChange) + 1}</span> PV</span>
-                    : <span>{player} &nbsp;<span style={{color: 'var(--error)'}}>-{Math.abs(currentLifeChange) + 1}</span> PV</span>;
+                const line = currentLifeChange > 0 ? 
+                    <span>{player} &nbsp;<span style={{color: 'var(--success)'}}>+{currentLifeChange}</span> PV</span>
+                    : <span>{player} &nbsp;<span style={{color: 'var(--error)'}}>{currentLifeChange}</span> PV</span>;
 
                 return [...prev, line]
             })
 
             // après la durée du fade (300ms), on reset réellement
             fadeRef.current = setTimeout(() => {
-                
                 setLifeChange({});
                 setIsFading(false);
             }, 300);
-        }, 1000);
+        }, 800);
     }
 
     const getGridColumn = (length: number, index: number ) => {

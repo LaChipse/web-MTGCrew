@@ -4,8 +4,8 @@ import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useGetAllDecks } from "../../hooks/queries/decks/useGetAllDecks";
-import { useGetAllPlayers } from "../../hooks/queries/joueurs/useGetAllPlayers";
-import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../Layouts/Theme/components/GamesFilter/StyleMui";
+import { useGetAllPlayers } from "../../hooks/queries/players/useGetAllPlayers";
+import { SELECT_MENU_STYLE, SELECT_STYLE } from "../../Layouts/Theme/StyleMui";
 import Header from "../../Layouts/Theme/components/Header/Header";
 import { addErrorSnackbar } from "../../store/reducers/snackbarReducer";
 import SmallLoading from "../loader/SmallLoading/SmallLoading";
@@ -167,7 +167,7 @@ const Matchmaking: React.FC = () => {
     return (
         <>
             <Header />
-            <div className={styles.container}>
+            <div data-container>
                 <h2 style={{ textAlign: 'center', marginTop: '10px' }}>Configurer le matchmaking</h2>
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'space-around', flexWrap: 'wrap' }}>
                     <FormControl className={styles.formControl}>

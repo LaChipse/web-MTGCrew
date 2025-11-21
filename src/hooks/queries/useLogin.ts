@@ -5,9 +5,9 @@ import { DEFAULT_PAGE_PATH } from '../../router/routes.js';
 import { authActions, AuthUser } from '../../store/reducers/authReducer.js';
 import { setTheme } from '../../store/reducers/themeReducer.js';
 import { Api } from '../../utils/Api';
-import { useGetAllPlayers } from './joueurs/useGetAllPlayers.js';
-import { useGetUsersDecks } from './joueurs/useGetUsersDecks.js';
-import { getTheme } from '../../utils/GetTheme.js';
+import { useGetAllPlayers } from './players/useGetAllPlayers.js';
+import { useGetUsersDecks } from './players/useGetUsersDecks.js';
+import { getTheme } from '../../utils/getTheme.js';
 
 const login = (nom: string, prenom:string, password: string) => (
     new Api<{ token: string, user: AuthUser }>()

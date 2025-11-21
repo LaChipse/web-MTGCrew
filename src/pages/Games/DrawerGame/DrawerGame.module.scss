@@ -1,0 +1,98 @@
+.drawer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    h3 {
+        margin-bottom: 0;
+        margin-top: 10px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+
+        .valide {
+            &:hover {
+                border: none
+            }
+        }
+
+        .disabled {
+            background-color: grey;
+            color: white;
+            border: none;
+            cursor: not-allowed;
+        }
+    }
+    
+    .firstBloc {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        width: 100%;
+
+        > div {
+            flex: 1
+        }
+    }
+
+    .add {
+        height: 20px;
+        width: 20px;
+        align-self: start;
+        background-color: rgba(33, 252, 66, 0.6);
+        color: var(--white);
+
+        svg {
+            font-size: 1.2rem
+        }
+
+        &:hover {
+            background-color: var(--white);
+            color: rgba(33, 252, 66, 0.6);
+        }
+    }
+
+    .add[disabled] {
+        background-color: grey;
+        color: white;
+        border: none;
+    }
+} 
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: var(--secondaryRow);
+    backdrop-filter: blur(1px);
+
+    h2 {
+        margin: 0
+    }
+
+    button {
+        border: none;
+        color: var(--primary);
+        background-color: var(--tertiary);
+
+        &:hover {
+            color: var(--secondary);
+            background-color: var(--primary);
+            border: none;
+        }
+        
+    }
+}
+
+@media (max-width: 650px) {
+    .drawer {
+        padding: 10px;
+    }
+    
+}

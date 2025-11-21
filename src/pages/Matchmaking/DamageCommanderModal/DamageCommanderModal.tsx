@@ -1,6 +1,6 @@
 import { MenuItem, Modal, Select } from '@mui/material';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/components/GamesFilter/StyleMui';
+import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/StyleMui';
 import NumberSpinnerInput from './NumberSpinnerInput/NumberSpinnerInput';
 import classNames from 'classnames';
 import { PlayerStateMap } from '../Match/Match';

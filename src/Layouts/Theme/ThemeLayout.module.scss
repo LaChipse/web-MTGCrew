@@ -6,6 +6,18 @@ body {
     margin: 0;
     letter-spacing: 0.3px;
 
+    [data-container="true"] {
+        background-color: var(--secondaryOpacity);
+        border-radius: 15px;
+        padding: 15px;
+    }
+
+    label {
+        margin-bottom: 5px;
+        color: var(--primary);
+        font-size: small;
+    }
+
     input {
         font-size: medium;
         color: var(--white);
@@ -61,6 +73,7 @@ body {
         padding: 10px;
         border-radius: 10px;
         backdrop-filter: blur(7px);
+        height: 40px;
 
         &:hover {
             cursor: pointer;

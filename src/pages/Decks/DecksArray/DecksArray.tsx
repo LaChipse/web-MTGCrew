@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import { Dispatch, MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { RANK } from '../../../utils/Enums/rank';
-import { toTitleCase } from '../../../utils/ToTitleCase';
-import ImagePortal from '../composants/ImagePortal/ImagePortal';
+import ImagePortal from '../../../Layouts/Theme/components/ImagePortal/ImagePortal';
 import DecksActionModal from '../DecksActionModal/DecksActionModal';
 import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
+import { toTitleCase } from '../../../utils/toTitleCase';
 import styles from './DecksArray.module.scss';
 
 type Props = {

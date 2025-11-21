@@ -1,12 +1,12 @@
 import InfoIcon from '@mui/icons-material/Info';
 import { IconButton } from "@mui/material";
 import { useState } from "react";
-import Biceps from '../../components/Biceps';
-import Crown from '../../components/Crown';
-import Seringue from '../../components/Syringe';
+import Biceps from '../../components/svg/Biceps';
+import Crown from '../../components/svg/Crown';
+import Seringue from '../../components/svg/Syringe';
 import { useCountGames } from "../../hooks/queries/games/useCountGames";
-import { useGetAllPlayers, User } from "../../hooks/queries/joueurs/useGetAllPlayers";
-import { useGetUsersDecks } from "../../hooks/queries/joueurs/useGetUsersDecks";
+import { useGetAllPlayers, User } from "../../hooks/queries/players/useGetAllPlayers";
+import { useGetUsersDecks } from "../../hooks/queries/players/useGetUsersDecks";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Header from '../../Layouts/Theme/components/Header/Header';
 import SmallLoading from "../loader/SmallLoading/SmallLoading";

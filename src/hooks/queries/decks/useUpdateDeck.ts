@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { Api } from '../../../utils/Api';
 import { useGetDecks } from './useGetDecks';
-import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
+import { useGetUsersDecks } from '../players/useGetUsersDecks';
 import { useAppSelector } from '../../useAppSelector';
 import { useGetUserDeck } from './useGetUserDeck';
 import { useGetGames } from '../games/useGetGames';

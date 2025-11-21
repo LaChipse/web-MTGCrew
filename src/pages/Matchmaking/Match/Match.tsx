@@ -2,13 +2,14 @@
 import classNames from 'classnames'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import Sortable from 'sortablejs'
-import Historical from '../../../components/Historical'
-import Shield from '../../../components/Shield'
-import Tombstone from '../../../components/Tombstone'
-import Trophey from '../../../components/Trophey'
+import Shield from '../../../components/svg/Shield'
+import Tombstone from '../../../components/svg/Tombstone'
+import Trophey from '../../../components/svg/Trophey'
+import ActionMatch from './ActionMatch/ActionMatch'
 import DamageCommanderModal from '../DamageCommanderModal/DamageCommanderModal'
 import LoosingModal from '../LoosingModal/LoosingModal'
 import styles from './Match.module.scss'
+import LifeContainer from './LifeContainer/LifeContainer'
 
 type Props = {
     toggleDrawer: (isOpened: boolean) => void
@@ -295,7 +296,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
             const attacking = conf.find((c) => c.idPlayer === from)!.player;
             const defensor = conf.find((c) => c.idPlayer === to)!.player;
 
-            const line =<span>{attacking} =&nbsp;<span style={{ color: 'var(--error)'}}>{Math.abs(damage)}</span> cmder dmg =&gt; &nbsp;{defensor}</span>;
+            const line =<span>{defensor} &nbsp;<span style={{ color: 'var(--error)'}}>-{Math.abs(damage)}</span> PV (cmder) par&nbsp;{attacking}</span>;
             return [...prev, line];
         });
 
@@ -313,20 +314,7 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
 
     return (
         <div>
-            <div className={styles.actionMatch}>
-                <button className={styles.close} onClick={() => toggleDrawer(false)}>X</button>
-                <Historical onClick={() => setOpenHistoric(!openHistoric)} className={styles.historical} height='30px' width='30px' color='var(--primary)'></Historical>
-            </div>
-
-            {openHistoric && (
-                <div className={styles.historicalModal}>
-                    {
-                        historic.map((h) => (
-                            <>{h}</>
-                        ))
-                    }
-                </div>
-            )}
+            <ActionMatch isOpenHistoric={openHistoric} historics={historic} setOpenHistoric={setOpenHistoric} toggleDrawer={toggleDrawer}/>
             <div className={styles.commanderButton}>
                 <Shield onClick={() => setCommanderModalIsOpen(true)} height='50px' width='50px' color='var(--primary)'/>
             </div>
@@ -374,20 +362,15 @@ const Match: React.FC<Props> = ({ conf, toggleDrawer }) => {
                             
                         <LoosingModal idPlayer={c.idPlayer} open={modalPlayerOpen[c.idPlayer]} setOpen={handleClose} widthDecalage={getWidthDecalage(index)}/>
 
-                        <div className={styles.lifeContainer}>
-                            <div style={{display: 'flex', flexDirection: 'column', margin: 'auto'}} className={classNames({[styles.displayLife]: modalPlayerOpen[c.idPlayer]})}>
-                                <h2 className={styles.life}>
-                                        <span 
-                                            className={classNames({[styles.deadLife]: isPlayerDead(c.idPlayer), [styles.winnerLife]: areAllOtherDead(c.idPlayer)})} 
-                                        >
-                                            {statePlayers?.[c.idPlayer]?.life ?? 40}
-                                        </span>
-                                </h2>
-                            </div>
-                                {(lifeChange[c.idPlayer] || lifeChange[c.idPlayer] === 0) && (
-                                    <span className={classNames(styles.lifeChange, {[styles.fadeOut]: isFading})}>( {lifeChange[c.idPlayer]} )</span>
-                                )}
-                        </div>
+                        <LifeContainer 
+                            idPlayer={c.idPlayer} 
+                            statePlayers={statePlayers}
+                            isFading={isFading} 
+                            lifeChangeCount={lifeChange[c.idPlayer]} 
+                            isModalPlayerOpen={modalPlayerOpen[c.idPlayer]}
+                            areAllOtherDead={areAllOtherDead}
+                            isPlayerDead={isPlayerDead} 
+                        />
 
                         <button className={classNames(styles.lifeButtonPlus, {[styles.healedButton]: healed[c.idPlayer]})} disabled={modalPlayerOpen[c.idPlayer]} onClick={() => {changeLife(c.idPlayer, 1)}}>+</button>
                     </div>

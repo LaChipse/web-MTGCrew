@@ -1,19 +1,11 @@
-.container {
-    background: var(--secondaryOpacity);
-    padding: 15px;
-    border-radius: 15px;
-    padding-bottom: 20px;
-
-    .userDeck {
-            margin-left: 5px;
-            font-size: smaller;
-            font-style: italic;
-        }
-
-    .containerTeam {
-        display: flex;
-        gap: 30px;
-        flex-wrap: wrap;
+.userDeck {
+        margin-left: 5px;
+        font-size: smaller;
+        font-style: italic;
     }
-}
 
+.containerTeam {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}

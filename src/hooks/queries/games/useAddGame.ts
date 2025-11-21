@@ -3,16 +3,16 @@ import { useDispatch } from 'react-redux';
 import { addSuccessSnackbar } from '../../../store/reducers/snackbarReducer';
 import { Api } from '../../../utils/Api';
 import { Dayjs } from 'dayjs';
-import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import { useAppSelector } from '../../useAppSelector';
 import { authActions } from '../../../store/reducers/authReducer';
 import { useGetGames } from './useGetGames';
-import { useGetAllPlayers } from '../joueurs/useGetAllPlayers';
+import { useGetAllPlayers } from '../players/useGetAllPlayers';
 import { useCountGames } from './useCountGames';
 import { useGetDecks } from '../decks/useGetDecks';
-import { useGetUsersDecks } from '../joueurs/useGetUsersDecks';
+import { useGetUsersDecks } from '../players/useGetUsersDecks';
 import { useGetHistoryGames } from './useGetHistoryGames';
 import { useGetAllDecks } from '../decks/useGetAllDecks';
+import { PlayersBlock } from '../../../pages/Games/DrawerGame/DrawerGame';
 
 const addGame = async (date: Dayjs | null, type: string, config: Array<PlayersBlock>, victoire: string, typeVictoire: string, isStandard: boolean, isRanked: boolean) => (
     await new Api<{ config: Array<PlayersBlock>, victoire:string }>()

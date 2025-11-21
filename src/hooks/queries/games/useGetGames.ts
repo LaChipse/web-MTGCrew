@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { PlayersBlock } from '../../../pages/Games/DrawerGamesForm/Standard/DrawerStandardGamesForm';
 import { filtersGames } from '../../../store/reducers/gameFiltersReducer';
 import { Api } from '../../../utils/Api';
 import { resetQueries } from '../../../utils/resetQueries';
+import { PlayersBlock } from '../../../pages/Games/DrawerGame/DrawerGame';
 export interface GameResume {
     id: string,
     date?: Date,

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Biceps from '../../components/Biceps';
-import Crown from '../../components/Crown';
-import Seringue from '../../components/Syringe';
+import Biceps from '../../components/svg/Biceps';
+import Crown from '../../components/svg/Crown';
+import Seringue from '../../components/svg/Syringe';
 import { Deck, useGetDecks } from '../../hooks/queries/decks/useGetDecks';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';

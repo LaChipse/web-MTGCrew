@@ -9,7 +9,7 @@ import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
 import { authActions } from "../../store/reducers/authReducer";
 import { setTheme } from "../../store/reducers/themeReducer";
 import { RootState } from "../../store/store";
-import { getTheme } from "../../utils/GetTheme";
+import { getTheme } from "../../utils/getTheme";
 
 const AuthLayout = () => {
     const navigate = useNavigate();

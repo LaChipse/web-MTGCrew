@@ -5,13 +5,13 @@ import { Deck } from '../../hooks/queries/decks/useGetDecks';
 import { useCountHistoryGames } from '../../hooks/queries/games/useCountHistoryGames';
 import { useGetHistoryGames } from '../../hooks/queries/games/useGetHistoryGames';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
 import Header from '../../Layouts/Theme/components/Header/Header';
 import Loading from '../loader/Loading/Loading';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
 import ProfilCard from './ProfilCard/ProfilCard';
 import ProfilModal from './ProfilModal/ProfilModal';
-import GamesFilter from '../../Layouts/Theme/components/GamesFilter/GamesFilter';
+import GamesFilter from '../Games/GamesFilter/GamesFilter';
+import GamesArray from '../Games/GamesArray/GamesArray';
 import styles from './Profil.module.scss';
 
 const Profil = () => {

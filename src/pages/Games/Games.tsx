@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useCountGames } from '../../hooks/queries/games/useCountGames';
 import { useGetGames } from '../../hooks/queries/games/useGetGames';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import GamesArray from '../../Layouts/Theme/components/GamesArray/GamesArray';
-import DrawerSpcialGamesForm from './DrawerGamesForm/Special/DrawerSpecialGamesForm';
-import DrawerStandardGamesForm from './DrawerGamesForm/Standard/DrawerStandardGamesForm';
-import SmallLoading from '../loader/SmallLoading/SmallLoading';
 import Header from '../../Layouts/Theme/components/Header/Header';
-import GamesFilter from '../../Layouts/Theme/components/GamesFilter/GamesFilter';
+import SmallLoading from '../loader/SmallLoading/SmallLoading';
+import DrawerPartie from './DrawerGame/DrawerGame';
+import GamesFilter from './GamesFilter/GamesFilter';
+import GamesArray from './GamesArray/GamesArray';
+import { DRAWER_STYLE } from '../../Layouts/Theme/StyleMui';
 import styles from './Games.module.scss';
 
 const Games = () => {
@@ -55,57 +55,12 @@ const Games = () => {
             </div>
 
             <Drawer 
-                sx={{
-                    color: "var(--white)",
-                    backdropFilter: 'blur(1px)',
-                    fontFamily: '"Akshar", sans-serif',
-                    letterSpacing: '0.3px',
-                    fontSize: 'medium',
-                    '.MuiPaper-root':{
-                        bgcolor: "var(--secondaryOpacity)",
-                        backdropFilter: 'blur(1px)',
-                        width: '500px'
-                    },
-
-                    '@media (max-width:650px)': {
-                        '.MuiPaper-root': {
-                            width: '100%',
-                        }
-                    }
-                }} 
-                open={openStandard} 
+                sx={DRAWER_STYLE} 
+                open={isStandard ? openStandard : openSpecial} 
                 onClose={() => toggleDrawer(false)} 
-                anchor='right' 
-                className={styles.drawer}
+                anchor='right'
             >
-                <DrawerStandardGamesForm toggleDrawer={toggleDrawer} />
-            </Drawer>
-
-            <Drawer 
-                sx={{
-                    color: "var(--white)",
-                    backdropFilter: 'blur(1px)',
-                    fontFamily: '"Akshar", sans-serif',
-                    letterSpacing: '0.3px',
-                    fontSize: 'medium',
-                    '.MuiPaper-root':{
-                        bgcolor: "var(--secondaryOpacity)",
-                        backdropFilter: 'blur(1px)',
-                        width: '500px'
-                    },
-
-                    '@media (max-width:650px)': {
-                        '.MuiPaper-root': {
-                            width: '100%',
-                        }
-                    }
-                }} 
-                open={openSpecial} 
-                onClose={() => toggleDrawer(false)} 
-                anchor='right' 
-                className={styles.drawer}
-            >
-                <DrawerSpcialGamesForm toggleDrawer={toggleDrawer} />
+                <DrawerPartie toggleDrawer={toggleDrawer}/>
             </Drawer>
         </>
     )

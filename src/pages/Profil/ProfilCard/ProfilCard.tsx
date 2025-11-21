@@ -32,7 +32,7 @@ const ProfilCard: React.FC<Props> = ({ user, isStandard, partieType, handleImage
     }
 
     return (
-        <div className={styles.profil}>
+        <div data-container className={styles.profil}>
                 <div className={styles.summary}>
                     <h2>
                         {user?.prenom} {user?.nom?.charAt(0)}.

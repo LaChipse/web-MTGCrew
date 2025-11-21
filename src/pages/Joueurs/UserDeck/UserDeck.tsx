@@ -4,7 +4,7 @@ import React, { MouseEvent, useState } from 'react';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { useGetUserDeck } from '../../../hooks/queries/decks/useGetUserDeck';
 import { RANK } from '../../../utils/Enums/rank';
-import ImagePortal from '../../Decks/composants/ImagePortal/ImagePortal';
+import ImagePortal from '../../../Layouts/Theme/components/ImagePortal/ImagePortal';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import styles from './UserDeck.module.scss';
 

@@ -1,6 +1,6 @@
 import { FormControl, Modal } from '@mui/material';
 import React, { MouseEvent, useState } from 'react';
-import { useUpdateUser } from '../../../hooks/queries/joueurs/useUpdateUser';
+import { useUpdateUser } from '../../../hooks/queries/players/useUpdateUser';
 import { AuthUser } from '../../../store/reducers/authReducer';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
 import ColorPickerModal from './ColorPickerModal/ColorPickerModal';

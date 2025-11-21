@@ -7,8 +7,8 @@ import { useAddDeck } from '../../../hooks/queries/decks/useAddDeck';
 import { ImageUrisType, useGetCardByName } from '../../../hooks/queries/decks/useGetCardByName';
 import { Deck } from '../../../hooks/queries/decks/useGetDecks';
 import { useUpdateDeck } from '../../../hooks/queries/decks/useUpdateDeck';
-import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/components/GamesFilter/StyleMui';
 import SmallLoading from '../../loader/SmallLoading/SmallLoading';
+import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../../Layouts/Theme/StyleMui';
 import styles from './DecksActionModal.module.scss';
 
 type Props = {

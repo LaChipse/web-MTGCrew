@@ -2,6 +2,7 @@ import { Drawer } from "@mui/material";
 import classNames from "classnames";
 import React, { useState } from "react";
 import Match from "../Match/Match";
+import { DRAWER_STYLE } from "../../../Layouts/Theme/StyleMui";
 import styles from './Result.module.scss';
 
 type Props = {
@@ -30,7 +31,7 @@ const Result: React.FC<Props> = ({configuration, ref}) => {
 
     return (
         <>
-            <div ref={ref} style={{ marginTop: '15px' }} className={styles.container}>
+            <div ref={ref} style={{ marginTop: '15px' }} data-container>
                 <h2 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}>Résultat</h2>
                 <div style={{ padding: '10px 0', overflow: 'auto', height: 'fit-content', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {configuration.map((config, index) => (
@@ -58,28 +59,10 @@ const Result: React.FC<Props> = ({configuration, ref}) => {
             </div>
 
             <Drawer 
-                sx={{
-                    color: "var(--white)",
-                    backdropFilter: 'blur(3px)',
-                    fontFamily: '"Akshar", sans-serif',
-                    letterSpacing: '0.3px',
-                    fontSize: 'medium',
-                    '.MuiPaper-root':{
-                        bgcolor: "var(--black)",
-                        backdropFilter: 'blur(3px)',
-                        width: '100vw'
-                    },
-
-                    '@media (max-width:650px)': {
-                        '.MuiPaper-root': {
-                            width: '100%',
-                        }
-                    }
-                }} 
+                sx={DRAWER_STYLE} 
                 open={isOpened} 
                 onClose={() => setIsOpened(false)} 
-                anchor='right' 
-                className={styles.drawer}
+                anchor='right'
             >
                 <Match conf={selectedConf!} toggleDrawer={setIsOpened} />
             </Drawer>

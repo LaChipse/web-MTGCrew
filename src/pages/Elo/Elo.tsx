@@ -1,13 +1,13 @@
 import { MenuItem, Select } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 import { DeckResume, useGetAllDecks } from '../../hooks/queries/decks/useGetAllDecks';
-import { useGetAllPlayers } from '../../hooks/queries/joueurs/useGetAllPlayers';
+import { useGetAllPlayers } from '../../hooks/queries/players/useGetAllPlayers';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useUpdateRank } from '../../hooks/queries/decks/useUpdateRank';
-import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../Layouts/Theme/components/GamesFilter/StyleMui';
+import { SELECT_MENU_STYLE, SELECT_STYLE } from '../../Layouts/Theme/StyleMui';
 import Header from '../../Layouts/Theme/components/Header/Header';
 import SmallLoading from '../loader/SmallLoading/SmallLoading';
-import ImagePortal from '../Decks/composants/ImagePortal/ImagePortal';
+import ImagePortal from '../../Layouts/Theme/components/ImagePortal/ImagePortal';
 import styles from './Elo.module.scss';
 
 type formatedDeck = DeckResume & { owner?: string } 

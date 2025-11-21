@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setTheme } from '../../../../store/reducers/themeReducer';
 import { COLOR_BY_THEME, THEME } from '../../../../utils/Enums/theme';
-import { getTheme } from '../../../../utils/GetTheme';
+import { getTheme } from '../../../../utils/getTheme';
 import styles from './ColorPickerModal.module.scss';
 
 type Props = {

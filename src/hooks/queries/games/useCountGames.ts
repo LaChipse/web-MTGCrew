@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { filtersGames } from '../../../store/reducers/gameFiltersReducer';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 
 const getCountGames = async (isStandard: boolean, filters: filtersGames) => {
     const searchParams = new URLSearchParams();
@@ -35,4 +35,4 @@ export const useCountGames = (isStandard: boolean, filters: filtersGames) => {
     })
 };
 
-useCountGames.reset = resetQueries(['getCountGames']);
+useCountGames.reset = resetQuerie(['getCountGames']);

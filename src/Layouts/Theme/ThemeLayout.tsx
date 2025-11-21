@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 import { RootState } from '../../store/store';
 import Navbar from './components/Navbar/Navbar';
 import styles from './ThemeLayout.module.scss';
-import { setThemeCss } from '../../utils/setThemeCss';
+import { setThemesCss } from '../../utils/setThemesCss';
 
 const ThemeLayout = () => {
     const theme = useSelector((state: RootState) => state.theme);
@@ -12,7 +12,7 @@ const ThemeLayout = () => {
   // Applique les couleurs en CSS variables
     useEffect(() => {
         const root = document.documentElement;
-        setThemeCss(root, theme);
+        setThemesCss(root, theme);
     }, [theme]);
 
     return (

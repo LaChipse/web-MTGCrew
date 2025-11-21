@@ -7,7 +7,7 @@ import { setTheme } from '../../store/reducers/themeReducer.js';
 import { Api } from '../../utils/Api';
 import { useGetAllPlayers } from './players/useGetAllPlayers.js';
 import { useGetUsersDecks } from './players/useGetUsersDecks.js';
-import { getTheme } from '../../utils/getTheme.js';
+import { getThemes } from '../../utils/getThemes.js';
 
 const login = (nom: string, prenom:string, password: string) => (
     new Api<{ token: string, user: AuthUser }>()
@@ -27,7 +27,7 @@ export const useLogin = (): UseMutationResult<{ token: string }, Error, { nom: s
 
             if (data.user) {
                 dispatch(authActions.updateState(data.user));
-                dispatch(setTheme(getTheme(data.user.colorStd)));
+                dispatch(setTheme(getThemes(data.user.colorStd)));
             }
 
             if (data.token) localStorage.setItem('token', data.token)

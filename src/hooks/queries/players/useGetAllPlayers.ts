@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 import { PartiesTypes } from '../../../store/reducers/authReducer';
 import { useAppSelector } from '../../useAppSelector';
 
@@ -40,4 +40,4 @@ export const useGetAllPlayers = (sort?: { key: string, direction: -1 | 1 }) => {
     )
 };
 
-useGetAllPlayers.reset = resetQueries(['getAllPlayers']);
+useGetAllPlayers.reset = resetQuerie(['getAllPlayers']);

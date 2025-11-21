@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 
 export interface DeckResume {
     id: string,
@@ -44,4 +44,4 @@ export const useGetAllDecks = (sort?: { key: string, direction: -1 | 1 }, filter
     })
 );
 
-useGetAllDecks.reset = resetQueries(['getAllDecks']);
+useGetAllDecks.reset = resetQuerie(['getAllDecks']);

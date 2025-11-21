@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 import { PartiesTypes } from '../../../store/reducers/authReducer';
 
 export interface Deck {
@@ -38,4 +38,4 @@ export const useGetDecks = (sort?: { key: string, direction: -1 | 1 }) => (
     })
 );
 
-useGetDecks.reset = resetQueries(['getDecks']);
+useGetDecks.reset = resetQuerie(['getDecks']);

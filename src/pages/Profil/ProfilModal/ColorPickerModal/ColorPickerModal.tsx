@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setTheme } from '../../../../store/reducers/themeReducer';
 import { COLOR_BY_THEME, THEME } from '../../../../utils/Enums/theme';
-import { getTheme } from '../../../../utils/getTheme';
+import { getThemes } from '../../../../utils/getThemes';
 import styles from './ColorPickerModal.module.scss';
 
 type Props = {
@@ -21,7 +21,7 @@ const ColorPickerModal: React.FC<Props> = ({ isPickColorOpen, setIsPickColorOpen
 
     const handleChangeColor = (theme: THEME) => {
         setColor(theme);
-        dispatch(setTheme((getTheme(theme))))
+        dispatch(setTheme((getThemes(theme))))
     }
 
     return (

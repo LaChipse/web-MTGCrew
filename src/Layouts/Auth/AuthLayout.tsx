@@ -9,7 +9,7 @@ import { DEFAULT_PAGE_PATH, LOGIN_PAGE } from '../../router/routes';
 import { authActions } from "../../store/reducers/authReducer";
 import { setTheme } from "../../store/reducers/themeReducer";
 import { RootState } from "../../store/store";
-import { getTheme } from "../../utils/getTheme";
+import { getThemes } from "../../utils/getThemes";
 
 const AuthLayout = () => {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ const AuthLayout = () => {
     useEffect(() => {
         if (user) {
             const theme = mode.isStandard ? user.colorStd : user.colorSpec;
-            dispatch(setTheme(getTheme(theme)));
+            dispatch(setTheme(getThemes(theme)));
         }
     }, [user, mode, dispatch]);
 

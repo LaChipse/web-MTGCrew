@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { filtersGames } from '../../../store/reducers/gameFiltersReducer';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 import { PlayersBlock } from '../../../pages/Games/DrawerGame/DrawerGame';
 export interface GameResume {
     id: string,
@@ -46,4 +46,4 @@ export const useGetGames = (
     });
 };
 
-useGetGames.reset = resetQueries(['getGames']);
+useGetGames.reset = resetQuerie(['getGames']);

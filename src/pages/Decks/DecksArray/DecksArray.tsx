@@ -8,7 +8,7 @@ import { RANK } from '../../../utils/Enums/rank';
 import ImagePortal from '../../../Layouts/Theme/components/ImagePortal/ImagePortal';
 import DecksActionModal from '../DecksActionModal/DecksActionModal';
 import DecksDeleteModal from '../DecksDeleteModal/DecksDeleteModal';
-import { toTitleCase } from '../../../utils/toTitleCase';
+import { toFirstLetterCase } from '../../../utils/toFirstLetterCase';
 import styles from './DecksArray.module.scss';
 
 type Props = {
@@ -123,7 +123,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetS
                                     }
                                 </th>
                                 <td style={{lineHeight: 0.5}} align='center'>{formatArray(deck.couleurs)}</td>
-                                <td align='center'>{toTitleCase(deck.type) || '-'}</td>
+                                <td align='center'>{toFirstLetterCase(deck.type) || '-'}</td>
                                 <td align='center' className={classNames([styles[RANK[deck.rank].toLocaleUpperCase()], styles.rank])}>
                                     {deck.rank === 0 ? 'RIP' : deck.rank || '-'}
                                 </td>

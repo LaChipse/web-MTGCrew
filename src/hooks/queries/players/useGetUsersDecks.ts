@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 import { Deck } from '../decks/useGetDecks';
 
 export interface UserDeck {
@@ -20,4 +20,4 @@ export const useGetUsersDecks = () => (
     })
 );
 
-useGetUsersDecks.reset = resetQueries(['getUsersDecks']);
+useGetUsersDecks.reset = resetQuerie(['getUsersDecks']);

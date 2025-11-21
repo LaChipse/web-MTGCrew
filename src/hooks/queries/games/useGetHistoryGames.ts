@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { filtersGames } from '../../../store/reducers/gameFiltersReducer';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 import { GameResume } from './useGetGames';
 
 const getHistoryGames = async (isStandard: boolean, page: number, filters: filtersGames) => {
@@ -38,4 +38,4 @@ export const useGetHistoryGames = (
     });
 };
 
-useGetHistoryGames.reset = resetQueries(['getHistoryGames']);
+useGetHistoryGames.reset = resetQuerie(['getHistoryGames']);

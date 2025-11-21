@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Api } from '../../../utils/Api';
-import { resetQueries } from '../../../utils/resetQueries';
+import { resetQuerie } from '../../../utils/resetQuerie';
 import { Deck } from './useGetDecks';
 
 const getUserDeck = async (id: string, sort?: { key: string, direction: -1 | 1 }) => {
@@ -27,4 +27,4 @@ export const useGetUserDeck = (id: string, sort?: { key: string, direction: -1 |
     })
 );
 
-useGetUserDeck.reset = (id: string) => resetQueries(['getUserDeck', id]);
+useGetUserDeck.reset = (id: string) => resetQuerie(['getUserDeck', id]);

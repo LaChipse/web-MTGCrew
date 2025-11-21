@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useEffect } from 'react';
-import { setThemeCss } from '../../utils/setThemeCss';
+import { setThemesCss } from '../../utils/setThemesCss';
 import styles from './ThemeLayout.module.scss'
 
 const ThemeLayout = () => {
@@ -11,7 +11,7 @@ const ThemeLayout = () => {
   // Applique les couleurs en CSS variables
     useEffect(() => {
         const root = document.documentElement;
-        setThemeCss(root, theme);
+        setThemesCss(root, theme);
     }, [theme]);
 
     return (

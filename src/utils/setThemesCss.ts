@@ -1,6 +1,6 @@
 import { ThemeColors } from "../store/reducers/themeReducer";
 
-export const setThemeCss = (root: HTMLElement, theme: ThemeColors) => {
+export const setThemesCss = (root: HTMLElement, theme: ThemeColors) => {
     root.style.setProperty('--primary', theme.primary);
     root.style.setProperty('--secondary', theme.secondary);
     root.style.setProperty('--secondaryOpacity', theme.secondaryOpacity);

@@ -30,15 +30,17 @@ const Matchmaking: React.FC = () => {
     const [isExlusifsDecks, setIsExclusifsDecks] = useState<boolean>(true);
     const [configuration, setConfiguration] = useState<unknown[]>()
 
+    const rankedDeck = decks?.filter((d) => d.rank !== 0)
+
     useEffect(() => {
         if (hasAllDecksSelected) {
             setAllUserDecksSelected([])
-            setIncludedDecks(decks!.map(d => d.id));
+            setIncludedDecks(rankedDeck!.map(d => d.id));
         } else {
             setIncludedDecks([]);
             setAllUserDecksSelected([])
         }
-    }, [hasAllDecksSelected, decks]);
+    }, [hasAllDecksSelected]);
 
     if (isUsersDecksLaoding || isUsersLaoding) return ( <SmallLoading heightContainer='90vh' dimensionLoader='150px' borderWidth='10px' /> )
 
@@ -56,14 +58,14 @@ const Matchmaking: React.FC = () => {
 
 
     const handleChangeDeckSelected = (deckId: string) => {
-        const deckSelected = decks?.find((d) => d.id === deckId)?.userId
+        const deckSelected = rankedDeck?.find((d) => d.id === deckId)?.userId
         if (allUserDecksSelected.includes(deckSelected!)) setAllUserDecksSelected((prev) => prev.filter((p) => p !== deckSelected))
     }
 
     const handleAllUserDecksSelected = (userId: string) => {
         setAllUserDecksSelected((prev) => {
             let formatedPrev = [...prev];
-            const userDecks = decks!.filter((d) => d.userId === userId).map((d) => d.id)
+            const userDecks = rankedDeck!.filter((d) => d.userId === userId).map((d) => d.id)
 
             if (prev.includes(userId)) {
                 formatedPrev = prev.filter((p) => p !== userId)
@@ -129,7 +131,7 @@ const Matchmaking: React.FC = () => {
         const players = users!.filter((u) => !usersChecked.length ? u : usersChecked.includes(u.id))
                                 .map((u) => ({ id: u.id, nom: u.fullName}))
 
-        const selectedDecks = decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d)
+        const selectedDecks = rankedDeck!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d)
                                     .filter((d) => !includedDecks.length ? d : includedDecks.includes(d.id))
                                     .map((d) => ({ nom: d.nom, user: users?.filter((u) => u.id === d.userId)[0].fullName, userId: d.userId, deckId: d.id, imageUrl: d.imageArt || d.imageUrl}))
 
@@ -250,7 +252,7 @@ const Matchmaking: React.FC = () => {
 
                             <Divider style={{backgroundColor: 'var(--primary'}}/>
 
-                            {decks!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d).map((deck) => (
+                            {rankedDeck!.filter((d) => (rank && rank !== 'all') ? d.rank === Number(rank) : d).map((deck) => (
                                 <MenuItem key={deck.id} value={deck.id}  className={styles.name} onClick={(e) => {
                                         e.preventDefault();
                                         handleChangeDeckSelected(deck.id)

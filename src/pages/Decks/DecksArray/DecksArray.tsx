@@ -55,7 +55,7 @@ const DecksArray: React.FC<Props> = ({ decks, partieType, sortConfig, handleSetS
     const countGames = decks?.reduce((sum, deck) => sum + deck.parties?.[partieType], 0)
 
     const handleOpenImage = (deck: Deck) => {
-        setOpenDeck((prev) => (prev === deck ? null : deck));
+        setOpenDeck((prev) => (prev?._id === deck._id ? null : deck));
     }
 
     const handleCloseImg = () => {

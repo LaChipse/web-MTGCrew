@@ -64,7 +64,11 @@ const Elo = () => {
     }
 
     const handleOpenImage = (deck: DeckResume) => {
-        setOpenDeck((prev) => (prev === deck ? null : deck));
+        setOpenDeck((prev) => (prev?.id === deck.id ? null : deck));
+    }
+
+    const handleCloseImg = () => {
+        if (openDeck !== null ) setOpenDeck(null);
     }
 
     const colorByPoint = (elo: number) => {
@@ -126,7 +130,7 @@ const Elo = () => {
             { isDecksLoading || isUseresLoading ? (
                 <SmallLoading heightContainer='70%' dimensionLoader='150px' borderWidth='10px'/>
             ) : (
-                <div className={styles.tableau}>
+                <div className={styles.tableau} onClick={handleCloseImg}>
                     <table aria-label='deck table'>
                         <thead>
                             <tr>
@@ -140,7 +144,7 @@ const Elo = () => {
                             {formatDeckWithOwner().filter((d) => (d.nom.toLocaleLowerCase()).includes(searchDeck.toLocaleLowerCase())).map((deck) => (
                                 <tr key={deck.id} style={{backgroundColor: colorByPoint(deck.elo)}}>
                                     <th align='center' className={styles.styckyCol} style={{fontWeight: 700}} scope='row'>
-                                        { deck.imageUrl ?
+                                        {deck.imageUrl ?
                                         <>
                                             <a style={{ cursor: 'pointer', color: 'white', textDecoration: 'underline' }} onClick={(e) => handleClick(deck, e)}>{deck.nom}</a>
                                             {openDeck && openDeck?.id === deck.id && anchor && (
